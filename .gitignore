@@ -1,5 +1,1 @@
-node_modules/
-stats.json
-dist/
-build/
-
+.DS_Store

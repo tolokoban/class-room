@@ -1,0 +1,55 @@
+# Started by `npm run backend` (see scripts/backend.mjs at the root of the
+# project), which sets WEB_PORT to a random free port.
+name: classroom
+
+services:
+  db:
+    image: mariadb:11
+    restart: unless-stopped
+    environment:
+      # Must match backend/www/api/env.php
+      MARIADB_ROOT_PASSWORD: admin
+      MARIADB_DATABASE: classroom
+      MARIADB_USER: admin
+      MARIADB_PASSWORD: admin
+    volumes:
+      # Persisted locally, outside the container's lifecycle.
+      - ./database/data:/var/lib/mysql
+      # Only used the very first time (empty data dir) to seed the schema
+      # then the data. Numbered so structure always runs before data.
+      - ./database/sql/structure.sql:/docker-entrypoint-initdb.d/01-structure.sql:ro
+      - ./database/sql/data.sql:/docker-entrypoint-initdb.d/02-data.sql:ro
+    networks:
+      - backend
+    # No "ports:" here on purpose: MariaDB is not reachable from the host.
+
+  phpmyadmin:
+    image: phpmyadmin:latest
+    restart: unless-stopped
+    environment:
+      PMA_HOST: db
+      PMA_ABSOLUTE_URI: http://localhost:${WEB_PORT:-8080}/phpMyAdmin/
+    depends_on:
+      - db
+    networks:
+      - backend
+    # No "ports:" here either: only reachable through the webserver's proxy.
+
+  web:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    restart: unless-stopped
+    volumes:
+      - ./www:/var/www/html
+    ports:
+      # The only port exposed by the whole stack.
+      - "${WEB_PORT:-8080}:80"
+    depends_on:
+      - db
+      - phpmyadmin
+    networks:
+      - backend
+
+networks:
+  backend:

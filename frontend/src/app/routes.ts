@@ -15,6 +15,11 @@ import { RoutePath, RouteMatch } from "./types"
 
 export const ROUTES: RoutePath[] = [
     "/",
+    "/student",
+    "/student/[classroom]",
+    "/student/[classroom]/activity",
+    "/student/[classroom]/activity/AI",
+    "/student/[classroom]/activity/AI/eliza",
 ]
 
 /**

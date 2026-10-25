@@ -12,9 +12,9 @@ import "./index.css"
 async function start() {
     Theme.apply({
         colors: {
-            neutral: "#334",
+            neutral: ["#333", "#ddd"],
             primary: "#37e",
-            secondary: "#f90",
+            secondary: "rgb(195, 117, 0)",
         }
     })
     FontDosis.load300()

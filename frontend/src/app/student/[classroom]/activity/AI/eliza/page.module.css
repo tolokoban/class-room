@@ -1,0 +1,49 @@
+main.console {
+    font-family: monospace;
+    font-size: 4vh;
+    padding: 1em;
+    border-radius: 0.5em;
+    background-color: #000;
+    width: 32em;
+    height: 20em;
+    overflow: auto;
+
+    > p {
+        margin: 0;
+    }
+
+    > input {
+        font: inherit;
+        background: none;
+        border: none;
+        outline: none;
+        margin: .25em 0;
+        padding: 0.125em .5em;
+        color: #f80;
+        background-color: #f802;
+        border: 1px solid #f806;
+        border-radius: 0.125em;
+        caret-shape: block;
+        caret-color: currentColor;
+        width: 100%;
+    }
+
+    > button {
+        font: inherit;
+        background: #f80;
+        color: #000;
+        font-weight: bold;
+        border: none;
+        margin: 1em 0;
+        padding: 0.5em 1em;
+        border-radius: 0.25em;
+    }
+}
+
+.doctor {
+    color: #f80;
+}
+
+.patient {
+    color: #0c0;
+}

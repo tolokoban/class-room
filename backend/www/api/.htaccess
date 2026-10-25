@@ -1,0 +1,27 @@
+# Never serve/execute PHP files directly (db.php, env.php, ...): only
+# index.php is meant to be reached, everything else must go through it.
+<FilesMatch "\.php$">
+    Require all denied
+</FilesMatch>
+<Files "index.php">
+    Require all granted
+</Files>
+
+# Route every request under /api/ through index.php,
+# exposing the remainder of the URL as the "path" query parameter.
+RewriteEngine On
+RewriteBase /api/
+
+# Entrypoints are only meant to be included by index.php.
+RewriteRule ^entrypoint(/|$) - [F,L]
+
+# Let requests for real files/directories through.
+RewriteCond %{REQUEST_FILENAME} -f [OR]
+RewriteCond %{REQUEST_FILENAME} -d
+RewriteRule ^ - [L]
+
+# Everything else: /api/<path> -> /api/index.php?path=<path>
+RewriteRule ^(.*)$ index.php?path=$1 [QSA,L]
+
+# Prevent conflicts between api paths and php files (`session.php` vs `session/...`).
+Options -MultiViews

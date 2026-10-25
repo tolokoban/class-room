@@ -1,70 +1,11 @@
 {
-    "name": "<My Game>",
+    "name": "class-room",
     "version": "0.1.0",
     "private": true,
-    "type": "module",
-    "sideEffects": [
-        "*.css"
-    ],
-    "homepage": "./",
-    "dependencies": {
-        "@tolokoban/react-state": "^0.9.0",
-        "@tolokoban/tgd": "^2.7.0",
-        "@tolokoban/type-guards": "^0.9.0",
-        "@tolokoban/ui": "^0.25.12",
-        "build-react-routes": "^0.12.4",
-        "json5": "^2.2.3",
-        "react": "^19.3.1",
-        "react-dom": "^19.3.1"
-    },
     "scripts": {
-        "generate": "npm run routes",
-        "routes": "build-react-routes ./src/app",
-        "analyse": "webpack --profile --json > stats.json",
-        "start": "rspack serve --mode=development",
-        "build": "rspack --mode=production",
-        "predeploy": "npm run build",
-        "deploy": "gh-pages -d build",
-        "format": "oxfmt",
-        "lint": "oxlint",
-        "test": "vitest run",
-        "test:watch": "vitest"
-    },
-    "eslintConfig": {},
-    "browserslist": {
-        "production": [
-            ">0.2%",
-            "not dead",
-            "not op_mini all"
-        ],
-        "development": [
-            "last 1 chrome version",
-            "last 1 firefox version",
-            "last 1 safari version"
-        ]
-    },
-    "devDependencies": {
-        "@rspack/cli": "^2.2.9",
-        "@rspack/core": "^2.2.9",
-        "@rspack/dev-server": "^2.2.1",
-        "@types/react": "^19.3.0",
-        "@types/react-dom": "^19.2.4",
-        "clean-webpack-plugin": "^4.0.0",
-        "css-loader": "^7.1.5",
-        "gh-pages": "^6.3.0",
-        "highlight.js": "^11.12.0",
-        "oxfmt": "^0.74.0",
-        "oxlint": "^1.89.0",
-        "rehype-highlight": "^7.0.2",
-        "rehype-highlight-code-lines": "^1.2.5",
-        "remark-emoji": "^5.0.2",
-        "remark-gfm": "^4.0.1",
-        "remark-images": "^4.1.0",
-        "ts-loader": "^9.6.2",
-        "typescript": "^7.0.2",
-        "vitest": "^5.0.5",
-        "webpack-shell-plugin-next": "^2.3.3",
-        "workbox-webpack-plugin": "^7.4.1"
-    },
-    "port": 37890
+        "backend": "node scripts/backend.mjs",
+        "db-reset": "cd ./backend && docker compose down && rm -rf ./database/data/* && cd .. && node scripts/backend.mjs",
+        "db-graph": "node scripts/db-graph.mjs",
+        "hash-password": "docker run --rm php:8.5-cli php -r 'echo password_hash($argv[1], PASSWORD_DEFAULT), PHP_EOL;'"
+    }
 }
