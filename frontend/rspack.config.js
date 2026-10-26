@@ -216,6 +216,14 @@ export default (env) => {
                     type: "asset/source",
                 },
                 {
+                    // Lisp programs are fetched at runtime: the import gives their URL.
+                    test: /\.lisp$/i,
+                    type: "asset/resource",
+                    generator: {
+                        filename: "lisp/[name].[hash][ext][query]",
+                    },
+                },
+                {
                     test: /\.css$/,
                     use: [
                         {

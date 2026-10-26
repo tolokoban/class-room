@@ -1,4 +1,11 @@
-main.console {
+.console {
+  > h1 {
+    margin: 0;
+    font-size: 0.9em;
+    color: #000;
+  }
+
+  > main {
     font-family: monospace;
     font-size: 4vh;
     padding: 1em;
@@ -9,41 +16,42 @@ main.console {
     overflow: auto;
 
     > p {
-        margin: 0;
+      margin: 0;
     }
 
     > input {
-        font: inherit;
-        background: none;
-        border: none;
-        outline: none;
-        margin: .25em 0;
-        padding: 0.125em .5em;
-        color: #f80;
-        background-color: #f802;
-        border: 1px solid #f806;
-        border-radius: 0.125em;
-        caret-shape: block;
-        caret-color: currentColor;
-        width: 100%;
+      font: inherit;
+      background: none;
+      border: none;
+      outline: none;
+      margin: 0.25em 0;
+      padding: 0.125em 0.5em;
+      color: #f80;
+      background-color: #f802;
+      border: 1px solid #f806;
+      border-radius: 0.125em;
+      caret-shape: block;
+      caret-color: currentColor;
+      width: 100%;
     }
 
     > button {
-        font: inherit;
-        background: #f80;
-        color: #000;
-        font-weight: bold;
-        border: none;
-        margin: 1em 0;
-        padding: 0.5em 1em;
-        border-radius: 0.25em;
+      font: inherit;
+      background: #f80;
+      color: #000;
+      font-weight: bold;
+      border: none;
+      margin: 1em 0;
+      padding: 0.5em 1em;
+      border-radius: 0.25em;
     }
+  }
 }
 
 .doctor {
-    color: #f80;
+  color: #f80;
 }
 
 .patient {
-    color: #0c0;
+  color: #0c0;
 }

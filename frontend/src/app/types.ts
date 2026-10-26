@@ -14,9 +14,10 @@ export type RoutePath =
     | "/student/[classroom]/activity"
     | "/student/[classroom]/activity/AI"
     | "/student/[classroom]/activity/AI/eliza"
+    | "/student/[classroom]/activity/AI/mycin"
 
 export function isRoutePath(path: string): path is RoutePath {
-    return ["/","/student","/student/[classroom]","/student/[classroom]/activity","/student/[classroom]/activity/AI","/student/[classroom]/activity/AI/eliza"].includes(path)
+    return ["/","/student","/student/[classroom]","/student/[classroom]/activity","/student/[classroom]/activity/AI","/student/[classroom]/activity/AI/eliza","/student/[classroom]/activity/AI/mycin"].includes(path)
 }
 
 export interface RouteMatch {

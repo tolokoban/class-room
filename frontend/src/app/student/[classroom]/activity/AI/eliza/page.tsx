@@ -23,8 +23,9 @@ export default function Page() {
   }, [lines, end]);
 
   return (
-    <ViewPanel display="grid" placeItems="center" fullsize position="absolute">
-      <main ref={refMain} className={Styles.console}>
+    <ViewPanel display="grid" placeItems="center" fullsize position="absolute" className={Styles.console}>
+      <h1>Eliza 1966</h1>
+      <main ref={refMain}>
         {lines.map((line, index) => (
           <p key={index} className={index % 2 === 1 ? Styles.doctor : Styles.patient}>
             {line}

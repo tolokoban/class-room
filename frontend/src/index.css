@@ -9,7 +9,8 @@ html {
     padding: 0;
     overflow: hidden;
     background-color: var(--theme-color-neutral-5);
-    color: var(--theme-color-on-neutral-5)
+    color: var(--theme-color-on-neutral-5);
+    font-family: Dosis, sans-serif;
 }
 
 div#app {

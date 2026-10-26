@@ -1,27 +1,25 @@
 {
     "compilerOptions": {
-        "alwaysStrict": false,
         "allowSyntheticDefaultImports": true,
-        "baseUrl": "./src/",
         "composite": false,
         "declaration": true,
         "declarationMap": true,
         "diagnostics": true,
-        "downlevelIteration": true,
         "esModuleInterop": true,
         "extendedDiagnostics": false,
         "incremental": false,
         "jsx": "react-jsx",
-        "lib": ["dom", "dom.iterable"],
+        "lib": ["es2020", "dom", "dom.iterable"],
         "module": "esnext",
-        "moduleResolution": "node",
+        "moduleResolution": "bundler",
         "noImplicitAny": true,
         "noImplicitReturns": true,
         "noImplicitThis": true,
         "outDir": "./dist/",
+        "rootDir": "./src/",
         "paths": {
-            "@/*": ["*"],
-            "*": ["src/*", "node_modules/*"]
+            "@/*": ["./src/*"],
+            "*": ["./src/*"]
         },
         "preserveWatchOutput": false,
         "removeComments": true,

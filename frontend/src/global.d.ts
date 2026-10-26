@@ -1,4 +1,7 @@
 /* eslint-disable init-declarations */
+// Global stylesheets, imported for their side effects only.
+declare module "*.css"
+
 declare module "*.module.css" {
     const content: { [key: string]: string }
     export default content
@@ -40,6 +43,11 @@ declare module "*.webp" {
 }
 
 declare module "*.woff2" {
+    const value: string
+    export = value
+}
+
+declare module "*.lisp" {
     const value: string
     export = value
 }
