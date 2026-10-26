@@ -11,6 +11,7 @@ html {
     background-color: var(--theme-color-neutral-5);
     color: var(--theme-color-on-neutral-5);
     font-family: Dosis, sans-serif;
+    font-size: 3vmin;
 }
 
 div#app {

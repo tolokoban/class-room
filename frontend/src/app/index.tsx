@@ -21,7 +21,8 @@ import Loading0 from "./loading"
 import NotFound0 from "./404"
 const Page0 = React.lazy(() => import("./page"))
 const Page5 = React.lazy(() => import("./student/[classroom]/activity/AI/eliza/page"))
-const Page6 = React.lazy(() => import("./student/[classroom]/activity/AI/mycin/page"))
+const Page6 = React.lazy(() => import("./student/[classroom]/activity/AI/le-chat-mange-la/page"))
+const Page7 = React.lazy(() => import("./student/[classroom]/activity/AI/mycin/page"))
 
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 export default function App({ lang }: { lang?: string }) {
@@ -30,6 +31,7 @@ export default function App({ lang }: { lang?: string }) {
     const pg0 = Page0
     const pg5 = Page5
     const pg6 = Page6
+    const pg7 = Page7
     return (
         <Route path="/" def={[pg0, , fb0, , NotFound0]} context={context}>
             <Route path="/student" def={[, , fb0, , NotFound0]} context={context}>
@@ -37,7 +39,8 @@ export default function App({ lang }: { lang?: string }) {
                     <Route path="/student/[classroom]/activity" def={[, , fb0, , NotFound0]} context={context}>
                         <Route path="/student/[classroom]/activity/AI" def={[, , fb0, , NotFound0]} context={context}>
                             <Route path="/student/[classroom]/activity/AI/eliza" def={[pg5, , fb0, , NotFound0]} context={context}/>
-                            <Route path="/student/[classroom]/activity/AI/mycin" def={[pg6, , fb0, , NotFound0]} context={context}/>
+                            <Route path="/student/[classroom]/activity/AI/le-chat-mange-la" def={[pg6, , fb0, , NotFound0]} context={context}/>
+                            <Route path="/student/[classroom]/activity/AI/mycin" def={[pg7, , fb0, , NotFound0]} context={context}/>
                         </Route>
                     </Route>
                 </Route>

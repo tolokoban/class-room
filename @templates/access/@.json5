@@ -1,0 +1,6 @@
+{
+    name: "Access (Routes)",
+    params: {},
+    vars: {},
+    open: "access.tsx",
+}

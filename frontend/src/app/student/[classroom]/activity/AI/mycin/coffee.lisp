@@ -117,6 +117,10 @@
   ((panne-lait prise-air-ou-buse-sale) (mousseur-nettoye "non"))
   (solution "Accumulation de protéines de lait dans l'arrivée d'air. Démontez le tube à lait et l'embout de la buse, puis faites-les tremper dans un nettoyant pour circuits de lait pendant 15 minutes."))
 
+(def-rule solution-joint-buse
+  ((panne-lait prise-air-ou-buse-sale) (mousseur-nettoye "oui"))
+  (solution "Le mousseur est propre, c'est donc une prise d'air parasite. Remplacez le joint torique de la buse vapeur et vérifiez que le tube à lait est bien enfoncé. Utilisez aussi un lait bien froid (4 °C) pour une mousse plus stable."))
+
 (def-rule solution-chaudiere-vapeur
   ((panne-lait chaudiere-vapeur-ou-obstruction) (temperature-vapeur "froid"))
   (solution "Le fusible thermique de sécurité de la chaudière vapeur s'est déclenché. Contactez la maintenance pour réinitialiser le fusible thermique interne."))
@@ -136,6 +140,68 @@
 (def-rule solution-erreur-bac
   ((sous-systeme diagnostics-numeriques) (code-ecran "BAC-PLEIN"))
   (solution "Les contacts du bac d'égouttage sont humides ou encrassés de résidus de café. Retirez le bac et frottez les broches métalliques à l'arrière avec un chiffon microfibre sec."))
+
+;; ----------------------------------------------------------------------------
+;; SOUS-SYSTÈME 5 : PHÉNOMÈNES ÉTRANGES (Gremlin dans la machine)
+;; ----------------------------------------------------------------------------
+
+(def-rule symptome-comportement-etrange
+  ((symptome "comportement-etrange"))
+  (sous-systeme phenomenes-etranges))
+
+;; Une fumée anormale : son odeur permet de distinguer un Gremlin qui fume
+;; la pipe d'une surchauffe de la machine.
+(def-rule gremlin-fume-la-pipe
+  ((sous-systeme phenomenes-etranges) (manifestation "fumee-anormale") (odeur-fumee "tabac"))
+  (presence-gremlin certaine))
+
+(def-rule fumee-surchauffe
+  ((sous-systeme phenomenes-etranges) (manifestation "fumee-anormale") (odeur-fumee "brule"))
+  (panne-thermique surchauffe))
+
+;; Éternuer : seul un Gremlin fait ça.
+
+(def-rule gremlin-eternue
+  ((sous-systeme phenomenes-etranges) (manifestation "eternue"))
+  (presence-gremlin certaine))
+
+;; Un reniflement peut n'être qu'un grippage mécanique : test de la lampe torche.
+(def-rule gremlin-renifle-et-crie
+  ((sous-systeme phenomenes-etranges) (manifestation "renifle") (reaction-lampe-torche "cri-strident"))
+  (presence-gremlin certaine))
+
+(def-rule renifle-grippage
+  ((sous-systeme phenomenes-etranges) (manifestation "renifle") (reaction-lampe-torche "aucune"))
+  (panne-mecanique grippage))
+
+;; Solutions pour les Phénomènes Étranges
+(def-rule solution-gremlin
+  ((presence-gremlin certaine))
+  (solution "Un Gremlin a élu domicile dans la machine ! Ne le mouillez surtout pas et ne le nourrissez jamais après minuit. Attirez-le hors de la machine avec un sucre et une petite cuillère, puis relogez-le dans une boîte à chaussures confortable."))
+
+(def-rule solution-surchauffe
+  ((panne-thermique surchauffe))
+  (solution "DANGER : la machine surchauffe ! Débranchez-la immédiatement de la prise électrique et ne la rallumez pas. Laissez-la refroidir et contactez la maintenance avant toute nouvelle utilisation."))
+
+(def-rule solution-grippage
+  ((panne-mecanique grippage))
+  (solution "Fausse alerte : pas de Gremlin, simplement un grippage de la mécanique. Lubrifiez les joints du groupe infuseur avec de la graisse alimentaire silicone."))
+
+;; ----------------------------------------------------------------------------
+;; SOUS-SYSTÈME 6 : FARCES DE BUREAU (Fou rire après le café)
+;; ----------------------------------------------------------------------------
+
+(def-rule symptome-fou-rire
+  ((symptome "fou-rire"))
+  (sous-systeme farces-de-bureau))
+
+(def-rule solution-champignons
+  ((sous-systeme farces-de-bureau) (champignons-dans-bac-a-lait "oui"))
+  (solution "Votre collègue Peter a mis des champignons dans le compartiment à lait ! Videz et désinfectez le bac à lait, puis ayez une conversation sérieuse avec Peter (si vous arrivez à arrêter de rire)."))
+
+(def-rule solution-bonne-humeur
+  ((sous-systeme farces-de-bureau) (champignons-dans-bac-a-lait "non"))
+  (solution "Aucun champignon dans le bac à lait : Peter est innocent, pour cette fois. Votre fou rire vient sans doute de votre excellente humeur naturelle. Aucune réparation nécessaire !"))
 
 ;;; --- 3. Moteur d'Inférence par Chaînage Arrière ---
 
@@ -157,29 +223,53 @@
           (push (second premise) valeurs))))
     (reverse valeurs)))
 
+(defun choose (question options)
+  "Affiche les OPTIONS, liste de paires (valeur libellé), numérotées à partir de 1,
+   et renvoie la valeur choisie. L'utilisateur tape un numéro (ou la valeur elle-même)."
+  (loop
+    (format t "~%[?] ~A~%" question)
+    (let ((i 0))
+      (dolist (o options)
+        (incf i)
+        (format t "  ~D. ~A~%" i (second o))))
+    (format t "Votre choix (1-~D) : " (length options))
+    (force-output)
+    (let ((reponse (string-trim " " (read-line)))
+          (i 0))
+      (dolist (o options)
+        (incf i)
+        (when (or (string= reponse (format nil "~D" i))
+                  (string-equal reponse (first o)))
+          (return-from choose (first o))))
+      (format t "~%Réponse invalide : tapez un numéro entre 1 et ~D.~%" (length options)))))
+
+(defvar *questions*
+  '(("manifestation"
+     . "Quel comportement étrange la machine a-t-elle ?")
+    ("odeur-fumee"
+     . "Sentez la fumée qui sort de la machine. Quelle odeur a-t-elle ?")
+    ("reaction-lampe-torche"
+     . "Ouvrez la machine et éclairez l'intérieur avec une lampe torche. Que se passe-t-il ?")
+    ("champignons-dans-bac-a-lait"
+     . "Ouvrez le compartiment à lait. Y voyez-vous des champignons ?"))
+  "Questions personnalisées pour certains attributs (sinon, question générique).")
+
+(defun question-for (attribut)
+  "Texte de la question à poser pour cet attribut."
+  (let ((q (assoc (symbol-name attribut) *questions* :test #'string-equal)))
+    (if q
+        (cdr q)
+        (format nil "Veuillez préciser l'état pour '~(~A~)' :" attribut))))
+
 (defun ask-user (attribut)
   "Interroge interactivement l'utilisateur pour un attribut manquant.
-   Tapez ? pour afficher la liste des réponses possibles."
-  (let ((valeurs (possible-values attribut)))
-    (loop
-      (format t "~%[?] Veuillez préciser l'état pour '~(~A~)'" attribut)
-      (when valeurs
-        (format t " (")
-        (dolist (v valeurs)
-          (format t "~A / " v))
-        (format t "autre, ? pour l'aide)"))
-      (format t " : ")
-      (force-output)
-      (let ((val (string-downcase (string-trim " " (read-line)))))
-        (if (string= val "?")
-            (progn
-              (format t "~%Réponses possibles pour '~(~A~)' :~%" attribut)
-              (dolist (v valeurs)
-                (format t "  - ~A~%" v))
-              (format t "  (toute autre réponse signifie qu'aucun de ces cas ne s'applique)~%"))
-            (progn
-              (set-fact attribut val)
-              (return val)))))))
+   Les réponses proposées sont celles attendues par les règles, plus « autre »."
+  (let ((val (choose (question-for attribut)
+                     (append (mapcar #'(lambda (v) (list v v))
+                                     (possible-values attribut))
+                             '(("autre" "autre (aucun de ces cas)"))))))
+    (set-fact attribut val)
+    val))
 
 (defun derivable-p (attribut)
   "Vrai si une règle conclut sur cet attribut : on ne le demande alors pas à l'utilisateur."
@@ -223,15 +313,14 @@
   (format t "~%========================================================~%")
   (format t "    SYSTÈME EXPERT - MACHINE À CAFÉ & ESPRESSO COMMERCIALE ~%")
   (format t "========================================================~%")
-  (format t "Veuillez sélectionner le symptôme principal observé :~%")
-  (format t "  1. pas-de-cafe          (Pas de liquide / Problème de pompe)~%")
-  (format t "  2. mauvaise-qualite     (Goût / Vitesse d'écoulement / Moulin)~%")
-  (format t "  3. probleme-lait        (Buse vapeur / Problème de mousse)~%")
-  (format t "  4. code-erreur          (Code d'erreur affiché à l'écran)~%")
-  (format t "~%Entrez le code du symptôme (pas-de-cafe / mauvaise-qualite / probleme-lait / code-erreur) : ")
-  (force-output)
-  
-  (set-fact 'symptome (read-line))
+  (set-fact 'symptome
+            (choose "Veuillez sélectionner le symptôme principal observé :"
+                    '(("pas-de-cafe"      "Pas de café (pas de liquide / problème de pompe)")
+                      ("mauvaise-qualite" "Mauvaise qualité (goût / vitesse d'écoulement / moulin)")
+                      ("probleme-lait"    "Problème de lait (buse vapeur / problème de mousse)")
+                      ("code-erreur"      "Code d'erreur affiché à l'écran")
+                      ("comportement-etrange" "Comportement étrange (fumée anormale / éternuements / reniflements)")
+                      ("fou-rire"         "Fou rire incontrôlable après avoir bu le café"))))
 
   (let ((solution (backward-chain 'solution)))
     (format t "~%========================================================~%")

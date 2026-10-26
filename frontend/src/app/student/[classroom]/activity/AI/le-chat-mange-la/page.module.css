@@ -1,0 +1,128 @@
+main.console {
+    font-family: monospace;
+    font-size: 2.5vh;
+    padding: 1em;
+    border-radius: 0.5em;
+    background-color: #000;
+    color: #f80;
+    width: 48em;
+    max-width: calc(100vw - 2rem);
+    height: 30em;
+    max-height: calc(100vh - 2rem);
+    overflow: auto;
+    display: flex;
+    flex-direction: column;
+    gap: 0.75em;
+
+    >input {
+        font: inherit;
+        background: none;
+        border: none;
+        outline: none;
+        padding: 0.125em 0.5em;
+        color: #0c0;
+        background-color: #0c02;
+        border: 1px solid #0c06;
+        border-radius: 0.125em;
+        caret-shape: block;
+        caret-color: currentColor;
+    }
+
+    >div.buttons>button {
+        align-self: flex-start;
+        font: inherit;
+        background: #f80;
+        color: #000;
+        font-weight: bold;
+        border: none;
+        padding: 0.5em 1em;
+        border-radius: 0.25em;
+        cursor: pointer;
+
+        &:disabled {
+            opacity: 0.4;
+            cursor: default;
+        }
+    }
+
+    footer {
+        display: flex;
+        flex-wrap: wrap;
+        flex-direction: row;
+        justify-content: space-around;
+        align-items: center;
+        gap: 0 1em;
+        opacity: .666;
+        margin: 1em 0;
+    }
+}
+
+.temperature {
+    display: flex;
+    align-items: center;
+    gap: 1em;
+
+    >input {
+        flex: 1;
+        accent-color: #f80;
+    }
+
+    >span:last-child {
+        min-width: 4ch;
+        text-align: right;
+    }
+}
+
+.bars {
+    display: grid;
+    grid-template-columns: auto 1fr auto;
+    align-items: center;
+    gap: 0.25em 1em;
+}
+
+.word {
+    font: inherit;
+    background: none;
+    border: none;
+    padding: 0;
+    color: #0c0;
+    text-align: right;
+    cursor: pointer;
+
+    &:hover:enabled {
+        text-decoration: underline;
+    }
+
+    &:disabled {
+        cursor: default;
+    }
+}
+
+.bar {
+    height: 1em;
+    background-color: #f802;
+    border-radius: 0.125em;
+
+    >div {
+        height: 100%;
+        background-color: #f80;
+        border-radius: 0.125em;
+        transition: width 0.2s;
+    }
+}
+
+.percent {
+    min-width: 7ch;
+    text-align: right;
+}
+
+.info {
+    margin: 0;
+    color: #888;
+    font-style: italic;
+}
+
+.error {
+    margin: 0;
+    color: #f44;
+}

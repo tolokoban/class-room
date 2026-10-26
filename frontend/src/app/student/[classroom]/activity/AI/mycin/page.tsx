@@ -64,7 +64,7 @@ export default function Page() {
               expert.restart();
             }}
           >
-            Nouvelle consultation
+            Nouveau diagnostic
           </button>
         )}
       </main>

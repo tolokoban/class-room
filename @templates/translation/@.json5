@@ -1,0 +1,4 @@
+{
+    name: "Translation",
+    open: "translation/translation.en.ts",
+}

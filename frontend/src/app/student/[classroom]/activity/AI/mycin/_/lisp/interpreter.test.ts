@@ -82,4 +82,43 @@ describe("Lisp interpreter", () => {
     expect(output).toContain("Veuillez préciser l'état pour 'son-pompe'");
     expect(output).toContain("Remplissez le réservoir d'eau principal");
   });
+  async function runCoffee(answers: string[]) {
+    const source = FS.readFileSync(Path.resolve(__dirname, "../../coffee.lisp"), "utf-8");
+    const { interp, getOutput } = makeInterpreter(answers);
+    await interp.run(source);
+    await interp.run("(diagnostiquer-machine-cafe)");
+    return getOutput();
+  }
+
+  it("should find the Gremlin", async () => {
+    const smoke = await runCoffee(["comportement-etrange", "fumee-anormale", "tabac"]);
+    expect(smoke).toContain("Quelle odeur a-t-elle ?");
+    expect(smoke).toContain("Un Gremlin");
+    expect(await runCoffee(["comportement-etrange", "eternue"])).toContain("Un Gremlin");
+    const output = await runCoffee(["comportement-etrange", "renifle", "cri-strident"]);
+    expect(output).toContain("lampe torche");
+    expect(output).toContain("Un Gremlin");
+    expect(await runCoffee(["comportement-etrange", "renifle", "aucune"])).toContain("grippage");
+  });
+
+  it("should detect overheating", async () => {
+    expect(await runCoffee(["comportement-etrange", "fumee-anormale", "brule"])).toContain(
+      "Débranchez-la immédiatement",
+    );
+  });
+
+  it("should handle a clean milk frother", async () => {
+    const output = await runCoffee(["probleme-lait", "gicle-sans-mousse", "oui"]);
+    expect(output).toContain("joint torique");
+    expect(await runCoffee(["probleme-lait", "gicle-sans-mousse", "non"])).toContain(
+      "protéines de lait",
+    );
+  });
+
+  it("should blame Peter", async () => {
+    const output = await runCoffee(["fou-rire", "oui"]);
+    expect(output).toContain("Y voyez-vous des champignons ?");
+    expect(output).toContain("Peter a mis des champignons");
+    expect(await runCoffee(["fou-rire", "non"])).toContain("Peter est innocent");
+  });
 });
