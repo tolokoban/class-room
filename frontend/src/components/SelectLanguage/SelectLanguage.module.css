@@ -1,0 +1,65 @@
+.selectLanguage {
+    display: flex;
+    flex-wrap: wrap;
+    flex-direction: row;
+    justify-content: flex-start;
+    align-items: center;
+    gap: 0.5em;
+
+    >button {
+        transform: scale(1);
+        transition: all 0.3s;
+
+        &[disabled] {
+            box-shadow: 0 0 0.25em 0.25em var(--theme-color-primary-7);
+            transform: scale(0.8);
+        }
+    }
+}
+
+.icon {
+    display: inline-block;
+    border: none;
+    box-shadow: none;
+    border-radius: 50%;
+    background-position: center;
+    background-size: cover;
+    aspect-ratio: 1/1;
+    width: 2em;
+    height: 2em;
+    max-height: 100%;
+    cursor: pointer;
+    box-shadow: 0 0 0.25em 0.25em transparent;
+}
+
+.fr {
+    background-image: url(./fr.webp);
+}
+
+.en {
+    background-image: url(./en.webp);
+}
+
+.de {
+    background-image: url(./de.webp);
+}
+
+.it {
+    background-image: url(./it.webp);
+}
+
+button.modalButton {
+    display: grid;
+    grid-template-columns: auto 1fr;
+    gap: 1em;
+    place-items: center;
+}
+
+.column {
+    display: flex;
+    flex-wrap: nowrap;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: stretch;
+    gap: 0;
+}

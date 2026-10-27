@@ -1,0 +1,34 @@
+.quizView {
+    position: absolute;
+    inset: 0;
+    display: grid;
+    grid-template-rows: auto 1fr 1fr;
+}
+
+.quizView > header {
+    display: flex;
+    align-items: center;
+    gap: 0.5em;
+    padding: 0.5em 1em;
+    background: var(--theme-color-primary-5);
+    color: var(--theme-color-on-primary-5);
+}
+
+.quizView > header > h1 {
+    flex: 1;
+    margin: 0;
+    font-size: 1.25em;
+}
+
+.question {
+    overflow: auto;
+    padding: 1em;
+    background: var(--theme-color-neutral-6);
+    color: var(--theme-color-on-neutral-6);
+}
+
+.choices {
+    overflow: auto;
+    background: var(--theme-color-neutral-4);
+    color: var(--theme-color-on-neutral-4);
+}

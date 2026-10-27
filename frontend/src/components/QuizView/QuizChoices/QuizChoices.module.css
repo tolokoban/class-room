@@ -1,0 +1,27 @@
+.quizChoices {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-around;
+    align-items: center;
+    gap: 1em;
+    padding: 1em;
+}
+
+.quizChoices>button {
+    font: inherit;
+    color: var(--theme-color-on-neutral-5);
+    background: var(--theme-color-neutral-5);
+    border: none;
+    padding: 0.5em;
+    border-radius: 0.5em;
+    cursor: pointer;
+    transition: all 0.2s;
+    box-shadow: 0 .125em .25em var(--theme-color-neutral-1);
+}
+
+.quizChoices>button.selected {
+    box-shadow: 0 0 1em .25em var(--theme-color-secondary-5);
+    color: var(--theme-color-on-secondary-7);
+    background: var(--theme-color-secondary-7);
+    transform: scale(1.1);
+}

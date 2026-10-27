@@ -1,0 +1,9 @@
+.activityDescription {
+    margin: 0.25em 0;
+}
+
+.activityDescription > summary {
+    cursor: pointer;
+    font-size: 0.9em;
+    opacity: 0.8;
+}

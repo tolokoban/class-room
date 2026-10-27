@@ -16,10 +16,12 @@
         "build-react-routes": "^0.12.4",
         "json5": "^2.2.3",
         "react": "^19.3.1",
-        "react-dom": "^19.3.1"
+        "react-dom": "^19.3.1",
+        "react-markdown": "^10.1.0"
     },
     "scripts": {
-        "generate": "npm run routes",
+        "activities": "node ../scripts/activities.mts",
+        "generate": "npm run activities && npm run routes",
         "routes": "build-react-routes ./src/app",
         "analyse": "webpack --profile --json > stats.json",
         "start": "rspack serve --mode=development",
