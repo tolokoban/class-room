@@ -11,6 +11,9 @@ importers:
       '@huggingface/transformers':
         specifier: ^4.3.1
         version: 4.3.1(@types/node@26.4.1)
+      '@tanstack/react-query':
+        specifier: ^5.105.0
+        version: 5.105.0(@types/react@19.3.0)(react@19.3.1)
       '@tolokoban/react-state':
         specifier: ^0.9.0
         version: 0.9.0(react-dom@19.3.1(react@19.3.1))(react@19.3.1)
@@ -1633,6 +1636,18 @@ packages:
   '@sindresorhus/is@4.6.0':
     resolution: {integrity: sha512-t09vSN3MdfsyCHoFcTRCH/iUtG7OJ0CsjzB8cjAmKc/va/kIgeDI/TxsigdncE/4be734m0cvIYwNaV4i2XqAw==}
     engines: {node: '>=10'}
+
+  '@tanstack/query-core@5.105.0':
+    resolution: {integrity: sha512-7p56vRmT/z4UJ6sctGIdl5WRUQyUv53IUpUwEKi2g97zMbO7zh8ZsCLffGAvCPBR4xD72e3VXsDyLwXHhoNTMQ==}
+
+  '@tanstack/react-query@5.105.0':
+    resolution: {integrity: sha512-y+hMuDERvgg6ay1da0V1a6ZC0ZONt7dELxSFkqRZuwm7p1TTZs0MoXrPlBRflIpRoYjvzQVYxycnLImpFLhWrw==}
+    peerDependencies:
+      '@types/react': ^18 || ^19
+      react: ^18 || ^19
+    peerDependenciesMeta:
+      '@types/react':
+        optional: true
 
   '@tolokoban/react-state@0.9.0':
     resolution: {integrity: sha512-u56vfI4T93dg2h4iFghLemxMhurgc98tsx3B6kLU+mnsEE9iY6MPjiSH5IfS9VvOwTbJr2xuLtkSWy6jNE14Ow==}
@@ -5394,6 +5409,15 @@ snapshots:
       '@rspack/dev-middleware': 2.0.5(@rspack/core@2.2.9)
 
   '@sindresorhus/is@4.6.0': {}
+
+  '@tanstack/query-core@5.105.0': {}
+
+  '@tanstack/react-query@5.105.0(@types/react@19.3.0)(react@19.3.1)':
+    dependencies:
+      '@tanstack/query-core': 5.105.0
+      react: 19.3.1
+    optionalDependencies:
+      '@types/react': 19.3.0
 
   '@tolokoban/react-state@0.9.0(react-dom@19.3.1(react@19.3.1))(react@19.3.1)':
     dependencies:

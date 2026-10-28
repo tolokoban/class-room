@@ -14,6 +14,7 @@ import { GenerateSW } from "workbox-webpack-plugin"
 import path from "path"
 
 const __dirname = path.dirname(new URL(import.meta.url).pathname)
+const OUTPUT_DIR = Path.resolve(__dirname, "../backend/www")
 
 export default (env) => {
     if (typeof Package.port !== "number") {
@@ -41,7 +42,8 @@ export default (env) => {
         // },
         output: {
             filename: "scr/[name].[contenthash].js",
-            path: Path.resolve(__dirname, "build"),
+            // Served by the Apache container (see backend/docker-compose.yaml).
+            path: OUTPUT_DIR,
             devtoolModuleFilenameTemplate: "[absolute-resource-path]",
         },
         watchOptions: {
@@ -51,6 +53,9 @@ export default (env) => {
             app: "./src/index.tsx",
         },
         target: "web",
+        // Rspack v2's `serve` enables lazy compilation by default, but the app
+        // is served by Apache, which can't answer `/_rspack/lazy/trigger`.
+        lazyCompilation: false,
         resolve: {
             extensions: [".tsx", ".ts", ".js", ".jsx", ".wasm"],
             enforceExtension: false,
@@ -70,12 +75,18 @@ export default (env) => {
                 overlay: { errors: false, warnings: false },
                 progress: true,
             },
-            hot: true,
-            // Open WebBrowser.
-            open: true,
+            hot: false,
+            liveReload: false,
+            // Don't open a browser: the app must be used through Apache
+            // (see `npm run backend`), which serves both the build and the API.
+            open: false,
             host: "0.0.0.0",
             port: env.PORT || Package.port,
             server: "http",
+            // Write the files in OUTPUT_DIR for the Apache container to serve them.
+            devMiddleware: {
+                writeToDisk: true,
+            },
         },
         stats: {
             children: true,
@@ -103,6 +114,11 @@ export default (env) => {
                 // We don't want to remove the "index.html" file
                 // after the incremental build triggered by watch.
                 cleanStaleWebpackAssets: false,
+                // OUTPUT_DIR also holds the PHP backend: never delete it.
+                cleanOnceBeforeBuildPatterns: ["**/*", "!api", "!api/**"],
+                // OUTPUT_DIR is outside of `frontend/`.
+                dangerouslyAllowCleanPatternsOutsideProject: true,
+                dry: false,
             }),
             new Rspack.CopyRspackPlugin({
                 patterns: [

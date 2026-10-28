@@ -1,0 +1,8 @@
+.teacherOnly {
+    position: absolute;
+    inset: 0;
+    display: grid;
+    place-items: center;
+    padding: 2em;
+    overflow: auto;
+}

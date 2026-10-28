@@ -1,0 +1,72 @@
+.page {
+    position: absolute;
+    inset: 0;
+    display: grid;
+    grid-template-rows: auto 1fr auto;
+
+    >header {
+        padding: .5em 1em;
+        background: var(--theme-color-primary-5);
+        color: var(--theme-color-on-primary-5);
+
+        >h1 {
+            margin: 0;
+            font-size: 1.25em;
+        }
+    }
+
+    >main {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 1em;
+        padding: 1em;
+        min-height: 0;
+        background: var(--theme-color-primary-3);
+        color: var(--theme-color-on-primary-3);
+
+        >* {
+            min-height: 0;
+            overflow: auto;
+            padding: .5em;
+            border-radius: .25em;
+            background: var(--theme-color-neutral-9);
+            color: var(--theme-color-on-neutral-9);
+        }
+
+        >textarea {
+            font-family: monospace;
+            font-size: .8em;
+            border: none;
+            resize: none;
+        }
+
+        /* Explicitly requested: the preview is always white on black. */
+        >.preview {
+            background: #000;
+            color: #ddd;
+
+            a {
+                color: var(--theme-color-primary-light);
+            }
+        }
+    }
+
+    >footer {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        gap: 1em;
+        padding: .5em 1em;
+        background: var(--theme-color-primary-2);
+        color: var(--theme-color-on-primary-2);
+
+        /* The button stays on the right, even without a message. */
+        >:last-child {
+            margin-left: auto;
+        }
+    }
+}
+
+.error {
+    color: var(--theme-color-error-7);
+}

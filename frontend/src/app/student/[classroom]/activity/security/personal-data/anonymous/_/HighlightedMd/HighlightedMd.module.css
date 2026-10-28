@@ -1,0 +1,26 @@
+.highlightedMd {
+    mark {
+        position: relative;
+        padding: 0 .125em;
+        border-radius: .25em;
+        cursor: help;
+
+        &:hover::after {
+            content: attr(data-category);
+            position: absolute;
+            left: 0;
+            bottom: 100%;
+            z-index: 1;
+            margin-bottom: .25em;
+            padding: .125em .5em;
+            border-radius: .25em;
+            white-space: nowrap;
+            font-size: .8em;
+            font-weight: normal;
+            font-style: normal;
+            pointer-events: none;
+            background: var(--theme-color-neutral-9);
+            color: var(--theme-color-on-neutral-9);
+        }
+    }
+}

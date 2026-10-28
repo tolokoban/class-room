@@ -6,7 +6,7 @@ type Activity = [name: string, children?: Activity[]];
 
 export const ACTIVITIES: Activity[] = [
   ["AI", [["eliza"], ["le-chat-mange-la"], ["mycin"]]],
-  ["security", [["personal-data", [["RGPD"]]]]],
+  ["security", [["personal-data", [["AI-Act"], ["anonymous"], ["RGPD"]]]]],
 ];
 
 export const INFOS: Record<
@@ -27,6 +27,10 @@ export const INFOS: Record<
   },
   "AI/mycin": {
     title: "Systèmes experts",
+  },
+  "security/personal-data/AI-Act": {},
+  "security/personal-data/anonymous": {
+    title: "Anonymisation de documents",
   },
   "security/personal-data/RGPD": {},
 };

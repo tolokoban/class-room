@@ -1,1 +1,5 @@
 .DS_Store
+
+# Frontend build output (see frontend/rspack.config.js), except the PHP backend.
+/backend/www/*
+!/backend/www/api/

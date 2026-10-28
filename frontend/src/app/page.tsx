@@ -1,13 +1,14 @@
-import { ActivitiesList } from "@/components/ActivitiesList";
+import { isString } from "@tolokoban/type-guards";
 
-import styles from "./page.module.css";
-import SelectLanguage from "@/components/SelectLanguage";
+import { isTeacher, State } from "@/state";
+
+import { StudentHome } from "./_/StudentHome";
+import { TeacherHome } from "./_/TeacherHome";
 
 export default function Page() {
-  return (
-    <div className={styles.main}>
-      <SelectLanguage />
-      <ActivitiesList />
-    </div>
-  );
+  const user = State.user.useValue();
+
+  if (isTeacher(user)) return <TeacherHome />;
+  if (isString(user)) return <StudentHome user={user} />;
+  return null;
 }

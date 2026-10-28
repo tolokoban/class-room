@@ -1,0 +1,19 @@
+.page {
+    position: absolute;
+    inset: 0;
+    padding: 2em;
+    overflow: auto;
+
+    >section {
+        width: min(40em, 100%);
+        margin: 0 auto;
+        border-radius: .25em;
+        overflow: hidden;
+
+        >nav {
+            background: var(--theme-color-primary-3);
+            color: var(--theme-color-on-primary-3);
+            padding: .5em;
+        }
+    }
+}

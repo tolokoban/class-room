@@ -1,0 +1,5 @@
+.risk {
+	> div:last-child {
+		font-style: italic;
+	}
+}

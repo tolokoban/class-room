@@ -1,0 +1,12 @@
+.studentHome {
+    position: absolute;
+    inset: 0;
+    display: grid;
+    place-items: center;
+    padding: 2em;
+    overflow: auto;
+
+    h1 {
+        margin: 0 0 .5em;
+    }
+}
