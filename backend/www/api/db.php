@@ -116,6 +116,64 @@ class Database
         }
     }
 
+    /**
+     * Create the tables (`structure.sql`) and fill them (`data.sql`)
+     * if they do not exist yet in the database.
+     *
+     * The SQL files use the `classroom_` prefix, which is replaced by
+     * the one defined in `env.php`.
+     */
+    public function ensureStructure(string $sqlDir): void
+    {
+        if ($this->hasTable("user")) {
+            return;
+        }
+
+        // Prevent two simultaneous requests from creating the tables twice.
+        $lockName = $this->table("structure");
+        $this->query("SELECT GET_LOCK(?, 30)", $lockName);
+        try {
+            if ($this->hasTable("user")) {
+                return;
+            }
+            error_log("[Database] Creating the database structure...");
+            foreach (["structure.sql", "data.sql"] as $filename) {
+                $this->executeFile("{$sqlDir}/{$filename}");
+            }
+        } finally {
+            $this->query("SELECT RELEASE_LOCK(?)", $lockName);
+        }
+    }
+
+    private function hasTable(string $name): bool
+    {
+        $stmt = $this->query(
+            "SELECT COUNT(*) FROM information_schema.tables WHERE table_schema = DATABASE() AND table_name = ?",
+            $this->table($name)
+        );
+        return $stmt !== false && (int) $stmt->fetchColumn() > 0;
+    }
+
+    /**
+     * Execute every statement of a SQL file, one by one.
+     * Statements are expected to end with a `;` at the end of a line.
+     */
+    private function executeFile(string $path): void
+    {
+        $sql = file_get_contents($path);
+        if ($sql === false) {
+            throw new Exception("Unable to read SQL file: {$path}");
+        }
+        // Remove comment lines.
+        $sql = preg_replace('/^\s*--.*$/m', "", $sql);
+        $sql = str_replace("`classroom_", "`" . $this->table(""), $sql);
+        foreach (preg_split('/;\s*$/m', $sql) as $statement) {
+            if (trim($statement) !== "") {
+                $this->query($statement);
+            }
+        }
+    }
+
     private function logException(PDOException $exception): void
     {
         if ($this->debug) {
@@ -128,5 +186,7 @@ class Database
 if (!isset($GLOBALS["DB"])) {
     global $DB_HOST, $DB_NAME, $DB_USER, $DB_PWRD, $DB_DBUG;
     $GLOBALS["DB"] = new Database($DB_HOST, $DB_NAME, $DB_USER, $DB_PWRD, $DB_DBUG ?? false);
+    // Copies of `backend/database/sql/*.sql` (see docker-compose.yaml and scripts/deploy.mjs).
+    $GLOBALS["DB"]->ensureStructure(__DIR__ . "/sql");
 }
 $DB = $GLOBALS["DB"];

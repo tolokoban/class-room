@@ -12,6 +12,10 @@ const EN: typeof FR = {
   all20101: "Invalid input.",
   all20102: "This code is already used by another class room.",
   all20103: "Database error while creating the class room.",
+  all20401: "Invalid input.",
+  all20402: "This class room does not exist.",
+  all20403: "You are not the owner of this class room.",
+  all20404: "Database error while deleting the class room.",
 
   // activity/result-set
   all30101: "Invalid input.",
@@ -33,6 +37,12 @@ const EN: typeof FR = {
   // activity/current
   all30401: "Invalid input.",
   all30402: "This class room does not exist.",
+
+  // activity/current-set
+  all30501: "Invalid input.",
+  all30502: "This class room does not exist.",
+  all30503: "You are not the owner of this class room.",
+  all30504: "Database error while setting the current activity.",
 };
 
 export default EN;

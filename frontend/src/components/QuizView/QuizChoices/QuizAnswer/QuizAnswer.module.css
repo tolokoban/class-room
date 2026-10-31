@@ -1,0 +1,20 @@
+div.quizAnswer {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1em;
+    padding: 1em;
+
+    /* Let the parent scroll instead of squashing the children (the button would get a height of 0). */
+    >* {
+        flex-shrink: 0;
+    }
+
+    >div {
+
+        a,
+        a:visited {
+            color: var(--theme-color-secondary-3);
+        }
+    }
+}

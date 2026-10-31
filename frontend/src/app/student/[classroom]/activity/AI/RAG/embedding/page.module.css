@@ -1,0 +1,59 @@
+.page {
+  position: absolute;
+  inset: 0;
+  display: grid;
+  grid-template-rows: auto 1fr auto;
+
+  > header {
+    padding: 0.5em 1em;
+    background: var(--theme-color-primary-5);
+    color: var(--theme-color-on-primary-5);
+
+    > h1 {
+      margin: 0;
+      font-size: 1.25em;
+    }
+  }
+
+  > main {
+    display: flex;
+    flex-direction: column;
+    gap: 1em;
+    padding: 1em;
+    min-height: 0;
+    background: var(--theme-color-primary-3);
+    color: var(--theme-color-on-primary-3);
+
+    > p {
+      margin: 0;
+    }
+
+    > div {
+      flex: 1;
+      min-height: 0;
+    }
+
+    > input {
+      font: inherit;
+      padding: 0.5em;
+      border: none;
+      border-radius: 0.25em;
+      background: var(--theme-color-neutral-9);
+      color: var(--theme-color-on-neutral-9);
+    }
+  }
+
+  > footer {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 1em;
+    padding: 0.5em 1em;
+    background: var(--theme-color-primary-2);
+    color: var(--theme-color-on-primary-2);
+  }
+}
+
+.error {
+  color: var(--theme-color-error-7);
+}

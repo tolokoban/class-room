@@ -3,10 +3,15 @@
     "version": "0.1.0",
     "private": true,
     "scripts": {
+        "start": "npm run backend",
         "backend": "node scripts/backend.mjs",
         "db-reset": "node scripts/db-reset.mjs",
         "db-graph": "node scripts/db-graph.mjs",
         "activities": "node scripts/activities.mts",
+        "deploy": "node scripts/deploy.mjs",
         "hash-password": "docker run --rm php:8.5-cli php -r 'echo password_hash($argv[1], PASSWORD_DEFAULT), PHP_EOL;'"
+    },
+    "devDependencies": {
+        "ssh2-sftp-client": "^12.1.1"
     }
 }

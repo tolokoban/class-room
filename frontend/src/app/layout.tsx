@@ -1,9 +1,12 @@
-import { State } from "@/state";
+import { IconHome, ViewFloatingButton } from "@tolokoban/ui";
+import { isString } from "@tolokoban/type-guards";
 
-import Styles from "./layout.module.css";
+import { isTeacher, State } from "@/state";
 import SelectLanguage from "@/components/SelectLanguage";
 import { Login } from "@/components/Login";
-import { isString } from "@tolokoban/type-guards";
+
+import Styles from "./layout.module.css";
+import { makeGoto } from "./routes";
 
 export default function Layout({ children }: { children: React.ReactNode }) {
   const user = State.user.useValue();
@@ -11,7 +14,12 @@ export default function Layout({ children }: { children: React.ReactNode }) {
   return (
     <div className={Styles.layout}>
       <header>
-        <div>Class Room</div>
+        <div>
+          {isTeacher(user) && (
+            <ViewFloatingButton size="S" icon={IconHome} onClick={makeGoto("/")} />
+          )}
+          <div className={Styles.light}>Class Room</div>
+        </div>
         <div>{user && (isString(user) ? user : user.name)}</div>
         <SelectLanguage />
       </header>

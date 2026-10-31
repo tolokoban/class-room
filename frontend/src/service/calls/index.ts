@@ -5,7 +5,7 @@ import {
   activityResultAll,
   activityResultSet,
 } from "./activity";
-import { classAdd, classList } from "./class";
+import { classAdd, classDelete, classList } from "./class";
 import { userLogin, userLogout } from "./user";
 
 export const API = {
@@ -18,6 +18,7 @@ export const API = {
   },
   class: {
     add: classAdd,
+    delete: classDelete,
     list: classList,
   },
   user: {

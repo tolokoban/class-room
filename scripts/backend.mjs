@@ -2,20 +2,20 @@
  * Start the backend (Apache + PHP, MariaDB and phpMyAdmin) in Docker:
  *
  * 1. Turn down any instance already running.
- * 2. Pick a random free port for the webserver.
- * 3. Start `docker compose up --build` with this port.
- * 4. Open a browser on it as soon as the webserver answers.
+ * 2. Start `docker compose up --build` on a fixed port (WEB_PORT).
+ * 3. Open a browser on it as soon as the webserver answers.
  */
 import { spawn, spawnSync } from "node:child_process"
-import { createServer } from "node:net"
 import { dirname, resolve } from "node:path"
 import { fileURLToPath } from "node:url"
 
 const BACKEND = resolve(dirname(fileURLToPath(import.meta.url)), "../backend")
+// Must match the default of WEB_PORT in backend/docker-compose.yaml
+const WEB_PORT = 47813
 
 spawnSync("docker", ["compose", "down"], { cwd: BACKEND, stdio: "inherit" })
 
-const port = await findFreePort()
+const port = WEB_PORT
 const url = `http://localhost:${port}`
 console.log(`Webserver:  ${url}/`)
 console.log(`phpMyAdmin: ${url}/phpMyAdmin/`)
@@ -34,21 +34,6 @@ console.log(`Opening ${url}/ ...`)
 openBrowser(`${url}/`)
 
 // ----------------------------------------------------------------------------
-
-/**
- * Let the OS give us a random free port.
- */
-function findFreePort() {
-    return new Promise((resolvePort, reject) => {
-        const server = createServer()
-        server.unref()
-        server.on("error", reject)
-        server.listen(0, () => {
-            const { port } = server.address()
-            server.close(() => resolvePort(port))
-        })
-    })
-}
 
 async function waitForServer(url) {
     for (;;) {

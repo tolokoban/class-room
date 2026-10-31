@@ -47,6 +47,25 @@ export async function classAdd(input: ClassAddInput): Promise<number> {
   return result;
 }
 
+export interface ClassDeleteInput {
+  /** Field `id` of table `class`. */
+  id: number;
+}
+
+/**
+ * Delete a class room owned by the current teacher,
+ * with all the results of its activities.
+ */
+export async function classDelete(input: ClassDeleteInput): Promise<void> {
+  const result = await api("class/delete", input);
+  throwIfError(result, {
+    [ApiError.CLASS_DELETE_INVALID_INPUT]: "Invalid input.",
+    [ApiError.CLASS_DELETE_NOT_FOUND]: `There is no class room with ID #${input.id}.`,
+    [ApiError.CLASS_DELETE_FORBIDDEN]: `You are not the owner of class room #${input.id}.`,
+    [ApiError.CLASS_DELETE_DATABASE_ERROR]: "Database error while deleting the class room.",
+  });
+}
+
 function isClassItemArray(data: unknown): data is ClassItem[] {
   return isType(data, [
     "array",

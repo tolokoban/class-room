@@ -1,7 +1,7 @@
 I need you to implement the backend (in folder `backend/`) for my project in docker.
 It will provide a Apache webserver, a MariaDB server (only visible by the Apache server, not outside Docker) and a PhpMyAdmin that we can reach at `http://localhost:{port}/phpMyAdmin`.
 
-The port must be a random (and free) one. At the root of this project, you will add a `package.json` file with an action `npm run backend` that will start the docker (after turning down any one already active), choose a random (and free) port and use it fir the webserver, and finally open a browser (the defaut one or Firefox) on this port.
+The port is fixed: 47813. At the root of this project, you will add a `package.json` file with an action `npm run backend` that will start the docker (after turning down any one already active), use port 47813 for the webserver, and finally open a browser (the defaut one or Firefox) on this port.
 
 Here is a description of the current file structure:
 

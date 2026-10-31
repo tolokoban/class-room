@@ -13,9 +13,14 @@ export type RoutePath =
     | "/student/[classroom]"
     | "/student/[classroom]/activity"
     | "/student/[classroom]/activity/AI"
+    | "/student/[classroom]/activity/AI/CRAFT"
+    | "/student/[classroom]/activity/AI/RAG"
+    | "/student/[classroom]/activity/AI/RAG/embedding"
     | "/student/[classroom]/activity/AI/eliza"
     | "/student/[classroom]/activity/AI/le-chat-mange-la"
     | "/student/[classroom]/activity/AI/mycin"
+    | "/student/[classroom]/activity/AI/types-ia-generatives"
+    | "/student/[classroom]/activity/AI/usage"
     | "/student/[classroom]/activity/security"
     | "/student/[classroom]/activity/security/personal-data"
     | "/student/[classroom]/activity/security/personal-data/AI-Act"
@@ -23,9 +28,11 @@ export type RoutePath =
     | "/student/[classroom]/activity/security/personal-data/anonymous"
     | "/teacher"
     | "/teacher/[classroom]"
+    | "/teacher/[classroom]/home"
+    | "/teacher/[classroom]/results"
 
 export function isRoutePath(path: string): path is RoutePath {
-    return ["/","/student","/student/[classroom]","/student/[classroom]/activity","/student/[classroom]/activity/AI","/student/[classroom]/activity/AI/eliza","/student/[classroom]/activity/AI/le-chat-mange-la","/student/[classroom]/activity/AI/mycin","/student/[classroom]/activity/security","/student/[classroom]/activity/security/personal-data","/student/[classroom]/activity/security/personal-data/AI-Act","/student/[classroom]/activity/security/personal-data/RGPD","/student/[classroom]/activity/security/personal-data/anonymous","/teacher","/teacher/[classroom]"].includes(path)
+    return ["/","/student","/student/[classroom]","/student/[classroom]/activity","/student/[classroom]/activity/AI","/student/[classroom]/activity/AI/CRAFT","/student/[classroom]/activity/AI/RAG","/student/[classroom]/activity/AI/RAG/embedding","/student/[classroom]/activity/AI/eliza","/student/[classroom]/activity/AI/le-chat-mange-la","/student/[classroom]/activity/AI/mycin","/student/[classroom]/activity/AI/types-ia-generatives","/student/[classroom]/activity/AI/usage","/student/[classroom]/activity/security","/student/[classroom]/activity/security/personal-data","/student/[classroom]/activity/security/personal-data/AI-Act","/student/[classroom]/activity/security/personal-data/RGPD","/student/[classroom]/activity/security/personal-data/anonymous","/teacher","/teacher/[classroom]","/teacher/[classroom]/home","/teacher/[classroom]/results"].includes(path)
 }
 
 export interface RouteMatch {

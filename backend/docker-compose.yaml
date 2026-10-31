@@ -1,5 +1,5 @@
 # Started by `npm run backend` (see scripts/backend.mjs at the root of the
-# project), which sets WEB_PORT to a random free port.
+# project), which uses WEB_PORT=47813.
 name: classroom
 
 services:
@@ -28,7 +28,7 @@ services:
     restart: unless-stopped
     environment:
       PMA_HOST: db
-      PMA_ABSOLUTE_URI: http://localhost:${WEB_PORT:-8080}/phpMyAdmin/
+      PMA_ABSOLUTE_URI: http://localhost:${WEB_PORT:-47813}/phpMyAdmin/
     depends_on:
       - db
     networks:
@@ -42,9 +42,11 @@ services:
     restart: unless-stopped
     volumes:
       - ./www:/var/www/html
+      # Used by api/db.php to create the tables if they do not exist.
+      - ./database/sql:/var/www/html/api/sql:ro
     ports:
       # The only port exposed by the whole stack.
-      - "${WEB_PORT:-8080}:80"
+      - "${WEB_PORT:-47813}:80"
     depends_on:
       - db
       - phpmyadmin

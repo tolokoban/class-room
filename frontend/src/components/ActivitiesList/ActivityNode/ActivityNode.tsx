@@ -3,7 +3,7 @@ import { Theme } from "@tolokoban/ui"
 
 import { ACTIVITIES, INFOS } from "../activities"
 import { ActivityDescription } from "./ActivityDescription"
-import { useActivityHref } from "./hooks"
+import { useActivityHref, useActivityMenu } from "./hooks"
 import Styles from "./ActivityNode.module.css"
 
 const $ = Theme.classNames
@@ -20,9 +20,16 @@ export function ActivityNode({ className, activity: [name, children], path }: Ac
     const info = INFOS[fullPath.join("/")] ?? {}
     const title = info.title ?? name
     const href = useActivityHref(fullPath)
+    const handleClick = useActivityMenu(fullPath, title)
     return (
         <li className={$.join(className, Styles.activityNode)}>
-            {children ? <strong>{title}</strong> : <a href={href}>{title}</a>}
+            {children ? (
+                <strong>{title}</strong>
+            ) : (
+                <a href={href} onClick={handleClick}>
+                    {title}
+                </a>
+            )}
             {info.description && <ActivityDescription markdown={info.description} />}
             {children && (
                 <ul>

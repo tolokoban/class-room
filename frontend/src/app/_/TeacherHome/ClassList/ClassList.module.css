@@ -10,6 +10,12 @@
         padding-left: 1.5em;
 
         >li {
+            display: flex;
+            flex-wrap: nowrap;
+            flex-direction: row;
+            justify-content: space-between;
+            align-items: center;
+            gap: 1em;
 
             >a,
             >a:visited {

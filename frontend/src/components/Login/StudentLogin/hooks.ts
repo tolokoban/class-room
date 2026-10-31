@@ -3,12 +3,14 @@ import React from "react";
 import { Notif } from "@/components/Notification";
 import { API } from "@/service/calls";
 import { ApiError } from "@/service/calls/service";
+import { useApiErrorTranslator } from "@/service/hooks/apiError";
 import { State } from "@/state";
 
 import { useTranslation } from "./translation";
 
 export function useStudentLogin() {
   const tr = useTranslation();
+  const translateError = useApiErrorTranslator();
   const [nickname, setNickname] = State.nickname.useState();
   const [classroom, setClassroom] = State.classroom.useState();
   const [isPending, setPending] = React.useState(false);
@@ -38,7 +40,7 @@ export function useStudentLogin() {
       if (error instanceof ApiError && error.code === ApiError.ACTIVITY_CURRENT_CLASS_NOT_FOUND) {
         Notif.error(tr.classroomNotFound);
         refClassroom.current?.focus();
-      } else Notif.error(error);
+      } else Notif.error(translateError(error));
     } finally {
       setPending(false);
     }

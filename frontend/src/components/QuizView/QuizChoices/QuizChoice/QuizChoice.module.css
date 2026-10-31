@@ -1,0 +1,39 @@
+.quizChoice {
+    position: relative;
+    transition: all 0.2s;
+
+    >.choice {
+        font: inherit;
+        color: var(--theme-color-on-neutral-5);
+        background: var(--theme-color-neutral-5);
+        border: none;
+        padding: 0.5em;
+        border-radius: 0.5em;
+        cursor: pointer;
+        transition: all 0.2s;
+        box-shadow: 0 .125em .25em var(--theme-color-neutral-1);
+    }
+
+    &.selected {
+        transform: scale(1.1);
+
+        >.choice {
+            box-shadow: 0 0 1em .25em var(--theme-color-secondary-5);
+            color: var(--theme-color-on-secondary-7);
+            background: var(--theme-color-secondary-7);
+        }
+    }
+
+    >.check {
+        position: absolute;
+        top: 0;
+        right: 0;
+        transform: translate(50%, -50%);
+        display: flex;
+
+        /* Prevent the button from moving when pressed. */
+        >button {
+            transform: none;
+        }
+    }
+}

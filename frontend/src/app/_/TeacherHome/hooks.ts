@@ -1,6 +1,7 @@
 import React from "react";
 
 import { Notif } from "@/components/Notification";
+import { useApiErrorTranslator } from "@/service/hooks/apiError";
 import { useServiceClassAdd } from "@/service/hooks/class";
 
 import { useTranslation } from "./translation";
@@ -8,6 +9,7 @@ import { useTranslation } from "./translation";
 export function useTeacherHome() {
   const tr = useTranslation();
   const service = useServiceClassAdd();
+  const translateError = useApiErrorTranslator();
   const [name, setName] = React.useState("");
   const refName = React.useRef<HTMLInputElement>(null);
   const add = () => {
@@ -26,7 +28,7 @@ export function useTeacherHome() {
         setName("");
         Notif.info(tr.created$(value));
       })
-      .catch(Notif.error);
+      .catch((error: unknown) => Notif.error(translateError(error)));
   };
 
   return {

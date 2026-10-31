@@ -127,3 +127,8 @@ progress[value]::-moz-progress-bar {
     border-radius: 0.5rem;
     box-shadow: 0 0 .5rem .5rem #ff8e;
 }
+
+a,
+a:visited {
+    color: var(--theme-color-secondary-5);
+}

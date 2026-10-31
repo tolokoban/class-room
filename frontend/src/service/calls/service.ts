@@ -56,6 +56,12 @@ export class ApiError extends Error {
   static CLASS_ADD_CODE_USED = -20102;
   static CLASS_ADD_DATABASE_ERROR = -20103;
 
+  // class/delete (02-04)
+  static CLASS_DELETE_INVALID_INPUT = -20401;
+  static CLASS_DELETE_NOT_FOUND = -20402;
+  static CLASS_DELETE_FORBIDDEN = -20403;
+  static CLASS_DELETE_DATABASE_ERROR = -20404;
+
   // activity/result-set (03-01)
   static ACTIVITY_RESULT_SET_INVALID_INPUT = -30101;
   static ACTIVITY_RESULT_SET_CLASS_NOT_FOUND = -30102;

@@ -1,0 +1,35 @@
+.resultsView {
+  position: absolute;
+  inset: 0;
+  display: grid;
+  grid-template-rows: auto 1fr;
+
+  > header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 0.5em;
+    padding: 0.5em 1em;
+    background: var(--theme-color-primary-5);
+    color: var(--theme-color-on-primary-5);
+
+    > h1 {
+      margin: 0;
+      font-size: 1.2em;
+    }
+  }
+
+  > main {
+    overflow: auto;
+    background: var(--theme-color-neutral-4);
+    color: var(--theme-color-on-neutral-4);
+
+    > .question {
+      padding: 1em;
+      background: var(--theme-color-neutral-6);
+      color: var(--theme-color-on-neutral-6);
+      display: grid;
+      place-items: center;
+    }
+  }
+}

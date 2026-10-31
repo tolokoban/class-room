@@ -1,0 +1,39 @@
+.resultsRow {
+  grid-column: 1 / -1;
+  display: grid;
+  grid-template-columns: subgrid;
+  align-items: center;
+  gap: 0.5em 1em;
+  padding: 0.5em;
+  border-radius: 0.25em;
+  background: var(--theme-color-primary-7);
+  color: var(--theme-color-on-primary-7);
+
+  &:nth-child(even) {
+    background: var(--theme-color-neutral-8);
+    color: var(--theme-color-on-neutral-8);
+  }
+
+  /*
+   * ViewFloatingButton uses `all: inherit`: any `min-width`, `min-height`, ...
+   * defined here would be inherited by the button and turn the disk into an ellipse.
+   */
+  > .check {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+
+  > strong {
+    font-size: 200%;
+    text-align: right;
+  }
+
+  > .answer {
+    grid-column: 2 / -1;
+    padding: 0.5em;
+    border-radius: 0.25em;
+    background: var(--theme-color-secondary-7);
+    color: var(--theme-color-on-secondary-7);
+  }
+}

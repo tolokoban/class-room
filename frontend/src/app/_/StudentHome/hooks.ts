@@ -4,6 +4,7 @@ import { goto } from "@/app/routes";
 import { isRoutePath } from "@/app/types";
 import { Notif } from "@/components/Notification";
 import { API } from "@/service/calls";
+import { useApiErrorTranslator } from "@/service/hooks/apiError";
 import { State } from "@/state";
 
 import { useTranslation } from "./translation";
@@ -11,6 +12,7 @@ import { useTranslation } from "./translation";
 export function useStudentHome() {
   const tr = useTranslation();
   const classroom = State.classroom.useValue();
+  const translateError = useApiErrorTranslator();
   const [isPending, setPending] = React.useState(false);
   const join = async () => {
     if (isPending) return;
@@ -26,7 +28,7 @@ export function useStudentHome() {
       if (isRoutePath(route)) goto(route, classroom);
       else Notif.error(tr.unknownActivity$(activity));
     } catch (error) {
-      Notif.error(error);
+      Notif.error(translateError(error));
     } finally {
       setPending(false);
     }

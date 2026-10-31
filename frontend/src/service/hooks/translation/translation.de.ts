@@ -12,6 +12,10 @@ const DE: typeof FR = {
   all20101: "Ungültige Eingabe.",
   all20102: "Dieser Code wird bereits von einer anderen Klasse verwendet.",
   all20103: "Datenbankfehler beim Erstellen der Klasse.",
+  all20401: "Ungültige Eingabe.",
+  all20402: "Diese Klasse existiert nicht.",
+  all20403: "Sie sind nicht der Besitzer dieser Klasse.",
+  all20404: "Datenbankfehler beim Löschen der Klasse.",
 
   // activity/result-set
   all30101: "Ungültige Eingabe.",
@@ -33,6 +37,12 @@ const DE: typeof FR = {
   // activity/current
   all30401: "Ungültige Eingabe.",
   all30402: "Diese Klasse existiert nicht.",
+
+  // activity/current-set
+  all30501: "Ungültige Eingabe.",
+  all30502: "Diese Klasse existiert nicht.",
+  all30503: "Sie sind nicht der Eigentümer dieser Klasse.",
+  all30504: "Datenbankfehler beim Festlegen der aktuellen Aktivität.",
 };
 
 export default DE;

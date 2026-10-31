@@ -15,6 +15,9 @@ RewriteBase /api/
 # Entrypoints are only meant to be included by index.php.
 RewriteRule ^entrypoint(/|$) - [F,L]
 
+# SQL files used to create the database (see db.php) must never be served.
+RewriteRule ^sql(/|$) - [F,L]
+
 # Let requests for real files/directories through.
 RewriteCond %{REQUEST_FILENAME} -f [OR]
 RewriteCond %{REQUEST_FILENAME} -d

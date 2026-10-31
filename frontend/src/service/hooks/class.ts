@@ -1,7 +1,7 @@
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 
 import { API } from "@/service/calls";
-import { ClassAddInput, ClassItem } from "@/service/calls/class";
+import { ClassAddInput, ClassDeleteInput, ClassItem } from "@/service/calls/class";
 import { ApiError } from "@/service/calls/service";
 
 import { useApiError } from "./apiError";
@@ -17,6 +17,12 @@ export interface ClassAddResult {
   isPending: boolean;
   error: ApiError | null;
   mutate(input: ClassAddInput): Promise<number>;
+}
+
+export interface ClassDeleteResult {
+  isPending: boolean;
+  error: ApiError | null;
+  mutate(input: ClassDeleteInput): Promise<void>;
 }
 
 const CLASS_LIST_KEY = ["class/list"];
@@ -49,6 +55,26 @@ export function useServiceClassAdd(): ClassAddResult {
   const queryClient = useQueryClient();
   const { mutateAsync, isPending, error } = useMutation({
     mutationFn: API.class.add,
+    onSuccess() {
+      void queryClient.invalidateQueries({ queryKey: CLASS_LIST_KEY });
+    },
+  });
+
+  return {
+    isPending,
+    error: useApiError(error),
+    mutate: mutateAsync,
+  };
+}
+
+/**
+ * Delete a class room.
+ * `useServiceClassList()` is refreshed on success.
+ */
+export function useServiceClassDelete(): ClassDeleteResult {
+  const queryClient = useQueryClient();
+  const { mutateAsync, isPending, error } = useMutation({
+    mutationFn: API.class.delete,
     onSuccess() {
       void queryClient.invalidateQueries({ queryKey: CLASS_LIST_KEY });
     },

@@ -52,6 +52,11 @@ declare module "*.lisp" {
     export = value
 }
 
+declare module "*.dat" {
+    const value: string
+    export = value
+}
+
 declare module "*.vert" {
     const value: string
     export = value

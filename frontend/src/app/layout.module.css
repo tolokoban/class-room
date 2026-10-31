@@ -19,7 +19,16 @@ div.layout {
         align-items: center;
         gap: 1em;
 
-        >div:first-child {
+        >div {
+            display: flex;
+            flex-wrap: nowrap;
+            flex-direction: row;
+            justify-content: flex-start;
+            align-items: center;
+            gap: 1em;
+        }
+
+        .light {
             opacity: .5;
         }
     }

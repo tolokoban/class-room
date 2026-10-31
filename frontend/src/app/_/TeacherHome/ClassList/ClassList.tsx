@@ -1,8 +1,9 @@
-import { Theme, ViewSpinner } from "@tolokoban/ui";
+import { IconDelete, Theme, ViewSpinner } from "@tolokoban/ui";
 
 import { useServiceClassList } from "@/service/hooks/class";
 
 import { useTranslation } from "../translation";
+import { useClassDelete } from "./hooks";
 
 import Styles from "./ClassList.module.css";
 
@@ -15,6 +16,7 @@ export interface ClassListProps {
 export function ClassList({ className }: ClassListProps) {
   const tr = useTranslation();
   const { data, isLoading, error } = useServiceClassList();
+  const handleDelete = useClassDelete();
 
   return (
     <div className={$.join(className, Styles.classList)}>
@@ -25,7 +27,8 @@ export function ClassList({ className }: ClassListProps) {
         <ul>
           {data.map((item) => (
             <li key={item.id}>
-              <a href={`#/teacher/${item.code}`}>{item.name}</a>
+              <a href={`#/teacher/${item.code}/home`}>{item.name}</a>
+              <IconDelete onClick={() => void handleDelete(item)} />
             </li>
           ))}
         </ul>

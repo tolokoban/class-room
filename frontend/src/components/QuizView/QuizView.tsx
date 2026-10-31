@@ -1,14 +1,23 @@
 import React from "react";
 import { useLangValue } from "@tolokoban/react-state";
-import { Theme, useModal, ViewButton, ViewDialog, ViewPanel } from "@tolokoban/ui";
+import {
+  IconMenu,
+  Theme,
+  useModal,
+  ViewButton,
+  ViewDialog,
+  ViewFloatingButton,
+  ViewPanel,
+} from "@tolokoban/ui";
 
 import { Quiz } from "@/types";
 import { Md } from "@/components/Md";
 import { QuizChoices } from "./QuizChoices";
-import { useQuizNavigation } from "./hooks";
+import { useQuizNavigation, useQuizResultSaver } from "./hooks";
 import { useTranslation } from "./translation";
 import Styles from "./QuizView.module.css";
 import { MultiLang } from "@/utils/multilang";
+import { isTeacher, State } from "@/state";
 
 const $ = Theme.classNames;
 
@@ -20,7 +29,8 @@ export interface QuizViewProps {
 export function QuizView({ className, quiz }: QuizViewProps) {
   const tr = useTranslation();
   const lang = useLangValue();
-  const nav = useQuizNavigation(quiz);
+  const user = State.user.useValue();
+  const nav = useQuizNavigation(quiz, isTeacher(user), useQuizResultSaver());
   const question = MultiLang.get(nav.item?.question, lang);
   const modal = useModal();
   const handleDone = () => {
@@ -32,10 +42,14 @@ export function QuizView({ className, quiz }: QuizViewProps) {
       ),
     });
   };
+
   return (
     <div className={$.join(className, Styles.quizView)}>
       <header>
-        <h1>{MultiLang.get(quiz.title, lang)}</h1>
+        <h1>
+          {isTeacher(user) && <ViewFloatingButton icon={IconMenu} size="S" />}
+          <div>{MultiLang.get(quiz.title, lang)}</div>
+        </h1>
         <div>
           <b>{nav.index + 1}</b> / {nav.count}
         </div>
@@ -57,12 +71,14 @@ export function QuizView({ className, quiz }: QuizViewProps) {
       <div className={Styles.question}>
         {typeof question === "string" ? <Md value={question} /> : question}
       </div>
-      <QuizChoices
-        className={Styles.choices}
-        choices={nav.item?.choices ?? {}}
-        selection={nav.selection}
-        onToggle={nav.toggle}
-      />
+      {nav.item && (
+        <QuizChoices
+          className={Styles.choices}
+          item={nav.item}
+          selection={nav.selection}
+          onToggle={nav.toggle}
+        />
+      )}
     </div>
   );
 }

@@ -3,3 +3,7 @@
 # Frontend build output (see frontend/rspack.config.js), except the PHP backend.
 /backend/www/*
 !/backend/www/api/
+
+# Root tooling (deploy script) and secrets.
+/node_modules
+.env

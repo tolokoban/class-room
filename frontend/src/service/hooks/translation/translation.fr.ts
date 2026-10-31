@@ -10,6 +10,10 @@ const FR = {
   all20101: "Données invalides.",
   all20102: "Ce code est déjà utilisé par une autre classe.",
   all20103: "Erreur de base de données lors de la création de la classe.",
+  all20401: "Données invalides.",
+  all20402: "Cette classe n'existe pas.",
+  all20403: "Vous n'êtes pas le propriétaire de cette classe.",
+  all20404: "Erreur de base de données lors de la suppression de la classe.",
 
   // activity/result-set
   all30101: "Données invalides.",
@@ -31,6 +35,12 @@ const FR = {
   // activity/current
   all30401: "Données invalides.",
   all30402: "Cette classe n'existe pas.",
+
+  // activity/current-set
+  all30501: "Données invalides.",
+  all30502: "Cette classe n'existe pas.",
+  all30503: "Vous n'êtes pas le propriétaire de cette classe.",
+  all30504: "Erreur de base de données lors du choix de l'activité courante.",
 } satisfies Record<string, string>;
 
 export default FR;
