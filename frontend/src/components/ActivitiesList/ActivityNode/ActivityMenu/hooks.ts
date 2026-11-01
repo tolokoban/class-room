@@ -1,4 +1,4 @@
-import { goto } from "@/app/routes";
+import { gotoTarget } from "@/app/routes";
 import { isRoutePath } from "@/app/types";
 import { Notif } from "@/components/Notification";
 import { useServiceActivityCurrent, useServiceActivityCurrentSet } from "@/service/hooks/activity";
@@ -14,7 +14,7 @@ export function useActivityMenu(classroom: string, activity: string, onClose: ()
     if (!isRoutePath(route)) return;
 
     onClose();
-    goto(route, classroom);
+    gotoTarget(null, route, classroom);
   };
   const toggle = () => {
     if (service.isPending) return;
@@ -26,7 +26,7 @@ export function useActivityMenu(classroom: string, activity: string, onClose: ()
   };
   const results = () => {
     onClose();
-    goto("/teacher/[classroom]/results", classroom);
+    gotoTarget(null, "/teacher/[classroom]/results", classroom);
   };
 
   return {
@@ -34,7 +34,7 @@ export function useActivityMenu(classroom: string, activity: string, onClose: ()
     isLoading: current.isLoading,
     isPending: service.isPending,
     open,
-    toggle,
     results,
+    toggle,
   };
 }

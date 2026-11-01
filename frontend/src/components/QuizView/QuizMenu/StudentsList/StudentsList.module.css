@@ -1,0 +1,43 @@
+.studentsList {
+  display: flex;
+  flex-direction: column;
+  gap: 1em;
+
+  > * {
+    flex-shrink: 0;
+  }
+
+  > header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 1em;
+  }
+
+  > p {
+    margin: 0;
+  }
+
+  /* Only the list of the students scrolls. */
+  > ul {
+    flex: 1 1 auto;
+    min-height: 0;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+    overflow: auto;
+
+    > li {
+      display: flex;
+      justify-content: space-between;
+      gap: 1em;
+      padding: 0.125em 0.5em;
+      border-radius: 0.25em;
+
+      &:nth-child(odd) {
+        background: var(--theme-color-neutral-3);
+        color: var(--theme-color-on-neutral-3);
+      }
+    }
+  }
+}

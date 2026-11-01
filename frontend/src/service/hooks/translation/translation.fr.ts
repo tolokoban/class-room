@@ -41,6 +41,16 @@ const FR = {
   all30502: "Cette classe n'existe pas.",
   all30503: "Vous n'êtes pas le propriétaire de cette classe.",
   all30504: "Erreur de base de données lors du choix de l'activité courante.",
+
+  // room/enter
+  all40101: "Données invalides.",
+  all40102: "Cette classe n'existe pas.",
+  all40103: "Erreur de base de données lors de l'entrée dans la classe.",
+
+  // room/students
+  all40201: "Données invalides.",
+  all40202: "Cette classe n'existe pas.",
+  all40203: "Vous n'êtes pas le propriétaire de cette classe.",
 } satisfies Record<string, string>;
 
 export default FR;

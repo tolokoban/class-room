@@ -1,9 +1,20 @@
 import { assertType, isNumber, isType, TypeDef } from "@tolokoban/type-guards";
 
+import { isTeacher, State } from "@/state";
+
+/**
+ * HTTP status sent by the backend when the session has no user
+ * with the role required by the entrypoint.
+ */
+const HTTP_FORBIDDEN = 403;
+
 export async function api(entrypoint: string, input: unknown = null): Promise<unknown> {
   const resp = await post(entrypoint, input);
   if (resp.ok) return await resp.json();
 
+  // The teacher has been restored from the session storage,
+  // but the PHP session has expired: ask for the login again.
+  if (resp.status === HTTP_FORBIDDEN && isTeacher(State.user.value)) State.user.value = null;
   throw new ApiError(resp.status, await getErrorMessage(resp));
 }
 
@@ -88,6 +99,16 @@ export class ApiError extends Error {
   static ACTIVITY_CURRENT_SET_CLASS_NOT_FOUND = -30502;
   static ACTIVITY_CURRENT_SET_FORBIDDEN = -30503;
   static ACTIVITY_CURRENT_SET_DATABASE_ERROR = -30504;
+
+  // room/enter (04-01)
+  static ROOM_ENTER_INVALID_INPUT = -40101;
+  static ROOM_ENTER_CLASS_NOT_FOUND = -40102;
+  static ROOM_ENTER_DATABASE_ERROR = -40103;
+
+  // room/students (04-02)
+  static ROOM_STUDENTS_INVALID_INPUT = -40201;
+  static ROOM_STUDENTS_CLASS_NOT_FOUND = -40202;
+  static ROOM_STUDENTS_FORBIDDEN = -40203;
 
   constructor(
     public readonly code: number,

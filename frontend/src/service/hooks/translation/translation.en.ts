@@ -43,6 +43,16 @@ const EN: typeof FR = {
   all30502: "This class room does not exist.",
   all30503: "You are not the owner of this class room.",
   all30504: "Database error while setting the current activity.",
+
+  // room/enter
+  all40101: "Invalid input.",
+  all40102: "This class room does not exist.",
+  all40103: "Database error while entering the class room.",
+
+  // room/students
+  all40201: "Invalid input.",
+  all40202: "This class room does not exist.",
+  all40203: "You are not the owner of this class room.",
 };
 
 export default EN;

@@ -13,7 +13,7 @@ import {
 import { Quiz } from "@/types";
 import { Md } from "@/components/Md";
 import { QuizChoices } from "./QuizChoices";
-import { useQuizNavigation, useQuizResultSaver } from "./hooks";
+import { useQuizMenu, useQuizNavigation, useQuizResultSaver } from "./hooks";
 import { useTranslation } from "./translation";
 import Styles from "./QuizView.module.css";
 import { MultiLang } from "@/utils/multilang";
@@ -32,6 +32,8 @@ export function QuizView({ className, quiz }: QuizViewProps) {
   const user = State.user.useValue();
   const nav = useQuizNavigation(quiz, isTeacher(user), useQuizResultSaver());
   const question = MultiLang.get(nav.item?.question, lang);
+  const title = MultiLang.get(quiz.title, lang);
+  const handleMenu = useQuizMenu(typeof title === "string" ? title : "");
   const modal = useModal();
   const handleDone = () => {
     const hide = modal.show({
@@ -47,8 +49,10 @@ export function QuizView({ className, quiz }: QuizViewProps) {
     <div className={$.join(className, Styles.quizView)}>
       <header>
         <h1>
-          {isTeacher(user) && <ViewFloatingButton icon={IconMenu} size="S" />}
-          <div>{MultiLang.get(quiz.title, lang)}</div>
+          {isTeacher(user) && handleMenu && (
+            <ViewFloatingButton icon={IconMenu} size="S" onClick={handleMenu} />
+          )}
+          <div>{title}</div>
         </h1>
         <div>
           <b>{nav.index + 1}</b> / {nav.count}

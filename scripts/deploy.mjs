@@ -5,8 +5,9 @@
  * 2. Upload every file of `backend/www` with SFTP, except `api/env.php`
  *    which holds the production secrets and must never be overwritten.
  *    `backend/database/sql/{structure,data}.sql` are uploaded in `api/sql/`.
- *    Only the files that are missing on the server, newer than their remote
- *    copy or with a different size are uploaded.
+ *    Each file `foo.css` comes with a `foo.css.hash` holding the SHA-1 of its
+ *    content. A file is uploaded only if its hash file is missing on the
+ *    server or holds a different hash.
  * 3. Print each uploaded file, the progress and the estimated remaining time.
  *
  * The SFTP password is read from `DEPLOY_PASSWORD` in the `.env` file at the
@@ -15,6 +16,7 @@
  * The remote folder can be set with `DEPLOY_REMOTE_DIR` (default: "classroom").
  */
 import { spawnSync } from "node:child_process"
+import { createHash } from "node:crypto"
 import FS from "node:fs"
 import { dirname, posix, relative, resolve, sep } from "node:path"
 import { fileURLToPath } from "node:url"
@@ -58,7 +60,7 @@ function build() {
 }
 
 /**
- * @returns {{ path: string, local: string, size: number, mtime: number }[]}
+ * @returns {{ path: string, local: string, size: number, hash: string }[]}
  */
 function listFiles(dir) {
     const files = []
@@ -73,7 +75,7 @@ function listFiles(dir) {
 /**
  * The SQL files are uploaded in `api/sql/`: `api/db.php` uses them
  * to create the tables if they do not exist yet.
- * @returns {{ path: string, local: string, size: number, mtime: number }[]}
+ * @returns {{ path: string, local: string, size: number, hash: string }[]}
  */
 function listSqlFiles() {
     return ["structure.sql", "data.sql"].map((name) => ({
@@ -82,36 +84,40 @@ function listSqlFiles() {
     }))
 }
 
-/**
- * `mtime` is in seconds, because this is the precision of SFTP.
- */
 function localFile(local) {
-    const stats = FS.statSync(local)
-    return { local, size: stats.size, mtime: Math.floor(stats.mtimeMs / 1000) }
+    const content = FS.readFileSync(local)
+    return { local, size: content.length, hash: createHash("sha1").update(content).digest("hex") }
 }
 
 /**
- * @returns {Promise<Map<string, { size: number, mtime: number }>>}
- *   The remote files, indexed by their path relative to `dir`.
+ * @returns {Promise<Set<string>>} The remote files paths, relative to `dir`.
  */
-async function listRemoteFiles(sftp, dir, prefix = "", files = new Map()) {
+async function listRemoteFiles(sftp, dir, prefix = "", files = new Set()) {
     if (!prefix && !(await sftp.exists(dir))) return files
     for (const item of await sftp.list(posix.join(dir, prefix))) {
         const path = posix.join(prefix, item.name)
         if (item.type === "d") await listRemoteFiles(sftp, dir, path, files)
-        else files.set(path, { size: item.size, mtime: Math.floor(item.modifyTime / 1000) })
+        else files.add(path)
     }
     return files
 }
 
 /**
- * Give the remote file the modification time of the local one,
- * so that the next deployment can tell if it changed.
+ * @returns {Promise<Map<string, string>>}
+ *   The content of the remote `.hash` files, indexed by the path of the file they describe.
  */
-function setRemoteTime(sftp, remote, mtime) {
-    return new Promise((resolveTime, reject) =>
-        sftp.sftp.utimes(remote, mtime, mtime, (err) => (err ? reject(err) : resolveTime()))
+async function readRemoteHashes(sftp, remoteDir, files) {
+    const remoteFiles = await listRemoteFiles(sftp, remoteDir)
+    const hashes = new Map()
+    await Promise.all(
+        files
+            .filter((file) => remoteFiles.has(`${file.path}.hash`))
+            .map(async (file) => {
+                const content = await sftp.get(posix.join(remoteDir, `${file.path}.hash`))
+                hashes.set(file.path, content.toString("utf8").trim())
+            })
     )
+    return hashes
 }
 
 async function connect(env) {
@@ -141,11 +147,8 @@ async function connect(env) {
 
 async function upload(sftp, allFiles, remoteDir) {
     console.log(`Comparing with the files in ${HOST}:${remoteDir}...`)
-    const remoteFiles = await listRemoteFiles(sftp, remoteDir)
-    const files = allFiles.filter((file) => {
-        const remote = remoteFiles.get(file.path)
-        return !remote || remote.size !== file.size || file.mtime > remote.mtime
-    })
+    const remoteHashes = await readRemoteHashes(sftp, remoteDir, allFiles)
+    const files = allFiles.filter((file) => remoteHashes.get(file.path) !== file.hash)
     console.log(`${allFiles.length - files.length} files are already up to date.`)
     const totalBytes = files.reduce((sum, file) => sum + file.size, 0)
     console.log(`Uploading ${files.length} files (${formatSize(totalBytes)}) to ${HOST}:${remoteDir}`)
@@ -160,7 +163,8 @@ async function upload(sftp, allFiles, remoteDir) {
             createdDirs.add(dir)
         }
         await sftp.fastPut(file.local, remote)
-        await setRemoteTime(sftp, remote, file.mtime)
+        // Written after the file, so that an interrupted upload is retried next time.
+        await sftp.put(Buffer.from(file.hash), `${remote}.hash`)
         sentBytes += file.size
         const elapsed = Date.now() - start
         const percent = totalBytes > 0 ? (100 * sentBytes) / totalBytes : 100

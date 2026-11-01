@@ -1,7 +1,9 @@
+import { useModal } from "@tolokoban/ui"
 import React from "react"
 
 import { useRouteContext } from "@/app/routes"
 import { Notif } from "@/components/Notification"
+import { QuizMenu } from "./QuizMenu"
 import { useServiceActivityResultSet } from "@/service/hooks/activity"
 import { useApiErrorTranslator } from "@/service/hooks/apiError"
 import { State } from "@/state"
@@ -61,16 +63,12 @@ export function useQuizNavigation(
 export function useQuizResultSaver(): ((status: QuizStatus) => void) | undefined {
     const user = State.user.useValue()
     const computer = State.computer.useValue()
-    const context = useRouteContext()
+    const activity = useActivityRoute()
     const service = useServiceActivityResultSet()
     const translateError = useApiErrorTranslator()
-    if (typeof user !== "string" || !context) return undefined
+    if (typeof user !== "string" || !activity) return undefined
 
-    const { route, params } = context
-    const classroomCode = params.classroom
-    if (!route.startsWith(ACTIVITY_ROUTE_PREFIX) || !classroomCode) return undefined
-
-    const activityCode = route.substring(ACTIVITY_ROUTE_PREFIX.length)
+    const { classroomCode, activityCode } = activity
     return (status: QuizStatus) => {
         service
             .mutate({
@@ -82,4 +80,42 @@ export function useQuizResultSaver(): ((status: QuizStatus) => void) | undefined
             })
             .catch((error: unknown) => Notif.error(translateError(error)))
     }
+}
+
+/**
+ * @returns A click handler that opens the teacher's menu of the quiz,
+ * or `undefined` if we are not on an activity route.
+ */
+export function useQuizMenu(title: string): (() => void) | undefined {
+    const modal = useModal()
+    const activity = useActivityRoute()
+    if (!activity) return undefined
+
+    return () => {
+        const hide = modal.show({
+            content: (
+                <QuizMenu
+                    classroom={activity.classroomCode}
+                    activity={activity.activityCode}
+                    title={title}
+                    onClose={() => hide()}
+                />
+            ),
+        })
+    }
+}
+
+/**
+ * @returns The codes of the class room and of the activity of the current route,
+ * or `undefined` if we are not on an activity route.
+ */
+function useActivityRoute(): { classroomCode: string; activityCode: string } | undefined {
+    const context = useRouteContext()
+    if (!context) return undefined
+
+    const { route, params } = context
+    const classroomCode = params.classroom
+    if (!route.startsWith(ACTIVITY_ROUTE_PREFIX) || !classroomCode) return undefined
+
+    return { classroomCode, activityCode: route.substring(ACTIVITY_ROUTE_PREFIX.length) }
 }

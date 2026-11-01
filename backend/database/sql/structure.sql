@@ -52,3 +52,16 @@ CREATE TABLE `classroom_activity` (
   UNIQUE (`classroom`, `code`, `nickname`)
 );
 ALTER TABLE `classroom_activity` ADD FOREIGN KEY (`classroom`) REFERENCES `classroom_class` (`id`) ON DELETE CASCADE;
+
+-- The last class room entered by each student.
+CREATE TABLE `classroom_room` (
+  -- Unique identifier for the student's computer.
+  `computer` VARCHAR(255) NOT NULL,
+  -- Student's nickname.
+  `nickname` VARCHAR(255) NOT NULL,
+  `classroom` integer NOT NULL,
+  -- Last time the student entered this class room.
+  `time` DATETIME NOT NULL,
+  PRIMARY KEY (`computer`)
+);
+ALTER TABLE `classroom_room` ADD FOREIGN KEY (`classroom`) REFERENCES `classroom_class` (`id`) ON DELETE CASCADE;

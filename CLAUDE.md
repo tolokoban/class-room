@@ -25,7 +25,7 @@ The first think en entrypoint function must do is check the validity of the `$in
 Errors are returned in the form of a negative number that should be unique among all entrypoints.
 The error code is build with this formula : `- 10000*{group} + 100*{action} + {error}`.
 For instance, with `backend/www/api/entrypoint/class/delete/index.php`, the `group` is "class" (2)
-and the `action` is "delete" (4). Groups: user = 1, class = 2.
+and the `action` is "delete" (4). Groups: user = 1, class = 2, activity = 3, room = 4.
 
 ## Frontend
 
@@ -38,6 +38,12 @@ the French file being the reference for the keys.
 To fill the placeholders `$1`, `$2`… of a translation, use the function generated for each key (its name ends with `$`):
 write `tr.deleted$(user.name)` or `tr.page$(page, pageCount, total)`, never `tr.deleted.replace("$1", user.name)`.
 For this to type-check, `useTranslation()` in `translation/index.ts` must not declare a return type (no `: typeof FR`).
+
+### Route params
+
+Always retrieve route params with the hooks of `frontend/src/app/routes.ts`:
+`useRouteParamAsString`, `useRouteParamAsInt`, `useRouteParamAsFloat` or `useRouteParam` (for JSON params).
+Never read them from the `params` prop of a layout or page.
 
 ### Components
 

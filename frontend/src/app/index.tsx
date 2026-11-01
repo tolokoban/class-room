@@ -18,6 +18,7 @@ export * from "./types"
 
 
 import Layout0 from "./layout"
+import Layout2 from "./student/[classroom]/layout"
 import Loading0 from "./loading"
 import NotFound0 from "./404"
 const Page0 = React.lazy(() => import("./page"))
@@ -40,6 +41,7 @@ export default function App({ lang }: { lang?: string }) {
     const fb0 = Loading0
     const ly0 = Layout0
     const pg0 = Page0
+    const ly2 = Layout2
     const pg5 = Page5
     const pg7 = Page7
     const pg8 = Page8
@@ -55,7 +57,7 @@ export default function App({ lang }: { lang?: string }) {
     return (
         <Route path="/" def={[pg0, ly0, fb0, , NotFound0]} context={context}>
             <Route path="/student" def={[, , fb0, , NotFound0]} context={context}>
-                <Route path="/student/[classroom]" def={[, , fb0, , NotFound0]} context={context}>
+                <Route path="/student/[classroom]" def={[, ly2, fb0, , NotFound0]} context={context}>
                     <Route path="/student/[classroom]/activity" def={[, , fb0, , NotFound0]} context={context}>
                         <Route path="/student/[classroom]/activity/AI" def={[, , fb0, , NotFound0]} context={context}>
                             <Route path="/student/[classroom]/activity/AI/CRAFT" def={[pg5, , fb0, , NotFound0]} context={context}/>

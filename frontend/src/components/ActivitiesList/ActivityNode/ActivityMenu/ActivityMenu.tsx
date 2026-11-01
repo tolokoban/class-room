@@ -30,7 +30,18 @@ export function ActivityMenu({
   return (
     <ViewDialog className={$.join(className, Styles.activityMenu)} title={title}>
       <div className={Styles.buttons}>
-        <ViewButton onClick={menu.open}>{tr.open}</ViewButton>
+        <ul>
+          <li>
+            <ViewButton variant="text" color="secondary-5" onClick={menu.open}>
+              {tr.open}
+            </ViewButton>
+          </li>
+          <li>
+            <ViewButton variant="text" color="secondary-5" onClick={menu.results}>
+              {tr.results}
+            </ViewButton>
+          </li>
+        </ul>
         <ViewButton
           color="secondary-5"
           enabled={!menu.isLoading}
@@ -39,7 +50,6 @@ export function ActivityMenu({
         >
           {menu.isCurrent ? tr.unselect : tr.select}
         </ViewButton>
-        <ViewButton onClick={menu.results}>{tr.results}</ViewButton>
       </div>
     </ViewDialog>
   );

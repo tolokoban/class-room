@@ -1,15 +1,17 @@
-import { IconHome, ViewFloatingButton } from "@tolokoban/ui";
 import { isString } from "@tolokoban/type-guards";
+import { IconHome, ViewFloatingButton } from "@tolokoban/ui";
 
-import { isTeacher, State } from "@/state";
-import SelectLanguage from "@/components/SelectLanguage";
 import { Login } from "@/components/Login";
+import SelectLanguage from "@/components/SelectLanguage";
+import { isTeacher, State } from "@/state";
+import { LogoutButton } from "./_/LogoutButton";
+import { makeGoto } from "./routes";
 
 import Styles from "./layout.module.css";
-import { makeGoto } from "./routes";
 
 export default function Layout({ children }: { children: React.ReactNode }) {
   const user = State.user.useValue();
+  const userPending = State.userPending.useValue();
 
   return (
     <div className={Styles.layout}>
@@ -20,10 +22,10 @@ export default function Layout({ children }: { children: React.ReactNode }) {
           )}
           <div className={Styles.light}>Class Room</div>
         </div>
-        <div>{user && (isString(user) ? user : user.name)}</div>
+        {user && <LogoutButton name={isString(user) ? user : user.name} />}
         <SelectLanguage />
       </header>
-      <main>{user === null ? <Login /> : children}</main>
+      <main>{user === null ? !userPending && <Login /> : children}</main>
     </div>
   );
 }

@@ -15,7 +15,8 @@ export interface ActivityResultAllResult {
   isLoading: boolean;
   error: ApiError | null;
   data: ActivityResultAllOutput | undefined;
-  refresh(): void;
+  /** Resolved once the new data is loaded. */
+  refresh(): Promise<void>;
 }
 
 export interface ActivityCurrentResult {
@@ -50,7 +51,7 @@ export function useServiceActivityResultAll(
     error: useApiError(error),
     data,
     refresh() {
-      void queryClient.invalidateQueries({ queryKey });
+      return queryClient.invalidateQueries({ queryKey });
     },
   };
 }

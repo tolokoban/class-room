@@ -43,6 +43,16 @@ const IT: typeof FR = {
   all30502: "Questa classe non esiste.",
   all30503: "Non sei il proprietario di questa classe.",
   all30504: "Errore del database durante la scelta dell'attività corrente.",
+
+  // room/enter
+  all40101: "Dati non validi.",
+  all40102: "Questa classe non esiste.",
+  all40103: "Errore del database durante l'ingresso nella classe.",
+
+  // room/students
+  all40201: "Dati non validi.",
+  all40202: "Questa classe non esiste.",
+  all40203: "Non sei il proprietario di questa classe.",
 };
 
 export default IT;

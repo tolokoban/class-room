@@ -14,7 +14,7 @@ const DE: typeof FR = {
   all20103: "Datenbankfehler beim Erstellen der Klasse.",
   all20401: "Ungültige Eingabe.",
   all20402: "Diese Klasse existiert nicht.",
-  all20403: "Sie sind nicht der Besitzer dieser Klasse.",
+  all20403: "Sie sind nicht der Eigentümer dieser Klasse.",
   all20404: "Datenbankfehler beim Löschen der Klasse.",
 
   // activity/result-set
@@ -43,6 +43,16 @@ const DE: typeof FR = {
   all30502: "Diese Klasse existiert nicht.",
   all30503: "Sie sind nicht der Eigentümer dieser Klasse.",
   all30504: "Datenbankfehler beim Festlegen der aktuellen Aktivität.",
+
+  // room/enter
+  all40101: "Ungültige Daten.",
+  all40102: "Diese Klasse existiert nicht.",
+  all40103: "Datenbankfehler beim Betreten der Klasse.",
+
+  // room/students
+  all40201: "Ungültige Daten.",
+  all40202: "Diese Klasse existiert nicht.",
+  all40203: "Sie sind nicht der Eigentümer dieser Klasse.",
 };
 
 export default DE;
