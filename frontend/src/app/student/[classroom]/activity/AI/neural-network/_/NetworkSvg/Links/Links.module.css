@@ -1,0 +1,5 @@
+g.links > line {
+  stroke: var(--ink-color);
+  stroke-width: 1;
+  opacity: 0.4;
+}

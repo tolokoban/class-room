@@ -1,5 +1,5 @@
 {
-    "name": "<My Game>",
+    "name": "class-room",
     "version": "0.1.0",
     "private": true,
     "type": "module",
@@ -28,8 +28,6 @@
         "analyse": "webpack --profile --json > stats.json",
         "start": "rspack serve --mode=development",
         "build": "rspack --mode=production",
-        "predeploy": "npm run build",
-        "deploy": "gh-pages -d build",
         "format": "oxfmt",
         "lint": "oxlint",
         "test": "vitest run",

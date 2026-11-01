@@ -1,0 +1,18 @@
+g.outputNeuron {
+  > circle {
+    fill: var(--output-color);
+    stroke: var(--ink-color);
+  }
+
+  > text {
+    fill: var(--ink-color);
+    font-size: 16px;
+    text-anchor: middle;
+    dominant-baseline: central;
+
+    &.icon {
+      font-size: 32px;
+      text-anchor: start;
+    }
+  }
+}

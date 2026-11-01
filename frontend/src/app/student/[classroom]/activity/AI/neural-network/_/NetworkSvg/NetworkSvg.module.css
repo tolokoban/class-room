@@ -1,0 +1,42 @@
+div.networkSvg {
+  /* Colors explicitly requested for this demo: the theme has no green nor yellow. */
+  --input-color: #6c6;
+  --hidden-color: #6af;
+  --output-color: #fd4;
+  --box-color: #fff;
+  --bias-box-color: #ddd;
+  --ink-color: #000;
+  --up-color: #070;
+  --down-color: #c00;
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+
+  > svg {
+    width: 100%;
+    max-height: 60vh;
+  }
+
+  > p {
+    margin: 0;
+    font-size: 0.8em;
+    opacity: 0.8;
+  }
+}
+
+g.input {
+  > circle {
+    fill: var(--input-color);
+    stroke: var(--ink-color);
+  }
+
+  > text {
+    fill: var(--ink-color);
+    font-size: 18px;
+    font-weight: bold;
+    text-anchor: middle;
+    dominant-baseline: central;
+  }
+}

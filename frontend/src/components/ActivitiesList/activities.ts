@@ -5,7 +5,7 @@
 type Activity = [name: string, children?: Activity[]];
 
 export const ACTIVITIES: Activity[] = [
-  ["AI", [["CRAFT"], ["eliza"], ["le-chat-mange-la"], ["mycin"], ["RAG", [["embedding"]]], ["types-ia-generatives"], ["usage"]]],
+  ["AI", [["CRAFT"], ["eliza"], ["le-chat-mange-la"], ["mycin"], ["neural-network"], ["RAG", [["embedding"]]], ["types-ia-generatives"], ["usage"]]],
   ["security", [["personal-data", [["AI-Act"], ["anonymous"], ["RGPD"]]]]],
 ];
 
@@ -28,6 +28,10 @@ export const INFOS: Record<
   },
   "AI/mycin": {
     title: "Systèmes experts",
+  },
+  "AI/neural-network": {
+    title: "Réseau de neurones",
+    description: "Un tout petit réseau de neurones apprend, clic après clic, le contenu d'un tableau de 8 cases.",
   },
   "AI/RAG": {
     title: "RAG",

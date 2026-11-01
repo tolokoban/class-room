@@ -25,6 +25,7 @@ export const ROUTES: RoutePath[] = [
     "/student/[classroom]/activity/AI/eliza",
     "/student/[classroom]/activity/AI/le-chat-mange-la",
     "/student/[classroom]/activity/AI/mycin",
+    "/student/[classroom]/activity/AI/neural-network",
     "/student/[classroom]/activity/AI/types-ia-generatives",
     "/student/[classroom]/activity/AI/usage",
     "/student/[classroom]/activity/security",

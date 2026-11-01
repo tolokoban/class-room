@@ -1,0 +1,30 @@
+g.coefBox {
+  > rect {
+    fill: var(--box-color);
+    stroke: var(--ink-color);
+    stroke-width: 1;
+  }
+
+  > text {
+    fill: var(--ink-color);
+    font-family: monospace;
+    font-size: 14px;
+    text-anchor: middle;
+    dominant-baseline: central;
+  }
+
+  &.bias > rect {
+    fill: var(--bias-box-color);
+    stroke-dasharray: 4 2;
+  }
+
+  &.up > text {
+    fill: var(--up-color);
+    font-weight: bold;
+  }
+
+  &.down > text {
+    fill: var(--down-color);
+    font-weight: bold;
+  }
+}
