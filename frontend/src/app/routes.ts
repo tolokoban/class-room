@@ -20,6 +20,7 @@ export const ROUTES: RoutePath[] = [
     "/student/[classroom]/activity",
     "/student/[classroom]/activity/AI",
     "/student/[classroom]/activity/AI/CRAFT",
+    "/student/[classroom]/activity/AI/GPS",
     "/student/[classroom]/activity/AI/RAG",
     "/student/[classroom]/activity/AI/RAG/embedding",
     "/student/[classroom]/activity/AI/eliza",

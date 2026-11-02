@@ -5,7 +5,7 @@
 type Activity = [name: string, children?: Activity[]];
 
 export const ACTIVITIES: Activity[] = [
-  ["AI", [["CRAFT"], ["eliza"], ["le-chat-mange-la"], ["mycin"], ["neural-network"], ["RAG", [["embedding"]]], ["types-ia-generatives"], ["usage"]]],
+  ["AI", [["CRAFT"], ["eliza"], ["GPS"], ["le-chat-mange-la"], ["mycin"], ["neural-network"], ["RAG", [["embedding"]]], ["types-ia-generatives"], ["usage"]]],
   ["security", [["personal-data", [["AI-Act"], ["anonymous"], ["RGPD"]]]]],
 ];
 
@@ -22,6 +22,10 @@ export const INFOS: Record<
   "AI/CRAFT": {},
   "AI/eliza": {
     title: "Eliza (1966)",
+  },
+  "AI/GPS": {
+    title: "Comment le GPS trouve la route la plus courte ?",
+    description: "Un labyrinthe aléatoire pour découvrir comment un GPS calcule le plus court chemin.",
   },
   "AI/le-chat-mange-la": {
     title: "Température",

@@ -1,0 +1,29 @@
+.page {
+  /* Colors of the maze, shared by the canvas and the table of candidates. */
+  --maze-empty: var(--theme-color-neutral-9);
+  --maze-wall: var(--theme-color-primary-3);
+  /* The theme has no pure green, red, black, gray, blue or yellow. */
+  --maze-highway: #fd3;
+  --maze-start: #2b2;
+  --maze-target: #e22;
+  --maze-path-border: #000;
+  --maze-path: #666;
+  --maze-best: #e22;
+  --maze-closest: #39f;
+
+  position: absolute;
+  inset: 0;
+  display: grid;
+  grid-template-rows: auto 1fr;
+  background: var(--theme-color-neutral-1);
+  color: var(--theme-color-on-neutral-1);
+
+  > main {
+    min-height: 0;
+    padding: 1em;
+    display: grid;
+    grid-template-columns: auto 1fr;
+    grid-template-rows: minmax(0, 1fr);
+    gap: 1em;
+  }
+}

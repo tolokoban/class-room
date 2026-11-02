@@ -1,0 +1,26 @@
+section.panel {
+  min-height: 0;
+  overflow: auto;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 1em;
+
+  > div {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1em;
+    /* The buttons have `overflow: hidden`, so without this they collapse to a zero height. */
+    flex-shrink: 0;
+  }
+
+  > p {
+    margin: 0;
+  }
+}
+
+p.counters {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0 2em;
+}

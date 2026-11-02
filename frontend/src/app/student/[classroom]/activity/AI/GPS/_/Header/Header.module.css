@@ -1,0 +1,14 @@
+header.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 1em;
+  padding: 0.5em 1em;
+  background: var(--theme-color-primary-5);
+  color: var(--theme-color-on-primary-5);
+
+  > h1 {
+    margin: 0;
+    font-size: 1.25em;
+  }
+}

@@ -1,0 +1,26 @@
+/* The colors are defined as CSS variables in `page.module.css`. */
+svg.routeIcon {
+  display: block;
+  height: 1em;
+  margin: auto;
+
+  > line {
+    stroke-linecap: round;
+  }
+
+  > line:first-child {
+    stroke: var(--maze-path-border);
+  }
+
+  > line:last-child {
+    stroke: var(--maze-path);
+  }
+
+  &.best > line:last-child {
+    stroke: var(--maze-best);
+  }
+
+  &.closest > line:last-child {
+    stroke: var(--maze-closest);
+  }
+}

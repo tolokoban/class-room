@@ -1,0 +1,7 @@
+canvas.maze {
+  display: block;
+  height: 100%;
+  max-width: 75vw;
+  box-shadow: 0 0.25em 0.5em #000;
+  background: #1e4b96;
+}

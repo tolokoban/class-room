@@ -1,0 +1,15 @@
+td.numberCell > span {
+  padding: 0 0.5em;
+  border-radius: 99vmax;
+
+  /* The theme has no light pink or light blue. */
+  &.highest {
+    background: #fcd;
+    color: #000;
+  }
+
+  &.lowest {
+    background: #cdf;
+    color: #000;
+  }
+}
