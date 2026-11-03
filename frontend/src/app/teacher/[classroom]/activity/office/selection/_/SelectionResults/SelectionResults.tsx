@@ -34,29 +34,33 @@ export function SelectionResults({ className, classroom }: SelectionResultsProps
           <table>
             <thead>
               <tr>
-                <th>{tr.student}</th>
-                {exercises.map(({ id, title }) => (
-                  <th key={id}>{title}</th>
+                <th />
+                {students.map(({ nickname }) => (
+                  <th key={nickname} title={nickname}>
+                    <div>{nickname}</div>
+                  </th>
                 ))}
-                <th>{tr.average}</th>
+                <th title={tr.average}>
+                  <div>{tr.average}</div>
+                </th>
               </tr>
             </thead>
             <tbody>
-              {students.map(({ nickname, scores, average }) => (
-                <tr key={nickname}>
-                  <th>{nickname}</th>
-                  {exercises.map(({ id }) => (
-                    <ScoreCell key={id} score={scores[id]} />
+              {exercises.map(({ id, title }, index) => (
+                <tr key={id}>
+                  <th>{title}</th>
+                  {students.map(({ nickname, scores }) => (
+                    <ScoreCell key={nickname} score={scores[id]} />
                   ))}
-                  <ScoreCell score={average} />
+                  <ScoreCell score={averages[index]} />
                 </tr>
               ))}
             </tbody>
             <tfoot>
               <tr>
                 <th>{tr.average}</th>
-                {exercises.map(({ id }, index) => (
-                  <ScoreCell key={id} score={averages[index]} />
+                {students.map(({ nickname, average }) => (
+                  <ScoreCell key={nickname} score={average} />
                 ))}
                 <td />
               </tr>

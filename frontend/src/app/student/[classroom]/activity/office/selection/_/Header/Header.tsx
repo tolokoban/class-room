@@ -1,5 +1,6 @@
-import { Theme, ViewButton } from "@tolokoban/ui";
+import { IconHelp, Theme, ViewButton, ViewFloatingButton } from "@tolokoban/ui";
 
+import { useShowHelp } from "./hooks";
 import { useTranslation } from "./translation";
 
 import Styles from "./Header.module.css";
@@ -20,6 +21,7 @@ export interface HeaderProps {
 
 export function Header({ className, title, progress, strokes, onRestart, onResults }: HeaderProps) {
   const tr = useTranslation();
+  const showHelp = useShowHelp();
   return (
     <header className={$.join(className, Styles.header)}>
       <h1>
@@ -41,6 +43,7 @@ export function Header({ className, title, progress, strokes, onRestart, onResul
           <ViewButton color="secondary-5" onClick={onRestart}>
             {tr.restart}
           </ViewButton>
+          <ViewFloatingButton size="S" icon={IconHelp} onClick={showHelp} />
         </>
       )}
     </header>

@@ -1,0 +1,33 @@
+.help {
+  max-width: 90vw;
+
+  & table {
+    border-collapse: collapse;
+    margin: 0 auto;
+
+    & td {
+      padding: 0.125em 0.5em;
+      text-align: left;
+      vertical-align: middle;
+    }
+
+    & td:first-child {
+      white-space: nowrap;
+    }
+
+    & tr:nth-child(even) {
+      background: var(--theme-color-neutral-6);
+      color: var(--theme-color-on-neutral-6);
+    }
+
+    & kbd {
+      display: inline-block;
+      margin: 0.125em 0.25em 0.125em 0;
+      padding: 0.125em 0.5em;
+      border-radius: 0.25em;
+      font-family: inherit;
+      background: var(--theme-color-neutral-9);
+      color: var(--theme-color-on-neutral-9);
+    }
+  }
+}

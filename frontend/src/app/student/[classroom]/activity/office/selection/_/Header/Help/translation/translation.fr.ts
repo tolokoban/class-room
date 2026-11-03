@@ -1,0 +1,27 @@
+const FR = {
+  title: "Raccourcis clavier",
+  close: "Fermer",
+  keyCtrl: "Ctrl",
+  keyShift: "Maj",
+  keyBackspace: "Retour arrière",
+  keyDelete: "Suppr",
+  keyHome: "Début",
+  keyEnd: "Fin",
+  moveChar: "Déplacer le curseur d'un caractère.",
+  moveLine: "Déplacer le curseur d'une ligne.",
+  moveWord: "Déplacer le curseur d'un mot.",
+  moveLineEdge: "Aller au début ou à la fin de la ligne.",
+  moveTextEdge: "Aller au début ou à la fin du texte.",
+  select: "Ajouter la touche Maj à un déplacement pour sélectionner.",
+  selectAll: "Tout sélectionner.",
+  copy: "Copier la sélection.",
+  cut: "Couper la sélection.",
+  paste: "Coller.",
+  bold: "Mettre en gras (ou enlever le gras).",
+  deleteChar: "Effacer le caractère avant ou après le curseur.",
+  deleteWord: "Effacer le mot avant ou après le curseur.",
+  undo: "Annuler la dernière modification.",
+  redo: "Rétablir la modification annulée.",
+} satisfies Record<string, string>;
+
+export default FR;
