@@ -1,0 +1,9 @@
+div.score {
+  align-self: center;
+  margin: 0 0 1em;
+  padding: 0.5em;
+  border-radius: 0.25em;
+  font-weight: bold;
+  background: var(--theme-color-primary-3);
+  color: var(--theme-color-on-primary-3);
+}

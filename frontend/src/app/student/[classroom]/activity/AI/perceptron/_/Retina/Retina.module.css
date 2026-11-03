@@ -1,0 +1,12 @@
+canvas.retina {
+  display: block;
+  height: 100%;
+  max-width: 50vw;
+  aspect-ratio: 1 / 1;
+
+  &.draw {
+    cursor: crosshair;
+    /* Prevent the page from scrolling while drawing with a finger. */
+    touch-action: none;
+  }
+}

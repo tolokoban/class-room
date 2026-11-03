@@ -1,0 +1,20 @@
+div.editor {
+  position: relative;
+  cursor: text;
+  outline: none;
+
+  > .hint {
+    position: absolute;
+    right: 0;
+    bottom: 0;
+    padding: 0.125em 0.5em;
+    border-radius: 0.25em;
+    background: var(--theme-color-tertiary-5);
+    color: var(--theme-color-on-tertiary-5);
+    pointer-events: none;
+  }
+
+  &:focus > .hint {
+    display: none;
+  }
+}

@@ -23,6 +23,7 @@
     "scripts": {
         "activities": "node ../scripts/activities.mts",
         "embeddings": "node \"src/app/student/[classroom]/activity/AI/RAG/embedding/_/generate.mts\"",
+        "perceptron": "node \"src/app/student/[classroom]/activity/AI/perceptron/_/train.mts\"",
         "generate": "npm run activities && npm run routes",
         "routes": "build-react-routes ./src/app",
         "analyse": "webpack --profile --json > stats.json",

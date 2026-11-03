@@ -1,8 +1,8 @@
-import { useModal } from "@tolokoban/ui";
 import { isType } from "@tolokoban/type-guards";
 import React from "react";
 
 import { gotoTarget } from "@/app/routes";
+import { useConfirm } from "@/components/Confirm";
 import { Notif } from "@/components/Notification";
 import {
   useServiceActivityClear,
@@ -80,14 +80,14 @@ export function useStudentsAnswers(classroom: string, activity: string) {
  */
 export function useClearResults(classroom: string, activity: string) {
   const tr = useTranslation();
-  const modal = useModal();
+  const confirm = useConfirm();
   const service = useServiceActivityClear();
   const translateError = useApiErrorTranslator();
 
   return async () => {
     if (service.isPending) return;
 
-    const confirmed = await modal.confirm({ content: tr.clearConfirm, accent: true });
+    const confirmed = await confirm({ content: tr.clearConfirm, accent: true });
     if (!confirmed) return;
 
     service

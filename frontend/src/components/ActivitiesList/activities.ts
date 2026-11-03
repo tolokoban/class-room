@@ -5,7 +5,8 @@
 type Activity = [name: string, children?: Activity[]];
 
 export const ACTIVITIES: Activity[] = [
-  ["AI", [["CRAFT"], ["eliza"], ["GPS"], ["le-chat-mange-la"], ["mycin"], ["neural-network"], ["RAG", [["embedding"]]], ["types-ia-generatives"], ["usage"]]],
+  ["AI", [["CRAFT"], ["eliza"], ["GPS"], ["le-chat-mange-la"], ["mycin"], ["neural-network"], ["perceptron"], ["RAG", [["embedding"]]], ["types-ia-generatives"], ["usage"]]],
+  ["office", [["selection"]]],
   ["security", [["personal-data", [["AI-Act"], ["anonymous"], ["RGPD"]]]]],
 ];
 
@@ -37,6 +38,10 @@ export const INFOS: Record<
     title: "Réseau de neurones",
     description: "Un tout petit réseau de neurones apprend, clic après clic, le contenu d'un tableau de 8 cases.",
   },
+  "AI/perceptron": {
+    title: "Perceptron (1958)",
+    description: "Le premier réseau de neurones capable d'apprendre : il regarde le monde à travers une grille de 20×20 cases.",
+  },
   "AI/RAG": {
     title: "RAG",
   },
@@ -46,6 +51,13 @@ export const INFOS: Record<
   },
   "AI/types-ia-generatives": {},
   "AI/usage": {},
+  office: {
+    title: "Bureautique",
+  },
+  "office/selection": {
+    title: "Sélectionner au clavier",
+    description: "Reproduire un texte en sélectionnant, copiant, coupant, collant et mettant en gras avec le clavier, en un minimum de frappes.",
+  },
   "security/personal-data/AI-Act": {},
   "security/personal-data/anonymous": {
     title: "Anonymisation de documents",

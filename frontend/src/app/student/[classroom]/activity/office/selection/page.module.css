@@ -1,0 +1,39 @@
+.page {
+  position: absolute;
+  inset: 0;
+  display: grid;
+  grid-template-rows: auto 1fr;
+  background: var(--theme-color-neutral-1);
+  color: var(--theme-color-on-neutral-1);
+
+  > main {
+    min-height: 0;
+    padding: 1em;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    grid-template-rows: minmax(0, 1fr);
+    gap: 1em;
+
+    > section {
+      display: grid;
+      grid-template-rows: auto 1fr;
+      overflow: hidden;
+      border-radius: 0.25em;
+      background: var(--theme-color-neutral-9);
+      color: var(--theme-color-on-neutral-9);
+
+      > header {
+        padding: 0.125em 0.5em;
+        background: var(--theme-color-primary-5);
+        color: var(--theme-color-on-primary-5);
+      }
+
+      /* Both texts must wrap their lines at exactly the same place. */
+      > div {
+        padding: 0.5em;
+        overflow: auto;
+        scrollbar-gutter: stable;
+      }
+    }
+  }
+}

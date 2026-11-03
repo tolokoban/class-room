@@ -2,7 +2,7 @@ import { ActivitiesList } from "@/components/ActivitiesList";
 import { isTeacher, State } from "@/state";
 
 import { CurrentActivity } from "./_/CurrentActivity";
-import { TeacherOnly } from "./_/TeacherOnly";
+import { TeacherOnly } from "@/components/TeacherOnly";
 
 import Styles from "./page.module.css";
 import { useRouteParamAsString } from "@/app/routes";

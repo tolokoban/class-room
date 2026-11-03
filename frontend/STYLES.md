@@ -23,6 +23,12 @@ Teachers can do statistics with students anwers.
 There is a global oject `Notif` to deal with temporary notifications.
 It's defined in file 'frontend/src/components/Notification/manager.tsx'.
 
+## Confirmation dialogs
+
+Never call `modal.confirm()` directly: use `const confirm = useConfirm()` from
+`@/components/Confirm`. It gives the buttons translated captions ("Confirmer" / "Annuler")
+instead of the content of the dialog and "Cancel".
+
 ## Imports
 
 Imports must be grouped in three sections separated by a blank line:

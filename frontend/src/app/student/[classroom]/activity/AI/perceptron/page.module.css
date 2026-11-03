@@ -1,0 +1,49 @@
+.page {
+  position: absolute;
+  inset: 0;
+  display: grid;
+  grid-template-rows: auto 1fr;
+  background: var(--theme-color-neutral-1);
+  color: var(--theme-color-on-neutral-1);
+
+  > main {
+    min-height: 0;
+    padding: 1em;
+    display: grid;
+    grid-template-columns: auto 1fr;
+    grid-template-rows: minmax(0, 1fr);
+    gap: 1em;
+
+    > div {
+      min-height: 0;
+      display: grid;
+      grid-template-rows: minmax(0, 1fr) auto;
+      justify-items: center;
+      gap: 1em;
+
+      > footer {
+        justify-self: stretch;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        gap: 1em;
+      }
+    }
+
+    > section {
+      min-height: 0;
+      overflow: auto;
+      display: flex;
+      flex-direction: column;
+
+      > footer {
+        margin-top: auto;
+        align-self: center;
+      }
+
+      > p {
+        margin: 0 0 1em;
+      }
+    }
+  }
+}

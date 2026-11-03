@@ -1,0 +1,39 @@
+div.richText {
+  white-space: pre-wrap;
+  font-family: monospace;
+  font-size: 1.25em;
+  line-height: 1.5;
+  user-select: none;
+
+  > span[data-bold="true"] {
+    font-weight: bold;
+    color: var(--theme-color-primary-5);
+  }
+
+  > span[data-selected="true"] {
+    background: var(--theme-color-secondary-5);
+    color: var(--theme-color-on-secondary-5);
+  }
+
+  /* The caret is only visible when the parent (the editor) has the focus. */
+  > span.caret {
+    display: inline-block;
+    width: 0;
+    height: 1.2em;
+    margin: 0 -1px;
+    vertical-align: text-bottom;
+    border-left: 2px solid currentColor;
+    visibility: hidden;
+  }
+
+  :focus > & > span.caret {
+    visibility: visible;
+    animation: blink 1s step-end infinite;
+  }
+}
+
+@keyframes blink {
+  50% {
+    border-color: transparent;
+  }
+}

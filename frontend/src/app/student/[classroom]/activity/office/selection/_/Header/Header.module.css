@@ -1,0 +1,26 @@
+header.header {
+  display: flex;
+  align-items: center;
+  gap: 1em;
+  padding: 0.5em 1em;
+  background: var(--theme-color-primary-5);
+  color: var(--theme-color-on-primary-5);
+
+  > h1 {
+    flex: 1;
+    margin: 0;
+    font-size: 1.25em;
+    display: flex;
+    align-items: center;
+    gap: 0.5em;
+
+    > span {
+      padding: 0.125em 0.5em;
+      border-radius: 0.25em;
+      font-weight: normal;
+      white-space: nowrap;
+      background: var(--theme-color-primary-3);
+      color: var(--theme-color-on-primary-3);
+    }
+  }
+}

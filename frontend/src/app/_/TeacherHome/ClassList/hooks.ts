@@ -1,5 +1,4 @@
-import { useModal } from "@tolokoban/ui";
-
+import { useConfirm } from "@/components/Confirm";
 import { Notif } from "@/components/Notification";
 import { ClassItem } from "@/service/calls/class";
 import { useApiErrorTranslator } from "@/service/hooks/apiError";
@@ -9,14 +8,14 @@ import { useTranslation } from "../translation";
 
 export function useClassDelete() {
   const tr = useTranslation();
-  const modal = useModal();
+  const confirm = useConfirm();
   const service = useServiceClassDelete();
   const translateError = useApiErrorTranslator();
 
   return async (classroom: ClassItem) => {
     if (service.isPending) return;
 
-    const confirmed = await modal.confirm({ content: tr.deleteConfirm, accent: true });
+    const confirmed = await confirm({ content: tr.deleteConfirm, accent: true });
     if (!confirmed) return;
 
     service

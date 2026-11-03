@@ -1,0 +1,27 @@
+const FR = {
+  title: "Résultat",
+  key: "Touche",
+  count: "Nombre",
+  tooMany: "Trop",
+  notEnough: "Pas assez",
+  summary: "Vous avez utilisé $1 frappes. La meilleure solution en utilise $2.",
+  score: "Score : $1 %",
+  unavailable: "La meilleure solution n'a pas pu être calculée.",
+  solution: "Meilleure solution (visible uniquement par l'enseignant) :",
+  restart: "Recommencer",
+  continue: "Continuer",
+  keyCtrl: "Ctrl",
+  keyAlt: "Alt",
+  keyShift: "Maj",
+  keyBackspace: "Retour arrière",
+  keyDelete: "Suppr",
+  keyEnter: "Entrée",
+  keyHome: "Début",
+  keyEnd: "Fin",
+  keyPageUp: "Page préc.",
+  keyPageDown: "Page suiv.",
+  keyInsert: "Inser",
+  keySpace: "Espace",
+} satisfies Record<string, string>;
+
+export default FR;

@@ -1,0 +1,8 @@
+td.scoreCell {
+  text-align: right;
+
+  &[data-low="true"] {
+    background: var(--theme-color-error);
+    color: var(--theme-color-on-error);
+  }
+}
