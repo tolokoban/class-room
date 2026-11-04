@@ -4,6 +4,7 @@ import { IconHome, ViewFloatingButton } from "@tolokoban/ui";
 import { Login } from "@/components/Login";
 import SelectLanguage from "@/components/SelectLanguage";
 import { isTeacher, State } from "@/state";
+import { ActivateActivity } from "./_/ActivateActivity";
 import { LogoutButton } from "./_/LogoutButton";
 import { makeGoto } from "./routes";
 
@@ -21,6 +22,7 @@ export default function Layout({ children }: { children: React.ReactNode }) {
             <ViewFloatingButton size="S" icon={IconHome} onClick={makeGoto("/")} />
           )}
           <div className={Styles.light}>Class Room</div>
+          {isTeacher(user) && <ActivateActivity />}
         </div>
         {user && <LogoutButton name={isString(user) ? user : user.name} />}
         <SelectLanguage />
