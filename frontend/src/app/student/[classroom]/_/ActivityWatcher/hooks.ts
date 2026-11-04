@@ -8,7 +8,7 @@ import { State } from "@/state";
 
 import { useTranslation } from "./translation";
 
-const POLLING_INTERVAL = 10000;
+const POLLING_INTERVAL = 4000;
 
 export function useActivityWatcher(classroom: string) {
   const tr = useTranslation();
@@ -28,7 +28,7 @@ export function useActivityWatcher(classroom: string) {
       const route = `/student/[classroom]/activity/${code}`;
       if (!isRoutePath(route) || currentRoute.current === route) return;
 
-      Notif.info(`**${tr.newActivity}**\n\n[${tr.join}](#/student/${classroom}/activity/${code})`);
+      globalThis.location.hash = `#/student/${classroom}/activity/${code})`;
     };
     const id = globalThis.setInterval(() => {
       // Network errors are ignored: we will try again at the next tick.
