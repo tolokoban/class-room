@@ -1,0 +1,26 @@
+.page {
+  position: absolute;
+  inset: 0;
+  display: grid;
+  grid-template-rows: auto 1fr;
+  background: var(--theme-color-neutral-1);
+  color: var(--theme-color-on-neutral-1);
+
+  > main {
+    /* "cq" units below are relative to this element. */
+    container-type: size;
+    /*
+     * The main board takes all the width of the left column (a third of the space),
+     * leaving room for the evaluation below it.
+     * The boards of the right column are a third of this size.
+     */
+    --chess-board-size: min((100cqw - 1em) / 3, 100cqh - 5em);
+
+    min-height: 0;
+    padding: 1em;
+    display: grid;
+    grid-template-columns: 1fr 2fr;
+    grid-template-rows: minmax(0, 1fr);
+    gap: 1em;
+  }
+}

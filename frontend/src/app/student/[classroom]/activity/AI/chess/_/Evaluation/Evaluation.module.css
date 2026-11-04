@@ -1,0 +1,20 @@
+div.evaluation {
+  padding: 0.125em 0.5em;
+  border-radius: 0.25em;
+  font-weight: bold;
+  text-align: center;
+  font-variant-numeric: tabular-nums;
+  background: var(--theme-color-neutral-5);
+  color: var(--theme-color-on-neutral-5);
+
+  &.white {
+    background: var(--theme-color-neutral-9);
+    color: var(--theme-color-on-neutral-9);
+  }
+
+  &.black {
+    background: var(--theme-color-neutral-1);
+    color: var(--theme-color-on-neutral-1);
+    outline: 1px solid var(--theme-color-neutral-5);
+  }
+}

@@ -1,0 +1,10 @@
+.restartDialog {
+  max-width: 90vw;
+  display: flex;
+  flex-direction: column;
+
+  & p {
+    margin: 0.25em 0 1em;
+    opacity: 0.8;
+  }
+}

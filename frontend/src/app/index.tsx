@@ -25,20 +25,21 @@ const Page0 = React.lazy(() => import("./page"))
 const Page5 = React.lazy(() => import("./student/[classroom]/activity/AI/CRAFT/page"))
 const Page6 = React.lazy(() => import("./student/[classroom]/activity/AI/GPS/page"))
 const Page8 = React.lazy(() => import("./student/[classroom]/activity/AI/RAG/embedding/page"))
-const Page9 = React.lazy(() => import("./student/[classroom]/activity/AI/eliza/page"))
-const Page10 = React.lazy(() => import("./student/[classroom]/activity/AI/le-chat-mange-la/page"))
-const Page11 = React.lazy(() => import("./student/[classroom]/activity/AI/mycin/page"))
-const Page12 = React.lazy(() => import("./student/[classroom]/activity/AI/neural-network/page"))
-const Page13 = React.lazy(() => import("./student/[classroom]/activity/AI/perceptron/page"))
-const Page14 = React.lazy(() => import("./student/[classroom]/activity/AI/types-ia-generatives/page"))
-const Page15 = React.lazy(() => import("./student/[classroom]/activity/AI/usage/page"))
-const Page17 = React.lazy(() => import("./student/[classroom]/activity/office/selection/page"))
-const Page20 = React.lazy(() => import("./student/[classroom]/activity/security/personal-data/AI-Act/page"))
-const Page21 = React.lazy(() => import("./student/[classroom]/activity/security/personal-data/RGPD/page"))
-const Page22 = React.lazy(() => import("./student/[classroom]/activity/security/personal-data/anonymous/page"))
-const Page27 = React.lazy(() => import("./teacher/[classroom]/activity/office/selection/page"))
-const Page28 = React.lazy(() => import("./teacher/[classroom]/home/page"))
-const Page29 = React.lazy(() => import("./teacher/[classroom]/results/page"))
+const Page9 = React.lazy(() => import("./student/[classroom]/activity/AI/chess/page"))
+const Page10 = React.lazy(() => import("./student/[classroom]/activity/AI/eliza/page"))
+const Page11 = React.lazy(() => import("./student/[classroom]/activity/AI/le-chat-mange-la/page"))
+const Page12 = React.lazy(() => import("./student/[classroom]/activity/AI/mycin/page"))
+const Page13 = React.lazy(() => import("./student/[classroom]/activity/AI/neural-network/page"))
+const Page14 = React.lazy(() => import("./student/[classroom]/activity/AI/perceptron/page"))
+const Page15 = React.lazy(() => import("./student/[classroom]/activity/AI/types-ia-generatives/page"))
+const Page16 = React.lazy(() => import("./student/[classroom]/activity/AI/usage/page"))
+const Page18 = React.lazy(() => import("./student/[classroom]/activity/office/selection/page"))
+const Page21 = React.lazy(() => import("./student/[classroom]/activity/security/personal-data/AI-Act/page"))
+const Page22 = React.lazy(() => import("./student/[classroom]/activity/security/personal-data/RGPD/page"))
+const Page23 = React.lazy(() => import("./student/[classroom]/activity/security/personal-data/anonymous/page"))
+const Page28 = React.lazy(() => import("./teacher/[classroom]/activity/office/selection/page"))
+const Page29 = React.lazy(() => import("./teacher/[classroom]/home/page"))
+const Page30 = React.lazy(() => import("./teacher/[classroom]/results/page"))
 
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 export default function App({ lang }: { lang?: string }) {
@@ -57,13 +58,14 @@ export default function App({ lang }: { lang?: string }) {
     const pg13 = Page13
     const pg14 = Page14
     const pg15 = Page15
-    const pg17 = Page17
-    const pg20 = Page20
+    const pg16 = Page16
+    const pg18 = Page18
     const pg21 = Page21
     const pg22 = Page22
-    const pg27 = Page27
+    const pg23 = Page23
     const pg28 = Page28
     const pg29 = Page29
+    const pg30 = Page30
     return (
         <Route path="/" def={[pg0, ly0, fb0, , NotFound0]} context={context}>
             <Route path="/student" def={[, , fb0, , NotFound0]} context={context}>
@@ -75,22 +77,23 @@ export default function App({ lang }: { lang?: string }) {
                             <Route path="/student/[classroom]/activity/AI/RAG" def={[, , fb0, , NotFound0]} context={context}>
                                 <Route path="/student/[classroom]/activity/AI/RAG/embedding" def={[pg8, , fb0, , NotFound0]} context={context}/>
                             </Route>
-                            <Route path="/student/[classroom]/activity/AI/eliza" def={[pg9, , fb0, , NotFound0]} context={context}/>
-                            <Route path="/student/[classroom]/activity/AI/le-chat-mange-la" def={[pg10, , fb0, , NotFound0]} context={context}/>
-                            <Route path="/student/[classroom]/activity/AI/mycin" def={[pg11, , fb0, , NotFound0]} context={context}/>
-                            <Route path="/student/[classroom]/activity/AI/neural-network" def={[pg12, , fb0, , NotFound0]} context={context}/>
-                            <Route path="/student/[classroom]/activity/AI/perceptron" def={[pg13, , fb0, , NotFound0]} context={context}/>
-                            <Route path="/student/[classroom]/activity/AI/types-ia-generatives" def={[pg14, , fb0, , NotFound0]} context={context}/>
-                            <Route path="/student/[classroom]/activity/AI/usage" def={[pg15, , fb0, , NotFound0]} context={context}/>
+                            <Route path="/student/[classroom]/activity/AI/chess" def={[pg9, , fb0, , NotFound0]} context={context}/>
+                            <Route path="/student/[classroom]/activity/AI/eliza" def={[pg10, , fb0, , NotFound0]} context={context}/>
+                            <Route path="/student/[classroom]/activity/AI/le-chat-mange-la" def={[pg11, , fb0, , NotFound0]} context={context}/>
+                            <Route path="/student/[classroom]/activity/AI/mycin" def={[pg12, , fb0, , NotFound0]} context={context}/>
+                            <Route path="/student/[classroom]/activity/AI/neural-network" def={[pg13, , fb0, , NotFound0]} context={context}/>
+                            <Route path="/student/[classroom]/activity/AI/perceptron" def={[pg14, , fb0, , NotFound0]} context={context}/>
+                            <Route path="/student/[classroom]/activity/AI/types-ia-generatives" def={[pg15, , fb0, , NotFound0]} context={context}/>
+                            <Route path="/student/[classroom]/activity/AI/usage" def={[pg16, , fb0, , NotFound0]} context={context}/>
                         </Route>
                         <Route path="/student/[classroom]/activity/office" def={[, , fb0, , NotFound0]} context={context}>
-                            <Route path="/student/[classroom]/activity/office/selection" def={[pg17, , fb0, , NotFound0]} context={context}/>
+                            <Route path="/student/[classroom]/activity/office/selection" def={[pg18, , fb0, , NotFound0]} context={context}/>
                         </Route>
                         <Route path="/student/[classroom]/activity/security" def={[, , fb0, , NotFound0]} context={context}>
                             <Route path="/student/[classroom]/activity/security/personal-data" def={[, , fb0, , NotFound0]} context={context}>
-                                <Route path="/student/[classroom]/activity/security/personal-data/AI-Act" def={[pg20, , fb0, , NotFound0]} context={context}/>
-                                <Route path="/student/[classroom]/activity/security/personal-data/RGPD" def={[pg21, , fb0, , NotFound0]} context={context}/>
-                                <Route path="/student/[classroom]/activity/security/personal-data/anonymous" def={[pg22, , fb0, , NotFound0]} context={context}/>
+                                <Route path="/student/[classroom]/activity/security/personal-data/AI-Act" def={[pg21, , fb0, , NotFound0]} context={context}/>
+                                <Route path="/student/[classroom]/activity/security/personal-data/RGPD" def={[pg22, , fb0, , NotFound0]} context={context}/>
+                                <Route path="/student/[classroom]/activity/security/personal-data/anonymous" def={[pg23, , fb0, , NotFound0]} context={context}/>
                             </Route>
                         </Route>
                     </Route>
@@ -100,11 +103,11 @@ export default function App({ lang }: { lang?: string }) {
                 <Route path="/teacher/[classroom]" def={[, , fb0, , NotFound0]} context={context}>
                     <Route path="/teacher/[classroom]/activity" def={[, , fb0, , NotFound0]} context={context}>
                         <Route path="/teacher/[classroom]/activity/office" def={[, , fb0, , NotFound0]} context={context}>
-                            <Route path="/teacher/[classroom]/activity/office/selection" def={[pg27, , fb0, , NotFound0]} context={context}/>
+                            <Route path="/teacher/[classroom]/activity/office/selection" def={[pg28, , fb0, , NotFound0]} context={context}/>
                         </Route>
                     </Route>
-                    <Route path="/teacher/[classroom]/home" def={[pg28, , fb0, , NotFound0]} context={context}/>
-                    <Route path="/teacher/[classroom]/results" def={[pg29, , fb0, , NotFound0]} context={context}>
+                    <Route path="/teacher/[classroom]/home" def={[pg29, , fb0, , NotFound0]} context={context}/>
+                    <Route path="/teacher/[classroom]/results" def={[pg30, , fb0, , NotFound0]} context={context}>
                         <Route path="/teacher/[classroom]/results/translation" def={[, , fb0, , NotFound0]} context={context}/>
                     </Route>
                 </Route>

@@ -1,0 +1,20 @@
+text.chessPiece {
+  /* Fonts that have nice chess glyphs. */
+  font-family: "DejaVu Sans", "Segoe UI Symbol", "Noto Sans Symbols 2", "Arial Unicode MS", serif;
+  font-size: 0.85px;
+  stroke-width: 0.04px;
+  paint-order: stroke;
+  stroke-linejoin: round;
+  user-select: none;
+
+  &.white {
+    fill: var(--chess-white-piece);
+    stroke: var(--chess-black-piece);
+  }
+
+  &.black {
+    fill: var(--chess-black-piece);
+    stroke: var(--chess-white-piece);
+    stroke-width: 0.02px;
+  }
+}

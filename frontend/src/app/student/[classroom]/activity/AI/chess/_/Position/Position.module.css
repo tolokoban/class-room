@@ -1,0 +1,19 @@
+section.position {
+  min-height: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.5em;
+
+  > svg {
+    width: var(--chess-board-size, 100%);
+  }
+
+  > div {
+    font-size: 1.5em;
+  }
+
+  > p {
+    margin: 0;
+  }
+}

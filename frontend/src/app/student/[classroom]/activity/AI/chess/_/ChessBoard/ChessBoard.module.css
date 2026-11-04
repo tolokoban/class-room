@@ -1,0 +1,26 @@
+svg.chessBoard {
+  /* The theme has no wood colors, nor pure black and white for the pieces. */
+  --chess-light: #f0d9b5;
+  --chess-dark: #b58863;
+  --chess-highlight: #fd38;
+  --chess-white-piece: #fff;
+  --chess-black-piece: #000;
+
+  display: block;
+  width: 100%;
+  aspect-ratio: 1;
+  border-radius: 0.25em;
+  box-shadow: 0 0.125em 0.5em #0006;
+
+  .light {
+    fill: var(--chess-light);
+  }
+
+  .dark {
+    fill: var(--chess-dark);
+  }
+
+  .highlight {
+    fill: var(--chess-highlight);
+  }
+}
