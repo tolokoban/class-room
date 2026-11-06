@@ -26,6 +26,7 @@ $ROLE = "teacher";
  * * -50104: There is already a file with this name in this class room.
  * * -50105: Database error (reported in the logs).
  * * -50106: Unable to store the file on the server (reported in the logs).
+ * * -50107: This name is reserved (see `NOTES_FILE_NAME`).
  */
 function entrypoint($input)
 {
@@ -37,6 +38,11 @@ function entrypoint($input)
     if (!isNonEmptyString($classroomCode) || $name === false || $data === false) {
         error_log("[file/add] Invalid input.");
         return -50101;
+    }
+
+    if (isReservedFileName($name)) {
+        error_log("[file/add] The name \"$name\" is reserved.");
+        return -50107;
     }
 
     $class = findClassByCode($classroomCode);

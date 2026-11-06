@@ -13,11 +13,6 @@ g.coefBox {
     dominant-baseline: central;
   }
 
-  &.bias > rect {
-    fill: var(--bias-box-color);
-    stroke-dasharray: 4 2;
-  }
-
   &.up > text {
     fill: var(--up-color);
     font-weight: bold;

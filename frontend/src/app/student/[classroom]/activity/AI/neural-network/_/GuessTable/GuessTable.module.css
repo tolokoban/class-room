@@ -2,6 +2,7 @@ div.guessTable {
   /* Same green as the input neurons of the SVG. */
   --correct-color: #3a3;
   --on-correct-color: #fff;
+  --border-color: #000;
 
   display: flex;
   flex-direction: column;
@@ -20,6 +21,7 @@ div.guessTable {
     td {
       min-width: 3em;
       padding: 0.125em 0.5em;
+      border: 1px solid var(--border-color);
       border-radius: 0.25em;
       text-align: center;
     }
@@ -34,4 +36,9 @@ td.correct {
 td.wrong {
   background: var(--theme-color-error-5);
   color: var(--theme-color-on-error-5);
+}
+
+/* Cells that are not in the array: the network extrapolates. */
+td.extrapolation {
+  border: 2px dotted var(--border-color);
 }

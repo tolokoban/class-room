@@ -25,6 +25,7 @@ $ROLE = "teacher";
  * * -50205: The mime type of the new content is not the same as the one of the replaced file.
  * * -50206: Database error (reported in the logs).
  * * -50207: Unable to store the file on the server (reported in the logs).
+ * * -50208: This name is reserved (see `NOTES_FILE_NAME`), or the file is the notes of the class room.
  */
 function entrypoint($input)
 {
@@ -38,6 +39,11 @@ function entrypoint($input)
         return -50201;
     }
 
+    if (isReservedFileName($name)) {
+        error_log("[file/replace] The name \"$name\" is reserved.");
+        return -50208;
+    }
+
     $file = findFile($fileId);
     if ($file === false) {
         error_log("[file/replace] File #{$fileId} does not exist.");
@@ -48,6 +54,11 @@ function entrypoint($input)
     if ($file["user"] !== $user["id"]) {
         error_log("[file/replace] User \"{$user["login"]}\" is not the owner of file #{$fileId}.");
         return -50203;
+    }
+
+    if (isReservedFileName($file["name"])) {
+        error_log("[file/replace] File #{$fileId} holds the notes of class room #{$file["classroom"]}.");
+        return -50208;
     }
 
     if (isFileNameUsed($file["classroom"], $name, $fileId)) {

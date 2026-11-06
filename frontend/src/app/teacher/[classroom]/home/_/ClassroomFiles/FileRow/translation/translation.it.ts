@@ -10,6 +10,7 @@ const IT: typeof FR = {
   sizeKB: "$1 KB",
   sizeMB: "$1 MB",
   sizeGB: "$1 GB",
+  reservedName: "Il nome «$1» è riservato alle note della classe.",
 };
 
 export default IT;

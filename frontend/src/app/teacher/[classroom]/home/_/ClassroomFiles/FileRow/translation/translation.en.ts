@@ -10,6 +10,7 @@ const EN: typeof FR = {
   sizeKB: "$1 KB",
   sizeMB: "$1 MB",
   sizeGB: "$1 GB",
+  reservedName: "The name “$1” is reserved for the notes of the class room.",
 };
 
 export default EN;

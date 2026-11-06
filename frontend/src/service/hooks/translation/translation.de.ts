@@ -65,6 +65,7 @@ const DE: typeof FR = {
     "In dieser Klasse gibt es bereits eine Datei mit diesem Namen. Verwenden Sie stattdessen das Ersetzen.",
   all50105: "Datenbankfehler beim Hinzufügen der Datei.",
   all50106: "Die Datei kann nicht auf dem Server gespeichert werden.",
+  all50107: "Der Name „notes.md“ ist für die Notizen der Klasse reserviert.",
 
   // file/replace
   all50201: "Ungültige Daten.",
@@ -74,6 +75,7 @@ const DE: typeof FR = {
   all50205: "Die neue Datei muss vom gleichen Typ sein wie die ersetzte Datei.",
   all50206: "Datenbankfehler beim Ersetzen der Datei.",
   all50207: "Die Datei kann nicht auf dem Server gespeichert werden.",
+  all50208: "Der Name „notes.md“ ist für die Notizen der Klasse reserviert.",
 
   // file/delete
   all50301: "Ungültige Daten.",
@@ -85,6 +87,19 @@ const DE: typeof FR = {
   all50401: "Ungültige Daten.",
   all50402: "Diese Klasse existiert nicht.",
   all50403: "Sie sind nicht der Eigentümer dieser Klasse.",
+
+  // file/notes-get
+  all50601: "Ungültige Daten.",
+  all50602: "Diese Klasse existiert nicht.",
+  all50603: "Sie sind nicht der Eigentümer dieser Klasse.",
+  all50604: "Der Inhalt der Notizen fehlt auf dem Server.",
+
+  // file/notes-set
+  all50701: "Ungültige Daten.",
+  all50702: "Diese Klasse existiert nicht.",
+  all50703: "Sie sind nicht der Eigentümer dieser Klasse.",
+  all50704: "Datenbankfehler beim Speichern der Notizen.",
+  all50705: "Die Notizen können nicht auf dem Server gespeichert werden.",
 };
 
 export default DE;

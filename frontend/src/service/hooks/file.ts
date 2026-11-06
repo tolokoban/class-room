@@ -1,7 +1,13 @@
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 
 import { API } from "@/service/calls";
-import { FileAddInput, FileDeleteInput, FileItem, FileReplaceInput } from "@/service/calls/file";
+import {
+  FileAddInput,
+  FileDeleteInput,
+  FileItem,
+  FileNotesSetInput,
+  FileReplaceInput,
+} from "@/service/calls/file";
 import { ApiError } from "@/service/calls/service";
 
 import { useApiError } from "./apiError";
@@ -19,6 +25,14 @@ export interface FileMutationResult<Input, Output> {
 }
 
 const FILE_LIST_KEY = "file/list";
+const FILE_NOTES_KEY = "file/notes-get";
+
+export interface FileNotesResult {
+  isLoading: boolean;
+  error: ApiError | null;
+  /** Markdown notes saved on the server. */
+  data: string | undefined;
+}
 
 /**
  * Fetch the files of a class room of the current teacher.
@@ -78,6 +92,34 @@ export function useServiceFileDelete(): FileMutationResult<FileDeleteInput, void
     mutationFn: API.file.delete,
     onSuccess() {
       void queryClient.invalidateQueries({ queryKey: [FILE_LIST_KEY] });
+    },
+  });
+
+  return { isPending, error: useApiError(error), mutate: mutateAsync };
+}
+
+/**
+ * Fetch the Markdown notes of a class room.
+ */
+export function useServiceFileNotes(classroomCode: string): FileNotesResult {
+  const { data, isLoading, error } = useQuery({
+    queryKey: [FILE_NOTES_KEY, classroomCode],
+    queryFn: () => API.file.notesGet({ classroomCode }),
+  });
+
+  return { isLoading, error: useApiError(error), data };
+}
+
+/**
+ * Save the Markdown notes of a class room.
+ * The matching `useServiceFileNotes()` gets the saved content on success.
+ */
+export function useServiceFileNotesSet(): FileMutationResult<FileNotesSetInput, void> {
+  const queryClient = useQueryClient();
+  const { mutateAsync, isPending, error } = useMutation({
+    mutationFn: API.file.notesSet,
+    onSuccess(_, { classroomCode, content }) {
+      queryClient.setQueryData([FILE_NOTES_KEY, classroomCode], content);
     },
   });
 

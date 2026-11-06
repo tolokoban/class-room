@@ -1,35 +1,7 @@
-I want the teacher to be able to store files in each classroom.
-We need a new database table `classroom_files` with this fields:
+I need few improvements in the activity `frontend/src/app/student/[classroom]/activity/AI/neural-network`.
 
-- An auto incremental ID
-- The name of the file (with the extension, but without any folder)
-- The size of the file in bytes
-- The mime type
-- A link to the classroom it belongs
+Fist of all, never display the biaises in the SVG. It aws confusing for the students and I don't explain the maths behinf the neuron trigger. the weight are fine to stay, though.
 
-The files will be stored in `/files`, a folder that is protected from direct access with a `.htaccess` file.
-To prevent having too much files in one folder, we will use subfolder based on the unique ID of each file.
-The rule si that we don't have more than 100 files and 100 folder per folder.
+Then, in the input layers, we can have the value +1 or -1. But I want you to replace (only in the view, not in the calculations) the -1 of the SVG with a 0. That will match better a digit of a binary number.
 
-Let's take an example.
-
-- A teacher uploads the file `my-slides.odp`.
-- It is stored in the database and get the id `47211`.
-- It will then be stored in `/files/04/72/11.odp`.
-
-We wil need new entrypoints :
-
-- `file/add(file: string, name: string): { fileId: number }`: upload a new file for a specifc classroom that belongs to the currently logged teacher.
-- `file/replace(fileId: number, file: string, name: string): { fileId: number }`: upload a file to replace an existing one, provided they have the same mime type.
-- `file/delete(fileId: number): boolean`: delete a file permanently.
-
-The name of file to upload must be unique in a classroom. uploading a file with a name of another file that already exists is forbidden. You can only do this with `file/replace` and specify the id of the file to replace.
-
-In route `#/teacher/[classroom]/home`, There is the list of available activities.
-I want two columns here: on the left, the list of the available activities (what is currently the content of this page) and on the right a section called "Ressources pédagogiques" with a table of files stored for this classroom and with the folling columns:
-
-1. An icon depending on the mime type of the file
-2. The name of the file
-3. The size of the file in human friendly format (Kb, Mb, ...)
-4. An action with icon <IconImport> to upload a file to replace this one. It is only possible tio upload a replacement file if it as the same mime type as the one to be replaced.
-5. Last column, an <UiActionDelete> with confirmation to delete this file permanently
+I want to tech the students that a neural network can guess things it has never learned directly. That's why, I want the array to have only 7 items, not 8. And in the result of training, that is just below the sentence "Après correction, le réseau devine pour chaque case", there is this table 8x2. We keep the last column, but the cells should be borderred by dotted lines. By the way, the other cells of the table should also get a black border, and the green background should never be applied in the first row, only on the percentages of the second row. And for the one on this second row that are bad guesses, I want a red background, except for the last column because this is not in the arrya of 7 items to guess, but this is more of an extrapolation that the model can do.

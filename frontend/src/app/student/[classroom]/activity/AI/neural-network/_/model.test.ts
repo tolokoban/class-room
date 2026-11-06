@@ -8,11 +8,11 @@ describe("neural-network model", () => {
     expect(indexToInputs(6)).toEqual([1, 1, -1]);
   });
 
-  it("should create arrays with 2 hearts, 1 treasure and 5 skulls", () => {
+  it("should create arrays with 2 hearts, 1 treasure and 4 skulls", () => {
     const array = createArray();
     expect(array.filter((item) => item === "heart").length).toBe(2);
     expect(array.filter((item) => item === "treasure").length).toBe(1);
-    expect(array.filter((item) => item === "skull").length).toBe(5);
+    expect(array.filter((item) => item === "skull").length).toBe(4);
   });
 
   it("should learn most random arrays in a reasonable number of clicks", () => {
@@ -24,7 +24,12 @@ describe("neural-network model", () => {
         const index = step % array.length;
         weights = train(weights, run(weights, index), array[index]);
       }
-      if (runAll(weights, array).every((result) => isCorrect(result, array))) success++;
+      if (
+        runAll(weights)
+          .slice(0, array.length)
+          .every((result) => isCorrect(result, array))
+      )
+        success++;
     }
     expect(success).toBeGreaterThan(80);
   });

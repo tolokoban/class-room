@@ -33,12 +33,11 @@ export function outputY(c: number): number {
 
 /**
  * Top-left corner of the box of the `j`-th input coefficient of hidden neuron `k`.
- * The box after the last input (`j = 3`) holds the bias.
  */
 export function hiddenInBox(k: number, j: number): Point {
   return {
     x: HIDDEN_X - RADIUS - GAP - BOX_WIDTH,
-    y: hiddenY(k) - 2 * BOX_HEIGHT + j * BOX_HEIGHT,
+    y: hiddenY(k) - 1.5 * BOX_HEIGHT + j * BOX_HEIGHT,
   };
 }
 
@@ -49,16 +48,6 @@ export function hiddenOutBox(k: number, c: number): Point {
   return {
     x: HIDDEN_X + RADIUS + GAP,
     y: hiddenY(k) - 1.5 * BOX_HEIGHT + c * BOX_HEIGHT,
-  };
-}
-
-/**
- * Top-left corner of the box of the bias of output `c` (below the neuron).
- */
-export function outputBiasBox(c: number): Point {
-  return {
-    x: OUTPUT_X - BOX_WIDTH / 2,
-    y: outputY(c) + RADIUS + GAP,
   };
 }
 

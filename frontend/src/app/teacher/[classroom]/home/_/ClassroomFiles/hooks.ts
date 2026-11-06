@@ -1,7 +1,7 @@
 import React from "react";
 
 import { Notif } from "@/components/Notification";
-import { readFileAsDataUrl } from "@/service/calls/file";
+import { isReservedFileName, readFileAsDataUrl } from "@/service/calls/file";
 import { useApiErrorTranslator } from "@/service/hooks/apiError";
 import { useServiceFileAdd, useServiceFileList } from "@/service/hooks/file";
 
@@ -18,6 +18,10 @@ export function useClassroomFiles(classroom: string) {
     // Allow to pick the same file again.
     if (refInput.current) refInput.current.value = "";
     for (const file of files) {
+      if (isReservedFileName(file.name)) {
+        Notif.error(tr.reservedName$(file.name));
+        continue;
+      }
       const name = file.name.toLowerCase();
       if (list.data?.some((item) => item.name.toLowerCase() === name)) {
         Notif.error(tr.nameUsed$(file.name));

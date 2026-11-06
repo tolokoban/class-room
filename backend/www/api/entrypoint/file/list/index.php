@@ -1,11 +1,13 @@
 <?php
 require_once __DIR__ . "/../../../db.php";
 require_once __DIR__ . "/../../../activity.php";
+require_once __DIR__ . "/../../../file.php";
 
 $ROLE = "teacher";
 
 /**
  * List the files of a class room owned by the current user, sorted by name.
+ * The notes of the class room (`NOTES_FILE_NAME`) are not listed.
  *
  * @param mixed $input
  * ```ts
@@ -51,8 +53,9 @@ function entrypoint($input)
 
     $stmt = $DB->query(
         "SELECT `id`, `name`, `size`, `mime` FROM `{$DB->table("files")}`
-         WHERE `classroom` = ? ORDER BY `name`",
-        $class["id"]
+         WHERE `classroom` = ? AND `name` <> ? ORDER BY `name`",
+        $class["id"],
+        NOTES_FILE_NAME
     );
     $rows = $stmt === false ? [] : $stmt->fetchAll();
 

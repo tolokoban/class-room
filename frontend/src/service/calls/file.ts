@@ -1,6 +1,18 @@
-import { isType } from "@tolokoban/type-guards";
+import { isString, isType } from "@tolokoban/type-guards";
 
 import { api, ApiError, ApiErrorTypeAssertion, throwIfError } from "./service";
+
+/**
+ * The Markdown notes of a class room are stored as a file with this name.
+ * It is reserved: the teacher cannot upload a file with this name,
+ * and it is not part of `fileList()`.
+ */
+export const NOTES_FILE_NAME = "notes.md";
+
+/** Same comparison as the backend (case insensitive). */
+export function isReservedFileName(name: string): boolean {
+  return name.toLowerCase() === NOTES_FILE_NAME;
+}
 
 export interface FileItem {
   /** Field `id` of table `files`. */
@@ -57,6 +69,7 @@ export async function fileAdd(input: FileAddInput): Promise<number> {
     [ApiError.FILE_ADD_NAME_USED]: `There is already a file called "${input.name}" in this class room.`,
     [ApiError.FILE_ADD_DATABASE_ERROR]: "Database error while adding the file.",
     [ApiError.FILE_ADD_STORAGE_ERROR]: "Unable to store the file on the server.",
+    [ApiError.FILE_ADD_RESERVED_NAME]: `The name "${input.name}" is reserved.`,
   });
   if (!isType(result, { fileId: "number" })) {
     throw new ApiErrorTypeAssertion('Invalid response for "file/add"');
@@ -91,6 +104,7 @@ export async function fileReplace(input: FileReplaceInput): Promise<number> {
       "The new file must have the same type as the replaced one.",
     [ApiError.FILE_REPLACE_DATABASE_ERROR]: "Database error while replacing the file.",
     [ApiError.FILE_REPLACE_STORAGE_ERROR]: "Unable to store the file on the server.",
+    [ApiError.FILE_REPLACE_RESERVED_NAME]: `The name "${input.name}" is reserved.`,
   });
   if (!isType(result, { fileId: "number" })) {
     throw new ApiErrorTypeAssertion('Invalid response for "file/replace"');
@@ -117,6 +131,49 @@ export async function fileDelete(input: FileDeleteInput): Promise<void> {
   if (result !== true) {
     throw new ApiErrorTypeAssertion('Invalid response for "file/delete"');
   }
+}
+
+export interface FileNotesGetInput {
+  /** Field `code` of table `class`. */
+  classroomCode: string;
+}
+
+/**
+ * @returns The Markdown notes of a class room (`""` if there are none yet).
+ */
+export async function fileNotesGet(input: FileNotesGetInput): Promise<string> {
+  const result = await api("file/notes-get", input);
+  throwIfError(result, {
+    [ApiError.FILE_NOTES_GET_INVALID_INPUT]: "Invalid input.",
+    [ApiError.FILE_NOTES_GET_CLASS_NOT_FOUND]: `Class room "${input.classroomCode}" does not exist.`,
+    [ApiError.FILE_NOTES_GET_FORBIDDEN]: `You are not the owner of class room "${input.classroomCode}".`,
+    [ApiError.FILE_NOTES_GET_CONTENT_MISSING]: "The content of the notes is missing on the server.",
+  });
+  if (!isString(result)) {
+    throw new ApiErrorTypeAssertion('Invalid response for "file/notes-get"');
+  }
+  return result;
+}
+
+export interface FileNotesSetInput {
+  /** Field `code` of table `class`. */
+  classroomCode: string;
+  /** Markdown. */
+  content: string;
+}
+
+/**
+ * Save the Markdown notes of a class room.
+ */
+export async function fileNotesSet(input: FileNotesSetInput): Promise<void> {
+  const result = await api("file/notes-set", input);
+  throwIfError(result, {
+    [ApiError.FILE_NOTES_SET_INVALID_INPUT]: "Invalid input.",
+    [ApiError.FILE_NOTES_SET_CLASS_NOT_FOUND]: `Class room "${input.classroomCode}" does not exist.`,
+    [ApiError.FILE_NOTES_SET_FORBIDDEN]: `You are not the owner of class room "${input.classroomCode}".`,
+    [ApiError.FILE_NOTES_SET_DATABASE_ERROR]: "Database error while saving the notes.",
+    [ApiError.FILE_NOTES_SET_STORAGE_ERROR]: "Unable to store the notes on the server.",
+  });
 }
 
 /**

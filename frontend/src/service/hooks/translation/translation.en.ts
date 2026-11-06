@@ -64,6 +64,7 @@ const EN: typeof FR = {
   all50104: "A file with this name already exists in this class room. Use the replacement instead.",
   all50105: "Database error while adding the file.",
   all50106: "Unable to store the file on the server.",
+  all50107: "The name “notes.md” is reserved for the notes of the class room.",
 
   // file/replace
   all50201: "Invalid input.",
@@ -73,6 +74,7 @@ const EN: typeof FR = {
   all50205: "The new file must be of the same type as the one it replaces.",
   all50206: "Database error while replacing the file.",
   all50207: "Unable to store the file on the server.",
+  all50208: "The name “notes.md” is reserved for the notes of the class room.",
 
   // file/delete
   all50301: "Invalid input.",
@@ -84,6 +86,19 @@ const EN: typeof FR = {
   all50401: "Invalid input.",
   all50402: "This class room does not exist.",
   all50403: "You are not the owner of this class room.",
+
+  // file/notes-get
+  all50601: "Invalid input.",
+  all50602: "This class room does not exist.",
+  all50603: "You are not the owner of this class room.",
+  all50604: "The content of the notes is missing on the server.",
+
+  // file/notes-set
+  all50701: "Invalid input.",
+  all50702: "This class room does not exist.",
+  all50703: "You are not the owner of this class room.",
+  all50704: "Database error while saving the notes.",
+  all50705: "Unable to store the notes on the server.",
 };
 
 export default EN;

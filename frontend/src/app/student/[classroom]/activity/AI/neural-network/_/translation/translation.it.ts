@@ -3,10 +3,10 @@ import FR from "./translation.fr";
 const IT: typeof FR = {
   explanation: `## Imparare una tabella a memoria
 
-La tabella in alto sullo schermo contiene **8 caselle**: 2 ❤️, 1 💰 e 5 💀.
+La tabella in alto sullo schermo contiene **7 caselle**: 2 ❤️, 1 💰 e 4 💀.
 Vogliamo che una **rete neurale** impari il contenuto di ogni casella, solo a partire dal suo **numero**.
 
-- 🟢 **Ingressi**: il numero della casella, scritto in binario con 3 cifre (**−1** per 0 e **+1** per 1).
+- 🟢 **Ingressi**: il numero della casella, scritto in binario con 3 cifre.
 - 🔵 **Strato nascosto**: 4 neuroni che combinano gli ingressi.
 - 🟡 **Uscite**: la fiducia della rete per ogni oggetto. La più grande è la sua risposta.
 

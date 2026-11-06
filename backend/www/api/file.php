@@ -15,6 +15,39 @@ require_once __DIR__ . "/db.php";
 const FILES_ROOT = __DIR__ . "/../files";
 
 /**
+ * The Markdown notes of a class room are stored as a file with this name
+ * (see `file/notes-get` and `file/notes-set`). The teacher cannot upload
+ * a file with this name, and it is not listed by `file/list`.
+ */
+const NOTES_FILE_NAME = "notes.md";
+const NOTES_MIME = "text/markdown";
+
+/**
+ * Is this name reserved (case insensitive, like the database collation)?
+ */
+function isReservedFileName(string $name): bool
+{
+    return mb_strtolower($name) === NOTES_FILE_NAME;
+}
+
+/**
+ * @return array|false `["id" => int, "name" => string]` of the notes file of a class room,
+ * or `false` if there is none yet.
+ */
+function findNotesFile(int $classroom)
+{
+    global $DB;
+
+    $stmt = $DB->query(
+        "SELECT `id`, `name` FROM `{$DB->table("files")}` WHERE `classroom` = ? AND `name` = ?",
+        $classroom,
+        NOTES_FILE_NAME
+    );
+    $row = $stmt === false ? false : $stmt->fetch();
+    return $row === false ? false : ["id" => (int) $row["id"], "name" => $row["name"]];
+}
+
+/**
  * Absolute path where the content of a file is stored.
  *
  * @param int $id Field `id` of table `files`.

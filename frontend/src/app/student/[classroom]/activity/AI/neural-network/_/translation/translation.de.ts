@@ -3,10 +3,10 @@ import FR from "./translation.fr";
 const DE: typeof FR = {
   explanation: `## Eine Tabelle auswendig lernen
 
-Die Tabelle oben auf dem Bildschirm hat **8 Felder**: 2 ❤️, 1 💰 und 5 💀.
+Die Tabelle oben auf dem Bildschirm hat **7 Felder**: 2 ❤️, 1 💰 und 4 💀.
 Wir möchten, dass ein **neuronales Netz** den Inhalt jedes Feldes lernt, nur anhand seiner **Nummer**.
 
-- 🟢 **Eingaben**: die Nummer des Feldes, binär mit 3 Ziffern geschrieben (**−1** für 0 und **+1** für 1).
+- 🟢 **Eingaben**: die Nummer des Feldes, binär mit 3 Ziffern geschrieben.
 - 🔵 **Verborgene Schicht**: 4 Neuronen, die die Eingaben kombinieren.
 - 🟡 **Ausgaben**: die Sicherheit des Netzes für jedes Objekt. Die größte ist seine Antwort.
 

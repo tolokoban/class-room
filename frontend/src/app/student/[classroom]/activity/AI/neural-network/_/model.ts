@@ -9,6 +9,8 @@ export type Item = (typeof ITEMS)[number];
 export const INPUT_COUNT = 3;
 export const HIDDEN_COUNT = 4;
 export const OUTPUT_COUNT = ITEMS.length;
+/** Number of cells the inputs can encode. The array has one cell less: the last one is never learned. */
+export const CELL_COUNT = 2 ** INPUT_COUNT;
 export const LEARNING_RATE = 1;
 /** Initial weights are random between -INITIAL_RANGE and +INITIAL_RANGE. */
 export const INITIAL_RANGE = 2;
@@ -33,7 +35,7 @@ export interface Run {
 }
 
 export function createArray(): Item[] {
-  const array: Item[] = ["heart", "heart", "treasure", "skull", "skull", "skull", "skull", "skull"];
+  const array: Item[] = ["heart", "heart", "treasure", "skull", "skull", "skull", "skull"];
   for (let i = array.length - 1; i > 0; i--) {
     const j = Math.floor(Math.random() * (i + 1));
     [array[i], array[j]] = [array[j], array[i]];
@@ -106,10 +108,11 @@ export function trainRandomly(weights: Weights, array: Item[], count: number): W
 }
 
 /**
- * Guess every item of the array.
+ * Guess every cell the inputs can encode, including the last one
+ * that is not in the array (extrapolation).
  */
-export function runAll(weights: Weights, array: Item[]): Run[] {
-  return array.map((_, index) => run(weights, index));
+export function runAll(weights: Weights): Run[] {
+  return Array.from({ length: CELL_COUNT }, (_, index) => run(weights, index));
 }
 
 export function isCorrect(result: Run, array: Item[]): boolean {

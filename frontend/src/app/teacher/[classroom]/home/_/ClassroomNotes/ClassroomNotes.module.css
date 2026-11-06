@@ -1,0 +1,48 @@
+.classroomNotes {
+    border-radius: .25em;
+    overflow: hidden;
+
+    >header {
+        background: var(--theme-color-primary-5);
+        color: var(--theme-color-on-primary-5);
+        padding: .5em;
+        font-weight: bold;
+    }
+
+    >div {
+        background: var(--theme-color-primary-3);
+        color: var(--theme-color-on-primary-3);
+        padding: .5em;
+
+        textarea {
+            display: block;
+            box-sizing: border-box;
+            width: 100%;
+            min-height: 10em;
+            resize: none;
+            overflow: hidden;
+            margin-top: .5em;
+            padding: .5em;
+            border: none;
+            border-radius: .25em;
+            font-family: monospace;
+            font-size: 1em;
+            background: var(--theme-color-neutral-9);
+            color: var(--theme-color-on-neutral-9);
+        }
+
+        >.error {
+            color: var(--theme-color-error);
+        }
+    }
+
+    >footer {
+        background: var(--theme-color-primary-2);
+        color: var(--theme-color-on-primary-2);
+        padding: .5em;
+        display: flex;
+        justify-content: flex-end;
+        align-items: center;
+        gap: 1em;
+    }
+}

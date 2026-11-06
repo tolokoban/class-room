@@ -11,7 +11,6 @@ import {
   INPUT_X,
   inputY,
   OUTPUT_X,
-  outputBiasBox,
   outputY,
   type Point,
   RADIUS,
@@ -42,15 +41,14 @@ function computeLines(): Array<[Point, Point]> {
   const lines: Array<[Point, Point]> = [];
   for (let k = 0; k < HIDDEN_COUNT; k++) {
     const y = hiddenY(k);
-    // Inputs → input coefficients → hidden neuron (the last box is the bias).
-    for (let j = 0; j <= INPUT_COUNT; j++) {
+    // Inputs → input coefficients → hidden neuron.
+    for (let j = 0; j < INPUT_COUNT; j++) {
       const box = hiddenInBox(k, j);
       const middle = box.y + BOX_HEIGHT / 2;
-      if (j < INPUT_COUNT)
-        lines.push([
-          { x: INPUT_X + RADIUS, y: inputY(j) },
-          { x: box.x, y: middle },
-        ]);
+      lines.push([
+        { x: INPUT_X + RADIUS, y: inputY(j) },
+        { x: box.x, y: middle },
+      ]);
       lines.push([
         { x: box.x + BOX_WIDTH, y: middle },
         { x: HIDDEN_X - RADIUS, y },
@@ -69,12 +67,6 @@ function computeLines(): Array<[Point, Point]> {
         { x: OUTPUT_X - RADIUS, y: outputY(c) },
       ]);
     }
-  }
-  for (let c = 0; c < OUTPUT_COUNT; c++) {
-    lines.push([
-      { x: OUTPUT_X, y: outputY(c) + RADIUS },
-      { x: OUTPUT_X, y: outputBiasBox(c).y },
-    ]);
   }
   return lines;
 }

@@ -51,7 +51,7 @@ export function useGame() {
       const weights = train(last.weights, result, array[index]);
       return [
         ...list.slice(0, -1),
-        { ...last, run: result, guesses: runAll(weights, array) },
+        { ...last, run: result, guesses: runAll(weights) },
         createStep(weights, last.weights),
       ];
     });
@@ -62,7 +62,7 @@ export function useGame() {
       const weights = trainRandomly(last.weights, array, ROUNDS);
       return [
         ...list.slice(0, -1),
-        { ...last, rounds: ROUNDS, guesses: runAll(weights, array) },
+        { ...last, rounds: ROUNDS, guesses: runAll(weights) },
         createStep(weights, last.weights),
       ];
     });

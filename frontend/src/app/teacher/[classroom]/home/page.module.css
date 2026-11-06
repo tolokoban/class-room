@@ -11,9 +11,24 @@
     align-content: flex-start;
     gap: 2em;
 
-    >section {
+    >* {
         flex: 1 1 min(20em, 100%);
         max-width: 40em;
+    }
+
+    /* Right column */
+    >div {
+        display: flex;
+        flex-direction: column;
+        gap: 2em;
+
+        >section {
+            border-radius: .25em;
+            overflow: hidden;
+        }
+    }
+
+    >section {
         border-radius: .25em;
         overflow: hidden;
 

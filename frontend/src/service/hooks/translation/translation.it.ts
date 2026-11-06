@@ -64,6 +64,7 @@ const IT: typeof FR = {
   all50104: "Esiste già un file con questo nome in questa classe. Usa la sostituzione.",
   all50105: "Errore del database durante l'aggiunta del file.",
   all50106: "Impossibile salvare il file sul server.",
+  all50107: "Il nome «notes.md» è riservato alle note della classe.",
 
   // file/replace
   all50201: "Dati non validi.",
@@ -73,6 +74,7 @@ const IT: typeof FR = {
   all50205: "Il nuovo file deve essere dello stesso tipo di quello che sostituisce.",
   all50206: "Errore del database durante la sostituzione del file.",
   all50207: "Impossibile salvare il file sul server.",
+  all50208: "Il nome «notes.md» è riservato alle note della classe.",
 
   // file/delete
   all50301: "Dati non validi.",
@@ -84,6 +86,19 @@ const IT: typeof FR = {
   all50401: "Dati non validi.",
   all50402: "Questa classe non esiste.",
   all50403: "Non sei il proprietario di questa classe.",
+
+  // file/notes-get
+  all50601: "Dati non validi.",
+  all50602: "Questa classe non esiste.",
+  all50603: "Non sei il proprietario di questa classe.",
+  all50604: "Il contenuto delle note non è presente sul server.",
+
+  // file/notes-set
+  all50701: "Dati non validi.",
+  all50702: "Questa classe non esiste.",
+  all50703: "Non sei il proprietario di questa classe.",
+  all50704: "Errore del database durante il salvataggio delle note.",
+  all50705: "Impossibile salvare le note sul server.",
 };
 
 export default IT;

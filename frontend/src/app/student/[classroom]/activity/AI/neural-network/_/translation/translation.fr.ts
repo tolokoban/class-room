@@ -1,10 +1,10 @@
 const FR = {
   explanation: `## Apprendre un tableau par cœur
 
-Le tableau en haut de l'écran contient **8 cases** : 2 ❤️, 1 💰 et 5 💀.
+Le tableau en haut de l'écran contient **7 cases** : 2 ❤️, 1 💰 et 4 💀.
 Nous voulons qu'un **réseau de neurones** apprenne le contenu de chaque case, uniquement à partir de son **numéro**.
 
-- 🟢 **Entrées** : le numéro de la case, écrit en binaire avec 3 chiffres (**−1** pour 0 et **+1** pour 1).
+- 🟢 **Entrées** : le numéro de la case, écrit en binaire avec 3 chiffres.
 - 🔵 **Couche cachée** : 4 neurones qui combinent les entrées.
 - 🟡 **Sorties** : la confiance du réseau pour chaque objet. La plus grande est sa réponse.
 

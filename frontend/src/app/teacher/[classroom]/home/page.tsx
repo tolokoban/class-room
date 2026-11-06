@@ -4,6 +4,7 @@ import { TeacherOnly } from "@/components/TeacherOnly";
 import { isTeacher, State } from "@/state";
 
 import { ClassroomFiles } from "./_/ClassroomFiles";
+import { ClassroomNotes } from "./_/ClassroomNotes";
 import { CurrentActivity } from "./_/CurrentActivity";
 
 import Styles from "./page.module.css";
@@ -20,7 +21,11 @@ export default function Page() {
         <CurrentActivity classroom={classroom} />
         <ActivitiesList />
       </section>
-      <ClassroomFiles classroom={classroom} />
+      <div>
+        <ClassroomFiles classroom={classroom} />
+        {/* The key resets the draft of the notes when the class room changes. */}
+        <ClassroomNotes key={classroom} classroom={classroom} />
+      </div>
     </div>
   );
 }

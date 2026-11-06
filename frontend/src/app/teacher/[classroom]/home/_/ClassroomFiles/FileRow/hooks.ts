@@ -3,7 +3,7 @@ import React from "react";
 
 import { useConfirm } from "@/components/Confirm";
 import { Notif } from "@/components/Notification";
-import { FileItem, getFileMime, readFileAsDataUrl } from "@/service/calls/file";
+import { FileItem, getFileMime, isReservedFileName, readFileAsDataUrl } from "@/service/calls/file";
 import { useApiErrorTranslator } from "@/service/hooks/apiError";
 import { useServiceFileDelete, useServiceFileReplace } from "@/service/hooks/file";
 
@@ -43,6 +43,10 @@ function useFileReplace(
     if (refInput.current) refInput.current.value = "";
     if (!picked) return;
 
+    if (isReservedFileName(picked.name)) {
+      Notif.error(tr.reservedName$(picked.name));
+      return;
+    }
     if (getFileMime(picked) !== file.mime) {
       Notif.error(tr.mimeMismatch$(picked.name, file.name));
       return;

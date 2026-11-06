@@ -62,6 +62,7 @@ const FR = {
   all50104: "Un fichier porte déjà ce nom dans cette classe. Utilisez le remplacement.",
   all50105: "Erreur de base de données lors de l'ajout du fichier.",
   all50106: "Impossible d'enregistrer le fichier sur le serveur.",
+  all50107: "Le nom « notes.md » est réservé aux notes de la classe.",
 
   // file/replace
   all50201: "Données invalides.",
@@ -71,6 +72,7 @@ const FR = {
   all50205: "Le nouveau fichier doit être du même type que celui qu'il remplace.",
   all50206: "Erreur de base de données lors du remplacement du fichier.",
   all50207: "Impossible d'enregistrer le fichier sur le serveur.",
+  all50208: "Le nom « notes.md » est réservé aux notes de la classe.",
 
   // file/delete
   all50301: "Données invalides.",
@@ -82,6 +84,19 @@ const FR = {
   all50401: "Données invalides.",
   all50402: "Cette classe n'existe pas.",
   all50403: "Vous n'êtes pas le propriétaire de cette classe.",
+
+  // file/notes-get
+  all50601: "Données invalides.",
+  all50602: "Cette classe n'existe pas.",
+  all50603: "Vous n'êtes pas le propriétaire de cette classe.",
+  all50604: "Le contenu des notes est introuvable sur le serveur.",
+
+  // file/notes-set
+  all50701: "Données invalides.",
+  all50702: "Cette classe n'existe pas.",
+  all50703: "Vous n'êtes pas le propriétaire de cette classe.",
+  all50704: "Erreur de base de données lors de l'enregistrement des notes.",
+  all50705: "Impossible d'enregistrer les notes sur le serveur.",
 } satisfies Record<string, string>;
 
 export default FR;

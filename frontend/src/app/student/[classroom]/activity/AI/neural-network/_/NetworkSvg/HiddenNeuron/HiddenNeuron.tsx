@@ -18,18 +18,15 @@ export interface HiddenNeuronProps {
 }
 
 export function HiddenNeuron({ className, index, weights, previous, value }: HiddenNeuronProps) {
-  const inputs = [...weights.hidden[index], weights.hiddenBias[index]];
-  const previousInputs = previous && [...previous.hidden[index], previous.hiddenBias[index]];
   const y = hiddenY(index);
   return (
     <g className={$.join(className, Styles.hiddenNeuron)}>
-      {inputs.map((coef, j) => (
+      {weights.hidden[index].map((coef, j) => (
         <CoefBox
           key={`in${j}`}
           position={hiddenInBox(index, j)}
           value={coef}
-          previous={previousInputs?.[j]}
-          bias={j === inputs.length - 1}
+          previous={previous?.hidden[index][j]}
         />
       ))}
       <circle cx={HIDDEN_X} cy={y} r={RADIUS} />

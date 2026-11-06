@@ -119,6 +119,7 @@ export class ApiError extends Error {
   static FILE_ADD_NAME_USED = -50104;
   static FILE_ADD_DATABASE_ERROR = -50105;
   static FILE_ADD_STORAGE_ERROR = -50106;
+  static FILE_ADD_RESERVED_NAME = -50107;
 
   // file/replace (05-02)
   static FILE_REPLACE_INVALID_INPUT = -50201;
@@ -128,6 +129,7 @@ export class ApiError extends Error {
   static FILE_REPLACE_MIME_MISMATCH = -50205;
   static FILE_REPLACE_DATABASE_ERROR = -50206;
   static FILE_REPLACE_STORAGE_ERROR = -50207;
+  static FILE_REPLACE_RESERVED_NAME = -50208;
 
   // file/delete (05-03)
   static FILE_DELETE_INVALID_INPUT = -50301;
@@ -139,6 +141,21 @@ export class ApiError extends Error {
   static FILE_LIST_INVALID_INPUT = -50401;
   static FILE_LIST_CLASS_NOT_FOUND = -50402;
   static FILE_LIST_FORBIDDEN = -50403;
+
+  // file/get (05-05): only used as a link, see `getFileUrl()`.
+
+  // file/notes-get (05-06)
+  static FILE_NOTES_GET_INVALID_INPUT = -50601;
+  static FILE_NOTES_GET_CLASS_NOT_FOUND = -50602;
+  static FILE_NOTES_GET_FORBIDDEN = -50603;
+  static FILE_NOTES_GET_CONTENT_MISSING = -50604;
+
+  // file/notes-set (05-07)
+  static FILE_NOTES_SET_INVALID_INPUT = -50701;
+  static FILE_NOTES_SET_CLASS_NOT_FOUND = -50702;
+  static FILE_NOTES_SET_FORBIDDEN = -50703;
+  static FILE_NOTES_SET_DATABASE_ERROR = -50704;
+  static FILE_NOTES_SET_STORAGE_ERROR = -50705;
 
   constructor(
     public readonly code: number,

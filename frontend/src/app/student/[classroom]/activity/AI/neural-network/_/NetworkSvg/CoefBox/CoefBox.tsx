@@ -14,15 +14,12 @@ export interface CoefBoxProps {
   value: number;
   /** Value before the last correction, if any. */
   previous?: number;
-  bias?: boolean;
 }
 
-export function CoefBox({ className, position, value, previous, bias }: CoefBoxProps) {
+export function CoefBox({ className, position, value, previous }: CoefBoxProps) {
   const tr = useTranslation();
   return (
-    <g
-      className={$.join(className, Styles.coefBox, bias && Styles.bias, getChange(value, previous))}
-    >
+    <g className={$.join(className, Styles.coefBox, getChange(value, previous))}>
       {previous !== undefined && <title>{tr.previous$(formatCoef(previous))}</title>}
       <rect x={position.x} y={position.y} width={BOX_WIDTH} height={BOX_HEIGHT} />
       <text x={position.x + BOX_WIDTH / 2} y={position.y + BOX_HEIGHT / 2}>

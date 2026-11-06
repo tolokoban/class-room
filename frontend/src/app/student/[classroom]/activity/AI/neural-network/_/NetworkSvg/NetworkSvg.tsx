@@ -31,7 +31,8 @@ export function NetworkSvg({ className, weights, previous, run }: NetworkSvgProp
           <g key={j} className={Styles.input}>
             <circle cx={INPUT_X} cy={inputY(j)} r={RADIUS} />
             <text x={INPUT_X} y={inputY(j)}>
-              {value === null ? "?" : value > 0 ? "+1" : "-1"}
+              {/* Displayed as a binary digit, but computed with -1 for 0. */}
+              {value === null ? "?" : value > 0 ? "+1" : "0"}
             </text>
           </g>
         ))}
@@ -45,18 +46,10 @@ export function NetworkSvg({ className, weights, previous, run }: NetworkSvgProp
           />
         ))}
         {ITEMS.map((item, c) => (
-          <OutputNeuron
-            key={item}
-            index={c}
-            weights={weights}
-            previous={previous}
-            value={run?.outputs[c] ?? null}
-          />
+          <OutputNeuron key={item} index={c} value={run?.outputs[c] ?? null} />
         ))}
       </svg>
-      <p>
-        {tr.bias} {previous && tr.changes}
-      </p>
+      {previous && <p>{tr.changes}</p>}
     </div>
   );
 }

@@ -8,6 +8,7 @@ const FR = {
   sizeKB: "$1 Ko",
   sizeMB: "$1 Mo",
   sizeGB: "$1 Go",
+  reservedName: "Le nom « $1 » est réservé aux notes de la classe.",
 } satisfies Record<string, string>;
 
 export default FR;
