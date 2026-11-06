@@ -1,9 +1,10 @@
 /**
- * Tiny neural network: 3 inputs (±1) → 4 hidden neurons (sigmoid) → 3 outputs (softmax).
+ * Tiny neural network: 3 inputs (±1) → 4 hidden neurons (sigmoid) → 4 outputs (softmax).
  * Trained by gradient descent on the cross-entropy loss.
  */
 
-export const ITEMS = ["heart", "skull", "treasure"] as const;
+/** The 4 suits of a deck of cards. */
+export const ITEMS = ["spade", "heart", "diamond", "club"] as const;
 export type Item = (typeof ITEMS)[number];
 
 export const INPUT_COUNT = 3;
@@ -35,7 +36,7 @@ export interface Run {
 }
 
 export function createArray(): Item[] {
-  const array: Item[] = ["heart", "heart", "treasure", "skull", "skull", "skull", "skull"];
+  const array: Item[] = ["spade", "spade", "spade", "heart", "heart", "diamond", "club"];
   for (let i = array.length - 1; i > 0; i--) {
     const j = Math.floor(Math.random() * (i + 1));
     [array[i], array[j]] = [array[j], array[i]];

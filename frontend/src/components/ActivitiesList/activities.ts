@@ -40,7 +40,7 @@ export const INFOS: Record<
   },
   "AI/neural-network": {
     title: "Réseau de neurones",
-    description: "Un tout petit réseau de neurones apprend, clic après clic, le contenu d'un tableau de 7 cases, puis devine la 8e.",
+    description: "Un tout petit réseau de neurones apprend, clic après clic, la couleur des 7 cartes d'un paquet, puis devine la 8e.",
   },
   "AI/perceptron": {
     title: "Perceptron (1958)",

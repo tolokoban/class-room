@@ -1,9 +1,10 @@
 import { type Item, ITEMS } from "./model";
 
 export const ICONS: Record<Item, string> = {
-  heart: "❤️",
-  skull: "💀",
-  treasure: "💰",
+  spade: "♠️",
+  heart: "♥️",
+  diamond: "♦️",
+  club: "♣️",
 };
 
 /**

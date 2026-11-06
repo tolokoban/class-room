@@ -28,7 +28,7 @@ export function hiddenY(k: number): number {
 }
 
 export function outputY(c: number): number {
-  return inputY(c);
+  return hiddenY(c);
 }
 
 /**
@@ -47,7 +47,7 @@ export function hiddenInBox(k: number, j: number): Point {
 export function hiddenOutBox(k: number, c: number): Point {
   return {
     x: HIDDEN_X + RADIUS + GAP,
-    y: hiddenY(k) - 1.5 * BOX_HEIGHT + c * BOX_HEIGHT,
+    y: hiddenY(k) - 2 * BOX_HEIGHT + c * BOX_HEIGHT,
   };
 }
 
