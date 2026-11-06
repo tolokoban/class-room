@@ -3,7 +3,8 @@
  *
  * 1. Build the frontend in production mode (output goes to `backend/www`).
  * 2. Upload every file of `backend/www` with SFTP, except `api/env.php`
- *    which holds the production secrets and must never be overwritten.
+ *    which holds the production secrets and must never be overwritten,
+ *    and the files uploaded by the teachers in `files/` (but its `.htaccess`).
  *    `backend/database/sql/{structure,data}.sql` are uploaded in `api/sql/`.
  *    Each file `foo.css` comes with a `foo.css.hash` holding the SHA-1 of its
  *    content. A file is uploaded only if its hash file is missing on the
@@ -32,9 +33,11 @@ const USER = "u68074545"
 const PORT = 22
 // Paths relative to `backend/www` that must never be uploaded.
 const EXCLUDED = new Set(["api/env.php"])
+// The files uploaded by the teachers live on the server: only their `.htaccess` is uploaded.
+const isExcluded = (path) => EXCLUDED.has(path) || (path.startsWith("files/") && path !== "files/.htaccess")
 
 build()
-const files = [...listFiles(WWW).filter((file) => !EXCLUDED.has(file.path)), ...listSqlFiles()]
+const files = [...listFiles(WWW).filter((file) => !isExcluded(file.path)), ...listSqlFiles()]
 const env = readEnv()
 const remoteDir = env.DEPLOY_REMOTE_DIR ?? "classroom"
 const sftp = await connect(env)

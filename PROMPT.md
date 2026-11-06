@@ -1,60 +1,35 @@
-I need a new activity in `frontend/src/app/student/[classroom]/activity/AI/chess` to help the students understand how a computer can play chess with an evaluation of the game board.
+I want the teacher to be able to store files in each classroom.
+We need a new database table `classroom_files` with this fields:
 
-I need to you to rrespect these types:
+- An auto incremental ID
+- The name of the file (with the extension, but without any folder)
+- The size of the file in bytes
+- The mime type
+- A link to the classroom it belongs
 
-```ts
-interface ChessBoard {
-    /**
-     * Complete this type.
-     * 
-     * This type must hold:
-     * - Position of the chess pieces for the whites and for the blacks.
-     * - Whose turn is it to play: "white" | "black"
-     * - Has a castle already occured?
-     * - Is there a possible "en passant" capture?
-     * - Last move that has been done before getting to this board positions
-     */
-}
-```
+The files will be stored in `/files`, a folder that is protected from direct access with a `.htaccess` file.
+To prevent having too much files in one folder, we will use subfolder based on the unique ID of each file.
+The rule si that we don't have more than 100 files and 100 folder per folder.
 
-And I want the following functions:
+Let's take an example.
 
-```ts
-/**
- * The evaluation add points for the white and remove for the blacks.
- * * We start by computing the points made by the chess pieces still on the board
- *   * King: 1000 points (or -1000 for the blacks)
- *   * Queen: 10 points (or -10 for the blacks)
- *   * Rook: 5 points (or -5 for the blacks)
- *   * Knight and Bishop: 3 points (or -3 for the blacks)
- *   * Pawn: 1 point (or -1 for the blacks)
- * * Then we look at all the pieces of the whites
- *   * We add half of the points of the white pieces that are protecting it.
- *   * We subtract half of the points of the black pieces that are threaten it.
- * * We do the same for the blacks but use negative points.
- */
-function chessBoardEvaluate(board: ChessBoard): number {
-    ...
-}
+- A teacher uploads the file `my-slides.odp`.
+- It is stored in the database and get the id `47211`.
+- It will then be stored in `/files/04/72/11.odp`.
 
-/**
- * Bases on the chess allowed moves, we return all the chess boards we
- * can reach from this one (`board`).
- */
-function chessBoardPossibleMoves(board: ChessBoard): ChessBoard[] {
+We wil need new entrypoints :
 
-}
-```
+- `file/add(file: string, name: string): { fileId: number }`: upload a new file for a specifc classroom that belongs to the currently logged teacher.
+- `file/replace(fileId: number, file: string, name: string): { fileId: number }`: upload a file to replace an existing one, provided they have the same mime type.
+- `file/delete(fileId: number): boolean`: delete a file permanently.
 
-I also need a component `<ChessBoard value >` (value is of type `ChessBoard`) that displays the chessboard with classic representation of the pieces. Using SVG is fine.
+The name of file to upload must be unique in a classroom. uploading a file with a name of another file that already exists is forbidden. You can only do this with `file/replace` and specify the id of the file to replace.
 
-Create a file with a constant array of `ChessBoard` that will hold 30 examples of chess board positions taken from real master games.
-The best positions are when in the middle of the game, when white and black are balances, but at a turnig point that will give a big advantage of one of the players in the next ply.
+In route `#/teacher/[classroom]/home`, There is the list of available activities.
+I want two columns here: on the left, the list of the available activities (what is currently the content of this page) and on the right a section called "Ressources pédagogiques" with a table of files stored for this classroom and with the folling columns:
 
-The activity is made of a header, with a title and a button "Recommencer".
-Below, taking the whole remaining space, we have two columns: `1fr 2fr`.
-On the left, we display a board (randomly choosen between the 30 examples) that trie to take as much place as posible in its column, and with the evaluation number just below it.
-On the right, we have as many chess boards as the function `chessBoardPossibleMoves` will get us. The size of these boards are about a third of the one on the left column.
-We also want the evaluation number under eac of the boards here.
-
-Button "Recommencer" takes a new random example.
+1. An icon depending on the mime type of the file
+2. The name of the file
+3. The size of the file in human friendly format (Kb, Mb, ...)
+4. An action with icon <IconImport> to upload a file to replace this one. It is only possible tio upload a replacement file if it as the same mime type as the one to be replaced.
+5. Last column, an <UiActionDelete> with confirmation to delete this file permanently

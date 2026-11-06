@@ -1,10 +1,12 @@
 <?php
 require_once __DIR__ . "/../../../db.php";
+require_once __DIR__ . "/../../../file.php";
 
 $ROLE = "teacher";
 
 /**
- * Delete a class room owned by the current user.
+ * Delete a class room owned by the current user,
+ * with all its activity results and files.
  *
  * @param mixed $input
  * ```ts
@@ -42,6 +44,10 @@ function entrypoint($input)
         return -20403;
     }
 
+    // The rows of table `files` are deleted by cascade, but not their content.
+    $stmt = $DB->query("SELECT `id`, `name` FROM `{$DB->table("files")}` WHERE `classroom` = ?", $id);
+    $files = $stmt === false ? [] : $stmt->fetchAll();
+
     try {
         $stmt = $DB->query("DELETE FROM `{$DB->table("class")}` WHERE `id` = ?", $id);
     } catch (Exception $exception) {
@@ -52,6 +58,10 @@ function entrypoint($input)
     if ($stmt === false) {
         error_log("[class/delete] Failed to delete class room #{$id}.");
         return -20404;
+    }
+
+    foreach ($files as $file) {
+        deleteFileContent(getFilePath((int) $file["id"], $file["name"]));
     }
 
     return 0;

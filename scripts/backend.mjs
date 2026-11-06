@@ -6,14 +6,20 @@
  * 3. Open a browser on it as soon as the webserver answers.
  */
 import { spawn, spawnSync } from "node:child_process"
+import FS from "node:fs"
 import { dirname, resolve } from "node:path"
 import { fileURLToPath } from "node:url"
 
 const BACKEND = resolve(dirname(fileURLToPath(import.meta.url)), "../backend")
+// Files uploaded by the teachers: Apache runs as `www-data` in the container
+// and must be allowed to write in this folder, which belongs to the host user.
+const FILES = resolve(BACKEND, "www/files")
 // Must match the default of WEB_PORT in backend/docker-compose.yaml
 const WEB_PORT = 47813
 
 spawnSync("docker", ["compose", "down"], { cwd: BACKEND, stdio: "inherit" })
+FS.mkdirSync(FILES, { recursive: true })
+FS.chmodSync(FILES, 0o777)
 
 const port = WEB_PORT
 const url = `http://localhost:${port}`

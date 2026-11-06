@@ -114,8 +114,9 @@ export default (env) => {
                 // We don't want to remove the "index.html" file
                 // after the incremental build triggered by watch.
                 cleanStaleWebpackAssets: false,
-                // OUTPUT_DIR also holds the PHP backend: never delete it.
-                cleanOnceBeforeBuildPatterns: ["**/*", "!api", "!api/**"],
+                // OUTPUT_DIR also holds the PHP backend and the files
+                // uploaded by the teachers: never delete them.
+                cleanOnceBeforeBuildPatterns: ["**/*", "!api", "!api/**", "!files", "!files/**"],
                 // OUTPUT_DIR is outside of `frontend/`.
                 dangerouslyAllowCleanPatternsOutsideProject: true,
                 dry: false,

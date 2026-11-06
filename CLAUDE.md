@@ -25,7 +25,7 @@ The first think en entrypoint function must do is check the validity of the `$in
 Errors are returned in the form of a negative number that should be unique among all entrypoints.
 The error code is build with this formula : `- 10000*{group} + 100*{action} + {error}`.
 For instance, with `backend/www/api/entrypoint/class/delete/index.php`, the `group` is "class" (2)
-and the `action` is "delete" (4). Groups: user = 1, class = 2, activity = 3, room = 4.
+and the `action` is "delete" (4). Groups: user = 1, class = 2, activity = 3, room = 4, file = 5.
 
 ## Frontend
 

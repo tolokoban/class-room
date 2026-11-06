@@ -3,10 +3,17 @@
     inset: 0;
     padding: 2em;
     overflow: auto;
+    /* Two columns that wrap on narrow screens. */
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: flex-start;
+    align-content: flex-start;
+    gap: 2em;
 
     >section {
-        width: min(40em, 100%);
-        margin: 0 auto;
+        flex: 1 1 min(20em, 100%);
+        max-width: 40em;
         border-radius: .25em;
         overflow: hidden;
 

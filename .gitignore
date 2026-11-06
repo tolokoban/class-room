@@ -3,6 +3,10 @@
 # Frontend build output (see frontend/rspack.config.js), except the PHP backend.
 /backend/www/*
 !/backend/www/api/
+# Files uploaded by the teachers: only the `.htaccess` protecting them is versioned.
+!/backend/www/files/
+/backend/www/files/*
+!/backend/www/files/.htaccess
 
 # Root tooling (deploy script) and secrets.
 /node_modules

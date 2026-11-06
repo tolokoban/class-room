@@ -1,11 +1,12 @@
 import { ActivitiesList } from "@/components/ActivitiesList";
+import { useRouteParamAsString } from "@/app/routes";
+import { TeacherOnly } from "@/components/TeacherOnly";
 import { isTeacher, State } from "@/state";
 
+import { ClassroomFiles } from "./_/ClassroomFiles";
 import { CurrentActivity } from "./_/CurrentActivity";
-import { TeacherOnly } from "@/components/TeacherOnly";
 
 import Styles from "./page.module.css";
-import { useRouteParamAsString } from "@/app/routes";
 
 export default function Page() {
   const classroom = useRouteParamAsString("classroom");
@@ -19,6 +20,7 @@ export default function Page() {
         <CurrentActivity classroom={classroom} />
         <ActivitiesList />
       </section>
+      <ClassroomFiles classroom={classroom} />
     </div>
   );
 }

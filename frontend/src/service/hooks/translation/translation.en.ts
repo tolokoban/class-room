@@ -53,6 +53,37 @@ const EN: typeof FR = {
   all40201: "Invalid input.",
   all40202: "This class room does not exist.",
   all40203: "You are not the owner of this class room.",
+
+  // HTTP errors
+  all413: "The file is too large for the server.",
+
+  // file/add
+  all50101: "Invalid input.",
+  all50102: "This class room does not exist.",
+  all50103: "You are not the owner of this class room.",
+  all50104: "A file with this name already exists in this class room. Use the replacement instead.",
+  all50105: "Database error while adding the file.",
+  all50106: "Unable to store the file on the server.",
+
+  // file/replace
+  all50201: "Invalid input.",
+  all50202: "This file does not exist.",
+  all50203: "You are not the owner of this file.",
+  all50204: "Another file already has this name in this class room.",
+  all50205: "The new file must be of the same type as the one it replaces.",
+  all50206: "Database error while replacing the file.",
+  all50207: "Unable to store the file on the server.",
+
+  // file/delete
+  all50301: "Invalid input.",
+  all50302: "This file does not exist.",
+  all50303: "You are not the owner of this file.",
+  all50304: "Database error while deleting the file.",
+
+  // file/list
+  all50401: "Invalid input.",
+  all50402: "This class room does not exist.",
+  all50403: "You are not the owner of this class room.",
 };
 
 export default EN;

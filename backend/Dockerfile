@@ -8,6 +8,7 @@ RUN a2enmod proxy proxy_http rewrite \
 COPY apache/phpmyadmin-proxy.conf /etc/apache2/conf-enabled/phpmyadmin-proxy.conf
 COPY apache/logging.conf /etc/apache2/conf-enabled/logging.conf
 COPY apache/htaccess.conf /etc/apache2/conf-enabled/htaccess.conf
+COPY apache/php.ini /usr/local/etc/php/conf.d/classroom.ini
 
 # php:*-apache does NOT wire Apache's logs to the container's stdout/stderr.
 # Redirect them so that error_log() calls are visible in `docker compose up`.

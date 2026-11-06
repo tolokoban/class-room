@@ -49,7 +49,7 @@ async function post(entrypoint: string, input: unknown): Promise<Response> {
 /**
  * Every entrypoint-specific error code is a negative number computed as
  * `-(10000 * group + 100 * action + error)`, where:
- * - `group` is the entrypoint group (1 = user, 2 = class, 3 = activity)
+ * - `group` is the entrypoint group (1 = user, 2 = class, 3 = activity, 4 = room, 5 = file)
  * - `action` is the action within that group
  * - `error` is the specific error within that action
  *
@@ -57,6 +57,8 @@ async function post(entrypoint: string, input: unknown): Promise<Response> {
  */
 export class ApiError extends Error {
   static TYPE_ASSERTION = -1;
+  /** HTTP status: the request exceeds the size accepted by the server. */
+  static REQUEST_TOO_LARGE = 413;
 
   // user/login (01-01)
   static USER_LOGIN_INVALID_INPUT = -10101;
@@ -109,6 +111,34 @@ export class ApiError extends Error {
   static ROOM_STUDENTS_INVALID_INPUT = -40201;
   static ROOM_STUDENTS_CLASS_NOT_FOUND = -40202;
   static ROOM_STUDENTS_FORBIDDEN = -40203;
+
+  // file/add (05-01)
+  static FILE_ADD_INVALID_INPUT = -50101;
+  static FILE_ADD_CLASS_NOT_FOUND = -50102;
+  static FILE_ADD_FORBIDDEN = -50103;
+  static FILE_ADD_NAME_USED = -50104;
+  static FILE_ADD_DATABASE_ERROR = -50105;
+  static FILE_ADD_STORAGE_ERROR = -50106;
+
+  // file/replace (05-02)
+  static FILE_REPLACE_INVALID_INPUT = -50201;
+  static FILE_REPLACE_NOT_FOUND = -50202;
+  static FILE_REPLACE_FORBIDDEN = -50203;
+  static FILE_REPLACE_NAME_USED = -50204;
+  static FILE_REPLACE_MIME_MISMATCH = -50205;
+  static FILE_REPLACE_DATABASE_ERROR = -50206;
+  static FILE_REPLACE_STORAGE_ERROR = -50207;
+
+  // file/delete (05-03)
+  static FILE_DELETE_INVALID_INPUT = -50301;
+  static FILE_DELETE_NOT_FOUND = -50302;
+  static FILE_DELETE_FORBIDDEN = -50303;
+  static FILE_DELETE_DATABASE_ERROR = -50304;
+
+  // file/list (05-04)
+  static FILE_LIST_INVALID_INPUT = -50401;
+  static FILE_LIST_CLASS_NOT_FOUND = -50402;
+  static FILE_LIST_FORBIDDEN = -50403;
 
   constructor(
     public readonly code: number,

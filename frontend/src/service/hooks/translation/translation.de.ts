@@ -53,6 +53,38 @@ const DE: typeof FR = {
   all40201: "Ungültige Daten.",
   all40202: "Diese Klasse existiert nicht.",
   all40203: "Sie sind nicht der Eigentümer dieser Klasse.",
+
+  // HTTP-Fehler
+  all413: "Die Datei ist zu groß für den Server.",
+
+  // file/add
+  all50101: "Ungültige Daten.",
+  all50102: "Diese Klasse existiert nicht.",
+  all50103: "Sie sind nicht der Eigentümer dieser Klasse.",
+  all50104:
+    "In dieser Klasse gibt es bereits eine Datei mit diesem Namen. Verwenden Sie stattdessen das Ersetzen.",
+  all50105: "Datenbankfehler beim Hinzufügen der Datei.",
+  all50106: "Die Datei kann nicht auf dem Server gespeichert werden.",
+
+  // file/replace
+  all50201: "Ungültige Daten.",
+  all50202: "Diese Datei existiert nicht.",
+  all50203: "Sie sind nicht der Eigentümer dieser Datei.",
+  all50204: "Eine andere Datei in dieser Klasse hat bereits diesen Namen.",
+  all50205: "Die neue Datei muss vom gleichen Typ sein wie die ersetzte Datei.",
+  all50206: "Datenbankfehler beim Ersetzen der Datei.",
+  all50207: "Die Datei kann nicht auf dem Server gespeichert werden.",
+
+  // file/delete
+  all50301: "Ungültige Daten.",
+  all50302: "Diese Datei existiert nicht.",
+  all50303: "Sie sind nicht der Eigentümer dieser Datei.",
+  all50304: "Datenbankfehler beim Löschen der Datei.",
+
+  // file/list
+  all50401: "Ungültige Daten.",
+  all50402: "Diese Klasse existiert nicht.",
+  all50403: "Sie sind nicht der Eigentümer dieser Klasse.",
 };
 
 export default DE;

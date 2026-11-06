@@ -1,0 +1,4 @@
+# Files uploaded by the teachers (see api/file.php).
+# They must never be served directly: only the API can read them.
+Require all denied
+Options -Indexes

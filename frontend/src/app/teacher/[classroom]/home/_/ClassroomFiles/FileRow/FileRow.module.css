@@ -1,0 +1,29 @@
+.fileRow {
+    >td {
+        padding: .125em .5em;
+        vertical-align: middle;
+        white-space: nowrap;
+    }
+
+    /* Name of the file */
+    >td:nth-child(2) {
+        width: 100%;
+        white-space: normal;
+        overflow-wrap: anywhere;
+
+        >a,
+        >a:visited {
+            color: var(--theme-color-secondary-5);
+        }
+    }
+
+    /* Size of the file */
+    >td:nth-child(3) {
+        text-align: right;
+        opacity: .8;
+    }
+
+    &:not(:last-child)>td {
+        border-bottom: 1px solid var(--theme-color-primary-4);
+    }
+}

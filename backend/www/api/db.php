@@ -117,15 +117,19 @@ class Database
     }
 
     /**
-     * Create the tables (`structure.sql`) and fill them (`data.sql`)
-     * if they do not exist yet in the database.
+     * Create the tables of `structure.sql` that do not exist yet in the database.
+     * If the database was empty, it is also filled with `data.sql`.
+     *
+     * This way, a table added to `structure.sql` is automatically created
+     * in an existing database (with the `ALTER TABLE` statements about it).
      *
      * The SQL files use the `classroom_` prefix, which is replaced by
      * the one defined in `env.php`.
      */
     public function ensureStructure(string $sqlDir): void
     {
-        if ($this->hasTable("user")) {
+        $statements = $this->readStatements("{$sqlDir}/structure.sql");
+        if (count($this->getMissingTables($statements)) === 0) {
             return;
         }
 
@@ -133,32 +137,62 @@ class Database
         $lockName = $this->table("structure");
         $this->query("SELECT GET_LOCK(?, 30)", $lockName);
         try {
-            if ($this->hasTable("user")) {
+            $missing = $this->getMissingTables($statements);
+            if (count($missing) === 0) {
                 return;
             }
-            error_log("[Database] Creating the database structure...");
-            foreach (["structure.sql", "data.sql"] as $filename) {
-                $this->executeFile("{$sqlDir}/{$filename}");
+            error_log("[Database] Creating missing tables: " . implode(", ", $missing));
+            foreach ($statements as $statement) {
+                if (in_array($this->getStatementTable($statement), $missing, true)) {
+                    $this->query($statement);
+                }
+            }
+            if (in_array($this->table("user"), $missing, true)) {
+                error_log("[Database] Filling the new database...");
+                foreach ($this->readStatements("{$sqlDir}/data.sql") as $statement) {
+                    $this->query($statement);
+                }
             }
         } finally {
             $this->query("SELECT RELEASE_LOCK(?)", $lockName);
         }
     }
 
-    private function hasTable(string $name): bool
+    /**
+     * @param string[] $statements
+     * @return string[] Names (with prefix) of the tables created or altered
+     * by these statements, but which do not exist in the database.
+     */
+    private function getMissingTables(array $statements): array
     {
         $stmt = $this->query(
-            "SELECT COUNT(*) FROM information_schema.tables WHERE table_schema = DATABASE() AND table_name = ?",
-            $this->table($name)
+            "SELECT `table_name` AS `name` FROM information_schema.tables WHERE table_schema = DATABASE()"
         );
-        return $stmt !== false && (int) $stmt->fetchColumn() > 0;
+        $existing = $stmt === false ? [] : array_column($stmt->fetchAll(), "name");
+        $wanted = array_unique(array_filter(array_map(
+            fn($statement) => $this->getStatementTable($statement),
+            $statements
+        )));
+        return array_values(array_diff($wanted, $existing));
     }
 
     /**
-     * Execute every statement of a SQL file, one by one.
-     * Statements are expected to end with a `;` at the end of a line.
+     * @return string|null The name of the table of a `CREATE TABLE` or `ALTER TABLE` statement.
      */
-    private function executeFile(string $path): void
+    private function getStatementTable(string $statement): ?string
+    {
+        return preg_match('/^\s*(?:CREATE|ALTER)\s+TABLE\s+`([^`]+)`/i', $statement, $matches)
+            ? $matches[1]
+            : null;
+    }
+
+    /**
+     * Read every statement of a SQL file, with the table prefix of `env.php`.
+     * Statements are expected to end with a `;` at the end of a line.
+     *
+     * @return string[]
+     */
+    private function readStatements(string $path): array
     {
         $sql = file_get_contents($path);
         if ($sql === false) {
@@ -167,11 +201,10 @@ class Database
         // Remove comment lines.
         $sql = preg_replace('/^\s*--.*$/m', "", $sql);
         $sql = str_replace("`classroom_", "`" . $this->table(""), $sql);
-        foreach (preg_split('/;\s*$/m', $sql) as $statement) {
-            if (trim($statement) !== "") {
-                $this->query($statement);
-            }
-        }
+        return array_values(array_filter(
+            preg_split('/;\s*$/m', $sql),
+            fn($statement) => trim($statement) !== ""
+        ));
     }
 
     private function logException(PDOException $exception): void

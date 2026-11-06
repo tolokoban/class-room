@@ -51,6 +51,37 @@ const FR = {
   all40201: "Données invalides.",
   all40202: "Cette classe n'existe pas.",
   all40203: "Vous n'êtes pas le propriétaire de cette classe.",
+
+  // Erreurs HTTP
+  all413: "Le fichier est trop volumineux pour le serveur.",
+
+  // file/add
+  all50101: "Données invalides.",
+  all50102: "Cette classe n'existe pas.",
+  all50103: "Vous n'êtes pas le propriétaire de cette classe.",
+  all50104: "Un fichier porte déjà ce nom dans cette classe. Utilisez le remplacement.",
+  all50105: "Erreur de base de données lors de l'ajout du fichier.",
+  all50106: "Impossible d'enregistrer le fichier sur le serveur.",
+
+  // file/replace
+  all50201: "Données invalides.",
+  all50202: "Ce fichier n'existe pas.",
+  all50203: "Vous n'êtes pas le propriétaire de ce fichier.",
+  all50204: "Un autre fichier porte déjà ce nom dans cette classe.",
+  all50205: "Le nouveau fichier doit être du même type que celui qu'il remplace.",
+  all50206: "Erreur de base de données lors du remplacement du fichier.",
+  all50207: "Impossible d'enregistrer le fichier sur le serveur.",
+
+  // file/delete
+  all50301: "Données invalides.",
+  all50302: "Ce fichier n'existe pas.",
+  all50303: "Vous n'êtes pas le propriétaire de ce fichier.",
+  all50304: "Erreur de base de données lors de la suppression du fichier.",
+
+  // file/list
+  all50401: "Données invalides.",
+  all50402: "Cette classe n'existe pas.",
+  all50403: "Vous n'êtes pas le propriétaire de cette classe.",
 } satisfies Record<string, string>;
 
 export default FR;

@@ -65,3 +65,18 @@ CREATE TABLE `classroom_room` (
   PRIMARY KEY (`computer`)
 );
 ALTER TABLE `classroom_room` ADD FOREIGN KEY (`classroom`) REFERENCES `classroom_class` (`id`) ON DELETE CASCADE;
+
+-- Files uploaded by the teacher in a class room ("Ressources pédagogiques").
+-- The content is stored in `www/files/` (see `backend/www/api/file.php`).
+CREATE TABLE `classroom_files` (
+  `id` integer PRIMARY KEY AUTO_INCREMENT,
+  `classroom` integer NOT NULL,
+  -- Name of the file, with its extension but without any folder.
+  `name` VARCHAR(255) NOT NULL,
+  -- Size of the file in bytes.
+  `size` integer NOT NULL,
+  `mime` VARCHAR(255) NOT NULL,
+  -- A file name can only be used once per class room.
+  UNIQUE (`classroom`, `name`)
+);
+ALTER TABLE `classroom_files` ADD FOREIGN KEY (`classroom`) REFERENCES `classroom_class` (`id`) ON DELETE CASCADE;

@@ -1,0 +1,32 @@
+.classroomFiles {
+    >header {
+        background: var(--theme-color-primary-5);
+        color: var(--theme-color-on-primary-5);
+        padding: .5em;
+        font-weight: bold;
+    }
+
+    >div {
+        background: var(--theme-color-primary-3);
+        color: var(--theme-color-on-primary-3);
+        padding: .5em;
+
+        >table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        >.error {
+            color: var(--theme-color-error);
+        }
+    }
+
+    >footer {
+        background: var(--theme-color-primary-2);
+        color: var(--theme-color-on-primary-2);
+        padding: .5em;
+        display: flex;
+        justify-content: flex-end;
+        gap: 1em;
+    }
+}

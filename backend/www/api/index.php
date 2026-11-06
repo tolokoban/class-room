@@ -25,12 +25,34 @@ function fail(int $code, ?string $message = null): void
     exit;
 }
 
+/**
+ * Convert a size from `php.ini` (like "8M") into bytes.
+ */
+function parseIniSize(string|false $value): int
+{
+    $value = trim((string) $value);
+    $number = (int) $value;
+    return match (strtoupper(substr($value, -1))) {
+        "G" => $number * 1024 * 1024 * 1024,
+        "M" => $number * 1024 * 1024,
+        "K" => $number * 1024,
+        default => $number,
+    };
+}
+
 // See `.htaccess`: everything after `/api/` is forwarded here as `path`
 // (without a leading slash, e.g. "entrypoint/login").
 $path = $_GET["path"] ?? "";
 
 if ($path === "") {
     fail(404);
+}
+
+// For a JSON body, PHP does not enforce `post_max_size` (it only applies to forms):
+// reject large requests before reading them in memory.
+$maxRequestSize = parseIniSize(ini_get("post_max_size"));
+if ($maxRequestSize > 0 && (int) ($_SERVER["CONTENT_LENGTH"] ?? 0) > $maxRequestSize) {
+    fail(413, "Request too large: maximum is " . ini_get("post_max_size") . ".");
 }
 
 // Try to include the entrypoint matching this path. It is expected to

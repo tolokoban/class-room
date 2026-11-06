@@ -53,6 +53,37 @@ const IT: typeof FR = {
   all40201: "Dati non validi.",
   all40202: "Questa classe non esiste.",
   all40203: "Non sei il proprietario di questa classe.",
+
+  // Errori HTTP
+  all413: "Il file è troppo grande per il server.",
+
+  // file/add
+  all50101: "Dati non validi.",
+  all50102: "Questa classe non esiste.",
+  all50103: "Non sei il proprietario di questa classe.",
+  all50104: "Esiste già un file con questo nome in questa classe. Usa la sostituzione.",
+  all50105: "Errore del database durante l'aggiunta del file.",
+  all50106: "Impossibile salvare il file sul server.",
+
+  // file/replace
+  all50201: "Dati non validi.",
+  all50202: "Questo file non esiste.",
+  all50203: "Non sei il proprietario di questo file.",
+  all50204: "Un altro file ha già questo nome in questa classe.",
+  all50205: "Il nuovo file deve essere dello stesso tipo di quello che sostituisce.",
+  all50206: "Errore del database durante la sostituzione del file.",
+  all50207: "Impossibile salvare il file sul server.",
+
+  // file/delete
+  all50301: "Dati non validi.",
+  all50302: "Questo file non esiste.",
+  all50303: "Non sei il proprietario di questo file.",
+  all50304: "Errore del database durante l'eliminazione del file.",
+
+  // file/list
+  all50401: "Dati non validi.",
+  all50402: "Questa classe non esiste.",
+  all50403: "Non sei il proprietario di questa classe.",
 };
 
 export default IT;
