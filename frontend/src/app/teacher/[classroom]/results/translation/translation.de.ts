@@ -2,7 +2,7 @@ import FR from "./translation.fr";
 
 const DE: typeof FR = {
   none: "Keine aktuelle Aktivität für diese Klasse.",
-  notQuiz: "Die aktuelle Aktivität ist kein Quiz: Es gibt keine Ergebnisse anzuzeigen.",
+  noResult: "Kein Ergebnis für die Aktivität «$1».",
 };
 
 export default DE;

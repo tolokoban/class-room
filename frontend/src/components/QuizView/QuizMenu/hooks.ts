@@ -4,10 +4,10 @@ import React from "react";
 import { gotoTarget } from "@/app/routes";
 import { useConfirm } from "@/components/Confirm";
 import { Notif } from "@/components/Notification";
+import { useSelectCurrentActivity } from "@/components/SelectCurrentActivity";
 import {
   useServiceActivityClear,
   useServiceActivityCurrent,
-  useServiceActivityCurrentSet,
   useServiceActivityResultAll,
 } from "@/service/hooks/activity";
 import { useApiErrorTranslator } from "@/service/hooks/apiError";
@@ -19,15 +19,11 @@ const REFRESH_INTERVAL = 15000;
 
 export function useQuizMenu(classroom: string, activity: string, onClose: () => void) {
   const current = useServiceActivityCurrent(classroom);
-  const service = useServiceActivityCurrentSet();
-  const translateError = useApiErrorTranslator();
+  const selector = useSelectCurrentActivity();
   const select = () => {
-    if (service.isPending) return;
-
-    service
-      .mutate({ classroomCode: classroom, activityCode: activity })
-      .then(onClose)
-      .catch((error: unknown) => Notif.error(translateError(error)));
+    void selector.select(classroom, activity).then((done) => {
+      if (done) onClose();
+    });
   };
   const results = () => {
     onClose();
@@ -38,7 +34,7 @@ export function useQuizMenu(classroom: string, activity: string, onClose: () => 
     isCurrent: current.data === activity,
     /** The "select" button is hidden while we don't know the current activity. */
     canSelect: !current.isLoading && current.data !== activity,
-    isPending: service.isPending,
+    isPending: selector.isPending,
     select,
     results,
   };

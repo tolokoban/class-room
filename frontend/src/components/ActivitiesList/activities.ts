@@ -5,7 +5,7 @@
 type Activity = [name: string, children?: Activity[]];
 
 export const ACTIVITIES: Activity[] = [
-  ["AI", [["chess"], ["CRAFT"], ["eliza"], ["GPS"], ["le-chat-mange-la"], ["mycin"], ["neural-network"], ["perceptron"], ["RAG", [["embedding"]]], ["types-ia-generatives"], ["usage"]]],
+  ["AI", [["bilan-1"], ["chess"], ["CRAFT"], ["eliza"], ["GPS"], ["le-chat-mange-la"], ["mycin"], ["neural-network"], ["perceptron"], ["RAG", [["embedding"]]], ["types-ia-generatives"], ["usage"]]],
   ["office", [["selection"]]],
   ["security", [["personal-data", [["AI-Act"], ["anonymous"], ["RGPD"]]]]],
 ];
@@ -19,6 +19,10 @@ export const INFOS: Record<
 > = {
   AI: {
     title: "Intelligence Artificielle",
+  },
+  "AI/bilan-1": {
+    title: "Bilan du premier jour",
+    description: "Trente questions pour vérifier que les grandes idées sur l'IA et son cadre d'usage sont bien comprises.",
   },
   "AI/chess": {
     title: "Comment un ordinateur joue aux échecs ?",

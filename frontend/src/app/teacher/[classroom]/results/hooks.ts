@@ -1,5 +1,6 @@
 import React from "react";
 
+import { INFOS } from "@/components/ActivitiesList/activities";
 import { useServiceActivityCurrent } from "@/service/hooks/activity";
 import { Quiz } from "@/types";
 import { QUIZZES } from "./quizzes";
@@ -38,6 +39,8 @@ export function useCurrentQuiz(classroom: string) {
     error: current.error,
     /** `undefined` while loading, `null` if there is no current activity. */
     code,
+    /** Title of the current activity (its code if it has no title). */
+    name: code ? (INFOS[code]?.title ?? code) : "",
     quiz,
   };
 }

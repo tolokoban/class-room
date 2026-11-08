@@ -14,14 +14,14 @@ import Styles from "./page.module.css";
 export default function Page() {
   const tr = useTranslation();
   const classroom = useRouteParamAsString("classroom");
-  const { isLoading, error, code, quiz } = useCurrentQuiz(classroom);
+  const { isLoading, error, code, name, quiz } = useCurrentQuiz(classroom);
 
   return (
     <div className={Styles.page}>
       {isLoading && <ViewSpinner />}
       {error && <p className={Styles.error}>{error.message}</p>}
       {code === null && <p>{tr.none}</p>}
-      {code && quiz === null && <p>{tr.notQuiz}</p>}
+      {code && quiz === null && <p>{tr.noResult$(name)}</p>}
       {code && quiz && (
         <ResultsView key={code} classroom={classroom} activityCode={code} quiz={quiz} />
       )}

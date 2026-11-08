@@ -1,12 +1,14 @@
 import { gotoTarget } from "@/app/routes";
 import { isRoutePath } from "@/app/types";
 import { Notif } from "@/components/Notification";
+import { useSelectCurrentActivity } from "@/components/SelectCurrentActivity";
 import { useServiceActivityCurrent, useServiceActivityCurrentSet } from "@/service/hooks/activity";
 import { useApiErrorTranslator } from "@/service/hooks/apiError";
 
 export function useActivityMenu(classroom: string, activity: string, onClose: () => void) {
   const current = useServiceActivityCurrent(classroom);
   const service = useServiceActivityCurrentSet();
+  const selector = useSelectCurrentActivity();
   const translateError = useApiErrorTranslator();
   const isCurrent = current.data === activity;
   const open = () => {
@@ -17,10 +19,17 @@ export function useActivityMenu(classroom: string, activity: string, onClose: ()
     gotoTarget(null, route, classroom);
   };
   const toggle = () => {
-    if (service.isPending) return;
+    if (service.isPending || selector.isPending) return;
+
+    if (!isCurrent) {
+      void selector.select(classroom, activity).then((done) => {
+        if (done) onClose();
+      });
+      return;
+    }
 
     service
-      .mutate({ classroomCode: classroom, activityCode: isCurrent ? null : activity })
+      .mutate({ classroomCode: classroom, activityCode: null })
       .then(onClose)
       .catch((error: unknown) => Notif.error(translateError(error)));
   };
@@ -32,7 +41,7 @@ export function useActivityMenu(classroom: string, activity: string, onClose: ()
   return {
     isCurrent,
     isLoading: current.isLoading,
-    isPending: service.isPending,
+    isPending: service.isPending || selector.isPending,
     open,
     results,
     toggle,
