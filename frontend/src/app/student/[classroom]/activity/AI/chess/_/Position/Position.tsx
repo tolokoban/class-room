@@ -21,7 +21,7 @@ export function Position({ className, board, evaluation }: PositionProps) {
   return (
     <section className={$.join(className, Styles.position)}>
       <ChessBoard value={board} />
-      <Evaluation value={evaluation} />
+      <Evaluation board={board} value={evaluation} />
       <p>{board.turn === "white" ? tr.whiteToPlay : tr.blackToPlay}</p>
     </section>
   );

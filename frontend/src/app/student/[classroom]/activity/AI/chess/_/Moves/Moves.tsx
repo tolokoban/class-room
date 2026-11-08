@@ -40,7 +40,7 @@ export function Moves({ className, board, moves, onSelect }: MovesProps) {
           >
             <button type="button" onClick={() => onSelect(move.board)}>
               <ChessBoard value={move.board} />
-              <Evaluation value={move.evaluation} />
+              <Evaluation board={move.board} value={move.evaluation} />
             </button>
           </li>
         ))}

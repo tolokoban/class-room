@@ -50,6 +50,10 @@ section.moves {
           transform: scale(1.05);
           outline: 0.125em solid var(--theme-color-primary-7);
         }
+
+        > div {
+          align-self: stretch;
+        }
       }
     }
   }

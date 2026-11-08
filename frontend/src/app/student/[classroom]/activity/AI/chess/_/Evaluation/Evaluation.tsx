@@ -1,26 +1,29 @@
 import { Theme } from "@tolokoban/ui";
 
+import type { ChessBoard } from "../chess";
+import { MissingPieces } from "./MissingPieces";
+
 import Styles from "./Evaluation.module.css";
 
 const $ = Theme.classNames;
 
 export interface EvaluationProps {
   className?: string;
+  board: ChessBoard;
   value: number;
 }
 
-/** Evaluation of a board: positive is good for the whites, negative for the blacks. */
-export function Evaluation({ className, value }: EvaluationProps) {
+/**
+ * Evaluation of a board (positive is good for the whites, negative for the blacks),
+ * with the pieces each player has lost.
+ */
+export function Evaluation({ className, board, value }: EvaluationProps) {
   return (
-    <div
-      className={$.join(
-        className,
-        Styles.evaluation,
-        value > 0 && Styles.white,
-        value < 0 && Styles.black,
-      )}
-    >
-      {formatEvaluation(value)}
+    <div className={$.join(className, Styles.evaluation)}>
+      <div className={$.join(value > 0 && Styles.white, value < 0 && Styles.black)}>
+        {formatEvaluation(value)}
+      </div>
+      <MissingPieces board={board} />
     </div>
   );
 }

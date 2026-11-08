@@ -10,7 +10,12 @@ section.position {
   }
 
   > div {
-    font-size: 1.5em;
+    /* As wide as the board (not scaled by the font size of its content). */
+    width: var(--chess-board-size, 100%);
+
+    > * {
+      font-size: 1.5em;
+    }
   }
 
   > p {

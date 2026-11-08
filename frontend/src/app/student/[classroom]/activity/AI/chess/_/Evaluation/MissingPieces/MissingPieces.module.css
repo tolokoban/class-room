@@ -1,0 +1,33 @@
+div.missingPieces {
+  /*
+   * Two lines of this size are as high as the evaluation box next to it
+   * (line height 1.2em + padding 2 × 0.125em = 1.45em).
+   */
+  font-size: 0.725em;
+  line-height: 1;
+  /* Same fonts as the pieces of the board. */
+  font-family: "DejaVu Sans", "Segoe UI Symbol", "Noto Sans Symbols 2", "Arial Unicode MS", serif;
+  text-align: right;
+  white-space: nowrap;
+  letter-spacing: -0.15em;
+  user-select: none;
+
+  > div {
+    /* Keep the height of the line even when no piece is missing. */
+    height: 1em;
+    -webkit-text-stroke-width: 0.06em;
+    paint-order: stroke fill;
+  }
+
+  /* The theme has no pure black and white for the pieces (same as the board). */
+  > div.white {
+    color: var(--chess-white-piece, #fff);
+    -webkit-text-stroke-color: var(--chess-black-piece, #000);
+  }
+
+  > div.black {
+    color: var(--chess-black-piece, #000);
+    -webkit-text-stroke-color: var(--chess-white-piece, #fff);
+    -webkit-text-stroke-width: 0.03em;
+  }
+}

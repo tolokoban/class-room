@@ -3,6 +3,7 @@ import { describe, expect, it } from "vitest";
 import {
   chessBoardEvaluate,
   chessBoardFromFEN,
+  chessBoardMissingPieces,
   chessBoardPossibleMoves,
   type ChessBoard,
   simulateCaptures,
@@ -104,5 +105,43 @@ describe("chessBoardEvaluate (simple)", () => {
     // The white knight d4 is badly protected, but the simple evaluation ignores it.
     const board = chessBoardFromFEN("4k3/8/8/4p3/3N4/2P5/8/4K3 w - - 0 1");
     expect(chessBoardEvaluate(board, { simple: true })).toBe(3);
+  });
+});
+
+describe("chessBoardMissingPieces", () => {
+  it("finds nothing missing at the start", () => {
+    const board = chessBoardFromFEN(START);
+    expect(chessBoardMissingPieces(board, "white")).toEqual([]);
+    expect(chessBoardMissingPieces(board, "black")).toEqual([]);
+  });
+  it("lists the missing pieces from the strongest to the weakest", () => {
+    const board = chessBoardFromFEN("1nb1kbn1/pppppp2/8/8/8/8/PPPPPPPP/R1BQKB1R w - - 0 1");
+    expect(chessBoardMissingPieces(board, "white")).toEqual(["knight", "knight"]);
+    expect(chessBoardMissingPieces(board, "black")).toEqual([
+      "queen",
+      "rook",
+      "rook",
+      "pawn",
+      "pawn",
+    ]);
+  });
+  it("ignores the extra pieces of a promotion", () => {
+    const board = chessBoardFromFEN("4k3/8/8/8/8/8/8/QQ2K3 w - - 0 1");
+    expect(chessBoardMissingPieces(board, "white")).toEqual([
+      "rook",
+      "rook",
+      "bishop",
+      "bishop",
+      "knight",
+      "knight",
+      "pawn",
+      "pawn",
+      "pawn",
+      "pawn",
+      "pawn",
+      "pawn",
+      "pawn",
+      "pawn",
+    ]);
   });
 });

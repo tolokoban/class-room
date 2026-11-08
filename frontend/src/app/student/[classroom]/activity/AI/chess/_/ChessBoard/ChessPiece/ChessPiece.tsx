@@ -1,23 +1,10 @@
 import { Theme } from "@tolokoban/ui";
 
-import type { ChessColor, ChessPieceType, ChessSquare } from "../../chess";
+import { CHESS_GLYPHS, type ChessColor, type ChessPieceType, type ChessSquare } from "../../chess";
 
 import Styles from "./ChessPiece.module.css";
 
 const $ = Theme.classNames;
-
-/**
- * We always use the "black" (filled) glyphs and paint them in white or black.
- * The U+FE0E selector prevents the browser from displaying them as emojis.
- */
-const GLYPHS: Record<ChessPieceType, string> = {
-  king: "♚︎",
-  queen: "♛︎",
-  rook: "♜︎",
-  bishop: "♝︎",
-  knight: "♞︎",
-  pawn: "♟︎",
-};
 
 export interface ChessPieceProps {
   className?: string;
@@ -37,7 +24,7 @@ export function ChessPiece({ className, color, type, square }: ChessPieceProps) 
       textAnchor="middle"
       dominantBaseline="central"
     >
-      {GLYPHS[type]}
+      {CHESS_GLYPHS[type]}
     </text>
   );
 }
