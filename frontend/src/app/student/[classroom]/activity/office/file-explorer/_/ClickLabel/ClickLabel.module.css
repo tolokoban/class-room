@@ -1,0 +1,14 @@
+span.clickLabel {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.25em;
+  white-space: nowrap;
+
+  > kbd {
+    padding: 0 0.5em;
+    border-radius: 0.25em;
+    font-family: inherit;
+    background: var(--theme-color-neutral-7);
+    color: var(--theme-color-on-neutral-7);
+  }
+}

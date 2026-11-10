@@ -1,0 +1,74 @@
+/*
+ * Icons of the files mimic Windows: their colors are those of the applications,
+ * which do not depend on the theme.
+ */
+svg.fileIcon {
+  --color: #6b7280;
+
+  width: 1.25em;
+  height: 1.25em;
+  flex: 0 0 auto;
+  stroke-linejoin: round;
+  stroke-linecap: round;
+
+  &[data-ext="docx"] {
+    --color: #2b579a;
+  }
+  &[data-ext="xlsx"] {
+    --color: #217346;
+  }
+  &[data-ext="pptx"] {
+    --color: #d24726;
+  }
+  &[data-ext="pdf"] {
+    --color: #c62828;
+  }
+  &[data-ext="png"],
+  &[data-ext="jpg"] {
+    --color: #00897b;
+  }
+  &[data-ext="zip"] {
+    --color: #b8860b;
+  }
+  &[data-ext="mp3"] {
+    --color: #8e24aa;
+  }
+  &[data-ext="mp4"] {
+    --color: #3949ab;
+  }
+
+  > text {
+    fill: #fff;
+    font-size: 7px;
+    font-weight: bold;
+    font-family: sans-serif;
+    text-anchor: middle;
+  }
+
+  &[data-ext="pdf"] > text {
+    font-size: 5.5px;
+  }
+}
+
+.page {
+  fill: #fff;
+  stroke: #9ca3af;
+  stroke-width: 1;
+}
+
+.badge {
+  fill: var(--color);
+}
+
+.symbol {
+  fill: none;
+  stroke: var(--color);
+  stroke-width: 1.2;
+}
+
+[data-ext="png"] > .symbol,
+[data-ext="jpg"] > .symbol,
+[data-ext="mp4"] > .symbol {
+  fill: var(--color);
+  stroke-width: 0.6;
+}

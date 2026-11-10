@@ -1,0 +1,41 @@
+ul.autocomplete {
+  position: absolute;
+  top: 100%;
+  left: 0;
+  z-index: 10;
+  min-width: 18em;
+  margin: 0.125em 0 0;
+  padding: 0.25em 0;
+  list-style: none;
+  font-family: inherit;
+  font-size: 0.9em;
+  border: 1px solid var(--theme-color-neutral-6);
+  border-radius: 0.25em;
+  box-shadow: 0 0.25em 0.5em var(--theme-color-neutral-3);
+  background: var(--theme-color-neutral-9);
+  color: var(--theme-color-on-neutral-9);
+  user-select: none;
+
+  > li {
+    display: flex;
+    flex-direction: column;
+    padding: 0.125em 0.5em;
+    cursor: pointer;
+
+    > span {
+      font-size: 0.8em;
+      white-space: normal;
+      opacity: 0.8;
+    }
+
+    &:hover {
+      background: var(--theme-color-neutral-8);
+      color: var(--theme-color-on-neutral-8);
+    }
+
+    &[data-highlighted="true"] {
+      background: var(--theme-color-primary-5);
+      color: var(--theme-color-on-primary-5);
+    }
+  }
+}

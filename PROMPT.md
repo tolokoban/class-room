@@ -1,7 +1,16 @@
-I need few improvements in the activity `frontend/src/app/student/[classroom]/activity/AI/neural-network`.
+I need a new activity to train students to use and understand Excel formulas.
+Take inspiration from `frontend/src/app/student/[classroom]/activity/office/file-explorer` and `frontend/src/app/student/[classroom]/activity/office/selection` for the two columns layout with the right being the target to reach.
 
-Fist of all, never display the biaises in the SVG. It aws confusing for the students and I don't explain the maths behinf the neuron trigger. the weight are fine to stay, though.
+For this activity we need a component that emulate a simple Excel sheet:
 
-Then, in the input layers, we can have the value +1 or -1. But I want you to replace (only in the view, not in the calculations) the -1 of the SVG with a 0. That will match better a digit of a binary number.
+1. A first input box at the top where you can enter the content of the currently active cell (if the content sytart with a "=" this a formula)
+2. Simples formulas must understand the absolute and relative cells addressing. For instance "A3", "$A3", "A$3, "$A$3", ...
+3. It must understand ranges. Example: "A1:D1".
+4. The simple operators "+", "-", "*" and "/" must work in formulas.
+5. The followinf functions must be implemented and their name depend on the current language of the user:
 
-I want to tech the students that a neural network can guess things it has never learned directly. That's why, I want the array to have only 7 items, not 8. And in the result of training, that is just below the sentence "Après correction, le réseau devine pour chaque case", there is this table 8x2. We keep the last column, but the cells should be borderred by dotted lines. By the way, the other cells of the table should also get a black border, and the green background should never be applied in the first row, only on the percentages of the second row. And for the one on this second row that are bad guesses, I want a red background, except for the last column because this is not in the arrya of 7 items to guess, but this is more of an extrapolation that the model can do.
+- `SUM()`: add the cells of a range
+- `COUNT()`: count the cells of a range
+- `COUNTA()`: count non-empty cells of a range
+- `AVERAGE()`: average the cells of a range
+  

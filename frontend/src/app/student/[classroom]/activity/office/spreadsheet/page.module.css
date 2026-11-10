@@ -1,0 +1,60 @@
+.page {
+  position: absolute;
+  inset: 0;
+  display: grid;
+  grid-template-rows: auto 1fr;
+  background: var(--theme-color-neutral-1);
+  color: var(--theme-color-on-neutral-1);
+
+  > header {
+    padding: 0.5em 1em;
+    background: var(--theme-color-primary-5);
+    color: var(--theme-color-on-primary-5);
+
+    > h1 {
+      margin: 0;
+      font-size: 1.25em;
+      display: flex;
+      align-items: center;
+      gap: 0.5em;
+
+      > span {
+        padding: 0.125em 0.5em;
+        border-radius: 0.25em;
+        font-weight: normal;
+        white-space: nowrap;
+        background: var(--theme-color-primary-3);
+        color: var(--theme-color-on-primary-3);
+      }
+    }
+  }
+
+  > main {
+    min-height: 0;
+    padding: 1em;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    grid-template-rows: minmax(0, 1fr);
+    gap: 1em;
+
+    > section {
+      display: grid;
+      grid-template-rows: auto minmax(0, 1fr);
+      overflow: hidden;
+      border-radius: 0.25em;
+      background: var(--theme-color-neutral-9);
+      color: var(--theme-color-on-neutral-9);
+
+      > header {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 1em;
+        min-height: 2em;
+        padding: 0.125em 0.5em;
+        background: var(--theme-color-primary-5);
+        color: var(--theme-color-on-primary-5);
+      }
+    }
+  }
+}

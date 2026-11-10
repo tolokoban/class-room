@@ -1,0 +1,19 @@
+.help {
+  max-width: 90vw;
+
+  & table {
+    border-collapse: collapse;
+    margin: 0 auto;
+
+    & td {
+      padding: 0.25em 0.5em;
+      text-align: left;
+      vertical-align: middle;
+    }
+
+    & tr:nth-child(even) {
+      background: var(--theme-color-neutral-6);
+      color: var(--theme-color-on-neutral-6);
+    }
+  }
+}

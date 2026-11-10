@@ -1,0 +1,50 @@
+div.fileRow {
+  display: grid;
+  grid-column: 1 / -1;
+  grid-template-columns: subgrid;
+  align-items: center;
+  border: 1px solid transparent;
+
+  > div {
+    padding: 0.0625em 0.5em;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+  }
+
+  > div:first-child {
+    display: flex;
+    align-items: center;
+    gap: 0.5em;
+
+    > span {
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+  }
+
+  > div:not(:first-child) {
+    opacity: 0.8;
+  }
+
+  > div:last-child {
+    text-align: right;
+  }
+
+  [data-interactive="true"] > &:hover {
+    background: var(--theme-color-primary-9);
+    color: var(--theme-color-on-primary-9);
+  }
+
+  &[data-selected="true"],
+  [data-interactive="true"] > &[data-selected="true"]:hover {
+    background: var(--theme-color-primary-7);
+    color: var(--theme-color-on-primary-7);
+    border-color: var(--theme-color-primary-5);
+  }
+
+  /* The anchor has the focus, as in Windows. */
+  &[data-anchor="true"] {
+    border: 1px dashed var(--theme-color-primary-3);
+  }
+}

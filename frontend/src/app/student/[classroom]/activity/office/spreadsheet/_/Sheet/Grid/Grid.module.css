@@ -1,0 +1,70 @@
+div.grid {
+  --sheet-header-width: 2.5em;
+  --sheet-row-height: 1.75em;
+
+  overflow: auto;
+  min-height: 0;
+  user-select: none;
+  scroll-padding: var(--sheet-row-height) 0 0 var(--sheet-header-width);
+  outline: none;
+
+  /* The table itself: headers row and column, then 5 columns × 30 rows. */
+  > div {
+    position: relative;
+    display: grid;
+    grid-template-columns: var(--sheet-header-width) repeat(5, minmax(6em, 1fr));
+    grid-auto-rows: var(--sheet-row-height);
+
+    /* Cells. */
+    > div[data-row] {
+      position: relative;
+      z-index: 0;
+      overflow: hidden;
+      padding: 0 0.25em;
+      line-height: var(--sheet-row-height);
+      white-space: nowrap;
+      text-overflow: ellipsis;
+      border-right: 1px solid var(--theme-color-neutral-7);
+      border-bottom: 1px solid var(--theme-color-neutral-7);
+      background: var(--theme-color-neutral-9);
+      color: var(--theme-color-on-neutral-9);
+      cursor: cell;
+
+      &[data-kind="number"] {
+        text-align: right;
+      }
+
+      &[data-kind="error"] {
+        text-align: center;
+        color: var(--theme-color-error-5);
+      }
+
+      /* Hint for the student: this cell must contain a formula. */
+      &[data-formula="true"]::after {
+        content: "Fx";
+        position: absolute;
+        top: 0;
+        left: 0.2em;
+        z-index: -1;
+        font-size: 0.6em;
+        font-style: italic;
+        font-weight: bold;
+        line-height: 1.2;
+        opacity: 0.5;
+        pointer-events: none;
+        color: var(--theme-color-primary-5);
+      }
+
+      &[data-selected="true"] {
+        background: var(--theme-color-primary-8);
+        color: var(--theme-color-on-primary-8);
+      }
+    }
+  }
+}
+
+div.fillPreview {
+  z-index: 1;
+  pointer-events: none;
+  border: 2px dashed var(--theme-color-neutral-3);
+}

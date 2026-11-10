@@ -1,0 +1,30 @@
+ul.folderTree {
+  margin: 0;
+  padding: 0.5em 0;
+  list-style: none;
+  overflow: auto;
+  border-right: 1px solid var(--theme-color-neutral-7);
+
+  > li {
+    display: flex;
+    align-items: center;
+    gap: 0.25em;
+    padding: 0.125em 1em 0.125em 0.5em;
+    white-space: nowrap;
+
+    &[data-depth="1"] {
+      padding-left: 1.5em;
+    }
+
+    &[data-current="true"] {
+      background: var(--theme-color-primary-8);
+      color: var(--theme-color-on-primary-8);
+    }
+
+    > span:first-child {
+      width: 1em;
+      text-align: center;
+      opacity: 0.6;
+    }
+  }
+}

@@ -1,0 +1,18 @@
+div.cellEditor {
+  position: relative;
+  z-index: 5;
+  display: grid;
+  min-width: 0;
+  margin: -1px 0 0 -1px;
+
+  > input {
+    min-width: 0;
+    padding: 0 0.25em;
+    font: inherit;
+    border: 2px solid var(--theme-color-primary-5);
+    outline: none;
+    background: var(--theme-color-neutral-9);
+    color: var(--theme-color-on-neutral-9);
+    user-select: text;
+  }
+}

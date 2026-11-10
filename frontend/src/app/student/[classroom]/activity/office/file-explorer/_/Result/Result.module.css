@@ -1,0 +1,31 @@
+.result {
+  max-width: 90vw;
+}
+
+.score {
+  font-size: 1.5em;
+  font-weight: bold;
+  text-align: center;
+}
+
+.solution {
+  padding: 0.5em;
+  border-radius: 0.25em;
+  background: var(--theme-color-tertiary-5);
+  color: var(--theme-color-on-tertiary-5);
+
+  > ol {
+    display: flex;
+    flex-direction: column;
+    gap: 0.25em;
+    margin: 0.5em 0 0;
+    padding-left: 1.5em;
+
+    > li {
+      padding: 0.125em 0.5em;
+      border-radius: 0.25em;
+      background: var(--theme-color-neutral-9);
+      color: var(--theme-color-on-neutral-9);
+    }
+  }
+}

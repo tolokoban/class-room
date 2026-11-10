@@ -1,0 +1,21 @@
+div.selectionBox {
+  position: relative;
+  z-index: 1;
+  pointer-events: none;
+  margin: -1px 0 0 -1px;
+  border: 2px solid var(--theme-color-primary-5);
+
+  /* Fill handle. */
+  > div {
+    position: absolute;
+    right: -0.3em;
+    bottom: -0.3em;
+    width: 0.5em;
+    height: 0.5em;
+    pointer-events: auto;
+    touch-action: none;
+    cursor: crosshair;
+    border: 1px solid var(--theme-color-neutral-9);
+    background: var(--theme-color-primary-5);
+  }
+}

@@ -6,7 +6,7 @@ type Activity = [name: string, children?: Activity[]];
 
 export const ACTIVITIES: Activity[] = [
   ["AI", [["bilan-1"], ["chess"], ["CRAFT"], ["eliza"], ["GPS"], ["le-chat-mange-la"], ["mycin"], ["neural-network"], ["perceptron"], ["RAG", [["embedding"]]], ["types-ia-generatives"], ["usage"]]],
-  ["office", [["selection"]]],
+  ["office", [["file-explorer"], ["selection"], ["spreadsheet"]]],
   ["security", [["personal-data", [["AI-Act"], ["anonymous"], ["RGPD"]]]]],
 ];
 
@@ -62,9 +62,17 @@ export const INFOS: Record<
   office: {
     title: "Bureautique",
   },
+  "office/file-explorer": {
+    title: "Sélectionner des fichiers",
+    description: "Reproduire une sélection de fichiers dans l'explorateur avec la souris et les touches `Ctrl` et `Maj`, en un minimum de clics.",
+  },
   "office/selection": {
     title: "Sélectionner au clavier",
     description: "Reproduire un texte en sélectionnant, copiant, coupant, collant et mettant en gras avec le clavier, en un minimum de frappes.",
+  },
+  "office/spreadsheet": {
+    title: "Formules de tableur",
+    description: "Reproduire une feuille de calcul en utilisant des formules, des références relatives et absolues, et la poignée de recopie.",
   },
   "security/personal-data/AI-Act": {},
   "security/personal-data/anonymous": {

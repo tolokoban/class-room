@@ -1,0 +1,18 @@
+/* Icons of the files and folders mimic Windows, so their colors are fixed. */
+svg.treeIcon {
+  width: 1.25em;
+  height: 1.25em;
+  flex: 0 0 auto;
+  stroke-width: 1;
+  stroke-linejoin: round;
+
+  &[data-kind="folder"] {
+    fill: #f8d775;
+    stroke: #c9a227;
+  }
+
+  &[data-kind="computer"] {
+    fill: #9fd3f5;
+    stroke: #3a6ea5;
+  }
+}

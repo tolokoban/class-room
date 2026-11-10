@@ -1,0 +1,41 @@
+div.formulaBar {
+  display: grid;
+  grid-template-columns: 4em auto minmax(0, 1fr);
+  align-items: center;
+  gap: 0.5em;
+  padding: 0.5em;
+  border-bottom: 1px solid var(--theme-color-neutral-7);
+
+  > div:first-child {
+    padding: 0.125em 0.5em;
+    border: 1px solid var(--theme-color-neutral-6);
+    border-radius: 0.25em;
+    text-align: center;
+    font-weight: bold;
+  }
+
+  > i {
+    color: var(--theme-color-neutral-5);
+    font-family: serif;
+  }
+
+  > div.input {
+    position: relative;
+    display: grid;
+  }
+
+  input {
+    font: inherit;
+    font-family: monospace;
+    padding: 0.125em 0.5em;
+    border: 1px solid var(--theme-color-neutral-6);
+    border-radius: 0.25em;
+    background: var(--theme-color-neutral-9);
+    color: var(--theme-color-on-neutral-9);
+
+    &:focus {
+      outline: 2px solid var(--theme-color-primary-5);
+      outline-offset: -1px;
+    }
+  }
+}

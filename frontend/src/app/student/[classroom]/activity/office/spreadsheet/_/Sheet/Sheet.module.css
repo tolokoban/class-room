@@ -1,0 +1,8 @@
+div.sheet {
+  display: grid;
+  grid-template-rows: auto minmax(0, 1fr);
+  min-height: 0;
+  height: 100%;
+  background: var(--theme-color-neutral-9);
+  color: var(--theme-color-on-neutral-9);
+}

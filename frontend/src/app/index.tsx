@@ -34,13 +34,16 @@ const Page14 = React.lazy(() => import("./student/[classroom]/activity/AI/neural
 const Page15 = React.lazy(() => import("./student/[classroom]/activity/AI/perceptron/page"))
 const Page16 = React.lazy(() => import("./student/[classroom]/activity/AI/types-ia-generatives/page"))
 const Page17 = React.lazy(() => import("./student/[classroom]/activity/AI/usage/page"))
-const Page19 = React.lazy(() => import("./student/[classroom]/activity/office/selection/page"))
-const Page22 = React.lazy(() => import("./student/[classroom]/activity/security/personal-data/AI-Act/page"))
-const Page23 = React.lazy(() => import("./student/[classroom]/activity/security/personal-data/RGPD/page"))
-const Page24 = React.lazy(() => import("./student/[classroom]/activity/security/personal-data/anonymous/page"))
-const Page29 = React.lazy(() => import("./teacher/[classroom]/activity/office/selection/page"))
-const Page30 = React.lazy(() => import("./teacher/[classroom]/home/page"))
-const Page31 = React.lazy(() => import("./teacher/[classroom]/results/page"))
+const Page19 = React.lazy(() => import("./student/[classroom]/activity/office/file-explorer/page"))
+const Page20 = React.lazy(() => import("./student/[classroom]/activity/office/selection/page"))
+const Page21 = React.lazy(() => import("./student/[classroom]/activity/office/spreadsheet/page"))
+const Page24 = React.lazy(() => import("./student/[classroom]/activity/security/personal-data/AI-Act/page"))
+const Page25 = React.lazy(() => import("./student/[classroom]/activity/security/personal-data/RGPD/page"))
+const Page26 = React.lazy(() => import("./student/[classroom]/activity/security/personal-data/anonymous/page"))
+const Page31 = React.lazy(() => import("./teacher/[classroom]/activity/office/file-explorer/page"))
+const Page32 = React.lazy(() => import("./teacher/[classroom]/activity/office/selection/page"))
+const Page33 = React.lazy(() => import("./teacher/[classroom]/home/page"))
+const Page34 = React.lazy(() => import("./teacher/[classroom]/results/page"))
 
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 export default function App({ lang }: { lang?: string }) {
@@ -62,12 +65,15 @@ export default function App({ lang }: { lang?: string }) {
     const pg16 = Page16
     const pg17 = Page17
     const pg19 = Page19
-    const pg22 = Page22
-    const pg23 = Page23
+    const pg20 = Page20
+    const pg21 = Page21
     const pg24 = Page24
-    const pg29 = Page29
-    const pg30 = Page30
+    const pg25 = Page25
+    const pg26 = Page26
     const pg31 = Page31
+    const pg32 = Page32
+    const pg33 = Page33
+    const pg34 = Page34
     return (
         <Route path="/" def={[pg0, ly0, fb0, , NotFound0]} context={context}>
             <Route path="/student" def={[, , fb0, , NotFound0]} context={context}>
@@ -90,13 +96,15 @@ export default function App({ lang }: { lang?: string }) {
                             <Route path="/student/[classroom]/activity/AI/usage" def={[pg17, , fb0, , NotFound0]} context={context}/>
                         </Route>
                         <Route path="/student/[classroom]/activity/office" def={[, , fb0, , NotFound0]} context={context}>
-                            <Route path="/student/[classroom]/activity/office/selection" def={[pg19, , fb0, , NotFound0]} context={context}/>
+                            <Route path="/student/[classroom]/activity/office/file-explorer" def={[pg19, , fb0, , NotFound0]} context={context}/>
+                            <Route path="/student/[classroom]/activity/office/selection" def={[pg20, , fb0, , NotFound0]} context={context}/>
+                            <Route path="/student/[classroom]/activity/office/spreadsheet" def={[pg21, , fb0, , NotFound0]} context={context}/>
                         </Route>
                         <Route path="/student/[classroom]/activity/security" def={[, , fb0, , NotFound0]} context={context}>
                             <Route path="/student/[classroom]/activity/security/personal-data" def={[, , fb0, , NotFound0]} context={context}>
-                                <Route path="/student/[classroom]/activity/security/personal-data/AI-Act" def={[pg22, , fb0, , NotFound0]} context={context}/>
-                                <Route path="/student/[classroom]/activity/security/personal-data/RGPD" def={[pg23, , fb0, , NotFound0]} context={context}/>
-                                <Route path="/student/[classroom]/activity/security/personal-data/anonymous" def={[pg24, , fb0, , NotFound0]} context={context}/>
+                                <Route path="/student/[classroom]/activity/security/personal-data/AI-Act" def={[pg24, , fb0, , NotFound0]} context={context}/>
+                                <Route path="/student/[classroom]/activity/security/personal-data/RGPD" def={[pg25, , fb0, , NotFound0]} context={context}/>
+                                <Route path="/student/[classroom]/activity/security/personal-data/anonymous" def={[pg26, , fb0, , NotFound0]} context={context}/>
                             </Route>
                         </Route>
                     </Route>
@@ -106,11 +114,12 @@ export default function App({ lang }: { lang?: string }) {
                 <Route path="/teacher/[classroom]" def={[, , fb0, , NotFound0]} context={context}>
                     <Route path="/teacher/[classroom]/activity" def={[, , fb0, , NotFound0]} context={context}>
                         <Route path="/teacher/[classroom]/activity/office" def={[, , fb0, , NotFound0]} context={context}>
-                            <Route path="/teacher/[classroom]/activity/office/selection" def={[pg29, , fb0, , NotFound0]} context={context}/>
+                            <Route path="/teacher/[classroom]/activity/office/file-explorer" def={[pg31, , fb0, , NotFound0]} context={context}/>
+                            <Route path="/teacher/[classroom]/activity/office/selection" def={[pg32, , fb0, , NotFound0]} context={context}/>
                         </Route>
                     </Route>
-                    <Route path="/teacher/[classroom]/home" def={[pg30, , fb0, , NotFound0]} context={context}/>
-                    <Route path="/teacher/[classroom]/results" def={[pg31, , fb0, , NotFound0]} context={context}>
+                    <Route path="/teacher/[classroom]/home" def={[pg33, , fb0, , NotFound0]} context={context}/>
+                    <Route path="/teacher/[classroom]/results" def={[pg34, , fb0, , NotFound0]} context={context}>
                         <Route path="/teacher/[classroom]/results/translation" def={[, , fb0, , NotFound0]} context={context}/>
                     </Route>
                 </Route>
