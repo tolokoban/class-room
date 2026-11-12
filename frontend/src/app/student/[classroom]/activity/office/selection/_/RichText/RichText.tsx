@@ -2,6 +2,7 @@ import { Theme } from "@tolokoban/ui";
 import React from "react";
 
 import { type RichText as RichTextValue } from "../rich-text";
+import { revealInvisibles } from "./invisibles";
 import { computeSegments } from "./segments";
 
 import Styles from "./RichText.module.css";
@@ -15,9 +16,11 @@ export interface RichTextProps {
   cursor?: number;
   /** The selection goes from `anchor` to `cursor`. */
   anchor?: number;
+  /** Show markers for spaces, tabs and line breaks. */
+  showInvisibles?: boolean;
 }
 
-export function RichText({ className, value, cursor, anchor }: RichTextProps) {
+export function RichText({ className, value, cursor, anchor, showInvisibles }: RichTextProps) {
   const segments = React.useMemo(
     () => computeSegments(value, cursor, anchor),
     [value, cursor, anchor],
@@ -29,7 +32,7 @@ export function RichText({ className, value, cursor, anchor }: RichTextProps) {
           <span key={index} className={Styles.caret} />
         ) : (
           <span key={index} data-bold={segment.bold} data-selected={segment.selected}>
-            {segment.text}
+            {showInvisibles ? revealInvisibles(segment.text, segment.selected) : segment.text}
           </span>
         ),
       )}

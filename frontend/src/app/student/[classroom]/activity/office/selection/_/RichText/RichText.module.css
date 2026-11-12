@@ -37,3 +37,32 @@ div.richText {
     border-color: transparent;
   }
 }
+
+/*
+ * Markers of the invisible characters. They are absolutely positioned at the
+ * place of the character they mark, so they never move the text around.
+ */
+div.richText span[data-invisible]::before {
+  position: absolute;
+  width: 1ch;
+  text-align: center;
+  font-weight: normal;
+  color: var(--theme-color-neutral-5);
+  pointer-events: none;
+}
+
+div.richText span[data-invisible="space"]::before {
+  content: "·";
+}
+
+div.richText span[data-invisible="tab"]::before {
+  content: "→";
+}
+
+div.richText span[data-invisible="eol"]::before {
+  content: "¶";
+}
+
+div.richText span[data-selected="true"] span[data-invisible]::before {
+  color: var(--theme-color-on-secondary-5);
+}

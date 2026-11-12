@@ -16,9 +16,11 @@ export interface EditorProps {
   focusKey: unknown;
   /** @returns `true` if the keystroke has been handled. */
   onKeyStroke(stroke: KeyStroke): boolean;
+  /** Show markers for spaces, tabs and line breaks. */
+  showInvisibles?: boolean;
 }
 
-export function Editor({ className, value, focusKey, onKeyStroke }: EditorProps) {
+export function Editor({ className, value, focusKey, onKeyStroke, showInvisibles }: EditorProps) {
   const tr = useTranslation();
   const { ref, handleKeyDown, handleMouseDown } = useEditorHandlers(focusKey, onKeyStroke);
   return (
@@ -30,7 +32,12 @@ export function Editor({ className, value, focusKey, onKeyStroke }: EditorProps)
       onMouseDown={handleMouseDown}
       onContextMenu={(event) => event.preventDefault()}
     >
-      <RichText value={value.text} cursor={value.cursor} anchor={value.anchor} />
+      <RichText
+        value={value.text}
+        cursor={value.cursor}
+        anchor={value.anchor}
+        showInvisibles={showInvisibles}
+      />
       <div className={Styles.hint}>{tr.focus}</div>
     </div>
   );
