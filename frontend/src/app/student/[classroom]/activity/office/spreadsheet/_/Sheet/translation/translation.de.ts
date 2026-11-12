@@ -6,6 +6,8 @@ const DE: typeof FR = {
   fnSum: "SUMME",
   fnCount: "ANZAHL",
   fnCountA: "ANZAHL2",
+  fnCountIf: "ZÄHLENWENN",
+  fnCountIfs: "ZÄHLENWENNS",
   fnAverage: "MITTELWERT",
   fnIf: "WENN",
   fnAnd: "UND",
@@ -23,7 +25,6 @@ const DE: typeof FR = {
   guessFormula: "Diese Formel musst du erraten...",
   copy: "Kopieren",
   paste: "Einfügen",
-  copyForbidden: "Das Kopieren der rechten Tabelle ist bei dieser Übung verboten.",
 };
 
 export default DE;

@@ -2,6 +2,7 @@ import { ViewButton } from "@tolokoban/ui";
 
 import { CopyButton } from "./_/CopyButton";
 import { Done } from "./_/Done";
+import { HelpButton } from "./_/HelpButton";
 import { useSpreadsheetActivity } from "./_/hooks";
 import { Navigation } from "./_/Navigation";
 import { Sheet } from "./_/Sheet";
@@ -25,6 +26,7 @@ export default function Page() {
           {tr.title}
           {exercise && ` — ${activity.title}`}
         </h1>
+        {exercise && <HelpButton notions={exercise.notions} />}
         {exercise && <Navigation {...activity.navigation} />}
       </header>
       {exercise ? (

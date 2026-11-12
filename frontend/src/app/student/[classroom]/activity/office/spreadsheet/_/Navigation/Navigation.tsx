@@ -8,7 +8,7 @@ export interface NavigationProps {
   className?: string;
   /** `false` on the first exercise: the "previous" button is hidden. */
   canGoPrevious: boolean;
-  /** The "next" button is enabled only once the current exercise has been solved. */
+  /** The "next" button is enabled only once the current exercise has been solved (always for a teacher). */
   canGoNext: boolean;
   handlePrevious(): void;
   handleNext(): void;

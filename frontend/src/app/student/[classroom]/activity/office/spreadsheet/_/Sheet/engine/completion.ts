@@ -16,12 +16,12 @@ export interface Completion {
 export function findCompletion(text: string, caret: number, locale: Locale): Completion | null {
   if (!text.startsWith("=")) return null;
   // The caret must be at the end of the word.
-  if (/^[A-Za-z0-9_.]/.test(text.slice(caret))) return null;
+  if (/^[\p{L}0-9_.]/u.test(text.slice(caret))) return null;
 
   // No suggestion inside a text between double quotes.
   if ((text.slice(0, caret).split('"').length - 1) % 2 === 1) return null;
 
-  const match = /[A-Za-z_][A-Za-z0-9_.]*$/.exec(text.slice(1, caret));
+  const match = /[\p{L}_][\p{L}0-9_.]*$/u.exec(text.slice(1, caret));
   if (!match) return null;
 
   const start = 1 + match.index;

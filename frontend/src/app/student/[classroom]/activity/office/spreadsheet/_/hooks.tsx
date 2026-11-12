@@ -4,20 +4,21 @@ import React from "react";
 
 import { EXERCISES } from "../exercises";
 import { type Exercise } from "./exercise";
-import { findLongFormulas, findWrongFormulas } from "./match";
+import { Failure } from "./Failure";
+import { findLongFormulas, findMissingDollars, findWrongFormulas } from "./match";
+import { type Notion } from "./NotionList";
 import { type Cells } from "./Sheet/engine/address";
 import { useSolvedExercises } from "./solved";
-import { type LongFormula, Success } from "./Success";
-import { useTranslation } from "./translation";
-import { Notif } from "@/components/Notification";
+import { type CellFormula, Success } from "./Success";
+import { isTeacher, State } from "@/state";
 import { MultiLang } from "@/utils/multilang";
 
 /** The ids of the exercises in the order of their declaration. */
 const EXERCISE_IDS = Object.keys(EXERCISES);
 
 export function useSpreadsheetActivity() {
-  const tr = useTranslation();
   const lang = useLangValue();
+  const user = State.user.useValue();
   const solved = useSolvedExercises();
   const [index, setIndex] = React.useState(() => getFirstUnsolvedIndex(solved.ids));
   const exerciseId = EXERCISE_IDS[index] as string | undefined;
@@ -26,6 +27,7 @@ export function useSpreadsheetActivity() {
   /** Cells of the student's sheet with a wrong formula, found by the last check. */
   const [wrongCells, setWrongCells] = React.useState<string[]>([]);
   const showSuccess = useShowSuccess();
+  const showFailure = useShowFailure();
   const goTo = (next: number) => {
     setIndex(next);
     setCells(EXERCISES[EXERCISE_IDS[next]]?.initial ?? {});
@@ -39,7 +41,8 @@ export function useSpreadsheetActivity() {
     wrongCells,
     navigation: {
       canGoPrevious: index > 0,
-      canGoNext: !!exerciseId && solved.ids.includes(exerciseId),
+      // A teacher can always browse the exercises, solved or not.
+      canGoNext: !!exerciseId && (isTeacher(user) || solved.ids.includes(exerciseId)),
       handlePrevious: () => goTo(index - 1),
       handleNext: () => goTo(index + 1),
     },
@@ -54,7 +57,7 @@ export function useSpreadsheetActivity() {
       const wrong = findWrongFormulas(cells, exercise.expected);
       setWrongCells(wrong);
       if (wrong.length > 0) {
-        Notif.warn(wrong.length === 1 ? tr.wrongOne : tr.wrongMany$(`${wrong.length}`));
+        showFailure(wrong.length, exercise.notions);
         return;
       }
       solved.markAsSolved(exerciseId);
@@ -63,6 +66,8 @@ export function useSpreadsheetActivity() {
           key,
           formula: cells[key] ?? "",
         })),
+        noDollar: findMissingDollars(cells, exercise.mustUseDollar).length > 0,
+        notions: exercise.notions,
         onContinue: () => goTo(index + 1),
         onRestart: () => goTo(index),
       });
@@ -79,20 +84,26 @@ function getFirstUnsolvedIndex(solvedIds: string[]): number {
 
 interface ShowSuccessOptions {
   /** Formulas of the student that are longer than the expected ones. */
-  longFormulas: LongFormula[];
+  longFormulas: CellFormula[];
+  /** Some formulas of the student should use `$` in their references. */
+  noDollar: boolean;
+  /** Notions needed to solve the exercise. */
+  notions?: Notion[];
   onContinue(): void;
   onRestart(): void;
 }
 
 function useShowSuccess() {
   const modal = useModal();
-  return ({ longFormulas, onContinue, onRestart }: ShowSuccessOptions) => {
+  return ({ longFormulas, noDollar, notions, onContinue, onRestart }: ShowSuccessOptions) => {
     const hide = modal.show({
       autoClosable: false,
       align: "TR",
       content: (
         <Success
           longFormulas={longFormulas}
+          noDollar={noDollar}
+          notions={notions}
           onContinue={() => {
             hide();
             onContinue();
@@ -103,6 +114,17 @@ function useShowSuccess() {
           }}
         />
       ),
+    });
+  };
+}
+
+function useShowFailure() {
+  const modal = useModal();
+  return (wrongCount: number, notions?: Notion[]) => {
+    const hide = modal.show({
+      autoClosable: true,
+      align: "TR",
+      content: <Failure wrongCount={wrongCount} notions={notions} onClose={() => hide()} />,
     });
   };
 }

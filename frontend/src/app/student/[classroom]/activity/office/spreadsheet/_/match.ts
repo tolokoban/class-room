@@ -1,7 +1,7 @@
 import { type Cells } from "./Sheet/engine/address";
 import { type CellValue, evaluateSheet, FormulaError } from "./Sheet/engine/evaluate";
 import { CANONICAL, parseNumber } from "./Sheet/engine/locale";
-import { stringify, tokenize } from "./Sheet/engine/tokenizer";
+import { type Ref, stringify, tokenize } from "./Sheet/engine/tokenizer";
 
 /** Number of times the numbers of the sheets are replaced by random values. */
 const RANDOM_PASSES = 5;
@@ -16,7 +16,8 @@ const RANDOM_PASSES = 5;
  *
  * This way, a formula that differs from the solution is accepted if it is equivalent
  * (`=2*A1` instead of `=A1*2`), but not if it only gives the right value by chance
- * (typing `14` instead of `=A1*2`).
+ * (typing `14` or `=14` instead of `=A1*2`).
+ * A formula without any cell reference is wrong if the expected one has references.
  * @returns The keys of the cells of `F` that are wrong, sorted.
  */
 export function findWrongFormulas(
@@ -28,7 +29,14 @@ export function findWrongFormulas(
   const numbers = Object.keys(expected).filter(
     (key) => !isFormula(expected[key]) && parseNumber(expected[key], CANONICAL) !== undefined,
   );
-  const wrong = new Set(formulas.filter((key) => !isFormula(cells[key])));
+  const wrong = new Set(
+    formulas.filter(
+      (key) =>
+        !isFormula(cells[key]) ||
+        // `=8` gives the right value, but only by chance.
+        (usesReference(expected[key]) && !usesReference(cells[key])),
+    ),
+  );
   let studentCells = cells;
   let expectedCells = expected;
   for (let pass = 0; pass <= RANDOM_PASSES; pass++) {
@@ -66,6 +74,31 @@ export function findLongFormulas(cells: Cells, expected: Cells): string[] {
 function formulaLength(formula: string): number {
   const tokens = tokenize(formula.slice(1), CANONICAL).filter((token) => token.type !== "space");
   return stringify(tokens, CANONICAL, CANONICAL).length;
+}
+
+/**
+ * Find the cells that should use a `$` in their references, but don't.
+ * @param keys - Cells whose formula must contain at least one absolute reference.
+ * @returns The keys of the cells without any `$` in their references, sorted.
+ */
+export function findMissingDollars(cells: Cells, keys: string[] = []): string[] {
+  return keys.filter((key) => !usesDollar(cells[key])).sort();
+}
+
+function usesDollar(raw: string | undefined): boolean {
+  return refsOf(raw).some((ref) => ref.colAbs || ref.rowAbs);
+}
+
+function usesReference(raw: string | undefined): boolean {
+  return refsOf(raw).length > 0;
+}
+
+/** Cell references of a formula (empty for a value). */
+function refsOf(raw: string | undefined): Ref[] {
+  if (raw === undefined || !isFormula(raw)) return [];
+  return tokenize(raw.slice(1), CANONICAL).flatMap((token) =>
+    token.type === "ref" ? [token.ref] : [],
+  );
 }
 
 export function sheetMatches(cells: Cells, expected: Cells): boolean {

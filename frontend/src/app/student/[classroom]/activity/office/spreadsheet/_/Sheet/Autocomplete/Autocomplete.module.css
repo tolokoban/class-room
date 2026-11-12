@@ -25,7 +25,15 @@ ul.autocomplete {
     > span {
       font-size: 0.8em;
       white-space: normal;
-      opacity: 0.8;
+
+      > span {
+        opacity: 0.8;
+      }
+
+      > em {
+        font-style: normal;
+        opacity: 0.6;
+      }
     }
 
     &:hover {

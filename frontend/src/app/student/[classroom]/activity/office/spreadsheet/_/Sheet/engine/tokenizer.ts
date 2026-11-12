@@ -51,7 +51,7 @@ export type Token =
   | { type: "invalid"; text: string };
 
 const RX_SPACE = /^\s+/;
-const RX_IDENTIFIER = /^[A-Za-z_][A-Za-z0-9_.]*/;
+const RX_IDENTIFIER = /^[\p{L}_][\p{L}0-9_.]*/u;
 const RX_REF = /^(\$?)([A-Za-z]{1,3})(\$?)([1-9]\d*)$/;
 const RX_ABSOLUTE_REF = /^\$?[A-Za-z]{1,3}\$?[1-9]\d*/;
 const RX_ERROR = /^#[A-Za-z0-9/]+[!?]/;
@@ -117,7 +117,7 @@ function nextRef(text: string): [token: Token, length: number] | undefined {
 
   const after = text.slice(match[0].length);
   // "ANZAHL2(" is a function, "A1B" is a name.
-  if (/^[A-Za-z0-9_.]/.test(after) || after.trimStart().startsWith("(")) return undefined;
+  if (/^[\p{L}0-9_.]/u.test(after) || after.trimStart().startsWith("(")) return undefined;
 
   const ref = parseRef(match[0]);
   return ref ? [{ type: "ref", ref }, match[0].length] : undefined;

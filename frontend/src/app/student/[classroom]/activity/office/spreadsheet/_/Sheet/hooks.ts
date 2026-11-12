@@ -1,6 +1,6 @@
 import React from "react";
 
-import { Notif } from "@/components/Notification";
+import { useShowCopyForbidden } from "./CopyForbidden";
 import {
   type CellPos,
   type Cells,
@@ -51,7 +51,7 @@ export function useSheet({
   copyValuesOnly = false,
   noCopy = false,
 }: SheetHookProps) {
-  const tr = useTranslation();
+  const showCopyForbidden = useShowCopyForbidden();
   const locale = useSheetLocale();
   const values = React.useMemo(() => evaluateSheet(cells, locale), [cells, locale]);
   const gridRef = React.useRef<HTMLDivElement | null>(null);
@@ -110,7 +110,7 @@ export function useSheet({
     /** Put the selection in the system clipboard. */
     copyToClipboard() {
       if (noCopy) {
-        Notif.error(tr.copyForbidden);
+        showCopyForbidden();
         return;
       }
 
@@ -237,6 +237,8 @@ export function useSheetLocale(): Locale {
         SUM: tr.fnSum,
         COUNT: tr.fnCount,
         COUNTA: tr.fnCountA,
+        COUNTIF: tr.fnCountIf,
+        COUNTIFS: tr.fnCountIfs,
         AVERAGE: tr.fnAverage,
         IF: tr.fnIf,
         AND: tr.fnAnd,

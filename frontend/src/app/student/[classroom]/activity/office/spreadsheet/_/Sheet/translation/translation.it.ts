@@ -6,6 +6,8 @@ const IT: typeof FR = {
   fnSum: "SOMMA",
   fnCount: "CONTA.NUMERI",
   fnCountA: "CONTA.VALORI",
+  fnCountIf: "CONTA.SE",
+  fnCountIfs: "CONTA.PIÙ.SE",
   fnAverage: "MEDIA",
   fnIf: "SE",
   fnAnd: "E",
@@ -23,7 +25,6 @@ const IT: typeof FR = {
   guessFormula: "Devi indovinare questa formula...",
   copy: "Copia",
   paste: "Incolla",
-  copyForbidden: "La copia del foglio di destra è vietata per questo esercizio.",
 };
 
 export default IT;

@@ -6,6 +6,8 @@ const FR = {
   fnSum: "SOMME",
   fnCount: "NB",
   fnCountA: "NBVAL",
+  fnCountIf: "NB.SI",
+  fnCountIfs: "NB.SI.ENS",
   fnAverage: "MOYENNE",
   fnIf: "SI",
   fnAnd: "ET",
@@ -23,7 +25,6 @@ const FR = {
   guessFormula: "Il faut deviner cette formule...",
   copy: "Copier",
   paste: "Coller",
-  copyForbidden: "Copie du classeur de droite interdite pour cet exercice.",
 } satisfies Record<string, string>;
 
 export default FR;

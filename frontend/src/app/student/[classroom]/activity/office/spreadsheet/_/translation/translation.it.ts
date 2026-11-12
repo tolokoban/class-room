@@ -5,8 +5,6 @@ const IT: typeof FR = {
   yourSheet: "Il tuo foglio",
   expected: "Foglio da ottenere",
   check: "Verifica",
-  wrongOne: "Hai una formula sbagliata.",
-  wrongMany: "Hai $1 formule sbagliate.",
 };
 
 export default IT;

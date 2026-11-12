@@ -1,6 +1,6 @@
 import { Theme } from "@tolokoban/ui";
 
-import { type FunctionName, type Locale } from "../engine/locale";
+import { CANONICAL, type FunctionName, type Locale } from "../engine/locale";
 import { type AutocompleteController } from "./hooks";
 import { useTranslation } from "./translation";
 
@@ -24,6 +24,8 @@ export function Autocomplete({ className, autocomplete, locale }: AutocompletePr
     SUM: tr.sum,
     COUNT: tr.count,
     COUNTA: tr.countA,
+    COUNTIF: tr.countIf,
+    COUNTIFS: tr.countIfs,
     AVERAGE: tr.average,
     IF: tr.if,
     AND: tr.and,
@@ -39,7 +41,12 @@ export function Autocomplete({ className, autocomplete, locale }: AutocompletePr
       {completion.functions.map((fn, i) => (
         <li key={fn} data-highlighted={i === index} onClick={() => accept(fn)}>
           <b>{locale.functions[fn]}</b>
-          <span>{descriptions[fn]}</span>
+          <span>
+            <span>{descriptions[fn]}</span>
+            {locale.functions[fn] !== CANONICAL.functions[fn] && (
+              <em> {tr.seeAlso$(CANONICAL.functions[fn])}</em>
+            )}
+          </span>
         </li>
       ))}
     </ul>

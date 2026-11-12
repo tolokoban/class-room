@@ -11,6 +11,8 @@ const FR: Locale = {
     SUM: "SOMME",
     COUNT: "NB",
     COUNTA: "NBVAL",
+    COUNTIF: "NB.SI",
+    COUNTIFS: "NB.SI.ENS",
     AVERAGE: "MOYENNE",
     IF: "SI",
     AND: "ET",
@@ -24,7 +26,7 @@ describe("findCompletion", () => {
     expect(findCompletion("=A1+n", 5, FR)).toEqual({
       start: 4,
       end: 5,
-      functions: ["COUNT", "COUNTA", "NOT"],
+      functions: ["COUNT", "COUNTA", "COUNTIF", "COUNTIFS", "NOT"],
     });
     expect(findCompletion("=so", 3, FR)?.functions).toEqual(["SUM"]);
     expect(findCompletion("=a", 2, CANONICAL)?.functions).toEqual(["AVERAGE", "AND"]);

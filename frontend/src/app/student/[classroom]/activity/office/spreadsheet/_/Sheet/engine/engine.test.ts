@@ -13,6 +13,8 @@ const FR: Locale = {
     SUM: "SOMME",
     COUNT: "NB",
     COUNTA: "NBVAL",
+    COUNTIF: "NB.SI",
+    COUNTIFS: "NB.SI.ENS",
     AVERAGE: "MOYENNE",
     IF: "SI",
     AND: "ET",
@@ -29,6 +31,8 @@ const IT: Locale = {
     SUM: "SOMMA",
     COUNT: "CONTA.NUMERI",
     COUNTA: "CONTA.VALORI",
+    COUNTIF: "CONTA.SE",
+    COUNTIFS: "CONTA.PIÙ.SE",
     AVERAGE: "MEDIA",
     IF: "SE",
     AND: "E",
@@ -114,6 +118,46 @@ describe("evaluate", () => {
   it("should detect indirect circular references", () => {
     expect(valueOf({ A1: "=B1", B1: "=A1+1" }, "A1")).toBe("CIRC");
   });
+  describe("COUNTIF", () => {
+    const cells: Cells = {
+      A1: "2",
+      A2: "15",
+      A3: "Bravo",
+      A4: "bravissimo",
+      A5: "8",
+      A6: "=TRUE",
+      B1: "10",
+      B2: "x",
+      B5: "x",
+    };
+    const countIf: Array<[formula: string, expected: unknown]> = [
+      ['=COUNTIF(A1:A7, ">5")', 2],
+      ['=COUNTIF(A1:A7, "<=8")', 2],
+      ['=COUNTIF(A1:A7, "<>8")', 6],
+      ["=COUNTIF(A1:A7, 15)", 1],
+      ['=COUNTIF(A1:A7, "15")', 1],
+      ['=COUNTIF(A1:A7, "bravo")', 1],
+      ['=COUNTIF(A1:A7, "brav*")', 2],
+      ['=COUNTIF(A1:A7, "?ravo")', 1],
+      ["=COUNTIF(A1:A7, TRUE)", 1],
+      ['=COUNTIF(A1:A7, "")', 1],
+      ['=COUNTIF(A1:A7, "<>")', 6],
+      ['=COUNTIF(A1:A7, ">"&B1)', 1],
+      ["=COUNTIF(A1, 2)", 1],
+      ["=COUNTIF(A1:A7)", "VALUE"],
+      ["=COUNTIF(5, 5)", "VALUE"],
+      ['=COUNTIFS(A1:A7, ">5")', 2],
+      ['=COUNTIFS(A1:A7, ">1", B1:B7, "x")', 2],
+      ['=COUNTIFS(A1:A7, ">1", B1:B7, "x", A1:A7, "<10")', 1],
+      ['=COUNTIFS(A1:A7, ">1", B1:B6, "x")', "VALUE"],
+      ['=COUNTIFS(A1:A7, ">1", B1:B7)', "VALUE"],
+    ];
+    for (const [formula, expected] of countIf) {
+      it(`should evaluate ${formula}`, () => {
+        expect(valueOf({ ...cells, C1: formula }, "C1")).toBe(expected);
+      });
+    }
+  });
   it("should propagate errors in functions", () => {
     expect(valueOf({ A1: "=1/0", B1: "=SUM(A1:A2)" }, "B1")).toBe("DIV0");
   });
@@ -156,6 +200,20 @@ describe("content", () => {
       },
     };
     expect(toCanonical("=ANZAHL2(A1:A3)+anzahl(B1)", DE)).toBe("=COUNTA(A1:A3)+COUNT(B1)");
+  });
+  it("should convert NB.SI", () => {
+    expect(toCanonical('=nb.si(A1:A3; ">2,5")', FR)).toBe('=COUNTIF(A1:A3, ">2,5")');
+    expect(toLocal("=COUNTIF(A1:A3, 3.5)", FR)).toBe("=NB.SI(A1:A3; 3,5)");
+  });
+  it("should convert NB.SI.ENS", () => {
+    expect(toCanonical('=nb.si.ens(A1:A3; ">2"; B1:B3; "x")', FR)).toBe(
+      '=COUNTIFS(A1:A3, ">2", B1:B3, "x")',
+    );
+    expect(toLocal("=COUNTIFS(A1:A3, 1)", IT)).toBe("=CONTA.PIÙ.SE(A1:A3; 1)");
+  });
+  it("should accept function names with accents", () => {
+    const DE: Locale = { ...FR, functions: { ...FR.functions, COUNTIF: "ZÄHLENWENN" } };
+    expect(toCanonical("=zählenwenn(A1:A3; 1)", DE)).toBe("=COUNTIF(A1:A3, 1)");
   });
   it("should accept english names in any language", () => {
     expect(toCanonical("=SUM(A1:A3)", FR)).toBe("=SUM(A1:A3)");

@@ -6,6 +6,8 @@ const EN: typeof FR = {
   fnSum: "SUM",
   fnCount: "COUNT",
   fnCountA: "COUNTA",
+  fnCountIf: "COUNTIF",
+  fnCountIfs: "COUNTIFS",
   fnAverage: "AVERAGE",
   fnIf: "IF",
   fnAnd: "AND",
@@ -23,7 +25,6 @@ const EN: typeof FR = {
   guessFormula: "You have to guess this formula...",
   copy: "Copy",
   paste: "Paste",
-  copyForbidden: "Copying the right sheet is forbidden for this exercise.",
 };
 
 export default EN;

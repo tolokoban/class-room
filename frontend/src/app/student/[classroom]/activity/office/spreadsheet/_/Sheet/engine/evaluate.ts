@@ -237,6 +237,8 @@ function call(name: string, args: Node[], ctx: Context): CellValue {
   if (!fn) return new FormulaError("NAME");
   if (args.length === 0) return new FormulaError("VALUE");
   if (fn === "IF") return callIf(args, ctx);
+  if (fn === "COUNTIF") return callCountIf(args, ctx);
+  if (fn === "COUNTIFS") return callCountIfs(args, ctx);
   if (fn === "NOT") {
     if (args.length !== 1) return new FormulaError("VALUE");
     const arg = toBoolean(evaluateNode(args[0], ctx));
@@ -265,7 +267,131 @@ function callIf(args: Node[], ctx: Context): CellValue {
   return branch ? toScalar(evaluateNode(branch, ctx)) : false;
 }
 
-const FUNCTIONS: Record<Exclude<FunctionName, "IF" | "NOT">, (args: Result[]) => CellValue> = {
+/**
+ * `COUNTIF(range, criterion)`: number of cells of `range` that meet `criterion`.
+ * The criterion can be a value (`5`, `"abc"`, `TRUE`) or a text starting
+ * with a comparison operator (`">=10"`, `"<>abc"`).
+ * Texts are compared without taking case into account and can use the
+ * wildcards `*` (any sequence of chars) and `?` (any single char).
+ */
+function callCountIf(args: Node[], ctx: Context): CellValue {
+  return args.length === 2 ? callCountIfs(args, ctx) : new FormulaError("VALUE");
+}
+
+/**
+ * `COUNTIFS(range1, criterion1, range2, criterion2, ...)`: number of positions `i`
+ * such that the i-th cell of every range meets the criterion of this range.
+ * All the ranges must have the same size. Criteria are the same as in `COUNTIF`.
+ */
+function callCountIfs(args: Node[], ctx: Context): CellValue {
+  if (args.length === 0 || args.length % 2 !== 0) return new FormulaError("VALUE");
+
+  const conditions: Array<{ values: CellValue[]; matches: (value: CellValue) => boolean }> = [];
+  for (let i = 0; i < args.length; i += 2) {
+    const range = criterionRange(args[i], ctx);
+    if (range instanceof FormulaError) return range;
+    if (conditions.length > 0 && range.length !== conditions[0].values.length) {
+      return new FormulaError("VALUE");
+    }
+    const criterion = toScalar(evaluateNode(args[i + 1], ctx));
+    if (criterion instanceof FormulaError) return criterion;
+
+    conditions.push({ values: range, matches: makeCriterion(criterion, ctx.locale) });
+  }
+  const size = conditions[0].values.length;
+  let count = 0;
+  for (let index = 0; index < size; index++) {
+    if (conditions.every(({ values, matches }) => matches(values[index]))) count++;
+  }
+  return count;
+}
+
+/** Values of the range of a criterion: it must be a range or a reference. */
+function criterionRange(arg: Node, ctx: Context): CellValue[] | FormulaError {
+  const range =
+    arg.type === "ref" ? new RangeValue([refValue(arg.ref, ctx)]) : evaluateNode(arg, ctx);
+  if (range instanceof FormulaError) return range;
+  return range instanceof RangeValue ? range.values : new FormulaError("VALUE");
+}
+
+const RX_CRITERION = /^(<>|<=|>=|=|<|>)?(.*)$/s;
+
+function makeCriterion(
+  criterion: Exclude<CellValue, FormulaError>,
+  locale: Locale,
+): (value: CellValue) => boolean {
+  if (typeof criterion !== "string") {
+    // An empty criterion (reference to an empty cell) matches 0, like in Excel.
+    const expected = criterion ?? 0;
+    return (value) => value === expected;
+  }
+
+  const [, op = "=", operand] = RX_CRITERION.exec(criterion) ?? [];
+  const target = parseCriterionOperand(operand ?? "", locale);
+  if (target === "") {
+    // "=" matches empty cells, "<>" matches non-empty cells.
+    if (op === "=") return (value) => value === null || value === "";
+    if (op === "<>") return (value) => value !== null && value !== "";
+  }
+  return (value) => {
+    if (value === null || value instanceof FormulaError) return op === "<>";
+    if (typeof value !== typeof target) return op === "<>";
+    if (typeof target === "string" && (op === "=" || op === "<>")) {
+      return wildcardRegex(target).test(String(value)) === (op === "=");
+    }
+    const diff = compareValues(value, target);
+    switch (op) {
+      case "=":
+        return diff === 0;
+      case "<>":
+        return diff !== 0;
+      case "<":
+        return diff < 0;
+      case ">":
+        return diff > 0;
+      case "<=":
+        return diff <= 0;
+      default:
+        return diff >= 0;
+    }
+  };
+}
+
+function parseCriterionOperand(text: string, locale: Locale): Comparable {
+  const number = parseNumber(text, locale);
+  if (number !== undefined) return number;
+
+  const upper = text.toUpperCase();
+  for (const names of [locale.booleans, CANONICAL.booleans]) {
+    if (upper === names.TRUE) return true;
+    if (upper === names.FALSE) return false;
+  }
+  return text;
+}
+
+/** `*` matches any sequence of chars, `?` any single char, `~` escapes them. */
+function wildcardRegex(pattern: string): RegExp {
+  let source = "";
+  for (let i = 0; i < pattern.length; i++) {
+    const char = pattern.charAt(i);
+    if (char === "~" && i + 1 < pattern.length) {
+      i++;
+      source += escapeRegex(pattern.charAt(i));
+    } else if (char === "*") source += ".*";
+    else if (char === "?") source += ".";
+    else source += escapeRegex(char);
+  }
+  return new RegExp(`^${source}$`, "is");
+}
+
+function escapeRegex(text: string): string {
+  return text.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
+}
+
+const FUNCTIONS: Record<
+  Exclude<FunctionName, "IF" | "NOT" | "COUNTIF" | "COUNTIFS">,
+  (args: Result[]) => CellValue
+> = {
   SUM(args) {
     const stats = numericStats(args);
     return stats instanceof FormulaError ? stats : stats.sum;
