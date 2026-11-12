@@ -126,10 +126,10 @@ export const EXERCISES: Record<string, Exercise> = {
   },
   exvraifx01: {
     title: {
-      fr: "Vrai ou faux ?",
-      en: "True or false?",
-      de: "Wahr oder falsch?",
-      it: "Vero o falso?",
+      fr: "Note supérieure ou égale à 4 ?",
+      en: "",
+      de: "",
+      it: "",
     },
     expected: {
       A1: "Élève",
@@ -266,7 +266,7 @@ export const EXERCISES: Record<string, Exercise> = {
   },
   expromu03: {
     title: {
-      fr: "Promu ?",
+      fr: "Promu si chaque note >= 4",
       en: "Promoted?",
       de: "Versetzt?",
       it: "Promosso?",
@@ -527,7 +527,7 @@ export const EXERCISES: Record<string, Exercise> = {
   },
   exbulletn7: {
     title: {
-      fr: "Bulletin",
+      fr: "Bulletin (>=4)",
       en: "School report",
       de: "Zeugnis",
       it: "Pagella",
@@ -659,6 +659,7 @@ export const EXERCISES: Record<string, Exercise> = {
       C7: "5",
       D7: "3",
       E7: '=IF(AND(AVERAGE(B7:D7)>=4,COUNTIF(B7:D7,"<3")=0),"Promu","Non promu")',
+      A9: "Promu si la moyenne est d'au moins 4 et qu'aucune note n'est inférieure à 3.",
     },
     notions: [11, 13, 16, 18, 19, 20, 21, 24],
   },
