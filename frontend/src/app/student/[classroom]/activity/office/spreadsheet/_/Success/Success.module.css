@@ -1,3 +1,20 @@
 .success {
   max-width: 90vw;
+
+  & ul {
+    margin: 0.5em 0 0 0;
+    padding-left: 1.5em;
+  }
+
+  & b {
+    font-weight: bold;
+  }
+
+  & code {
+    font-family: monospace;
+    padding: 0.125em 0.5em;
+    border-radius: 0.25em;
+    background: var(--theme-color-neutral-9);
+    color: var(--theme-color-on-neutral-9);
+  }
 }

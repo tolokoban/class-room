@@ -51,6 +51,8 @@ function gridAction(
       return () => sheet.editActive("", true);
   }
   if (ctrl && key.toLowerCase() === "a") return () => sheet.selectAll();
+  // Ctrl+V is handled by the "paste" event (see `Grid/hooks.ts`).
+  if (ctrl && key.toLowerCase() === "c") return () => sheet.copyToClipboard();
   // Typing a character replaces the content of the active cell.
   if (!ctrl && key.length === 1 && !sheet.readOnly) return () => sheet.editActive(key, true);
 

@@ -1,20 +1,20 @@
 .currentActivity {
-    background: var(--theme-color-primary-5);
-    color: var(--theme-color-on-primary-5);
-    padding: .5em;
+  background: var(--theme-color-primary-4);
+  color: var(--theme-color-on-primary-4);
+  padding: 0.5em;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1em;
+
+  > div {
     display: flex;
+    flex-wrap: wrap;
     align-items: center;
-    justify-content: space-between;
-    gap: 1em;
+    gap: 0.5em;
+  }
 
-    >div {
-        display: flex;
-        flex-wrap: wrap;
-        align-items: center;
-        gap: .5em;
-    }
-
-    .error {
-        color: var(--theme-color-error);
-    }
+  .error {
+    color: var(--theme-color-error);
+  }
 }

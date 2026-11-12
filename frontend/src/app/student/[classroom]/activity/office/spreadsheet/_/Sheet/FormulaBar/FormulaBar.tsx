@@ -12,17 +12,21 @@ const $ = Theme.classNames;
 export interface FormulaBarProps {
   className?: string;
   sheet: SheetController;
+  /** Replace the formula of the active cell with a message inviting to guess it. */
+  hideFormulas?: boolean;
 }
 
 /** Name of the active cell, followed by its content (the formula, not its value). */
-export function FormulaBar({ className, sheet }: FormulaBarProps) {
+export function FormulaBar({ className, sheet, hideFormulas = false }: FormulaBarProps) {
   const tr = useTranslation();
   const autocomplete = useAutocomplete(sheet);
+  const hidden = hideFormulas && (sheet.cells[sheet.activeKey] ?? "").startsWith("=");
   return (
     <div className={$.join(className, Styles.formulaBar)}>
       <div>{sheet.activeKey}</div>
       <i>fx</i>
       <div className={Styles.input}>
+        {hidden && <div className={Styles.hidden}>{tr.guessFormula}</div>}
         <input
           ref={autocomplete.ref}
           type="text"
@@ -30,7 +34,7 @@ export function FormulaBar({ className, sheet }: FormulaBarProps) {
           spellCheck={false}
           autoComplete="off"
           readOnly={sheet.readOnly}
-          value={sheet.activeText}
+          value={hidden ? "" : sheet.activeText}
           onFocus={(evt) => {
             if (!sheet.edit) sheet.editActive(null, false);
             autocomplete.handleFocus(evt);

@@ -2,6 +2,18 @@ canvas.maze {
   display: block;
   height: 100%;
   max-width: 75vw;
+
+  /*
+   * Portrait screens: the maze is above the panel, as wide as possible,
+   * but at most half of the screen height.
+   * `--maze-ratio` is width / height, set by the component.
+   */
+  @media (orientation: portrait) {
+    justify-self: center;
+    width: min(100%, 50vh * var(--maze-ratio, 1));
+    height: auto;
+    max-width: none;
+  }
   box-shadow: 0 0.25em 0.5em #000;
   background: #1e4b96;
 }

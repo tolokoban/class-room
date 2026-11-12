@@ -7,6 +7,12 @@ const FR = {
   fnCount: "NB",
   fnCountA: "NBVAL",
   fnAverage: "MOYENNE",
+  fnIf: "SI",
+  fnAnd: "ET",
+  fnOr: "OU",
+  fnNot: "NON",
+  true: "VRAI",
+  false: "FAUX",
   errDiv0: "#DIV/0!",
   errName: "#NOM?",
   errRef: "#REF!",
@@ -14,6 +20,10 @@ const FR = {
   errCirc: "#CIRC!",
   errSyntax: "#ERREUR!",
   formula: "Contenu de la cellule active",
+  guessFormula: "Il faut deviner cette formule...",
+  copy: "Copier",
+  paste: "Coller",
+  copyForbidden: "Copie du classeur de droite interdite pour cet exercice.",
 } satisfies Record<string, string>;
 
 export default FR;

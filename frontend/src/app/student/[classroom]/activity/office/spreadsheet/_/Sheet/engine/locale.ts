@@ -1,4 +1,13 @@
-export const FUNCTION_NAMES = ["SUM", "COUNT", "COUNTA", "AVERAGE"] as const;
+export const FUNCTION_NAMES = [
+  "SUM",
+  "COUNT",
+  "COUNTA",
+  "AVERAGE",
+  "IF",
+  "AND",
+  "OR",
+  "NOT",
+] as const;
 export type FunctionName = (typeof FUNCTION_NAMES)[number];
 
 export const ERROR_CODES = ["DIV0", "NAME", "REF", "VALUE", "CIRC", "SYNTAX"] as const;
@@ -17,13 +26,24 @@ export interface Locale {
   functions: Record<FunctionName, string>;
   /** Localized names of the errors. */
   errors: Record<ErrorCode, string>;
+  /** Localized names of the logical values, in uppercase. */
+  booleans: { TRUE: string; FALSE: string };
 }
 
 /** The locale used to store formulas. */
 export const CANONICAL: Locale = {
   decimal: ".",
   separator: ",",
-  functions: { SUM: "SUM", COUNT: "COUNT", COUNTA: "COUNTA", AVERAGE: "AVERAGE" },
+  functions: {
+    SUM: "SUM",
+    COUNT: "COUNT",
+    COUNTA: "COUNTA",
+    AVERAGE: "AVERAGE",
+    IF: "IF",
+    AND: "AND",
+    OR: "OR",
+    NOT: "NOT",
+  },
   errors: {
     DIV0: "#DIV/0!",
     NAME: "#NAME?",
@@ -32,6 +52,7 @@ export const CANONICAL: Locale = {
     CIRC: "#CIRC!",
     SYNTAX: "#ERROR!",
   },
+  booleans: { TRUE: "TRUE", FALSE: "FALSE" },
 };
 
 /** Find the function from its localized name (english names are accepted too). */
@@ -41,6 +62,16 @@ export function findFunction(name: string, locale: Locale): FunctionName | undef
     FUNCTION_NAMES.find((fn) => locale.functions[fn] === upper) ??
     FUNCTION_NAMES.find((fn) => CANONICAL.functions[fn] === upper)
   );
+}
+
+/** Find the logical value from its localized name (english names are accepted too). */
+export function findBoolean(name: string, locale: Locale): boolean | undefined {
+  const upper = name.toUpperCase();
+  for (const names of [locale.booleans, CANONICAL.booleans]) {
+    if (names.TRUE === upper) return true;
+    if (names.FALSE === upper) return false;
+  }
+  return undefined;
 }
 
 /** Find the error code from its localized name (english names are accepted too). */

@@ -1,3 +1,13 @@
 .activityNode {
     margin: 0.25em 0;
 }
+
+.spaceBetween {
+    display: grid;
+    grid-template-columns: 1fr auto;
+    gap: 1em;
+
+    details[open] {
+        grid-column: 1/3;
+    }
+}

@@ -1,16 +1,26 @@
 import React from "react";
 
-import { type CellPos, type Cells, cellKey, COLUMNS, type Rect, ROWS } from "../engine/address";
+import {
+  type CellPos,
+  type Cells,
+  cellKey,
+  COLUMNS,
+  type Rect,
+  rectContains,
+  ROWS,
+} from "../engine/address";
 import { formatValue } from "../engine/content";
 import { type CellValue, FormulaError } from "../engine/evaluate";
 import { computeFillTarget } from "../engine/fill";
 import { type SheetController } from "../hooks";
+import { useTranslation } from "../translation";
+import { type ContextMenuItem } from "./ContextMenu";
 
 export interface GridCell {
   key: string;
   pos: CellPos;
   text: string;
-  kind: "empty" | "number" | "text" | "error";
+  kind: "empty" | "number" | "text" | "boolean" | "error";
   /** The cell contains a formula. */
   formula: boolean;
 }
@@ -22,6 +32,8 @@ const AUTO_SCROLL_STEP = 12;
 export function useGrid(sheet: SheetController) {
   const { cells: raws, values, locale, gridRef } = sheet;
   const [fillTarget, setFillTarget] = React.useState<Rect | null>(null);
+  const menu = useContextMenu(sheet);
+  useClipboardEvents(sheet);
   const cells = React.useMemo(
     () => buildCells(raws, values, (value) => formatValue(value, locale)),
     [raws, values, locale],
@@ -46,6 +58,7 @@ export function useGrid(sheet: SheetController) {
   return {
     cells,
     fillTarget,
+    menu,
     handlePointerDown(evt: React.PointerEvent) {
       if (evt.button !== 0) return;
 
@@ -84,6 +97,73 @@ export function useGrid(sheet: SheetController) {
   };
 }
 
+/**
+ * Ctrl+V (Cmd+V on macOS). Ctrl+C is handled in `keyboard.ts`, because some browsers
+ * (Safari) do not fire a "copy" event when no text is selected.
+ * Without text selection, the browser sends the "paste" event to the body,
+ * not to the focused grid: we listen to the whole document and act only if the grid has the focus.
+ * In the in-cell editor, the default behaviour is kept (the editor is the active element).
+ */
+function useClipboardEvents(sheet: SheetController) {
+  const sheetRef = React.useRef(sheet);
+  sheetRef.current = sheet;
+  React.useEffect(() => {
+    const isFocused = () => {
+      const grid = sheetRef.current.gridRef.current;
+      return !!grid && document.activeElement === grid;
+    };
+    const handlePaste = (evt: ClipboardEvent) => {
+      if (!isFocused() || !evt.clipboardData) return;
+
+      evt.preventDefault();
+      sheetRef.current.paste(evt.clipboardData.getData("text/plain"));
+    };
+    document.addEventListener("paste", handlePaste);
+    return () => {
+      document.removeEventListener("paste", handlePaste);
+    };
+  }, []);
+}
+
+export interface GridMenu {
+  x: number;
+  y: number;
+  items: ContextMenuItem[];
+}
+
+/** Right click: "Copy" (and "Paste" if the sheet can be modified). */
+function useContextMenu(sheet: SheetController) {
+  const tr = useTranslation();
+  const [menu, setMenu] = React.useState<GridMenu | null>(null);
+  const copy = () => {
+    sheet.copyToClipboard();
+    sheet.focusGrid();
+  };
+  const paste = () => {
+    navigator.clipboard
+      .readText()
+      .then(sheet.paste)
+      // Reading the clipboard can be forbidden by the browser.
+      .catch(() => sheet.paste(null))
+      .finally(sheet.focusGrid);
+  };
+  return {
+    value: menu,
+    handleClose: () => setMenu(null),
+    handleContextMenu(evt: React.MouseEvent) {
+      evt.preventDefault();
+      const pos = posOf(evt.target);
+      if (!pos) return;
+
+      sheet.commit();
+      if (!rectContains(sheet.rect, pos)) sheet.select(pos);
+      const items = [{ label: tr.copy, onClick: copy }];
+      if (!sheet.readOnly) items.push({ label: tr.paste, onClick: paste });
+      setMenu({ x: evt.clientX, y: evt.clientY, items });
+    },
+  };
+}
+
 function buildCells(
   raws: Cells,
   values: Record<string, CellValue>,
@@ -105,6 +185,7 @@ function buildCells(
 function kindOf(value: CellValue): GridCell["kind"] {
   if (value === null) return "empty";
   if (typeof value === "number") return "number";
+  if (typeof value === "boolean") return "boolean";
   if (value instanceof FormulaError) return "error";
   return "text";
 }

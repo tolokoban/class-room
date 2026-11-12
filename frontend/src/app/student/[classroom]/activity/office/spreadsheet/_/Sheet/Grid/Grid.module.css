@@ -34,9 +34,13 @@ div.grid {
         text-align: right;
       }
 
+      &[data-kind="boolean"] {
+        text-align: center;
+      }
+
       &[data-kind="error"] {
         text-align: center;
-        color: var(--theme-color-error-5);
+        color: var(--theme-color-error);
       }
 
       /* Hint for the student: this cell must contain a formula. */
@@ -53,6 +57,13 @@ div.grid {
         opacity: 0.5;
         pointer-events: none;
         color: var(--theme-color-primary-5);
+      }
+
+      /* Wrong formula found by the last check. */
+      &[data-wrong="true"] {
+        /* The theme defines no shades for "error": make a pale pink from it. */
+        background: color-mix(in srgb, var(--theme-color-error) 25%, var(--theme-color-neutral-9));
+        color: var(--theme-color-on-neutral-9);
       }
 
       &[data-selected="true"] {

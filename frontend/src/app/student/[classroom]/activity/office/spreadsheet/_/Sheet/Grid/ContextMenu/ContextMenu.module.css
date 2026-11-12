@@ -1,0 +1,36 @@
+div.contextMenu {
+  position: fixed;
+  inset: 0;
+  z-index: 10;
+
+  > menu {
+    position: fixed;
+    margin: 0;
+    padding: 0.25em 0;
+    list-style: none;
+    border-radius: 0.25em;
+    box-shadow: 0 0.25em 0.75em #0007;
+    background: var(--theme-color-neutral-9);
+    color: var(--theme-color-on-neutral-9);
+
+    > li > button {
+      display: block;
+      width: 100%;
+      min-width: 8em;
+      padding: 0.25em 1em;
+      border: none;
+      font: inherit;
+      text-align: left;
+      cursor: pointer;
+      background: transparent;
+      color: inherit;
+
+      &:hover,
+      &:focus-visible {
+        outline: none;
+        background: var(--theme-color-primary-8);
+        color: var(--theme-color-on-primary-8);
+      }
+    }
+  }
+}

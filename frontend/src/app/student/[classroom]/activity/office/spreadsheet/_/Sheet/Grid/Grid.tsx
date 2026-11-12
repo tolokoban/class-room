@@ -5,6 +5,7 @@ import { type SheetController } from "../hooks";
 import { handleGridKey } from "../keyboard";
 import { areaStyle } from "./area";
 import { CellEditor } from "./CellEditor";
+import { ContextMenu } from "./ContextMenu";
 import { Headers } from "./Headers";
 import { useGrid } from "./hooks";
 import { SelectionBox } from "./SelectionBox";
@@ -18,9 +19,11 @@ export interface GridProps {
   sheet: SheetController;
   /** Mark the cells containing a formula with a "Fx" watermark. */
   formulaHints?: boolean;
+  /** Keys of the cells to highlight as wrong. */
+  wrongCells?: string[];
 }
 
-export function Grid({ className, sheet, formulaHints = false }: GridProps) {
+export function Grid({ className, sheet, formulaHints = false, wrongCells = [] }: GridProps) {
   const grid = useGrid(sheet);
   const { anchor, rect, edit } = sheet;
   return (
@@ -31,6 +34,7 @@ export function Grid({ className, sheet, formulaHints = false }: GridProps) {
       onKeyDown={(evt) => handleGridKey(evt, sheet)}
       onPointerDown={grid.handlePointerDown}
       onDoubleClick={grid.handleDoubleClick}
+      onContextMenu={grid.menu.handleContextMenu}
     >
       <div>
         <Headers selection={rect} />
@@ -41,6 +45,7 @@ export function Grid({ className, sheet, formulaHints = false }: GridProps) {
             data-row={pos.row}
             data-kind={kind}
             data-formula={formulaHints && formula}
+            data-wrong={wrongCells.includes(key)}
             data-selected={rectContains(rect, pos) && key !== sheet.activeKey}
             style={areaStyle({ top: pos.row, left: pos.col, bottom: pos.row, right: pos.col })}
           >
@@ -56,6 +61,7 @@ export function Grid({ className, sheet, formulaHints = false }: GridProps) {
         )}
         {edit?.inCell && <CellEditor sheet={sheet} pos={anchor} />}
       </div>
+      {grid.menu.value && <ContextMenu {...grid.menu.value} onClose={grid.menu.handleClose} />}
     </div>
   );
 }

@@ -28,6 +28,7 @@ export function toLocal(raw: string, locale: Locale): string {
 export function formatValue(value: CellValue, locale: Locale): string {
   if (value === null) return "";
   if (typeof value === "number") return formatNumber(value, locale);
+  if (typeof value === "boolean") return value ? locale.booleans.TRUE : locale.booleans.FALSE;
   if (value instanceof FormulaError) return locale.errors[value.code];
   return value;
 }

@@ -25,6 +25,10 @@ export function Autocomplete({ className, autocomplete, locale }: AutocompletePr
     COUNT: tr.count,
     COUNTA: tr.countA,
     AVERAGE: tr.average,
+    IF: tr.if,
+    AND: tr.and,
+    OR: tr.or,
+    NOT: tr.not,
   };
   return (
     <ul

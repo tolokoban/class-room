@@ -7,6 +7,12 @@ const IT: typeof FR = {
   fnCount: "CONTA.NUMERI",
   fnCountA: "CONTA.VALORI",
   fnAverage: "MEDIA",
+  fnIf: "SE",
+  fnAnd: "E",
+  fnOr: "O",
+  fnNot: "NON",
+  true: "VERO",
+  false: "FALSO",
   errDiv0: "#DIV/0!",
   errName: "#NOME?",
   errRef: "#RIF!",
@@ -14,6 +20,10 @@ const IT: typeof FR = {
   errCirc: "#CIRC!",
   errSyntax: "#ERRORE!",
   formula: "Contenuto della cella attiva",
+  guessFormula: "Devi indovinare questa formula...",
+  copy: "Copia",
+  paste: "Incolla",
+  copyForbidden: "La copia del foglio di destra è vietata per questo esercizio.",
 };
 
 export default IT;

@@ -19,6 +19,12 @@
         display: grid;
         grid-template-columns: 1fr 1fr;
         gap: 1em;
+
+        /* Portrait screens: one panel above the other. */
+        @media (orientation: portrait) {
+            grid-template-columns: minmax(0, 1fr);
+            grid-template-rows: minmax(0, 1fr) minmax(0, 1fr);
+        }
         padding: 1em;
         min-height: 0;
         background: var(--theme-color-primary-3);

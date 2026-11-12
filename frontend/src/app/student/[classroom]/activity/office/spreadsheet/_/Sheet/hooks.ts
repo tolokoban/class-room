@@ -1,5 +1,6 @@
 import React from "react";
 
+import { Notif } from "@/components/Notification";
 import {
   type CellPos,
   type Cells,
@@ -11,6 +12,7 @@ import {
   rectOf,
   ROWS,
 } from "./engine/address";
+import { type ClipboardData, copyCells, parseClipboardText, pasteCells } from "./engine/clipboard";
 import { toCanonical, toLocal } from "./engine/content";
 import { evaluateSheet } from "./engine/evaluate";
 import { fill } from "./engine/fill";
@@ -31,13 +33,27 @@ export interface SheetHookProps {
   cells: Cells;
   onChange?(cells: Cells): void;
   readOnly?: boolean;
+  /** Copy the computed values of the cells instead of their formulas. */
+  copyValuesOnly?: boolean;
+  /** Copy is forbidden: an error notification is displayed instead. */
+  noCopy?: boolean;
 }
+
+/** Last cells copied from any sheet, to shift the formulas when they are pasted. */
+let lastCopy: ClipboardData | null = null;
 
 export type SheetController = ReturnType<typeof useSheet>;
 
-export function useSheet({ cells, onChange, readOnly = false }: SheetHookProps) {
-  const locale = useLocale();
-  const values = React.useMemo(() => evaluateSheet(cells), [cells]);
+export function useSheet({
+  cells,
+  onChange,
+  readOnly = false,
+  copyValuesOnly = false,
+  noCopy = false,
+}: SheetHookProps) {
+  const tr = useTranslation();
+  const locale = useSheetLocale();
+  const values = React.useMemo(() => evaluateSheet(cells, locale), [cells, locale]);
   const gridRef = React.useRef<HTMLDivElement | null>(null);
   const cellsRef = React.useRef(cells);
   cellsRef.current = cells;
@@ -91,6 +107,38 @@ export function useSheet({ cells, onChange, readOnly = false }: SheetHookProps) 
       for (const pos of rectCells(selection.rect)) delete next[cellKey(pos)];
       onChange?.(next);
     },
+    /** Put the selection in the system clipboard. */
+    copyToClipboard() {
+      if (noCopy) {
+        Notif.error(tr.copyForbidden);
+        return;
+      }
+
+      lastCopy = copyCells(cells, values, selection.rect, locale, copyValuesOnly);
+      navigator.clipboard.writeText(lastCopy.text).catch(console.error);
+    },
+    /**
+     * Paste `text` (coming from the system clipboard) on the selection.
+     * If `text` is `null`, the last cells copied in this application are pasted.
+     */
+    paste(text: string | null) {
+      if (readOnly) return;
+
+      const data =
+        text === null || (lastCopy && normalize(lastCopy.text) === normalize(text))
+          ? lastCopy
+          : parseClipboardText(text, locale);
+      if (!data) return;
+
+      editing.cancel();
+      const { rect } = selection;
+      const result = pasteCells(cellsRef.current, data, { col: rect.left, row: rect.top });
+      onChange?.(result.cells);
+      selection.select(
+        { col: result.rect.left, row: result.rect.top },
+        { col: result.rect.right, row: result.rect.bottom },
+      );
+    },
     applyFill(source: Rect, target: Rect) {
       if (readOnly) return;
 
@@ -101,6 +149,11 @@ export function useSheet({ cells, onChange, readOnly = false }: SheetHookProps) 
       );
     },
   };
+}
+
+/** Other applications can change the line endings. */
+function normalize(text: string): string {
+  return text.replace(/\r\n?/g, "\n").replace(/\n$/, "");
 }
 
 function useSelection() {
@@ -173,7 +226,8 @@ function useEditing(locale: Locale, readOnly: boolean, save: (key: string, raw: 
   };
 }
 
-function useLocale(): Locale {
+/** Locale of the sheets, in the language of the user. */
+export function useSheetLocale(): Locale {
   const tr = useTranslation();
   return React.useMemo(
     () => ({
@@ -184,6 +238,10 @@ function useLocale(): Locale {
         COUNT: tr.fnCount,
         COUNTA: tr.fnCountA,
         AVERAGE: tr.fnAverage,
+        IF: tr.fnIf,
+        AND: tr.fnAnd,
+        OR: tr.fnOr,
+        NOT: tr.fnNot,
       },
       errors: {
         DIV0: tr.errDiv0,
@@ -193,6 +251,7 @@ function useLocale(): Locale {
         CIRC: tr.errCirc,
         SYNTAX: tr.errSyntax,
       },
+      booleans: { TRUE: tr.true, FALSE: tr.false },
     }),
     [tr],
   );

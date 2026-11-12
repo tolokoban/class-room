@@ -7,6 +7,12 @@ const DE: typeof FR = {
   fnCount: "ANZAHL",
   fnCountA: "ANZAHL2",
   fnAverage: "MITTELWERT",
+  fnIf: "WENN",
+  fnAnd: "UND",
+  fnOr: "ODER",
+  fnNot: "NICHT",
+  true: "WAHR",
+  false: "FALSCH",
   errDiv0: "#DIV/0!",
   errName: "#NAME?",
   errRef: "#BEZUG!",
@@ -14,6 +20,10 @@ const DE: typeof FR = {
   errCirc: "#ZIRKEL!",
   errSyntax: "#FEHLER!",
   formula: "Inhalt der aktiven Zelle",
+  guessFormula: "Diese Formel musst du erraten...",
+  copy: "Kopieren",
+  paste: "Einfügen",
+  copyForbidden: "Das Kopieren der rechten Tabelle ist bei dieser Übung verboten.",
 };
 
 export default DE;

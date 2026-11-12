@@ -9,14 +9,34 @@ import { CANONICAL, type Locale } from "./locale";
 const FR: Locale = {
   decimal: ",",
   separator: ";",
-  functions: { SUM: "SOMME", COUNT: "NB", COUNTA: "NBVAL", AVERAGE: "MOYENNE" },
+  functions: {
+    SUM: "SOMME",
+    COUNT: "NB",
+    COUNTA: "NBVAL",
+    AVERAGE: "MOYENNE",
+    IF: "SI",
+    AND: "ET",
+    OR: "OU",
+    NOT: "NON",
+  },
   errors: { ...CANONICAL.errors, NAME: "#NOM?", VALUE: "#VALEUR!" },
+  booleans: { TRUE: "VRAI", FALSE: "FAUX" },
 };
 const IT: Locale = {
   decimal: ",",
   separator: ";",
-  functions: { SUM: "SOMMA", COUNT: "CONTA.NUMERI", COUNTA: "CONTA.VALORI", AVERAGE: "MEDIA" },
+  functions: {
+    SUM: "SOMMA",
+    COUNT: "CONTA.NUMERI",
+    COUNTA: "CONTA.VALORI",
+    AVERAGE: "MEDIA",
+    IF: "SE",
+    AND: "E",
+    OR: "O",
+    NOT: "NON",
+  },
   errors: CANONICAL.errors,
+  booleans: { TRUE: "VERO", FALSE: "FALSO" },
 };
 
 function valueOf(cells: Cells, key: string) {
@@ -52,6 +72,38 @@ describe("evaluate", () => {
     ["=F1", "REF"],
     ["=SUM(A1:A40)", "REF"],
     ["=E1", "CIRC"],
+    // Conditions
+    ['=IF(A1>=2, "Pass", "Fail")', "Pass"],
+    ['=IF(A1>2, "Pass", "Fail")', "Fail"],
+    ["=IF(A1<B1, A1, B1)", 2],
+    ["=IF(D1, 1, 2)", 2],
+    ["=IF(A1=2, 1)", 1],
+    ["=IF(A1=3, 1)", false],
+    ["=IF(TRUE, 1, 1/0)", 1],
+    ["=IF(C1, 1, 2)", "VALUE"],
+    ["=IF(1/0, 1, 2)", "DIV0"],
+    ["=IF(A1)", "VALUE"],
+    ['=C1="HELLO"', true],
+    ['=C1<>"hello"', false],
+    ['=C1>"abc"', true],
+    ["=C1>100", true],
+    ["=A1<>B1", true],
+    ["=A1+1=B1", true],
+    ["=D1=0", true],
+    ['=D1=""', true],
+    ["=TRUE", true],
+    ["=true+1", 2],
+    ["=AND(A1>1, B1>1)", true],
+    ["=AND(A1>1, B1>5)", false],
+    ["=AND(A1:D1)", true],
+    ["=OR(A1>5, B1>1)", true],
+    ["=OR(C1:D1)", "VALUE"],
+    ["=NOT(A1>5)", true],
+    ["=NOT(A1, B1)", "VALUE"],
+    ['=C1&" "&A1', "hello 2"],
+    ["=A1&B1+1", "24"],
+    ['="say ""hi"""', 'say "hi"'],
+    ['="unterminated', "SYNTAX"],
   ];
   for (const [formula, expected] of cases) {
     it(`should evaluate ${formula}`, () => {
@@ -68,6 +120,22 @@ describe("evaluate", () => {
 });
 
 describe("content", () => {
+  it("should convert french conditions", () => {
+    expect(toCanonical('=si(et(A1>=50; b1<>"x;y"); vrai; "Échec")', FR)).toBe(
+      '=IF(AND(A1>=50, B1<>"x;y"), TRUE, "Échec")',
+    );
+    expect(toLocal('=IF(OR(A1<=1.5, NOT(B1)), FALSE, "a""b")', FR)).toBe(
+      '=SI(OU(A1<=1,5; NON(B1)); FAUX; "a""b")',
+    );
+  });
+  it("should convert italian single letter functions", () => {
+    expect(toCanonical("=E(A1;O(B1;C1))", IT)).toBe("=AND(A1,OR(B1,C1))");
+  });
+  it("should format logical values and concatenate in the user's language", () => {
+    const values = evaluateSheet({ A1: "1.5", B1: '=A1&" "&(A1>1)' }, FR);
+    expect(values.B1).toBe("1,5 VRAI");
+    expect(formatValue(false, FR)).toBe("FAUX");
+  });
   it("should convert french formulas", () => {
     expect(toCanonical("=somme(A1:b2; 1,5)", FR)).toBe("=SUM(A1:B2, 1.5)");
     expect(toLocal("=SUM(A1:B2, 1.5)", FR)).toBe("=SOMME(A1:B2; 1,5)");
@@ -79,7 +147,13 @@ describe("content", () => {
   it("should not take german ANZAHL2 for a reference", () => {
     const DE: Locale = {
       ...FR,
-      functions: { SUM: "SUMME", COUNT: "ANZAHL", COUNTA: "ANZAHL2", AVERAGE: "MITTELWERT" },
+      functions: {
+        ...FR.functions,
+        SUM: "SUMME",
+        COUNT: "ANZAHL",
+        COUNTA: "ANZAHL2",
+        AVERAGE: "MITTELWERT",
+      },
     };
     expect(toCanonical("=ANZAHL2(A1:A3)+anzahl(B1)", DE)).toBe("=COUNTA(A1:A3)+COUNT(B1)");
   });

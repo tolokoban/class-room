@@ -1,14 +1,22 @@
 import { type ErrorCode } from "./locale";
 import { type Ref, type Token } from "./tokenizer";
 
+export type ArithmeticOperator = "+" | "-" | "*" | "/";
+export type ComparisonOperator = "=" | "<>" | "<" | ">" | "<=" | ">=";
+export type BinaryOperator = ArithmeticOperator | ComparisonOperator | "&";
+
+const COMPARISON_OPERATORS: ComparisonOperator[] = ["=", "<>", "<", ">", "<=", ">="];
+
 export type Node =
   | { type: "number"; value: number }
+  | { type: "string"; value: string }
+  | { type: "boolean"; value: boolean }
   | { type: "ref"; ref: Ref }
   | { type: "range"; from: Ref; to: Ref }
   | { type: "error"; code: ErrorCode }
   | { type: "name"; text: string }
   | { type: "unary"; op: "+" | "-"; arg: Node }
-  | { type: "binary"; op: "+" | "-" | "*" | "/"; left: Node; right: Node }
+  | { type: "binary"; op: BinaryOperator; left: Node; right: Node }
   | { type: "call"; name: string; args: Node[] };
 
 export class ParseError extends Error {}
@@ -17,10 +25,13 @@ export class ParseError extends Error {}
  * Build the syntax tree of a formula.
  *
  * ```
- * expr    := term (("+" | "-") term)*
+ * expr    := concat (("=" | "<>" | "<" | ">" | "<=" | ">=") concat)*
+ * concat  := sum ("&" sum)*
+ * sum     := term (("+" | "-") term)*
  * term    := unary (("*" | "/") unary)*
  * unary   := ("+" | "-") unary | primary
- * primary := number | ref (":" ref)? | error | name | function "(" args? ")" | "(" expr ")"
+ * primary := number | string | boolean | ref (":" ref)? | error | name
+ *          | function "(" args? ")" | "(" expr ")"
  * args    := expr (separator expr)*
  * ```
  * @throws ParseError
@@ -43,6 +54,26 @@ class Parser {
   }
 
   expr(): Node {
+    let left = this.concat();
+    for (;;) {
+      const op = this.nextOp(...COMPARISON_OPERATORS);
+      if (!op) return left;
+
+      left = { type: "binary", op, left, right: this.concat() };
+    }
+  }
+
+  private concat(): Node {
+    let left = this.sum();
+    for (;;) {
+      const op = this.nextOp("&");
+      if (!op) return left;
+
+      left = { type: "binary", op, left, right: this.sum() };
+    }
+  }
+
+  private sum(): Node {
     let left = this.term();
     for (;;) {
       const op = this.nextOp("+", "-");
@@ -73,7 +104,9 @@ class Parser {
     const token = this.next();
     switch (token.type) {
       case "number":
-        return { type: "number", value: token.value };
+      case "string":
+      case "boolean":
+        return token;
       case "error":
         return { type: "error", code: token.code };
       case "name":

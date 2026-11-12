@@ -22,5 +22,13 @@
     grid-template-columns: 1fr 2fr;
     grid-template-rows: minmax(0, 1fr);
     gap: 1em;
+
+    /* Portrait screens: the main board above the moves. */
+    @media (orientation: portrait) {
+      grid-template-columns: minmax(0, 1fr);
+      grid-template-rows: auto minmax(0, 1fr);
+      /* The main board takes the whole width, but at most half of the height. */
+      --chess-board-size: min(100cqw, 50cqh - 5em);
+    }
   }
 }

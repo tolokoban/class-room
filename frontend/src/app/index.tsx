@@ -43,7 +43,7 @@ const Page26 = React.lazy(() => import("./student/[classroom]/activity/security/
 const Page31 = React.lazy(() => import("./teacher/[classroom]/activity/office/file-explorer/page"))
 const Page32 = React.lazy(() => import("./teacher/[classroom]/activity/office/selection/page"))
 const Page33 = React.lazy(() => import("./teacher/[classroom]/home/page"))
-const Page34 = React.lazy(() => import("./teacher/[classroom]/results/page"))
+const Page35 = React.lazy(() => import("./teacher/[classroom]/results/page"))
 
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 export default function App({ lang }: { lang?: string }) {
@@ -73,7 +73,7 @@ export default function App({ lang }: { lang?: string }) {
     const pg31 = Page31
     const pg32 = Page32
     const pg33 = Page33
-    const pg34 = Page34
+    const pg35 = Page35
     return (
         <Route path="/" def={[pg0, ly0, fb0, , NotFound0]} context={context}>
             <Route path="/student" def={[, , fb0, , NotFound0]} context={context}>
@@ -118,8 +118,10 @@ export default function App({ lang }: { lang?: string }) {
                             <Route path="/teacher/[classroom]/activity/office/selection" def={[pg32, , fb0, , NotFound0]} context={context}/>
                         </Route>
                     </Route>
-                    <Route path="/teacher/[classroom]/home" def={[pg33, , fb0, , NotFound0]} context={context}/>
-                    <Route path="/teacher/[classroom]/results" def={[pg34, , fb0, , NotFound0]} context={context}>
+                    <Route path="/teacher/[classroom]/home" def={[pg33, , fb0, , NotFound0]} context={context}>
+                        <Route path="/teacher/[classroom]/home/translation" def={[, , fb0, , NotFound0]} context={context}/>
+                    </Route>
+                    <Route path="/teacher/[classroom]/results" def={[pg35, , fb0, , NotFound0]} context={context}>
                         <Route path="/teacher/[classroom]/results/translation" def={[, , fb0, , NotFound0]} context={context}/>
                     </Route>
                 </Route>

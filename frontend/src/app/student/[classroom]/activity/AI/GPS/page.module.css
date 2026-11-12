@@ -25,5 +25,11 @@
     grid-template-columns: auto 1fr;
     grid-template-rows: minmax(0, 1fr);
     gap: 1em;
+
+    /* Portrait screens: the first panel above the second one. */
+    @media (orientation: portrait) {
+      grid-template-columns: minmax(0, 1fr);
+      grid-template-rows: auto minmax(0, 1fr);
+    }
   }
 }

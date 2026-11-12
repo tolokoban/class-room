@@ -4,6 +4,13 @@ canvas.retina {
   max-width: 50vw;
   aspect-ratio: 1 / 1;
 
+  /* Portrait screens: the retina is above the text and takes at most half of the height. */
+  @media (orientation: portrait) {
+    width: min(100%, 50vh);
+    height: auto;
+    max-width: none;
+  }
+
   &.draw {
     cursor: crosshair;
     /* Prevent the page from scrolling while drawing with a finger. */

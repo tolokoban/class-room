@@ -1,6 +1,9 @@
+import { ViewButton } from "@tolokoban/ui";
+
 import { CopyButton } from "./_/CopyButton";
 import { Done } from "./_/Done";
 import { useSpreadsheetActivity } from "./_/hooks";
+import { Navigation } from "./_/Navigation";
 import { Sheet } from "./_/Sheet";
 import { useTranslation } from "./_/translation";
 
@@ -22,6 +25,7 @@ export default function Page() {
           {tr.title}
           {exercise && ` — ${activity.title}`}
         </h1>
+        {exercise && <Navigation {...activity.navigation} />}
       </header>
       {exercise ? (
         <main>
@@ -30,11 +34,29 @@ export default function Page() {
               {tr.yourSheet}
               <CopyButton cells={activity.cells} />
             </header>
-            <Sheet key={progress.index} cells={activity.cells} onChange={activity.handleChange} />
+            <Sheet
+              key={progress.index}
+              cells={activity.cells}
+              wrongCells={activity.wrongCells}
+              onChange={activity.handleChange}
+            />
           </section>
           <section>
-            <header>{tr.expected}</header>
-            <Sheet key={progress.index} cells={exercise.expected} readOnly formulaHints />
+            <header>
+              {tr.expected}
+              <ViewButton color="secondary-5" onClick={activity.handleCheck}>
+                {tr.check}
+              </ViewButton>
+            </header>
+            <Sheet
+              key={progress.index}
+              cells={exercise.expected}
+              readOnly
+              copyValuesOnly
+              noCopy={exercise.nocopy}
+              formulaHints
+              hideFormulas
+            />
           </section>
         </main>
       ) : (

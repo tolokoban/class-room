@@ -6,7 +6,7 @@ import { useServiceFileNotes, useServiceFileNotesSet } from "@/service/hooks/fil
 
 import { useTranslation } from "./translation";
 
-export function useClassroomNotes(classroom: string) {
+export function useClassroomNotes(classroom: string, expanded: boolean) {
   const tr = useTranslation();
   const server = useServiceFileNotes(classroom);
   const service = useServiceFileNotesSet();
@@ -16,7 +16,7 @@ export function useClassroomNotes(classroom: string) {
   const [draft, setDraft] = React.useState<string | null>(() => readSessionStorage(storageKey));
   const [tab, setTab] = React.useState<string | undefined>("view");
   const content = draft ?? server.data ?? "";
-  const refTextarea = useAutoResize(content, tab);
+  const refTextarea = useAutoResize(content, tab, expanded);
 
   const update = (value: string) => {
     setDraft(value);
@@ -50,7 +50,7 @@ export function useClassroomNotes(classroom: string) {
 /**
  * Make the textarea as high as its content, so that the section grows with it.
  */
-function useAutoResize(content: string, tab: string | undefined) {
+function useAutoResize(content: string, tab: string | undefined, expanded: boolean) {
   const ref = React.useRef<HTMLTextAreaElement | null>(null);
   React.useLayoutEffect(() => {
     const textarea = ref.current;
@@ -58,7 +58,7 @@ function useAutoResize(content: string, tab: string | undefined) {
 
     textarea.style.height = "auto";
     textarea.style.height = `${textarea.scrollHeight + 2}px`;
-  }, [content, tab]);
+  }, [content, tab, expanded]);
   return ref;
 }
 

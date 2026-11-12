@@ -3,6 +3,7 @@ import {
   acceptedDecimals,
   acceptedSeparators,
   type ErrorCode,
+  findBoolean,
   findError,
   findFunction,
   formatNumber,
@@ -17,14 +18,32 @@ export interface Ref {
   rowAbs: boolean;
 }
 
+export type Operator =
+  | "+"
+  | "-"
+  | "*"
+  | "/"
+  | "&"
+  | "("
+  | ")"
+  | ":"
+  | "="
+  | "<>"
+  | "<"
+  | ">"
+  | "<="
+  | ">=";
+
 export type Token =
   | { type: "number"; value: number }
+  | { type: "string"; value: string }
+  | { type: "boolean"; value: boolean }
   | { type: "ref"; ref: Ref }
   /** Name followed by a "(". */
   | { type: "function"; name: string }
   /** Unknown name. */
   | { type: "name"; text: string }
-  | { type: "op"; text: "+" | "-" | "*" | "/" | "(" | ")" | ":" }
+  | { type: "op"; text: Operator }
   | { type: "separator" }
   | { type: "error"; code: ErrorCode }
   | { type: "space"; text: string }
@@ -36,7 +55,8 @@ const RX_IDENTIFIER = /^[A-Za-z_][A-Za-z0-9_.]*/;
 const RX_REF = /^(\$?)([A-Za-z]{1,3})(\$?)([1-9]\d*)$/;
 const RX_ABSOLUTE_REF = /^\$?[A-Za-z]{1,3}\$?[1-9]\d*/;
 const RX_ERROR = /^#[A-Za-z0-9/]+[!?]/;
-const OPERATORS = "+-*/():";
+const OPERATORS = "+-*/&():=<>";
+const RX_STRING = /^"(?:[^"]|"")*"/;
 
 /**
  * Split the text of a formula (without the leading "=") into tokens.
@@ -67,8 +87,13 @@ function nextToken(
 
   if (separators.includes(char)) return [{ type: "separator" }, 1];
 
+  if (char === '"') return nextString(text);
+
   if (OPERATORS.includes(char)) {
-    return [{ type: "op", text: char as "+" }, 1];
+    const pair = text.slice(0, 2);
+    if (pair === "<>" || pair === "<=" || pair === ">=") return [{ type: "op", text: pair }, 2];
+
+    return [{ type: "op", text: char as Operator }, 1];
   }
   const number = rxNumber.exec(text);
   if (number) {
@@ -80,7 +105,7 @@ function nextToken(
   if (ref) return ref;
 
   const identifier = RX_IDENTIFIER.exec(text);
-  if (identifier) return [identifierToken(identifier[0], text), identifier[0].length];
+  if (identifier) return [identifierToken(identifier[0], text, locale), identifier[0].length];
 
   return [{ type: "invalid", text: char }, 1];
 }
@@ -98,6 +123,15 @@ function nextRef(text: string): [token: Token, length: number] | undefined {
   return ref ? [{ type: "ref", ref }, match[0].length] : undefined;
 }
 
+/** Text between double quotes. Inside, `""` stands for one `"`. */
+function nextString(text: string): [token: Token, length: number] {
+  const match = RX_STRING.exec(text);
+  // Unterminated string: the rest of the formula is invalid.
+  if (!match) return [{ type: "invalid", text }, text.length];
+
+  return [{ type: "string", value: match[0].slice(1, -1).replace(/""/g, '"') }, match[0].length];
+}
+
 function nextError(text: string, locale: Locale): [token: Token, length: number] {
   const match = RX_ERROR.exec(text);
   const code = match ? findError(match[0], locale) : undefined;
@@ -106,9 +140,12 @@ function nextError(text: string, locale: Locale): [token: Token, length: number]
   return [{ type: "error", code }, match[0].length];
 }
 
-function identifierToken(identifier: string, text: string): Token {
+function identifierToken(identifier: string, text: string, locale: Locale): Token {
   const after = text.slice(identifier.length).trimStart();
   if (after.startsWith("(")) return { type: "function", name: identifier };
+
+  const boolean = findBoolean(identifier, locale);
+  if (boolean !== undefined) return { type: "boolean", value: boolean };
 
   return { type: "name", text: identifier };
 }
@@ -150,6 +187,10 @@ function stringifyToken(token: Token, from: Locale, to: Locale): string {
   switch (token.type) {
     case "number":
       return formatNumber(token.value, to);
+    case "string":
+      return `"${token.value.replace(/"/g, '""')}"`;
+    case "boolean":
+      return token.value ? to.booleans.TRUE : to.booleans.FALSE;
     case "ref":
       return formatRef(token.ref);
     case "function": {

@@ -23,7 +23,12 @@ export function Maze({ className, maze, astar, previous, onAnimationEnd }: MazeP
     <canvas
       ref={refCanvas}
       className={$.join(className, Styles.maze)}
-      style={{ aspectRatio: `${maze.width} / ${maze.height}` }}
+      style={
+        {
+          aspectRatio: `${maze.width} / ${maze.height}`,
+          "--maze-ratio": maze.width / maze.height,
+        } as React.CSSProperties
+      }
     />
   );
 }

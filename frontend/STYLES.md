@@ -84,7 +84,10 @@ export function MyComp({ className, children }: MyCompProps) {
 Never hardcode colors: use the theme CSS variables from `@tolokoban/ui`.
 Every background color has a matching foreground `on-` variable.
 
-- Palettes: `primary`, `secondary`, `tertiary`, `neutral`, `error`.
+- Palettes with shades: `primary`, `secondary`, `tertiary`, `neutral`.
+- `error` has NO shades: only `--theme-color-error` and `--theme-color-on-error` exist
+  (`--theme-color-error-5` is undefined). For a pale error background, use
+  `color-mix(in srgb, var(--theme-color-error) 25%, var(--theme-color-neutral-9))`.
 - Shades: `-1` (darkest) … `-9` (lightest), e.g. `--theme-color-primary-5`.
 - Pair them: `background: var(--theme-color-primary-5); color: var(--theme-color-on-primary-5);`
 - App-specific extras (in `src/index.css`): `--theme-color-screen`,

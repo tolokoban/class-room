@@ -6,7 +6,7 @@ import { type Cells, cellKey, COLUMNS, ROWS } from "./Sheet/engine/address";
  */
 export function exerciseCode(cells: Cells): string {
   const lines = [
-    "  newExercise: {",
+    `  ex${Math.floor(Math.random() * 1e12).toString(36)}: {`,
     "    title: {",
     '      fr: "",',
     '      en: "",',

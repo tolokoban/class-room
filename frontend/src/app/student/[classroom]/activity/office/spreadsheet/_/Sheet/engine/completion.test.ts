@@ -7,7 +7,16 @@ const FR: Locale = {
   ...CANONICAL,
   decimal: ",",
   separator: ";",
-  functions: { SUM: "SOMME", COUNT: "NB", COUNTA: "NBVAL", AVERAGE: "MOYENNE" },
+  functions: {
+    SUM: "SOMME",
+    COUNT: "NB",
+    COUNTA: "NBVAL",
+    AVERAGE: "MOYENNE",
+    IF: "SI",
+    AND: "ET",
+    OR: "OU",
+    NOT: "NON",
+  },
 };
 
 describe("findCompletion", () => {
@@ -15,10 +24,11 @@ describe("findCompletion", () => {
     expect(findCompletion("=A1+n", 5, FR)).toEqual({
       start: 4,
       end: 5,
-      functions: ["COUNT", "COUNTA"],
+      functions: ["COUNT", "COUNTA", "NOT"],
     });
     expect(findCompletion("=so", 3, FR)?.functions).toEqual(["SUM"]);
-    expect(findCompletion("=a", 2, CANONICAL)?.functions).toEqual(["AVERAGE"]);
+    expect(findCompletion("=a", 2, CANONICAL)?.functions).toEqual(["AVERAGE", "AND"]);
+    expect(findCompletion("=s", 2, FR)?.functions).toEqual(["SUM", "IF"]);
   });
   it("should not suggest anything when it does not apply", () => {
     expect(findCompletion("so", 2, FR)).toBeNull();
@@ -26,6 +36,7 @@ describe("findCompletion", () => {
     expect(findCompletion("=$M", 3, FR)).toBeNull();
     expect(findCompletion("=SOM", 2, FR)).toBeNull();
     expect(findCompletion("=1+", 3, FR)).toBeNull();
+    expect(findCompletion('=SI(A1>1; "so', 13, FR)).toBeNull();
   });
 });
 
