@@ -2,7 +2,7 @@
   position: absolute;
   inset: 0;
   display: grid;
-  grid-template-rows: auto 1fr auto;
+  grid-template-rows: auto 1fr;
 
   > header {
     padding: 0.5em 1em;
@@ -15,6 +15,20 @@
     }
   }
 
+  > div.columns {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    min-height: 0;
+
+    > section {
+      display: grid;
+      grid-template-rows: 1fr auto;
+      min-height: 0;
+    }
+  }
+}
+
+.chat {
   > main {
     display: flex;
     flex-direction: column;
@@ -54,6 +68,26 @@
   }
 }
 
+/* Small screens: one column, and the whole page scrolls. */
+@media (max-width: 800px) {
+  .page {
+    grid-template-rows: auto auto;
+    overflow-y: auto;
+
+    > div.columns {
+      grid-template-columns: 1fr;
+
+      > section {
+        height: 85dvh;
+      }
+
+      > :last-child {
+        min-height: 85dvh;
+      }
+    }
+  }
+}
+
 .error {
-  color: var(--theme-color-error-7);
+  color: var(--theme-color-error);
 }

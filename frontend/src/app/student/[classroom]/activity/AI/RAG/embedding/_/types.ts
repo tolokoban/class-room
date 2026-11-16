@@ -25,3 +25,15 @@ export type Questions = Record<
     offset: number;
   }> // Array of similar questions that have the same answer
 >;
+
+/**
+ * Linear projection of an embedding into the 3D view:
+ * `coordinate[k] = (vector - mean) · axes[k] - center[k]`.
+ * Computed by a Fisher LDA on the questions (see `lda.ts`).
+ */
+export interface Projection {
+  mean: number[];
+  axes: [number[], number[], number[]];
+  /** Middle of the questions' cloud, so that it is centered in the view. */
+  center: [number, number, number];
+}

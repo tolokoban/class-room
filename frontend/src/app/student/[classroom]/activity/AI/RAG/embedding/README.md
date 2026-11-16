@@ -12,7 +12,7 @@ An embedding model turns a sentence into a vector of 384 numbers. Sentences with
 
 ```text
 embedding/
-├── page.tsx, page.module.css   The page: header, conversation, input, buttons.
+├── page.tsx, page.module.css   The page: the game on the left, the 3D view on the right.
 ├── info.fr.md                  Title and description shown in the activities list.
 └── _/
     ├── model.ts                Model name, dtype, vector size and text prefix.
@@ -26,13 +26,17 @@ embedding/
     ├── data/                   Generated: never edit by hand.
     │   ├── questions.ts        Questions with the offsets of their embeddings.
     │   ├── animals.ts          Animals with their answers and the offsets of their names.
+    │   ├── projection.ts       Mean and axes of the 3D projection (Fisher LDA).
     │   └── vectors.dat         All the embeddings, in binary.
+    ├── lda.ts                  Fisher LDA, used by the generator for the 3D view.
+    ├── projection.ts           Places an embedding in the 3D view.
     ├── vectors.ts              Decoding of `vectors.dat` and cosine similarity.
     ├── embedder.ts             Loads the model and `vectors.dat`, embeds a sentence.
     ├── game.ts                 Matching logic: question, guess, or "too vague".
     ├── hooks.ts                React state of the game.
     ├── Conversation/           The list of messages.
     ├── LoadingOverlay/         Progress bar shown while the model downloads.
+    ├── VectorsView/            The 3D view of the questions and the student's sentence.
     └── translation/            UI texts in fr, en, de and it.
 ```
 
@@ -73,15 +77,19 @@ The generator stops with an error when an animal has fewer than 10 answers for a
 
 The generator embeds two kinds of text:
 
-- **Every wording of every question.** Each question has 5 to 8 wordings ("Peut-il voler ?", "Sait-il voler ?", "A-t-il des ailes ?"…). They all lead to the same answer. Students ask the same thing in many ways, and one vector per question is not enough to catch them all.
+- **Every wording of every question.** Each question has 9 to 11 wordings ("Peut-il voler ?", "Sait-il voler ?", "A-t-il des ailes ?"…). They all lead to the same answer. Students ask the same thing in many ways, and one vector per question is not enough to catch them all.
 - **Every name of every animal, inside a question.** For example "Est-ce la lionne ?", and not just "la lionne". Students type guesses as questions ("c'est un lion ?"), and a bare word is far from a sentence in the vector space. When names were embedded alone, "c'est une poule ?" was matched to the fur question instead of the hen. The alternative names come from `aliases` in `source/animals.ts`: "la lionne", "le T-rex", "le poulpe"…
 
-### 3. `vectors.dat`
+### 3. The 3D projection
+
+The generator also computes how to draw the 384-dimension vectors in 3D, and writes it in `data/projection.ts`. See [The 3D view](#the-3d-view).
+
+### 4. `vectors.dat`
 
 All the vectors are written one after the other in `data/vectors.dat`:
 
 - **Format:** 16-bit floats (float16), little-endian, with no header.
-- **Size:** 384 values × 2 bytes = 768 bytes per vector. There are currently 377 vectors (about 290 KB).
+- **Size:** 384 values × 2 bytes = 768 bytes per vector. There are currently 541 vectors (about 415 KB).
 - **Precision:** float16 keeps about 3 significant digits, which is plenty for values between -1 and 1. A stored question compared with its live embedding still scores 0.997. The difference comes from the 8-bit model as much as from float16.
 
 `data/questions.ts` and `data/animals.ts` don't contain vectors, only **offsets**. An offset is the index of the first value of a vector, counted in values (not bytes), once the file is decoded as a `Float32Array`. Vector `n` starts at offset `n × 384`.
@@ -137,6 +145,24 @@ When a reasonable question is not understood, prefer **adding a wording** to `so
 - **Close but different meanings** can be confused. "il mange du poisson ?" is answered as "Est-ce un poisson ?".
 - **Tense:** extinct and imaginary animals are described in the present tense in the shared answers. Their specific answers correct this where it matters.
 
+## The 3D view
+
+`VectorsView` draws every wording of every question as a point, with one color per question. When the student types a sentence, it appears as a bigger point, linked to its **3 nearest questions**, each labeled with its similarity. Students can drag to rotate the view and hover over a point to read its wording. The animals' names are not shown: 91 groups would be too crowded.
+
+### Why a Fisher LDA, and not a PCA?
+
+Only a **linear** projection can place the student's sentence on the fly, with 3 dot products: `coordinate[k] = (vector − mean) · axes[k] − center[k]` (`projection.ts`). That rules out t-SNE and UMAP.
+
+A PCA was tried first, and it does not work with this data. 3 axes keep only 13% of the variance, and a wording's nearest neighbour in 3D belongs to the same question only 8.5% of the time. The clouds of wordings are lost in the noise.
+
+The **Fisher LDA** (`lda.ts`) uses the groups: it looks for the directions where the questions are far from each other while each question's wordings stay close together. In 3D, the nearest neighbour is then in the same group 69% of the time, about as often as in 384 dimensions. A shrinkage of the within-group scatter limits overfitting: the LDA is fitted on the wordings, but must also place sentences it has never seen.
+
+Each axis is scaled and shifted so that the questions span exactly [-1, +1]: the cloud is centered in the view. The axes have no meaning of their own.
+
+### Keep in mind
+
+The 3D view is a shadow of the real space. Two points can look close in 3D and be far apart in 384 dimensions. That is why the lines show the **real** similarity, computed in 384 dimensions: it is the one the game uses.
+
 ## How to…
 
 ### Add a wording to a question
@@ -157,5 +183,5 @@ Add an entry in `source/animals.ts` with its name (with the article), aliases, l
 ### Change the model
 
 1. Change `MODEL_ID`, `MODEL_DTYPE`, `EMBEDDING_SIZE` and `prepareText()` in `model.ts`, following the new model's documentation.
-2. Run `npm run embeddings`. It fails if the vector size does not match `EMBEDDING_SIZE`.
+2. Run `npm run embeddings`. It fails if the vector size does not match `EMBEDDING_SIZE`. It also recomputes the 3D projection.
 3. Re-tune the constants in `game.ts`: every model has its own similarity range.

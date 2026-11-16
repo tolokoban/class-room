@@ -40,6 +40,28 @@ interface Match<T> {
   margin: number;
 }
 
+/** A question close to the student's sentence, through its closest wording. */
+export interface Neighbour {
+  /** The closest wording of the question. */
+  question: string;
+  /** Offset of its embedding in `vectors`. */
+  offset: number;
+  similarity: number;
+}
+
+/**
+ * @returns The `count` questions that are the closest to `vector`, the closest first.
+ */
+export function nearestQuestions(
+  vector: number[],
+  vectors: Float32Array,
+  count: number,
+): Neighbour[] {
+  return rank(vector, vectors, Object.values(QUESTIONS), (list) => list.map(({ offset }) => offset))
+    .slice(0, count)
+    .map(({ item, index, similarity }) => ({ ...item[index], similarity }));
+}
+
 export function pickAnimal(previous?: Animal): Animal {
   const candidates = ANIMALS.filter((animal) => animal !== previous);
   return pickOne(candidates);
@@ -100,13 +122,24 @@ function findClosest<T>(
   items: T[],
   getOffsets: (item: T) => number[],
 ): Match<T> {
-  const sorted = items
+  const [best, second] = rank(vector, vectors, items, getOffsets);
+  return { ...best, margin: best.similarity - (second?.similarity ?? 0) };
+}
+
+/**
+ * @returns The items, sorted from the closest to `vector` to the farthest.
+ */
+function rank<T>(
+  vector: number[],
+  vectors: Float32Array,
+  items: T[],
+  getOffsets: (item: T) => number[],
+): Array<Omit<Match<T>, "margin">> {
+  return items
     .map((item) => {
       const similarities = getOffsets(item).map((offset) => similarity(vector, vectors, offset));
       const max = Math.max(...similarities);
       return { item, index: similarities.indexOf(max), similarity: max };
     })
     .sort((a, b) => b.similarity - a.similarity);
-  const [best, second] = sorted;
-  return { ...best, margin: best.similarity - (second?.similarity ?? 0) };
 }

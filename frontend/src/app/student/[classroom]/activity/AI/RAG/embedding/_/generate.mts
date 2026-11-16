@@ -2,6 +2,7 @@
  * Precompute the embeddings of the questions and of the animals' names,
  * and write them in `data/vectors.dat` (16 bits floats, little endian).
  * `data/questions.ts` and `data/animals.ts` only hold offsets in this file.
+ * It also computes the projection used by the 3D view (`data/projection.ts`).
  *
  * Only run it again if you change the data or the model (see `model.ts`):
  *   npm run embeddings
@@ -12,6 +13,7 @@ import Path from "node:path";
 
 import { pipeline } from "@huggingface/transformers";
 
+import { fisherLda } from "./lda.ts";
 import { EMBEDDING_SIZE, MODEL_DTYPE, MODEL_ID, prepareText } from "./model.ts";
 import {
   ANIMALS,
@@ -21,7 +23,7 @@ import {
   type Fact,
 } from "./source/animals.ts";
 import { QUESTIONS, type QuestionKey } from "./source/questions.ts";
-import type { Animals, Questions } from "./types.ts";
+import type { Animals, Projection, Questions } from "./types.ts";
 import {
   COLOR,
   CONTINENT,
@@ -138,12 +140,39 @@ export const ${name}: ${type} = ${JSON.stringify(value, null, 2)};
   console.log("Written:", filename);
 }
 
+/**
+ * Fisher LDA on the questions (see `lda.ts`), for the 3D view.
+ * Each axis is scaled and shifted so that the questions span exactly [-1, +1] on it:
+ * the cloud is centered in the view.
+ */
+function makeProjection(questions: Questions): Projection {
+  const groups = Object.values(questions).map((list) =>
+    list.map(({ offset }) => values.slice(offset, offset + EMBEDDING_SIZE)),
+  );
+  const { mean, axes } = fisherLda(groups, 3);
+  const ranges = axes.map((axis) => {
+    const coords = groups
+      .flat()
+      .map((vector) => vector.reduce((sum, x, i) => sum + (x - mean[i]) * axis[i], 0));
+    const min = Math.min(...coords);
+    const max = Math.max(...coords);
+    return { scale: 2 / (max - min), middle: (min + max) / 2 };
+  });
+  const round = (x: number) => Number(x.toPrecision(6));
+  return {
+    mean: mean.map(round),
+    axes: axes.map((axis, k) => axis.map((x) => round(x * ranges[k].scale))) as Projection["axes"],
+    center: ranges.map(({ scale, middle }) => round(middle * scale)) as Projection["center"],
+  };
+}
+
 const questions: Questions = {};
 for (const [key, list] of Object.entries(QUESTIONS)) {
   const offsets = await embed([...list]);
   questions[key] = list.map((question, index) => ({ question, offset: offsets[index] }));
 }
 write("questions.ts", "Questions", "QUESTIONS", questions);
+write("projection.ts", "Projection", "PROJECTION", makeProjection(questions));
 
 ANIMALS.forEach(checkDiet);
 const animals: Animals = [];

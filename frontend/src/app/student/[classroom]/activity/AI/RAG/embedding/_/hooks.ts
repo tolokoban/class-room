@@ -3,8 +3,12 @@ import React from "react";
 import { Notif } from "@/components/Notification/manager";
 import type { Message } from "./Conversation";
 import { addProgressListener, embed, loadModel, type Model } from "./embedder";
-import { type Animal, pickAnimal, pickOne, type Reply, reply } from "./game";
+import { type Animal, nearestQuestions, pickAnimal, pickOne, type Reply, reply } from "./game";
 import { useTranslation } from "./translation";
+import type { Probe } from "./VectorsView";
+
+/** Number of questions linked to the student's sentence in the 3D view. */
+const NEIGHBOURS_COUNT = 3;
 
 export type EmbedderState =
   | { status: "loading"; progress: number; remaining: number | null }
@@ -50,6 +54,7 @@ export function useGame() {
   const [messages, setMessages] = React.useState<Message[]>([]);
   const [input, setInput] = React.useState("");
   const [busy, setBusy] = React.useState(false);
+  const [probe, setProbe] = React.useState<Probe | null>(null);
   const refInput = React.useRef<HTMLInputElement | null>(null);
   const ready = embedder.status === "ready";
   React.useEffect(() => {
@@ -89,6 +94,11 @@ export function useGame() {
     embed(embedder.extractor, text)
       .then((vector) => {
         const answer = reply(animal, vector, embedder.vectors);
+        setProbe({
+          text,
+          vector,
+          neighbours: nearestQuestions(vector, embedder.vectors, NEIGHBOURS_COUNT),
+        });
         say(makeMessage(answer));
         if (answer.type === "guess" && answer.found) setOver(true);
       })
@@ -102,6 +112,7 @@ export function useGame() {
   const handleNewGame = () => {
     setAnimal(pickAnimal(animal));
     setMessages([]);
+    setProbe(null);
     setOver(false);
   };
   const handleKeyDown = (event: React.KeyboardEvent<HTMLInputElement>) => {
@@ -111,6 +122,8 @@ export function useGame() {
     tr,
     embedder,
     ready,
+    vectors: embedder.status === "ready" ? embedder.vectors : null,
+    probe,
     refInput,
     messages,
     input,
