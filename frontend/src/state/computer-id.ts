@@ -1,4 +1,6 @@
 const BODY_LENGTH = 120;
+/** Key of the computer ID in the local storage. */
+const STORAGE_KEY = "computer-id";
 const CHECKSUM_LENGTH = 8;
 const RX_COMPUTER_ID = new RegExp(`^[0-9a-f]{${BODY_LENGTH + CHECKSUM_LENGTH}}$`);
 
@@ -11,6 +13,29 @@ export function createComputerId(): string {
   crypto.getRandomValues(bytes);
   const body = Array.from(bytes, toHex2).join("");
   return `${body}${checksum(body)}`;
+}
+
+/**
+ * The ID of this computer must stay the same after a reload of the page:
+ * it is what identifies a student (seat in a class room, uploaded files, ...).
+ * So it is stored in the local storage the first time it is created.
+ */
+export function getComputerId(
+  storage: Pick<Storage, "getItem" | "setItem"> = globalThis.localStorage,
+): string {
+  try {
+    const stored = storage.getItem(STORAGE_KEY);
+    if (isComputerId(stored)) return stored;
+  } catch (ex) {
+    console.error("Unable to read the computer ID:", ex);
+  }
+  const id = createComputerId();
+  try {
+    storage.setItem(STORAGE_KEY, id);
+  } catch (ex) {
+    console.error("Unable to store the computer ID:", ex);
+  }
+  return id;
 }
 
 export function isComputerId(data: unknown): data is string {

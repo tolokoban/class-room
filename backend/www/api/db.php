@@ -122,6 +122,8 @@ class Database
      *
      * This way, a table added to `structure.sql` is automatically created
      * in an existing database (with the `ALTER TABLE` statements about it).
+     * In the same way, a column added in the `CREATE TABLE` of an existing table
+     * is added with `ALTER TABLE ... ADD COLUMN`.
      *
      * The SQL files use the `classroom_` prefix, which is replaced by
      * the one defined in `env.php`.
@@ -129,7 +131,7 @@ class Database
     public function ensureStructure(string $sqlDir): void
     {
         $statements = $this->readStatements("{$sqlDir}/structure.sql");
-        if (count($this->getMissingTables($statements)) === 0) {
+        if ($this->isStructureUpToDate($statements)) {
             return;
         }
 
@@ -137,14 +139,20 @@ class Database
         $lockName = $this->table("structure");
         $this->query("SELECT GET_LOCK(?, 30)", $lockName);
         try {
-            $missing = $this->getMissingTables($statements);
-            if (count($missing) === 0) {
-                return;
+            $existing = $this->getExistingColumns();
+            $missing = $this->getMissingTables($statements, $existing);
+            if (count($missing) > 0) {
+                error_log("[Database] Creating missing tables: " . implode(", ", $missing));
+                foreach ($statements as $statement) {
+                    if (in_array($this->getStatementTable($statement), $missing, true)) {
+                        $this->query($statement);
+                    }
+                }
             }
-            error_log("[Database] Creating missing tables: " . implode(", ", $missing));
-            foreach ($statements as $statement) {
-                if (in_array($this->getStatementTable($statement), $missing, true)) {
-                    $this->query($statement);
+            foreach ($this->getMissingColumns($statements, $existing) as $table => $definitions) {
+                foreach ($definitions as $definition) {
+                    error_log("[Database] Adding column to `$table`: $definition");
+                    $this->query("ALTER TABLE `$table` ADD COLUMN $definition");
                 }
             }
             if (in_array($this->table("user"), $missing, true)) {
@@ -160,20 +168,74 @@ class Database
 
     /**
      * @param string[] $statements
+     */
+    private function isStructureUpToDate(array $statements): bool
+    {
+        $existing = $this->getExistingColumns();
+        return count($this->getMissingTables($statements, $existing)) === 0
+            && count($this->getMissingColumns($statements, $existing)) === 0;
+    }
+
+    /**
+     * @return array<string, string[]> The names of the columns of each table of the database.
+     */
+    private function getExistingColumns(): array
+    {
+        $stmt = $this->query(
+            "SELECT `table_name` AS `t`, `column_name` AS `c` FROM information_schema.columns
+             WHERE table_schema = DATABASE()"
+        );
+        $columns = [];
+        foreach ($stmt === false ? [] : $stmt->fetchAll() as $row) {
+            $columns[$row["t"]][] = $row["c"];
+        }
+        return $columns;
+    }
+
+    /**
+     * @param string[] $statements
+     * @param array<string, string[]> $existing See `getExistingColumns()`.
      * @return string[] Names (with prefix) of the tables created or altered
      * by these statements, but which do not exist in the database.
      */
-    private function getMissingTables(array $statements): array
+    private function getMissingTables(array $statements, array $existing): array
     {
-        $stmt = $this->query(
-            "SELECT `table_name` AS `name` FROM information_schema.tables WHERE table_schema = DATABASE()"
-        );
-        $existing = $stmt === false ? [] : array_column($stmt->fetchAll(), "name");
         $wanted = array_unique(array_filter(array_map(
             fn($statement) => $this->getStatementTable($statement),
             $statements
         )));
-        return array_values(array_diff($wanted, $existing));
+        return array_values(array_diff($wanted, array_keys($existing)));
+    }
+
+    /**
+     * Columns declared in the `CREATE TABLE` statements of existing tables,
+     * but missing in the database.
+     *
+     * @param string[] $statements
+     * @param array<string, string[]> $existing See `getExistingColumns()`.
+     * @return array<string, string[]> The definitions of the missing columns, indexed by table name.
+     */
+    private function getMissingColumns(array $statements, array $existing): array
+    {
+        $missing = [];
+        foreach ($statements as $statement) {
+            if (!preg_match('/^\s*CREATE\s+TABLE\s+`([^`]+)`\s*\((.*)\)\s*$/is', $statement, $matches)) {
+                continue;
+            }
+            $table = $matches[1];
+            if (!isset($existing[$table])) {
+                continue;
+            }
+            foreach (preg_split('/\r?\n/', $matches[2]) as $line) {
+                if (!preg_match('/^\s*`([^`]+)`\s+(.+?),?\s*$/', $line, $column)) {
+                    continue;
+                }
+                if (!in_array($column[1], $existing[$table], true)) {
+                    $missing[$table][] = "`{$column[1]}` {$column[2]}";
+                }
+            }
+        }
+        return $missing;
     }
 
     /**

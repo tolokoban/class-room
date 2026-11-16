@@ -1,0 +1,39 @@
+.writtenProductions {
+  border-radius: 0.25em;
+  overflow: hidden;
+
+  > div:first-of-type {
+    background: var(--theme-color-primary-3);
+    color: var(--theme-color-on-primary-3);
+    padding: 0.5em;
+
+    > ul {
+      list-style: none;
+      margin: 0;
+      padding: 0;
+      display: flex;
+      flex-direction: column;
+      gap: 0.5em;
+    }
+
+    > .total {
+      margin-top: 0.5em;
+      text-align: right;
+      font-weight: bold;
+    }
+
+    > .error {
+      color: var(--theme-color-error);
+    }
+  }
+
+  > footer {
+    background: var(--theme-color-primary-2);
+    color: var(--theme-color-on-primary-2);
+    padding: 0.5em;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    gap: 1em;
+  }
+}

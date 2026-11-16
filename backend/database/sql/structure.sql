@@ -34,6 +34,8 @@ CREATE TABLE `classroom_class` (
   `description` TEXT NOT NULL,
   -- The code of the activity to display to the student, or NULL
   `activity` VARCHAR(255) DEFAULT NULL,
+  -- Maximum number of students that can join this class room at the same time (see table `seat`).
+  `max_students` integer NOT NULL DEFAULT 24,
   UNIQUE (`code`)
 );
 ALTER TABLE `classroom_class` ADD FOREIGN KEY (`user`) REFERENCES `classroom_user` (`id`) ON DELETE CASCADE;
@@ -80,3 +82,89 @@ CREATE TABLE `classroom_files` (
   UNIQUE (`classroom`, `name`)
 );
 ALTER TABLE `classroom_files` ADD FOREIGN KEY (`classroom`) REFERENCES `classroom_class` (`id`) ON DELETE CASCADE;
+
+-- The students that have joined a class room. A seat is reserved for a computer
+-- until the teacher frees it (see `room/kick`). The number of seats of a class room
+-- is limited by `class.max_students`.
+CREATE TABLE `classroom_seat` (
+  `classroom` integer NOT NULL,
+  -- Unique identifier for the student's computer.
+  `computer` VARCHAR(255) NOT NULL,
+  -- Student's nickname: only one seat can use it in a class room.
+  `nickname` VARCHAR(255) NOT NULL,
+  -- Last time the student was seen in this class room.
+  `time` DATETIME NOT NULL,
+  PRIMARY KEY (`classroom`, `computer`),
+  UNIQUE (`classroom`, `nickname`)
+);
+ALTER TABLE `classroom_seat` ADD FOREIGN KEY (`classroom`) REFERENCES `classroom_class` (`id`) ON DELETE CASCADE;
+
+-- Generic activities of type "Production écrite" ("written production"), defined by a teacher.
+CREATE TABLE `classroom_written` (
+  `id` integer PRIMARY KEY AUTO_INCREMENT,
+  -- Author (with role "teacher").
+  `user` integer NOT NULL,
+  `name` VARCHAR(255) NOT NULL,
+  -- Markdown description of what is expected from the students.
+  `description` TEXT NOT NULL,
+  -- Duration of the exercise, in minutes.
+  `duration` integer NOT NULL,
+  -- The uploaded files are deleted this number of hours after the end of the exercise.
+  `expiration` integer NOT NULL DEFAULT 24,
+  -- JSON: Array<{ name: string, mimeTypes: string[], maxSize: number }>
+  -- An empty `mimeTypes` means that any type is accepted.
+  `files` TEXT NOT NULL,
+  UNIQUE (`user`, `name`)
+);
+ALTER TABLE `classroom_written` ADD FOREIGN KEY (`user`) REFERENCES `classroom_user` (`id`) ON DELETE CASCADE;
+
+-- A written production assigned to a class room, with the state of its timer.
+-- Times are UNIX timestamps in seconds.
+-- * Not started: `end_time` and `remaining` are NULL.
+-- * Running: `end_time` is set.
+-- * Paused: `remaining` (seconds) is set.
+CREATE TABLE `classroom_written_assignment` (
+  `id` integer PRIMARY KEY AUTO_INCREMENT,
+  `written` integer NOT NULL,
+  `classroom` integer NOT NULL,
+  `end_time` BIGINT DEFAULT NULL,
+  `remaining` integer DEFAULT NULL,
+  -- Hours added by the teacher to the expiration of the files.
+  `extension` integer NOT NULL DEFAULT 0,
+  -- When the uploaded files must be deleted (`end_time` + `expiration` + `extension`), NULL if not started.
+  -- It does not change while the timer is paused.
+  `expires_at` BIGINT DEFAULT NULL,
+  UNIQUE (`written`, `classroom`)
+);
+ALTER TABLE `classroom_written_assignment` ADD FOREIGN KEY (`written`) REFERENCES `classroom_written` (`id`) ON DELETE CASCADE;
+ALTER TABLE `classroom_written_assignment` ADD FOREIGN KEY (`classroom`) REFERENCES `classroom_class` (`id`) ON DELETE CASCADE;
+
+-- Files uploaded by the students for a written production.
+-- The content is stored in `www/files/written/` (see `backend/www/api/written.php`).
+CREATE TABLE `classroom_written_upload` (
+  `id` integer PRIMARY KEY AUTO_INCREMENT,
+  `assignment` integer NOT NULL,
+  -- Owner of the upload.
+  `computer` VARCHAR(255) NOT NULL,
+  -- Nickname of the student when the file was uploaded.
+  `nickname` VARCHAR(255) NOT NULL,
+  -- Field `name` of the expected file.
+  `slot` VARCHAR(255) NOT NULL,
+  -- Original name of the uploaded file.
+  `original` VARCHAR(255) NOT NULL,
+  `mime` VARCHAR(255) NOT NULL,
+  -- Extension of the file, deduced from its mime type.
+  `ext` VARCHAR(16) NOT NULL,
+  -- Declared size of the file in bytes.
+  `size` BIGINT NOT NULL,
+  -- Number of bytes received so far.
+  `received` BIGINT NOT NULL DEFAULT 0,
+  -- 0 while the chunks are being sent, 1 once the file is complete.
+  `complete` TINYINT NOT NULL DEFAULT 0,
+  -- 1 if the file has been completed after the end of the timer.
+  `late` TINYINT NOT NULL DEFAULT 0,
+  -- UNIX timestamp of the last change.
+  `time` BIGINT NOT NULL,
+  INDEX (`assignment`, `computer`, `slot`)
+);
+ALTER TABLE `classroom_written_upload` ADD FOREIGN KEY (`assignment`) REFERENCES `classroom_written_assignment` (`id`) ON DELETE CASCADE;

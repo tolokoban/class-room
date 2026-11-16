@@ -14,6 +14,7 @@ $ROLE = "teacher";
  *   code: string
  *   name: string
  *   description: string
+ *   maxStudents: number
  * }>
  * ```
  */
@@ -23,7 +24,7 @@ function entrypoint($input)
 
     $user = $_SESSION["USER"];
     $stmt = $DB->query(
-        "SELECT `id`, `code`, `name`, `description` FROM `{$DB->table("class")}`
+        "SELECT `id`, `code`, `name`, `description`, `max_students` FROM `{$DB->table("class")}`
          WHERE `user` = ? ORDER BY `name`",
         $user["id"]
     );
@@ -34,5 +35,6 @@ function entrypoint($input)
         "code" => $row["code"],
         "name" => $row["name"],
         "description" => $row["description"],
+        "maxStudents" => (int) $row["max_students"],
     ], $rows);
 }

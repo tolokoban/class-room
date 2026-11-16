@@ -3,6 +3,8 @@
  * `frontend/src/components/ActivitiesList/activities.ts`.
  *
  * An activity is a folder containing a `page.tsx`.
+ * Folders with a route param (like `written/[written]`) are generic activities
+ * configured by the teachers: they are not listed.
  * A folder can also hold an `info.fr.md` whose first `# ` line is the title
  * and the remaining text the description.
  *
@@ -33,7 +35,12 @@ const INFOS: Record<string, Info> = {}
 function crawl(dir: string, path: string[]): Activity[] {
     const activities: Activity[] = []
     const entries = FS.readdirSync(dir, { withFileTypes: true })
-        .filter((entry) => entry.isDirectory() && entry.name !== "_")
+        .filter(
+            (entry) =>
+                entry.isDirectory() &&
+                entry.name !== "_" &&
+                !entry.name.startsWith("["),
+        )
         .map((entry) => entry.name)
         .sort((a, b) => a.localeCompare(b))
     for (const name of entries) {

@@ -1,0 +1,41 @@
+.page {
+  position: absolute;
+  inset: 0;
+  overflow: auto;
+  padding: 1em max(1em, calc(50% - 25em));
+  display: flex;
+  flex-direction: column;
+  gap: 1em;
+
+  /* The sections must not shrink to fit in the page: it scrolls. */
+  > * {
+    flex-shrink: 0;
+  }
+
+  > h1 {
+    margin: 0;
+    font-size: 1.5em;
+  }
+
+  > .description {
+    border-radius: 0.25em;
+    overflow: hidden;
+    background: var(--theme-color-primary-3);
+    color: var(--theme-color-on-primary-3);
+
+    > header {
+      background: var(--theme-color-primary-5);
+      color: var(--theme-color-on-primary-5);
+      padding: 0.5em;
+      font-weight: bold;
+    }
+
+    > div {
+      padding: 0.5em 1em;
+    }
+  }
+
+  .error {
+    color: var(--theme-color-error);
+  }
+}

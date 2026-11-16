@@ -11,6 +11,7 @@ export function useTeacherHome() {
   const service = useServiceClassAdd();
   const translateError = useApiErrorTranslator();
   const [name, setName] = React.useState("");
+  const [maxStudents, setMaxStudents] = React.useState(24);
   const refName = React.useRef<HTMLInputElement>(null);
   const add = () => {
     if (service.isPending) return;
@@ -23,7 +24,7 @@ export function useTeacherHome() {
     }
     service
       // The name is also the code the students will type to join the class.
-      .mutate({ code: value, name: value })
+      .mutate({ code: value, name: value, maxStudents })
       .then(() => {
         setName("");
         Notif.info(tr.created$(value));
@@ -34,6 +35,8 @@ export function useTeacherHome() {
   return {
     name,
     setName,
+    maxStudents,
+    setMaxStudents,
     refName,
     isPending: service.isPending,
     add,

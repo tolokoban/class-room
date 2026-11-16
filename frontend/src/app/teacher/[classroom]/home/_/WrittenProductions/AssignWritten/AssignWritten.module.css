@@ -1,0 +1,13 @@
+.assignWritten {
+  background: var(--theme-color-primary-2);
+  color: var(--theme-color-on-primary-2);
+  padding: 0.5em;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-end;
+  gap: 1em;
+
+  > :first-child {
+    flex: 1 1 auto;
+  }
+}

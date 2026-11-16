@@ -1,0 +1,14 @@
+.maxStudents {
+  padding: 0.5em;
+  border-radius: 0.25em;
+  background: var(--theme-color-primary-3);
+  color: var(--theme-color-on-primary-3);
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-end;
+  gap: 1em;
+
+  > :first-child {
+    flex: 1 1 15em;
+  }
+}

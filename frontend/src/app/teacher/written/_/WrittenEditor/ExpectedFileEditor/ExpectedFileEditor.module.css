@@ -1,0 +1,21 @@
+.expectedFileEditor {
+  padding: 0.5em;
+  border-radius: 0.25em;
+  background: var(--theme-color-primary-4);
+  color: var(--theme-color-on-primary-4);
+  display: flex;
+  flex-direction: column;
+  gap: 0.5em;
+
+  /* Name, max size and delete button on the same line. */
+  > .row {
+    display: grid;
+    grid-template-columns: 1fr 8em auto;
+    align-items: end;
+    gap: 1em;
+  }
+
+  > small {
+    opacity: 0.8;
+  }
+}

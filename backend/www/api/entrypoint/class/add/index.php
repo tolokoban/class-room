@@ -14,6 +14,7 @@ $ROLE = "teacher";
  *   code: string // The code to give the students to access the class (not empty).
  *   name: string // Not empty.
  *   description?: string // Markdown description (default to "").
+ *   maxStudents?: number // Maximum number of students that can join at the same time (default to 24).
  * }
  * ```
  * @return int In case of success, the ID of the new class room. Otherwise:
@@ -28,11 +29,13 @@ function entrypoint($input)
     $code = $input["code"] ?? null;
     $name = $input["name"] ?? null;
     $description = $input["description"] ?? "";
+    $maxStudents = $input["maxStudents"] ?? 24;
 
     if (
         !is_string($code) || trim($code) === ""
         || !is_string($name) || trim($name) === ""
         || !is_string($description)
+        || !is_int($maxStudents) || $maxStudents < 1 || $maxStudents > 1000
     ) {
         error_log("[class/add] Invalid input.");
         return -20101;
@@ -48,11 +51,12 @@ function entrypoint($input)
     $user = $_SESSION["USER"];
     try {
         $stmt = $DB->query(
-            "INSERT INTO `{$DB->table("class")}` (`user`, `code`, `name`, `description`) VALUES (?, ?, ?, ?)",
+            "INSERT INTO `{$DB->table("class")}` (`user`, `code`, `name`, `description`, `max_students`) VALUES (?, ?, ?, ?, ?)",
             $user["id"],
             $code,
             $name,
-            $description
+            $description,
+            $maxStudents
         );
     } catch (Exception $exception) {
         if (isDuplicateKeyError($exception)) {

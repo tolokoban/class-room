@@ -1,7 +1,12 @@
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 
 import { API } from "@/service/calls";
-import { ClassAddInput, ClassDeleteInput, ClassItem } from "@/service/calls/class";
+import {
+  ClassAddInput,
+  ClassDeleteInput,
+  ClassItem,
+  ClassUpdateInput,
+} from "@/service/calls/class";
 import { ApiError } from "@/service/calls/service";
 
 import { useApiError } from "./apiError";
@@ -85,4 +90,27 @@ export function useServiceClassDelete(): ClassDeleteResult {
     error: useApiError(error),
     mutate: mutateAsync,
   };
+}
+
+export interface ClassUpdateResult {
+  isPending: boolean;
+  error: ApiError | null;
+  mutate(input: ClassUpdateInput): Promise<void>;
+}
+
+/**
+ * Update a class room.
+ * `useServiceClassList()` and the seats of the class rooms are refreshed on success.
+ */
+export function useServiceClassUpdate(): ClassUpdateResult {
+  const queryClient = useQueryClient();
+  const { mutateAsync, isPending, error } = useMutation({
+    mutationFn: API.class.update,
+    onSuccess() {
+      void queryClient.invalidateQueries({ queryKey: CLASS_LIST_KEY });
+      void queryClient.invalidateQueries({ queryKey: ["room/seats"] });
+    },
+  });
+
+  return { isPending, error: useApiError(error), mutate: mutateAsync };
 }

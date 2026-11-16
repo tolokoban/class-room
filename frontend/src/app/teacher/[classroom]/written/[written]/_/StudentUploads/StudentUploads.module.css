@@ -1,0 +1,76 @@
+.studentUploads {
+  border-radius: 0.25em;
+  overflow: hidden;
+
+  > header {
+    background: var(--theme-color-primary-5);
+    color: var(--theme-color-on-primary-5);
+    padding: 0.5em;
+    font-weight: bold;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    gap: 0 1em;
+
+    > small {
+      font-weight: normal;
+    }
+  }
+
+  > div {
+    background: var(--theme-color-primary-3);
+    color: var(--theme-color-on-primary-3);
+    padding: 0.5em;
+    display: flex;
+    flex-direction: column;
+    gap: 0.5em;
+
+    > article {
+      > header > small {
+        opacity: 0.6;
+        font-family: monospace;
+      }
+
+      > ul {
+        margin: 0.25em 0 0;
+        padding-left: 1.5em;
+
+        > li {
+          display: flex;
+          flex-wrap: wrap;
+          align-items: center;
+          gap: 0 1em;
+
+          > a,
+          > a:visited {
+            color: var(--theme-color-secondary-5);
+            overflow-wrap: anywhere;
+          }
+
+          > span {
+            font-size: 0.9em;
+            opacity: 0.8;
+          }
+
+          > .late {
+            opacity: 1;
+            padding: 0 0.5em;
+            border-radius: 0.25em;
+            background: var(--theme-color-error);
+            color: var(--theme-color-on-error);
+          }
+        }
+      }
+    }
+  }
+
+  > footer {
+    background: var(--theme-color-primary-2);
+    color: var(--theme-color-on-primary-2);
+    padding: 0.5em;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    gap: 1em;
+  }
+}

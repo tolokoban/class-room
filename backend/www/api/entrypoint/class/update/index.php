@@ -15,6 +15,7 @@ $ROLE = "teacher";
  *   code?: string // Not empty, and unique in the whole database.
  *   name?: string // Not empty.
  *   description?: string
+ *   maxStudents?: number // Between 1 and 1000.
  * }
  * ```
  * @return int
@@ -53,6 +54,14 @@ function entrypoint($input)
             }
         }
         $fields[$key] = $value;
+    }
+    if (array_key_exists("maxStudents", $input)) {
+        $maxStudents = $input["maxStudents"];
+        if (!is_int($maxStudents) || $maxStudents < 1 || $maxStudents > 1000) {
+            error_log("[class/update] Invalid input: `maxStudents` must be an integer between 1 and 1000.");
+            return -20301;
+        }
+        $fields["max_students"] = $maxStudents;
     }
 
     $stmt = $DB->query("SELECT `user` FROM `{$DB->table("class")}` WHERE `id` = ?", $id);

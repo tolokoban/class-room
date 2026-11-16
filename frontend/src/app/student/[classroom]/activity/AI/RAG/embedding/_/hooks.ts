@@ -3,7 +3,15 @@ import React from "react";
 import { Notif } from "@/components/Notification/manager";
 import type { Message } from "./Conversation";
 import { addProgressListener, embed, loadModel, type Model } from "./embedder";
-import { type Animal, nearestQuestions, pickAnimal, pickOne, type Reply, reply } from "./game";
+import {
+  type Animal,
+  farthestQuestion,
+  nearestQuestions,
+  pickAnimal,
+  pickOne,
+  type Reply,
+  reply,
+} from "./game";
 import { useTranslation } from "./translation";
 import type { Probe } from "./VectorsView";
 
@@ -98,6 +106,7 @@ export function useGame() {
           text,
           vector,
           neighbours: nearestQuestions(vector, embedder.vectors, NEIGHBOURS_COUNT),
+          farthest: farthestQuestion(vector, embedder.vectors),
         });
         say(makeMessage(answer));
         if (answer.type === "guess" && answer.found) setOver(true);

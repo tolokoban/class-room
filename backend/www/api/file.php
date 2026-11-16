@@ -23,6 +23,13 @@ const NOTES_FILE_NAME = "notes.md";
 const NOTES_MIME = "text/markdown";
 
 /**
+ * Mime types the browser can display in a tab without any risk.
+ * Everything else (HTML, SVG, ...) is downloaded: displaying it inline
+ * would run its scripts in the origin of the application.
+ */
+const INLINE_MIME_PATTERN = '#^(image/(png|jpeg|gif|webp|avif|bmp)|application/pdf|text/plain|audio/.+|video/.+)$#';
+
+/**
  * Is this name reserved (case insensitive, like the database collation)?
  */
 function isReservedFileName(string $name): bool
@@ -210,4 +217,33 @@ function deleteFileContent(string $path): void
     while ($root !== false && $dir !== false && $dir !== $root && str_starts_with($dir, $root) && @rmdir($dir)) {
         $dir = dirname($dir);
     }
+}
+
+
+/**
+ * Value of the `Content-Disposition` header for a file called `$name`:
+ * an ASCII fallback for old browsers, and the exact UTF-8 name (RFC 6266).
+ */
+function getContentDisposition(string $disposition, string $name): string
+{
+    $asciiName = preg_replace('/[^\x20-\x7e]|["\\\\]/u', "_", $name);
+    return "$disposition; filename=\"$asciiName\"; filename*=UTF-8''" . rawurlencode($name);
+}
+
+/**
+ * Send the content of a file to the browser and stop the script.
+ * It is displayed in a tab only if its mime type is safe (see `INLINE_MIME_PATTERN`),
+ * otherwise it is downloaded.
+ */
+function sendFileContent(string $path, string $name, string $mime): void
+{
+    $disposition = preg_match(INLINE_MIME_PATTERN, $mime) ? "inline" : "attachment";
+    header("Content-Type: $mime");
+    header("Content-Disposition: " . getContentDisposition($disposition, $name));
+    header("Content-Length: " . filesize($path));
+    header("X-Content-Type-Options: nosniff");
+    header("Content-Security-Policy: sandbox");
+    header("Cache-Control: private, no-cache");
+    readfile($path);
+    exit;
 }

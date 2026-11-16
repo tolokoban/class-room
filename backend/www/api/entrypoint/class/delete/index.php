@@ -1,12 +1,13 @@
 <?php
 require_once __DIR__ . "/../../../db.php";
 require_once __DIR__ . "/../../../file.php";
+require_once __DIR__ . "/../../../written.php";
 
 $ROLE = "teacher";
 
 /**
  * Delete a class room owned by the current user,
- * with all its activity results and files.
+ * with all its activity results and files (including the files uploaded by the students).
  *
  * @param mixed $input
  * ```ts
@@ -49,6 +50,8 @@ function entrypoint($input)
     $files = $stmt === false ? [] : $stmt->fetchAll();
 
     try {
+        // The rows would be deleted by cascade, but not the content of the files.
+        deleteUploads("`a`.`classroom` = ?", $id);
         $stmt = $DB->query("DELETE FROM `{$DB->table("class")}` WHERE `id` = ?", $id);
     } catch (Exception $exception) {
         error_log("[class/delete] Database error: " . $exception->getMessage());

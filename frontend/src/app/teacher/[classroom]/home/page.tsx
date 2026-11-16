@@ -5,8 +5,10 @@ import { isTeacher, State } from "@/state";
 
 import { ClassroomFiles } from "./_/ClassroomFiles";
 import { ClassroomNotes } from "./_/ClassroomNotes";
+import { ClassroomStudents } from "./_/ClassroomStudents";
 import { CurrentActivity } from "./_/CurrentActivity";
 import { SectionHeader } from "./_/SectionHeader";
+import { WrittenProductions } from "./_/WrittenProductions";
 import { useExpandedSection } from "./hooks";
 import { useTranslation } from "./translation";
 
@@ -33,6 +35,16 @@ export default function Page() {
         {section.isExpanded("activities") && <ActivitiesList />}
       </section>
       <div>
+        <WrittenProductions
+          classroom={classroom}
+          expanded={section.isExpanded("written")}
+          onToggle={() => section.toggle("written")}
+        />
+        <ClassroomStudents
+          classroom={classroom}
+          expanded={section.isExpanded("students")}
+          onToggle={() => section.toggle("students")}
+        />
         <ClassroomFiles
           classroom={classroom}
           expanded={section.isExpanded("files")}

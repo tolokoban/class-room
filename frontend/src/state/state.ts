@@ -1,6 +1,6 @@
 import AtomicState from "@tolokoban/react-state";
 import { isString, isType } from "@tolokoban/type-guards";
-import { createComputerId, isComputerId } from "./computer-id";
+import { getComputerId } from "./computer-id";
 import { persistInSessionStorage } from "./session-storage";
 import { shareWithOtherTabs } from "./tab-sync";
 
@@ -22,9 +22,12 @@ export const State = {
   classroom: new AtomicState("", {
     storage: { id: "classroom", guard: isString },
   }),
-  computer: new AtomicState(createComputerId(), {
-    storage: { id: "computer", guard: isComputerId },
-  }),
+  /**
+   * Unique identifier of this computer, kept in the local storage.
+   * `AtomicState` only writes in the storage when the value changes:
+   * that's why `getComputerId()` stores it itself.
+   */
+  computer: new AtomicState(getComputerId()),
   /** A `Teacher`, the pseudo of a student, or `null` if nobody is connected. */
   user: new AtomicState<null | string | Teacher>(null),
   /** `true` while we are asking the other tabs who is connected. */

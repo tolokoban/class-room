@@ -9,9 +9,9 @@
     "homepage": "./",
     "dependencies": {
         "@huggingface/transformers": "^4.3.2",
-        "@tanstack/react-query": "^5.105.0",
+        "@tanstack/react-query": "^5.107.1",
         "@tolokoban/react-state": "^0.9.0",
-        "@tolokoban/tgd": "^2.9.0",
+        "@tolokoban/tgd": "^2.9.1",
         "@tolokoban/type-guards": "^0.9.0",
         "@tolokoban/ui": "^0.25.12",
         "build-react-routes": "^0.14.0",
@@ -48,8 +48,8 @@
         ]
     },
     "devDependencies": {
-        "@rspack/cli": "^2.3.0",
-        "@rspack/core": "^2.3.0",
+        "@rspack/cli": "^2.3.2",
+        "@rspack/core": "^2.3.2",
         "@rspack/dev-server": "^2.2.2",
         "@types/react": "^19.3.0",
         "@types/react-dom": "^19.3.0",
@@ -57,8 +57,8 @@
         "css-loader": "^7.1.5",
         "gh-pages": "^6.3.0",
         "highlight.js": "^11.12.0",
-        "oxfmt": "^0.75.0",
-        "oxlint": "^1.90.0",
+        "oxfmt": "^0.78.0",
+        "oxlint": "^1.93.0",
         "rehype-highlight": "^7.0.2",
         "rehype-highlight-code-lines": "^1.2.5",
         "remark-emoji": "^5.0.2",
@@ -66,7 +66,7 @@
         "remark-images": "^4.1.0",
         "ts-loader": "^9.6.2",
         "typescript": "^7.0.2",
-        "vitest": "^5.0.5",
+        "vitest": "^5.1.0",
         "webpack-shell-plugin-next": "^2.3.3",
         "workbox-webpack-plugin": "^7.4.1"
     },

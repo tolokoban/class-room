@@ -1,11 +1,11 @@
 import React from "react";
 
 import { goto } from "@/app/routes";
-import { isRoutePath } from "@/app/types";
 import { Notif } from "@/components/Notification";
 import { API } from "@/service/calls";
 import { useApiErrorTranslator } from "@/service/hooks/apiError";
 import { State } from "@/state";
+import { getStudentActivityPath } from "@/utils/activity";
 
 import { useTranslation } from "./translation";
 
@@ -24,8 +24,8 @@ export function useStudentHome() {
         Notif.warn(tr.noActivity);
         return;
       }
-      const route = `/student/[classroom]/activity/${activity}`;
-      if (isRoutePath(route)) goto(route, classroom);
+      const path = getStudentActivityPath(classroom, activity);
+      if (path) globalThis.location.hash = `#${path}`;
       else Notif.error(tr.unknownActivity$(activity));
     } catch (error) {
       Notif.error(translateError(error));

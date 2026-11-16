@@ -7,7 +7,7 @@ digraph dbml {
       
       
       "classroom_role" [id="classroom_role";label=<<TABLE BORDER="2" COLOR="#29235c" CELLBORDER="1" CELLSPACING="0" CELLPADDING="10">
-      <TR><TD PORT="f0" BGCOLOR="#61a51d"><FONT COLOR="#ffffff"><B>       classroom_role       </B></FONT></TD></TR>
+      <TR><TD PORT="f0" BGCOLOR="#4ea51d"><FONT COLOR="#ffffff"><B>       classroom_role       </B></FONT></TD></TR>
 <TR><TD ALIGN="LEFT" PORT="f1" BGCOLOR="#e7e2dd">
       <TABLE CELLPADDING="0" CELLSPACING="0" BORDER="0">
         <TR>
@@ -26,7 +26,7 @@ digraph dbml {
     </TD></TR>
     </TABLE>>];
 "classroom_user" [id="classroom_user";label=<<TABLE BORDER="2" COLOR="#29235c" CELLBORDER="1" CELLSPACING="0" CELLPADDING="10">
-      <TR><TD PORT="f0" BGCOLOR="#611da5"><FONT COLOR="#ffffff"><B>       classroom_user       </B></FONT></TD></TR>
+      <TR><TD PORT="f0" BGCOLOR="#981da5"><FONT COLOR="#ffffff"><B>       classroom_user       </B></FONT></TD></TR>
 <TR><TD ALIGN="LEFT" PORT="f1" BGCOLOR="#e7e2dd">
       <TABLE CELLPADDING="0" CELLSPACING="0" BORDER="0">
         <TR>
@@ -61,7 +61,7 @@ digraph dbml {
     </TD></TR>
     </TABLE>>];
 "classroom_user_role" [id="classroom_user_role";label=<<TABLE BORDER="2" COLOR="#29235c" CELLBORDER="1" CELLSPACING="0" CELLPADDING="10">
-      <TR><TD PORT="f0" BGCOLOR="#dd3c3c"><FONT COLOR="#ffffff"><B>       classroom_user_role       </B></FONT></TD></TR>
+      <TR><TD PORT="f0" BGCOLOR="#3cb1dd"><FONT COLOR="#ffffff"><B>       classroom_user_role       </B></FONT></TD></TR>
 <TR><TD ALIGN="LEFT" PORT="f1" BGCOLOR="#e7e2dd">
       <TABLE CELLPADDING="0" CELLSPACING="0" BORDER="0">
         <TR>
@@ -80,7 +80,7 @@ digraph dbml {
     </TD></TR>
     </TABLE>>];
 "classroom_class" [id="classroom_class";label=<<TABLE BORDER="2" COLOR="#29235c" CELLBORDER="1" CELLSPACING="0" CELLPADDING="10">
-      <TR><TD PORT="f0" BGCOLOR="#3cdddd"><FONT COLOR="#000000"><B>       classroom_class       </B></FONT></TD></TR>
+      <TR><TD PORT="f0" BGCOLOR="#1da580"><FONT COLOR="#ffffff"><B>       classroom_class       </B></FONT></TD></TR>
 <TR><TD ALIGN="LEFT" PORT="f1" BGCOLOR="#e7e2dd">
       <TABLE CELLPADDING="0" CELLSPACING="0" BORDER="0">
         <TR>
@@ -101,7 +101,7 @@ digraph dbml {
       <TABLE CELLPADDING="0" CELLSPACING="0" BORDER="0">
         <TR>
           <TD ALIGN="LEFT">code    </TD>
-          <TD ALIGN="RIGHT"><FONT><I>VARCHAR(64)</I> <B>(!)</B></FONT></TD>
+          <TD ALIGN="RIGHT"><FONT><I>VARCHAR(255)</I> <B>(!)</B></FONT></TD>
         </TR>
       </TABLE>
     </TD></TR>
@@ -121,12 +121,433 @@ digraph dbml {
         </TR>
       </TABLE>
     </TD></TR>
+<TR><TD ALIGN="LEFT" PORT="f6" BGCOLOR="#e7e2dd">
+      <TABLE CELLPADDING="0" CELLSPACING="0" BORDER="0">
+        <TR>
+          <TD ALIGN="LEFT">activity    </TD>
+          <TD ALIGN="RIGHT"><FONT><I>VARCHAR(255)</I></FONT></TD>
+        </TR>
+      </TABLE>
+    </TD></TR>
+<TR><TD ALIGN="LEFT" PORT="f7" BGCOLOR="#e7e2dd">
+      <TABLE CELLPADDING="0" CELLSPACING="0" BORDER="0">
+        <TR>
+          <TD ALIGN="LEFT">max_students    </TD>
+          <TD ALIGN="RIGHT"><FONT><I>integer</I> <B>(!)</B></FONT></TD>
+        </TR>
+      </TABLE>
+    </TD></TR>
+    </TABLE>>];
+"classroom_activity" [id="classroom_activity";label=<<TABLE BORDER="2" COLOR="#29235c" CELLBORDER="1" CELLSPACING="0" CELLPADDING="10">
+      <TR><TD PORT="f0" BGCOLOR="#1d36a5"><FONT COLOR="#ffffff"><B>       classroom_activity       </B></FONT></TD></TR>
+<TR><TD ALIGN="LEFT" PORT="f1" BGCOLOR="#e7e2dd">
+      <TABLE CELLPADDING="0" CELLSPACING="0" BORDER="0">
+        <TR>
+          <TD ALIGN="LEFT"><B>id</B>    </TD>
+          <TD ALIGN="RIGHT"><FONT><I>integer</I></FONT></TD>
+        </TR>
+      </TABLE>
+    </TD></TR>
+<TR><TD ALIGN="LEFT" PORT="f2" BGCOLOR="#e7e2dd">
+      <TABLE CELLPADDING="0" CELLSPACING="0" BORDER="0">
+        <TR>
+          <TD ALIGN="LEFT">code    </TD>
+          <TD ALIGN="RIGHT"><FONT><I>VARCHAR(255)</I> <B>(!)</B></FONT></TD>
+        </TR>
+      </TABLE>
+    </TD></TR>
+<TR><TD ALIGN="LEFT" PORT="f3" BGCOLOR="#e7e2dd">
+      <TABLE CELLPADDING="0" CELLSPACING="0" BORDER="0">
+        <TR>
+          <TD ALIGN="LEFT">classroom    </TD>
+          <TD ALIGN="RIGHT"><FONT><I>integer</I> <B>(!)</B></FONT></TD>
+        </TR>
+      </TABLE>
+    </TD></TR>
+<TR><TD ALIGN="LEFT" PORT="f4" BGCOLOR="#e7e2dd">
+      <TABLE CELLPADDING="0" CELLSPACING="0" BORDER="0">
+        <TR>
+          <TD ALIGN="LEFT">computer    </TD>
+          <TD ALIGN="RIGHT"><FONT><I>VARCHAR(255)</I> <B>(!)</B></FONT></TD>
+        </TR>
+      </TABLE>
+    </TD></TR>
+<TR><TD ALIGN="LEFT" PORT="f5" BGCOLOR="#e7e2dd">
+      <TABLE CELLPADDING="0" CELLSPACING="0" BORDER="0">
+        <TR>
+          <TD ALIGN="LEFT">nickname    </TD>
+          <TD ALIGN="RIGHT"><FONT><I>VARCHAR(255)</I> <B>(!)</B></FONT></TD>
+        </TR>
+      </TABLE>
+    </TD></TR>
+<TR><TD ALIGN="LEFT" PORT="f6" BGCOLOR="#e7e2dd">
+      <TABLE CELLPADDING="0" CELLSPACING="0" BORDER="0">
+        <TR>
+          <TD ALIGN="LEFT">result    </TD>
+          <TD ALIGN="RIGHT"><FONT><I>TEXT</I></FONT></TD>
+        </TR>
+      </TABLE>
+    </TD></TR>
+    </TABLE>>];
+"classroom_room" [id="classroom_room";label=<<TABLE BORDER="2" COLOR="#29235c" CELLBORDER="1" CELLSPACING="0" CELLPADDING="10">
+      <TR><TD PORT="f0" BGCOLOR="#3cdd59"><FONT COLOR="#000000"><B>       classroom_room       </B></FONT></TD></TR>
+<TR><TD ALIGN="LEFT" PORT="f1" BGCOLOR="#e7e2dd">
+      <TABLE CELLPADDING="0" CELLSPACING="0" BORDER="0">
+        <TR>
+          <TD ALIGN="LEFT"><B>computer</B>    </TD>
+          <TD ALIGN="RIGHT"><FONT><I>VARCHAR(255)</I> <B>(!)</B></FONT></TD>
+        </TR>
+      </TABLE>
+    </TD></TR>
+<TR><TD ALIGN="LEFT" PORT="f2" BGCOLOR="#e7e2dd">
+      <TABLE CELLPADDING="0" CELLSPACING="0" BORDER="0">
+        <TR>
+          <TD ALIGN="LEFT">nickname    </TD>
+          <TD ALIGN="RIGHT"><FONT><I>VARCHAR(255)</I> <B>(!)</B></FONT></TD>
+        </TR>
+      </TABLE>
+    </TD></TR>
+<TR><TD ALIGN="LEFT" PORT="f3" BGCOLOR="#e7e2dd">
+      <TABLE CELLPADDING="0" CELLSPACING="0" BORDER="0">
+        <TR>
+          <TD ALIGN="LEFT">classroom    </TD>
+          <TD ALIGN="RIGHT"><FONT><I>integer</I> <B>(!)</B></FONT></TD>
+        </TR>
+      </TABLE>
+    </TD></TR>
+<TR><TD ALIGN="LEFT" PORT="f4" BGCOLOR="#e7e2dd">
+      <TABLE CELLPADDING="0" CELLSPACING="0" BORDER="0">
+        <TR>
+          <TD ALIGN="LEFT">time    </TD>
+          <TD ALIGN="RIGHT"><FONT><I>DATETIME</I> <B>(!)</B></FONT></TD>
+        </TR>
+      </TABLE>
+    </TD></TR>
+    </TABLE>>];
+"classroom_files" [id="classroom_files";label=<<TABLE BORDER="2" COLOR="#29235c" CELLBORDER="1" CELLSPACING="0" CELLPADDING="10">
+      <TR><TD PORT="f0" BGCOLOR="#dd3c94"><FONT COLOR="#ffffff"><B>       classroom_files       </B></FONT></TD></TR>
+<TR><TD ALIGN="LEFT" PORT="f1" BGCOLOR="#e7e2dd">
+      <TABLE CELLPADDING="0" CELLSPACING="0" BORDER="0">
+        <TR>
+          <TD ALIGN="LEFT"><B>id</B>    </TD>
+          <TD ALIGN="RIGHT"><FONT><I>integer</I></FONT></TD>
+        </TR>
+      </TABLE>
+    </TD></TR>
+<TR><TD ALIGN="LEFT" PORT="f2" BGCOLOR="#e7e2dd">
+      <TABLE CELLPADDING="0" CELLSPACING="0" BORDER="0">
+        <TR>
+          <TD ALIGN="LEFT">classroom    </TD>
+          <TD ALIGN="RIGHT"><FONT><I>integer</I> <B>(!)</B></FONT></TD>
+        </TR>
+      </TABLE>
+    </TD></TR>
+<TR><TD ALIGN="LEFT" PORT="f3" BGCOLOR="#e7e2dd">
+      <TABLE CELLPADDING="0" CELLSPACING="0" BORDER="0">
+        <TR>
+          <TD ALIGN="LEFT">name    </TD>
+          <TD ALIGN="RIGHT"><FONT><I>VARCHAR(255)</I> <B>(!)</B></FONT></TD>
+        </TR>
+      </TABLE>
+    </TD></TR>
+<TR><TD ALIGN="LEFT" PORT="f4" BGCOLOR="#e7e2dd">
+      <TABLE CELLPADDING="0" CELLSPACING="0" BORDER="0">
+        <TR>
+          <TD ALIGN="LEFT">size    </TD>
+          <TD ALIGN="RIGHT"><FONT><I>integer</I> <B>(!)</B></FONT></TD>
+        </TR>
+      </TABLE>
+    </TD></TR>
+<TR><TD ALIGN="LEFT" PORT="f5" BGCOLOR="#e7e2dd">
+      <TABLE CELLPADDING="0" CELLSPACING="0" BORDER="0">
+        <TR>
+          <TD ALIGN="LEFT">mime    </TD>
+          <TD ALIGN="RIGHT"><FONT><I>VARCHAR(255)</I> <B>(!)</B></FONT></TD>
+        </TR>
+      </TABLE>
+    </TD></TR>
+    </TABLE>>];
+"classroom_seat" [id="classroom_seat";label=<<TABLE BORDER="2" COLOR="#29235c" CELLBORDER="1" CELLSPACING="0" CELLPADDING="10">
+      <TR><TD PORT="f0" BGCOLOR="#cedd3c"><FONT COLOR="#000000"><B>       classroom_seat       </B></FONT></TD></TR>
+<TR><TD ALIGN="LEFT" PORT="f1" BGCOLOR="#e7e2dd">
+      <TABLE CELLPADDING="0" CELLSPACING="0" BORDER="0">
+        <TR>
+          <TD ALIGN="LEFT"><B>classroom</B>    </TD>
+          <TD ALIGN="RIGHT"><FONT><I>integer</I> <B>(!)</B></FONT></TD>
+        </TR>
+      </TABLE>
+    </TD></TR>
+<TR><TD ALIGN="LEFT" PORT="f2" BGCOLOR="#e7e2dd">
+      <TABLE CELLPADDING="0" CELLSPACING="0" BORDER="0">
+        <TR>
+          <TD ALIGN="LEFT"><B>computer</B>    </TD>
+          <TD ALIGN="RIGHT"><FONT><I>VARCHAR(255)</I> <B>(!)</B></FONT></TD>
+        </TR>
+      </TABLE>
+    </TD></TR>
+<TR><TD ALIGN="LEFT" PORT="f3" BGCOLOR="#e7e2dd">
+      <TABLE CELLPADDING="0" CELLSPACING="0" BORDER="0">
+        <TR>
+          <TD ALIGN="LEFT">nickname    </TD>
+          <TD ALIGN="RIGHT"><FONT><I>VARCHAR(255)</I> <B>(!)</B></FONT></TD>
+        </TR>
+      </TABLE>
+    </TD></TR>
+<TR><TD ALIGN="LEFT" PORT="f4" BGCOLOR="#e7e2dd">
+      <TABLE CELLPADDING="0" CELLSPACING="0" BORDER="0">
+        <TR>
+          <TD ALIGN="LEFT">time    </TD>
+          <TD ALIGN="RIGHT"><FONT><I>DATETIME</I> <B>(!)</B></FONT></TD>
+        </TR>
+      </TABLE>
+    </TD></TR>
+    </TABLE>>];
+"classroom_written" [id="classroom_written";label=<<TABLE BORDER="2" COLOR="#29235c" CELLBORDER="1" CELLSPACING="0" CELLPADDING="10">
+      <TR><TD PORT="f0" BGCOLOR="#dd3c3c"><FONT COLOR="#ffffff"><B>       classroom_written       </B></FONT></TD></TR>
+<TR><TD ALIGN="LEFT" PORT="f1" BGCOLOR="#e7e2dd">
+      <TABLE CELLPADDING="0" CELLSPACING="0" BORDER="0">
+        <TR>
+          <TD ALIGN="LEFT"><B>id</B>    </TD>
+          <TD ALIGN="RIGHT"><FONT><I>integer</I></FONT></TD>
+        </TR>
+      </TABLE>
+    </TD></TR>
+<TR><TD ALIGN="LEFT" PORT="f2" BGCOLOR="#e7e2dd">
+      <TABLE CELLPADDING="0" CELLSPACING="0" BORDER="0">
+        <TR>
+          <TD ALIGN="LEFT">user    </TD>
+          <TD ALIGN="RIGHT"><FONT><I>integer</I> <B>(!)</B></FONT></TD>
+        </TR>
+      </TABLE>
+    </TD></TR>
+<TR><TD ALIGN="LEFT" PORT="f3" BGCOLOR="#e7e2dd">
+      <TABLE CELLPADDING="0" CELLSPACING="0" BORDER="0">
+        <TR>
+          <TD ALIGN="LEFT">name    </TD>
+          <TD ALIGN="RIGHT"><FONT><I>VARCHAR(255)</I> <B>(!)</B></FONT></TD>
+        </TR>
+      </TABLE>
+    </TD></TR>
+<TR><TD ALIGN="LEFT" PORT="f4" BGCOLOR="#e7e2dd">
+      <TABLE CELLPADDING="0" CELLSPACING="0" BORDER="0">
+        <TR>
+          <TD ALIGN="LEFT">description    </TD>
+          <TD ALIGN="RIGHT"><FONT><I>TEXT</I> <B>(!)</B></FONT></TD>
+        </TR>
+      </TABLE>
+    </TD></TR>
+<TR><TD ALIGN="LEFT" PORT="f5" BGCOLOR="#e7e2dd">
+      <TABLE CELLPADDING="0" CELLSPACING="0" BORDER="0">
+        <TR>
+          <TD ALIGN="LEFT">duration    </TD>
+          <TD ALIGN="RIGHT"><FONT><I>integer</I> <B>(!)</B></FONT></TD>
+        </TR>
+      </TABLE>
+    </TD></TR>
+<TR><TD ALIGN="LEFT" PORT="f6" BGCOLOR="#e7e2dd">
+      <TABLE CELLPADDING="0" CELLSPACING="0" BORDER="0">
+        <TR>
+          <TD ALIGN="LEFT">expiration    </TD>
+          <TD ALIGN="RIGHT"><FONT><I>integer</I> <B>(!)</B></FONT></TD>
+        </TR>
+      </TABLE>
+    </TD></TR>
+<TR><TD ALIGN="LEFT" PORT="f7" BGCOLOR="#e7e2dd">
+      <TABLE CELLPADDING="0" CELLSPACING="0" BORDER="0">
+        <TR>
+          <TD ALIGN="LEFT">files    </TD>
+          <TD ALIGN="RIGHT"><FONT><I>TEXT</I> <B>(!)</B></FONT></TD>
+        </TR>
+      </TABLE>
+    </TD></TR>
+    </TABLE>>];
+"classroom_written_assignment" [id="classroom_written_assignment";label=<<TABLE BORDER="2" COLOR="#29235c" CELLBORDER="1" CELLSPACING="0" CELLPADDING="10">
+      <TR><TD PORT="f0" BGCOLOR="#763cdd"><FONT COLOR="#ffffff"><B>       classroom_written_assignment       </B></FONT></TD></TR>
+<TR><TD ALIGN="LEFT" PORT="f1" BGCOLOR="#e7e2dd">
+      <TABLE CELLPADDING="0" CELLSPACING="0" BORDER="0">
+        <TR>
+          <TD ALIGN="LEFT"><B>id</B>    </TD>
+          <TD ALIGN="RIGHT"><FONT><I>integer</I></FONT></TD>
+        </TR>
+      </TABLE>
+    </TD></TR>
+<TR><TD ALIGN="LEFT" PORT="f2" BGCOLOR="#e7e2dd">
+      <TABLE CELLPADDING="0" CELLSPACING="0" BORDER="0">
+        <TR>
+          <TD ALIGN="LEFT">written    </TD>
+          <TD ALIGN="RIGHT"><FONT><I>integer</I> <B>(!)</B></FONT></TD>
+        </TR>
+      </TABLE>
+    </TD></TR>
+<TR><TD ALIGN="LEFT" PORT="f3" BGCOLOR="#e7e2dd">
+      <TABLE CELLPADDING="0" CELLSPACING="0" BORDER="0">
+        <TR>
+          <TD ALIGN="LEFT">classroom    </TD>
+          <TD ALIGN="RIGHT"><FONT><I>integer</I> <B>(!)</B></FONT></TD>
+        </TR>
+      </TABLE>
+    </TD></TR>
+<TR><TD ALIGN="LEFT" PORT="f4" BGCOLOR="#e7e2dd">
+      <TABLE CELLPADDING="0" CELLSPACING="0" BORDER="0">
+        <TR>
+          <TD ALIGN="LEFT">end_time    </TD>
+          <TD ALIGN="RIGHT"><FONT><I>BIGINT</I></FONT></TD>
+        </TR>
+      </TABLE>
+    </TD></TR>
+<TR><TD ALIGN="LEFT" PORT="f5" BGCOLOR="#e7e2dd">
+      <TABLE CELLPADDING="0" CELLSPACING="0" BORDER="0">
+        <TR>
+          <TD ALIGN="LEFT">remaining    </TD>
+          <TD ALIGN="RIGHT"><FONT><I>integer</I></FONT></TD>
+        </TR>
+      </TABLE>
+    </TD></TR>
+<TR><TD ALIGN="LEFT" PORT="f6" BGCOLOR="#e7e2dd">
+      <TABLE CELLPADDING="0" CELLSPACING="0" BORDER="0">
+        <TR>
+          <TD ALIGN="LEFT">extension    </TD>
+          <TD ALIGN="RIGHT"><FONT><I>integer</I> <B>(!)</B></FONT></TD>
+        </TR>
+      </TABLE>
+    </TD></TR>
+<TR><TD ALIGN="LEFT" PORT="f7" BGCOLOR="#e7e2dd">
+      <TABLE CELLPADDING="0" CELLSPACING="0" BORDER="0">
+        <TR>
+          <TD ALIGN="LEFT">expires_at    </TD>
+          <TD ALIGN="RIGHT"><FONT><I>BIGINT</I></FONT></TD>
+        </TR>
+      </TABLE>
+    </TD></TR>
+    </TABLE>>];
+"classroom_written_upload" [id="classroom_written_upload";label=<<TABLE BORDER="2" COLOR="#29235c" CELLBORDER="1" CELLSPACING="0" CELLPADDING="10">
+      <TR><TD PORT="f0" BGCOLOR="#a5671d"><FONT COLOR="#ffffff"><B>       classroom_written_upload       </B></FONT></TD></TR>
+<TR><TD ALIGN="LEFT" PORT="f1" BGCOLOR="#e7e2dd">
+      <TABLE CELLPADDING="0" CELLSPACING="0" BORDER="0">
+        <TR>
+          <TD ALIGN="LEFT"><B>id</B>    </TD>
+          <TD ALIGN="RIGHT"><FONT><I>integer</I></FONT></TD>
+        </TR>
+      </TABLE>
+    </TD></TR>
+<TR><TD ALIGN="LEFT" PORT="f2" BGCOLOR="#e7e2dd">
+      <TABLE CELLPADDING="0" CELLSPACING="0" BORDER="0">
+        <TR>
+          <TD ALIGN="LEFT">assignment    </TD>
+          <TD ALIGN="RIGHT"><FONT><I>integer</I> <B>(!)</B></FONT></TD>
+        </TR>
+      </TABLE>
+    </TD></TR>
+<TR><TD ALIGN="LEFT" PORT="f3" BGCOLOR="#e7e2dd">
+      <TABLE CELLPADDING="0" CELLSPACING="0" BORDER="0">
+        <TR>
+          <TD ALIGN="LEFT">computer    </TD>
+          <TD ALIGN="RIGHT"><FONT><I>VARCHAR(255)</I> <B>(!)</B></FONT></TD>
+        </TR>
+      </TABLE>
+    </TD></TR>
+<TR><TD ALIGN="LEFT" PORT="f4" BGCOLOR="#e7e2dd">
+      <TABLE CELLPADDING="0" CELLSPACING="0" BORDER="0">
+        <TR>
+          <TD ALIGN="LEFT">nickname    </TD>
+          <TD ALIGN="RIGHT"><FONT><I>VARCHAR(255)</I> <B>(!)</B></FONT></TD>
+        </TR>
+      </TABLE>
+    </TD></TR>
+<TR><TD ALIGN="LEFT" PORT="f5" BGCOLOR="#e7e2dd">
+      <TABLE CELLPADDING="0" CELLSPACING="0" BORDER="0">
+        <TR>
+          <TD ALIGN="LEFT">slot    </TD>
+          <TD ALIGN="RIGHT"><FONT><I>VARCHAR(255)</I> <B>(!)</B></FONT></TD>
+        </TR>
+      </TABLE>
+    </TD></TR>
+<TR><TD ALIGN="LEFT" PORT="f6" BGCOLOR="#e7e2dd">
+      <TABLE CELLPADDING="0" CELLSPACING="0" BORDER="0">
+        <TR>
+          <TD ALIGN="LEFT">original    </TD>
+          <TD ALIGN="RIGHT"><FONT><I>VARCHAR(255)</I> <B>(!)</B></FONT></TD>
+        </TR>
+      </TABLE>
+    </TD></TR>
+<TR><TD ALIGN="LEFT" PORT="f7" BGCOLOR="#e7e2dd">
+      <TABLE CELLPADDING="0" CELLSPACING="0" BORDER="0">
+        <TR>
+          <TD ALIGN="LEFT">mime    </TD>
+          <TD ALIGN="RIGHT"><FONT><I>VARCHAR(255)</I> <B>(!)</B></FONT></TD>
+        </TR>
+      </TABLE>
+    </TD></TR>
+<TR><TD ALIGN="LEFT" PORT="f8" BGCOLOR="#e7e2dd">
+      <TABLE CELLPADDING="0" CELLSPACING="0" BORDER="0">
+        <TR>
+          <TD ALIGN="LEFT">ext    </TD>
+          <TD ALIGN="RIGHT"><FONT><I>VARCHAR(16)</I> <B>(!)</B></FONT></TD>
+        </TR>
+      </TABLE>
+    </TD></TR>
+<TR><TD ALIGN="LEFT" PORT="f9" BGCOLOR="#e7e2dd">
+      <TABLE CELLPADDING="0" CELLSPACING="0" BORDER="0">
+        <TR>
+          <TD ALIGN="LEFT">size    </TD>
+          <TD ALIGN="RIGHT"><FONT><I>BIGINT</I> <B>(!)</B></FONT></TD>
+        </TR>
+      </TABLE>
+    </TD></TR>
+<TR><TD ALIGN="LEFT" PORT="f10" BGCOLOR="#e7e2dd">
+      <TABLE CELLPADDING="0" CELLSPACING="0" BORDER="0">
+        <TR>
+          <TD ALIGN="LEFT">received    </TD>
+          <TD ALIGN="RIGHT"><FONT><I>BIGINT</I> <B>(!)</B></FONT></TD>
+        </TR>
+      </TABLE>
+    </TD></TR>
+<TR><TD ALIGN="LEFT" PORT="f11" BGCOLOR="#e7e2dd">
+      <TABLE CELLPADDING="0" CELLSPACING="0" BORDER="0">
+        <TR>
+          <TD ALIGN="LEFT">complete    </TD>
+          <TD ALIGN="RIGHT"><FONT><I>TINYINT</I> <B>(!)</B></FONT></TD>
+        </TR>
+      </TABLE>
+    </TD></TR>
+<TR><TD ALIGN="LEFT" PORT="f12" BGCOLOR="#e7e2dd">
+      <TABLE CELLPADDING="0" CELLSPACING="0" BORDER="0">
+        <TR>
+          <TD ALIGN="LEFT">late    </TD>
+          <TD ALIGN="RIGHT"><FONT><I>TINYINT</I> <B>(!)</B></FONT></TD>
+        </TR>
+      </TABLE>
+    </TD></TR>
+<TR><TD ALIGN="LEFT" PORT="f13" BGCOLOR="#e7e2dd">
+      <TABLE CELLPADDING="0" CELLSPACING="0" BORDER="0">
+        <TR>
+          <TD ALIGN="LEFT">time    </TD>
+          <TD ALIGN="RIGHT"><FONT><I>BIGINT</I> <B>(!)</B></FONT></TD>
+        </TR>
+      </TABLE>
+    </TD></TR>
     </TABLE>>];
       "classroom_user":f0 -> "classroom_user_role":f0 [style=invis, weight=100, color=red]
-    "classroom_user":f1:e -> "classroom_user_role":f1:w [dir=forward, penwidth=3, color="#611da5", headlabel="*", taillabel="1"]
+    "classroom_user":f1:e -> "classroom_user_role":f1:w [dir=forward, penwidth=3, color="#981da5", headlabel="*", taillabel="1"]
 "classroom_role":f0 -> "classroom_user_role":f0 [style=invis, weight=100, color=red]
-    "classroom_role":f1:e -> "classroom_user_role":f2:w [dir=forward, penwidth=3, color="#61a51d", headlabel="*", taillabel="1"]
+    "classroom_role":f1:e -> "classroom_user_role":f2:w [dir=forward, penwidth=3, color="#4ea51d", headlabel="*", taillabel="1"]
 "classroom_user":f0 -> "classroom_class":f0 [style=invis, weight=100, color=red]
-    "classroom_user":f1:e -> "classroom_class":f2:w [dir=forward, penwidth=3, color="#611da5", headlabel="*", taillabel="1"]
+    "classroom_user":f1:e -> "classroom_class":f2:w [dir=forward, penwidth=3, color="#981da5", headlabel="*", taillabel="1"]
+"classroom_class":f0 -> "classroom_activity":f0 [style=invis, weight=100, color=red]
+    "classroom_class":f1:e -> "classroom_activity":f3:w [dir=forward, penwidth=3, color="#1da580", headlabel="*", taillabel="1"]
+"classroom_class":f0 -> "classroom_room":f0 [style=invis, weight=100, color=red]
+    "classroom_class":f1:e -> "classroom_room":f3:w [dir=forward, penwidth=3, color="#1da580", headlabel="*", taillabel="1"]
+"classroom_class":f0 -> "classroom_files":f0 [style=invis, weight=100, color=red]
+    "classroom_class":f1:e -> "classroom_files":f2:w [dir=forward, penwidth=3, color="#1da580", headlabel="*", taillabel="1"]
+"classroom_class":f0 -> "classroom_seat":f0 [style=invis, weight=100, color=red]
+    "classroom_class":f1:e -> "classroom_seat":f1:w [dir=forward, penwidth=3, color="#1da580", headlabel="*", taillabel="1"]
+"classroom_user":f0 -> "classroom_written":f0 [style=invis, weight=100, color=red]
+    "classroom_user":f1:e -> "classroom_written":f2:w [dir=forward, penwidth=3, color="#981da5", headlabel="*", taillabel="1"]
+"classroom_written":f0 -> "classroom_written_assignment":f0 [style=invis, weight=100, color=red]
+    "classroom_written":f1:e -> "classroom_written_assignment":f2:w [dir=forward, penwidth=3, color="#dd3c3c", headlabel="*", taillabel="1"]
+"classroom_class":f0 -> "classroom_written_assignment":f0 [style=invis, weight=100, color=red]
+    "classroom_class":f1:e -> "classroom_written_assignment":f3:w [dir=forward, penwidth=3, color="#1da580", headlabel="*", taillabel="1"]
+"classroom_written_assignment":f0 -> "classroom_written_upload":f0 [style=invis, weight=100, color=red]
+    "classroom_written_assignment":f1:e -> "classroom_written_upload":f2:w [dir=forward, penwidth=3, color="#763cdd", headlabel="*", taillabel="1"]
       
     }

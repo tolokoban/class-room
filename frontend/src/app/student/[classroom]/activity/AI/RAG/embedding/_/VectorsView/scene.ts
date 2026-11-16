@@ -1,11 +1,8 @@
 import { QUESTIONS } from "../data/questions";
 import { type Point3, project } from "../projection";
-import type { Camera, ScenePoint, ScreenPoint } from "./types";
+import type { Palette, ScenePoint } from "./types";
 
-/** Distance from the camera to the center of the cube, in cube half-sides. */
-const CAMERA_DISTANCE = 6;
-/** Size of a cube half-side, relative to the smallest side of the canvas. */
-const ZOOM = 0.2;
+export const GROUP_COUNT = Object.keys(QUESTIONS).length;
 
 /** All the wordings of all the questions, placed in 3D. */
 export function makeScene(vectors: Float32Array): ScenePoint[] {
@@ -19,27 +16,32 @@ export function makeScene(vectors: Float32Array): ScenePoint[] {
   );
 }
 
-export function toScreen(
-  [x, y, z]: Point3,
-  { yaw, pitch }: Camera,
-  width: number,
-  height: number,
-): ScreenPoint {
-  const x1 = x * Math.cos(yaw) + z * Math.sin(yaw);
-  const z1 = -x * Math.sin(yaw) + z * Math.cos(yaw);
-  const y2 = y * Math.cos(pitch) - z1 * Math.sin(pitch);
-  const z2 = y * Math.sin(pitch) + z1 * Math.cos(pitch);
-  const scale = CAMERA_DISTANCE / (CAMERA_DISTANCE - z2);
-  const unit = Math.min(width, height) * ZOOM * scale;
-  return { x: width / 2 + x1 * unit, y: height / 2 - y2 * unit, depth: z2, scale };
-}
-
-/** One color per question, as different as possible from its neighbours (golden angle). */
+/**
+ * One color per question, as different as possible from its neighbours (golden angle).
+ * The theme has no categorical palette with that many colors.
+ */
 export function groupColor(group: number): string {
   return `hsl(${(group * 137.508) % 360} 70% 55%)`;
 }
 
-/** The 8 corners of the cube and its 12 edges, to give a sense of depth. */
+/** The colors of the palette texture: one per question, then the probe, then the cube. */
+export function paletteColors(palette: Palette): string[] {
+  return [
+    ...Array.from({ length: GROUP_COUNT }, (_, group) => groupColor(group)),
+    palette.probe,
+    palette.cube,
+  ];
+}
+
+/** Horizontal texture coordinate of a color of `paletteColors()`. */
+export function paletteU(index: number): number {
+  return (index + 0.5) / (GROUP_COUNT + 2);
+}
+
+export const PROBE_COLOR_INDEX = GROUP_COUNT;
+export const CUBE_COLOR_INDEX = GROUP_COUNT + 1;
+
+/** The 12 edges of the cube that contains the questions, to give a sense of depth. */
 export const CUBE_EDGES: Array<[Point3, Point3]> = (() => {
   const corners: Point3[] = [];
   for (const x of [-1, 1])
@@ -51,3 +53,16 @@ export const CUBE_EDGES: Array<[Point3, Point3]> = (() => {
       .map((b): [Point3, Point3] => [a, b]),
   );
 })();
+
+export function readPalette(element: HTMLElement): Palette {
+  const style = getComputedStyle(element);
+  const read = (name: string) => style.getPropertyValue(name).trim();
+  const background = "#000";
+  const text = "#fff";
+  return {
+    background,
+    text,
+    probe: read("--theme-color-secondary-5"),
+    cube: "#777",
+  };
+}

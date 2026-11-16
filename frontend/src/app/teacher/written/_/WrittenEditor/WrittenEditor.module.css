@@ -1,0 +1,67 @@
+.writtenEditor {
+  border-radius: 0.25em;
+  overflow: hidden;
+
+  > header {
+    background: var(--theme-color-primary-5);
+    color: var(--theme-color-on-primary-5);
+    padding: 0.5em;
+    font-weight: bold;
+  }
+
+  > div {
+    background: var(--theme-color-primary-3);
+    color: var(--theme-color-on-primary-3);
+    padding: 0.5em;
+    display: flex;
+    flex-direction: column;
+    gap: 1em;
+
+    > .numbers {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 1em;
+
+      > * {
+        flex: 1 1 12em;
+      }
+    }
+
+    > h2 {
+      margin: 0;
+      font-size: 1.2em;
+    }
+
+    > p {
+      margin: 0;
+      font-size: 0.9em;
+      opacity: 0.8;
+    }
+
+    textarea {
+      display: block;
+      box-sizing: border-box;
+      width: 100%;
+      min-height: 12em;
+      resize: vertical;
+      margin-top: 0.5em;
+      padding: 0.5em;
+      border: none;
+      border-radius: 0.25em;
+      font-family: monospace;
+      font-size: 1em;
+      background: var(--theme-color-neutral-9);
+      color: var(--theme-color-on-neutral-9);
+    }
+  }
+
+  > footer {
+    background: var(--theme-color-primary-2);
+    color: var(--theme-color-on-primary-2);
+    padding: 0.5em;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 1em;
+  }
+}

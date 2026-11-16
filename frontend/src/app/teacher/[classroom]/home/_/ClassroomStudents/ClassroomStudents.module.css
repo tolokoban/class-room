@@ -1,0 +1,23 @@
+.classroomStudents {
+  border-radius: 0.25em;
+  overflow: hidden;
+
+  > div {
+    background: var(--theme-color-primary-3);
+    color: var(--theme-color-on-primary-3);
+    padding: 0.5em;
+
+    > .error {
+      color: var(--theme-color-error);
+    }
+  }
+
+  > footer {
+    background: var(--theme-color-primary-2);
+    color: var(--theme-color-on-primary-2);
+    padding: 0.5em;
+    display: flex;
+    justify-content: flex-end;
+    gap: 1em;
+  }
+}

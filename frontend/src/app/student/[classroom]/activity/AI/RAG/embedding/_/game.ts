@@ -62,6 +62,19 @@ export function nearestQuestions(
     .map(({ item, index, similarity }) => ({ ...item[index], similarity }));
 }
 
+/**
+ * @returns The question that is the farthest from `vector`, through its closest wording.
+ */
+export function farthestQuestion(vector: number[], vectors: Float32Array): Neighbour | null {
+  const ranking = rank(vector, vectors, Object.values(QUESTIONS), (list) =>
+    list.map(({ offset }) => offset),
+  );
+  const last = ranking[ranking.length - 1];
+  if (!last) return null;
+
+  return { ...last.item[last.index], similarity: last.similarity };
+}
+
 export function pickAnimal(previous?: Animal): Animal {
   const candidates = ANIMALS.filter((animal) => animal !== previous);
   return pickOne(candidates);

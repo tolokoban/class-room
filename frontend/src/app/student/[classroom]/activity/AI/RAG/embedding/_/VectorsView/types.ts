@@ -8,6 +8,8 @@ export interface Probe {
   vector: number[];
   /** The closest questions, the closest first. */
   neighbours: Neighbour[];
+  /** The question that is the farthest. */
+  farthest: Neighbour | null;
 }
 
 /** A wording of a question, in the 3D view. */
@@ -20,19 +22,16 @@ export interface ScenePoint {
   offset: number;
 }
 
-export interface Camera {
-  /** Rotation around the vertical axis, in radians. */
-  yaw: number;
-  /** Rotation around the horizontal axis, in radians. */
-  pitch: number;
-}
-
-/** A point once projected on the canvas, in pixels. */
+/** A point once projected on the canvas, in physical pixels. */
 export interface ScreenPoint {
   x: number;
   y: number;
-  /** Greater when closer to the viewer. */
-  depth: number;
-  /** Perspective factor: greater than 1 when close to the viewer. */
-  scale: number;
+}
+
+/** Colors of the view, as CSS colors, read from the theme. */
+export interface Palette {
+  background: string;
+  text: string;
+  probe: string;
+  cube: string;
 }

@@ -9,6 +9,8 @@ export interface ClassItem {
   name: string;
   /** Markdown description. */
   description: string;
+  /** Maximum number of students that can join the class room at the same time. */
+  maxStudents: number;
 }
 
 /**
@@ -28,6 +30,8 @@ export interface ClassAddInput {
   name: string;
   /** Markdown description (default to ""). */
   description?: string;
+  /** Maximum number of students that can join the class room at the same time (default to 24). */
+  maxStudents?: number;
 }
 
 /**
@@ -45,6 +49,29 @@ export async function classAdd(input: ClassAddInput): Promise<number> {
     throw new ApiErrorTypeAssertion('Invalid response for "class/add"');
   }
   return result;
+}
+
+export interface ClassUpdateInput {
+  /** Field `id` of table `class`. */
+  id: number;
+  code?: string;
+  name?: string;
+  description?: string;
+  maxStudents?: number;
+}
+
+/**
+ * Update a class room owned by the current teacher. Only the given fields are updated.
+ */
+export async function classUpdate(input: ClassUpdateInput): Promise<void> {
+  const result = await api("class/update", input);
+  throwIfError(result, {
+    [ApiError.CLASS_UPDATE_INVALID_INPUT]: "Invalid input.",
+    [ApiError.CLASS_UPDATE_NOT_FOUND]: `There is no class room with ID #${input.id}.`,
+    [ApiError.CLASS_UPDATE_FORBIDDEN]: `You are not the owner of class room #${input.id}.`,
+    [ApiError.CLASS_UPDATE_CODE_USED]: `Code "${input.code}" is already used by another class room.`,
+    [ApiError.CLASS_UPDATE_DATABASE_ERROR]: "Database error while updating the class room.",
+  });
 }
 
 export interface ClassDeleteInput {
@@ -69,6 +96,6 @@ export async function classDelete(input: ClassDeleteInput): Promise<void> {
 function isClassItemArray(data: unknown): data is ClassItem[] {
   return isType(data, [
     "array",
-    { id: "number", code: "string", name: "string", description: "string" },
+    { id: "number", code: "string", name: "string", description: "string", maxStudents: "number" },
   ]);
 }

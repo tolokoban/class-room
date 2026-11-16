@@ -35,6 +35,8 @@ export type RoutePath =
     | "/student/[classroom]/activity/security/personal-data/AI-Act"
     | "/student/[classroom]/activity/security/personal-data/RGPD"
     | "/student/[classroom]/activity/security/personal-data/anonymous"
+    | "/student/[classroom]/activity/written"
+    | "/student/[classroom]/activity/written/[written]"
     | "/teacher"
     | "/teacher/[classroom]"
     | "/teacher/[classroom]/activity"
@@ -43,9 +45,13 @@ export type RoutePath =
     | "/teacher/[classroom]/activity/office/selection"
     | "/teacher/[classroom]/home"
     | "/teacher/[classroom]/results"
+    | "/teacher/[classroom]/students"
+    | "/teacher/[classroom]/written"
+    | "/teacher/[classroom]/written/[written]"
+    | "/teacher/written"
 
 export function isRoutePath(path: string): path is RoutePath {
-    return ["/","/student","/student/[classroom]","/student/[classroom]/activity","/student/[classroom]/activity/AI","/student/[classroom]/activity/AI/CRAFT","/student/[classroom]/activity/AI/GPS","/student/[classroom]/activity/AI/RAG","/student/[classroom]/activity/AI/RAG/embedding","/student/[classroom]/activity/AI/bilan-1","/student/[classroom]/activity/AI/chess","/student/[classroom]/activity/AI/eliza","/student/[classroom]/activity/AI/le-chat-mange-la","/student/[classroom]/activity/AI/mycin","/student/[classroom]/activity/AI/neural-network","/student/[classroom]/activity/AI/perceptron","/student/[classroom]/activity/AI/types-ia-generatives","/student/[classroom]/activity/AI/usage","/student/[classroom]/activity/office","/student/[classroom]/activity/office/file-explorer","/student/[classroom]/activity/office/selection","/student/[classroom]/activity/office/spreadsheet","/student/[classroom]/activity/security","/student/[classroom]/activity/security/personal-data","/student/[classroom]/activity/security/personal-data/AI-Act","/student/[classroom]/activity/security/personal-data/RGPD","/student/[classroom]/activity/security/personal-data/anonymous","/teacher","/teacher/[classroom]","/teacher/[classroom]/activity","/teacher/[classroom]/activity/office","/teacher/[classroom]/activity/office/file-explorer","/teacher/[classroom]/activity/office/selection","/teacher/[classroom]/home","/teacher/[classroom]/results"].includes(path)
+    return ["/","/student","/student/[classroom]","/student/[classroom]/activity","/student/[classroom]/activity/AI","/student/[classroom]/activity/AI/CRAFT","/student/[classroom]/activity/AI/GPS","/student/[classroom]/activity/AI/RAG","/student/[classroom]/activity/AI/RAG/embedding","/student/[classroom]/activity/AI/bilan-1","/student/[classroom]/activity/AI/chess","/student/[classroom]/activity/AI/eliza","/student/[classroom]/activity/AI/le-chat-mange-la","/student/[classroom]/activity/AI/mycin","/student/[classroom]/activity/AI/neural-network","/student/[classroom]/activity/AI/perceptron","/student/[classroom]/activity/AI/types-ia-generatives","/student/[classroom]/activity/AI/usage","/student/[classroom]/activity/office","/student/[classroom]/activity/office/file-explorer","/student/[classroom]/activity/office/selection","/student/[classroom]/activity/office/spreadsheet","/student/[classroom]/activity/security","/student/[classroom]/activity/security/personal-data","/student/[classroom]/activity/security/personal-data/AI-Act","/student/[classroom]/activity/security/personal-data/RGPD","/student/[classroom]/activity/security/personal-data/anonymous","/student/[classroom]/activity/written","/student/[classroom]/activity/written/[written]","/teacher","/teacher/[classroom]","/teacher/[classroom]/activity","/teacher/[classroom]/activity/office","/teacher/[classroom]/activity/office/file-explorer","/teacher/[classroom]/activity/office/selection","/teacher/[classroom]/home","/teacher/[classroom]/results","/teacher/[classroom]/students","/teacher/[classroom]/written","/teacher/[classroom]/written/[written]","/teacher/written"].includes(path)
 }
 
 export interface RouteMatch {

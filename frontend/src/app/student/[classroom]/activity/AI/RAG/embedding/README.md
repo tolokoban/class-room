@@ -147,7 +147,9 @@ When a reasonable question is not understood, prefer **adding a wording** to `so
 
 ## The 3D view
 
-`VectorsView` draws every wording of every question as a point, with one color per question. When the student types a sentence, it appears as a bigger point, linked to its **3 nearest questions**, each labeled with its similarity. Students can drag to rotate the view and hover over a point to read its wording. The animals' names are not shown: 91 groups would be too crowded.
+`VectorsView` draws every wording of every question as a point, with one color per question. When the student types a sentence, it appears as a bigger point, linked to its **3 nearest questions**, each labeled with its similarity. Students can drag to rotate the view, use the wheel to zoom, and hover over a point to read its wording. The animals' names are not shown: 91 groups would be too crowded.
+
+The spheres, the links and the cube are painted with WebGL by `@tolokoban/tgd` (`VectorsView/renderer.ts` and `painters.ts`). The colors come from a palette texture with one pixel per color. The highlighted objects (the sentence, its nearest questions, the links between them, and the hovered question) glow. `bloom.ts` paints the scene in a framebuffer, and the highlighted objects in another one at a quarter of the resolution, cleared to opaque black so that nothing else glows. This glow is blurred, then a last filter paints the scene on the canvas and adds the glow. While a sentence is shown, this filter also dims and desaturates the scene, so that the glowing objects stand out. WebGL cannot write text, so the labels are drawn on a transparent 2D canvas on top of it (`overlay.ts`), at the positions given by `camera.apply()`.
 
 ### Why a Fisher LDA, and not a PCA?
 

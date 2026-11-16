@@ -5,7 +5,7 @@ require_once __DIR__ . "/db.php";
 /**
  * Find a class room (table `class`) from its `code`.
  *
- * @return array|false `["id" => int, "user" => int, "activity" => string|null]`,
+ * @return array|false `["id" => int, "user" => int, "activity" => string|null, "maxStudents" => int]`,
  * or `false` if there is no class room with this code.
  */
 function findClassByCode(string $code)
@@ -13,7 +13,7 @@ function findClassByCode(string $code)
     global $DB;
 
     $stmt = $DB->query(
-        "SELECT `id`, `user`, `activity` FROM `{$DB->table("class")}` WHERE `code` = ?",
+        "SELECT `id`, `user`, `activity`, `max_students` FROM `{$DB->table("class")}` WHERE `code` = ?",
         $code
     );
     $row = $stmt === false ? false : $stmt->fetch();
@@ -25,6 +25,7 @@ function findClassByCode(string $code)
         "id" => (int) $row["id"],
         "user" => (int) $row["user"],
         "activity" => $row["activity"],
+        "maxStudents" => (int) $row["max_students"],
     ];
 }
 

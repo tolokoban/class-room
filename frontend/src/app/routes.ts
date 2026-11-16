@@ -41,6 +41,8 @@ export const ROUTES: RoutePath[] = [
     "/student/[classroom]/activity/security/personal-data/AI-Act",
     "/student/[classroom]/activity/security/personal-data/RGPD",
     "/student/[classroom]/activity/security/personal-data/anonymous",
+    "/student/[classroom]/activity/written",
+    "/student/[classroom]/activity/written/[written]",
     "/teacher",
     "/teacher/[classroom]",
     "/teacher/[classroom]/activity",
@@ -49,6 +51,10 @@ export const ROUTES: RoutePath[] = [
     "/teacher/[classroom]/activity/office/selection",
     "/teacher/[classroom]/home",
     "/teacher/[classroom]/results",
+    "/teacher/[classroom]/students",
+    "/teacher/[classroom]/written",
+    "/teacher/[classroom]/written/[written]",
+    "/teacher/written",
 ]
 
 /**

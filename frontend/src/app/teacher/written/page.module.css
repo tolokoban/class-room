@@ -1,0 +1,23 @@
+.page {
+  position: absolute;
+  inset: 0;
+  padding: 1em;
+  overflow: auto;
+  /* Two columns that wrap on narrow screens. */
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: flex-start;
+  align-content: flex-start;
+  gap: 1em;
+
+  > :first-child {
+    flex: 1 1 min(15em, 100%);
+    max-width: 22em;
+  }
+
+  > :last-child {
+    flex: 3 1 min(28em, 100%);
+    max-width: 50em;
+  }
+}

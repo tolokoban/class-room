@@ -1,0 +1,61 @@
+.uploadSlot {
+  border-radius: 0.25em;
+  overflow: hidden;
+  background: var(--theme-color-primary-3);
+  color: var(--theme-color-on-primary-3);
+
+  > header {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: baseline;
+    gap: 0 1em;
+    padding: 0.5em;
+    background: var(--theme-color-primary-5);
+    color: var(--theme-color-on-primary-5);
+
+    > small {
+      margin-left: auto;
+      opacity: 0.8;
+    }
+  }
+
+  > div {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 0.5em;
+    padding: 0.5em;
+
+    > span:first-of-type {
+      overflow-wrap: anywhere;
+    }
+
+    > .late {
+      padding: 0.125em 0.5em;
+      border-radius: 0.25em;
+      background: var(--theme-color-error);
+      color: var(--theme-color-on-error);
+    }
+  }
+
+  > progress {
+    display: block;
+    width: calc(100% - 1em);
+    margin: 0 0.5em 0.5em;
+  }
+
+  > footer {
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    gap: 1em;
+    padding: 0.5em;
+    background: var(--theme-color-primary-2);
+    color: var(--theme-color-on-primary-2);
+  }
+
+  &.done > header {
+    background: var(--theme-color-secondary-5);
+    color: var(--theme-color-on-secondary-5);
+  }
+}

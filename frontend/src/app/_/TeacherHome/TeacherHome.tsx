@@ -1,4 +1,12 @@
-import { IconAdd, Theme, ViewFloatingButton, ViewInputText } from "@tolokoban/ui";
+import {
+  IconAdd,
+  IconEdit,
+  Theme,
+  ViewButton,
+  ViewFloatingButton,
+  ViewInputNumber,
+  ViewInputText,
+} from "@tolokoban/ui";
 
 import { ClassList } from "./ClassList";
 import { useTeacherHome } from "./hooks";
@@ -29,9 +37,20 @@ export function TeacherHome({ className }: TeacherHomeProps) {
             onChange={home.setName}
             onEnterKeyPressed={home.add}
           />
+          <ViewInputNumber
+            label={tr.maxStudents}
+            min={1}
+            max={1000}
+            value={home.maxStudents}
+            onChange={home.setMaxStudents}
+            onEnterKeyPressed={home.add}
+          />
           <ViewFloatingButton icon={IconAdd} enabled={!home.isPending} onClick={home.add} />
         </footer>
       </section>
+      <ViewButton variant="text" icon={IconEdit} onClick="#/teacher/written">
+        {tr.written}
+      </ViewButton>
     </div>
   );
 }

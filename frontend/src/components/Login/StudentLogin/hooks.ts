@@ -34,12 +34,17 @@ export function useStudentLogin() {
     setPending(true);
     try {
       await API.activity.current({ classroomCode: code });
+      // Reserve a seat in the class room: the nickname must not be used by someone else.
+      await API.room.enter({ classroomCode: code, computer: State.computer.value, nickname: name });
       setClassroom(code);
       State.user.value = name;
     } catch (error) {
       if (error instanceof ApiError && error.code === ApiError.ACTIVITY_CURRENT_CLASS_NOT_FOUND) {
         Notif.error(tr.classroomNotFound);
         refClassroom.current?.focus();
+      } else if (error instanceof ApiError && error.code === ApiError.ROOM_ENTER_NICKNAME_TAKEN) {
+        Notif.error(translateError(error));
+        refNickname.current?.focus();
       } else Notif.error(translateError(error));
     } finally {
       setPending(false);

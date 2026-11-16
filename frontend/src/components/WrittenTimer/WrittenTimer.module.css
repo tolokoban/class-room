@@ -1,0 +1,44 @@
+.writtenTimer {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 0.25em;
+  padding: 0.5em;
+  border-radius: 0.25em;
+  background: var(--theme-color-primary-5);
+  color: var(--theme-color-on-primary-5);
+  text-align: center;
+
+  > strong {
+    font-variant-numeric: tabular-nums;
+  }
+
+  &.large > strong {
+    font-size: 2.5em;
+    line-height: 1;
+  }
+
+  &.small {
+    flex-direction: row;
+    flex-wrap: wrap;
+    padding: 0.125em 0.5em;
+    gap: 0.5em;
+    font-size: 0.9em;
+  }
+
+  &.idle {
+    background: var(--theme-color-neutral-5);
+    color: var(--theme-color-on-neutral-5);
+  }
+
+  &.paused {
+    background: var(--theme-color-secondary-5);
+    color: var(--theme-color-on-secondary-5);
+  }
+
+  &.over {
+    background: var(--theme-color-error);
+    color: var(--theme-color-on-error);
+  }
+}

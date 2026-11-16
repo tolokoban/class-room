@@ -5,7 +5,7 @@ const FR = {
   newGame: "Nouvelle partie",
   giveUp: "Je donne ma langue au chat",
   vague1: "Soyez plus précis dans votre question.",
-  vague2: "Votre question est un peu vague.",
+  vague2: "Je ne sais pas répondre à votre question.",
   found: "Bravo ! C'était bien $1 ! 🎉",
   wrong: "Non, ce n'est pas $1.",
   reveal: "C'était $1 !",

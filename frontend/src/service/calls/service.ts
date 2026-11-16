@@ -49,7 +49,7 @@ async function post(entrypoint: string, input: unknown): Promise<Response> {
 /**
  * Every entrypoint-specific error code is a negative number computed as
  * `-(10000 * group + 100 * action + error)`, where:
- * - `group` is the entrypoint group (1 = user, 2 = class, 3 = activity, 4 = room, 5 = file)
+ * - `group` is the entrypoint group (1 = user, 2 = class, 3 = activity, 4 = room, 5 = file, 6 = written)
  * - `action` is the action within that group
  * - `error` is the specific error within that action
  *
@@ -68,6 +68,13 @@ export class ApiError extends Error {
   static CLASS_ADD_INVALID_INPUT = -20101;
   static CLASS_ADD_CODE_USED = -20102;
   static CLASS_ADD_DATABASE_ERROR = -20103;
+
+  // class/update (02-03)
+  static CLASS_UPDATE_INVALID_INPUT = -20301;
+  static CLASS_UPDATE_NOT_FOUND = -20302;
+  static CLASS_UPDATE_FORBIDDEN = -20303;
+  static CLASS_UPDATE_CODE_USED = -20304;
+  static CLASS_UPDATE_DATABASE_ERROR = -20305;
 
   // class/delete (02-04)
   static CLASS_DELETE_INVALID_INPUT = -20401;
@@ -106,11 +113,28 @@ export class ApiError extends Error {
   static ROOM_ENTER_INVALID_INPUT = -40101;
   static ROOM_ENTER_CLASS_NOT_FOUND = -40102;
   static ROOM_ENTER_DATABASE_ERROR = -40103;
+  static ROOM_ENTER_NICKNAME_TAKEN = -40104;
+  static ROOM_ENTER_FULL = -40105;
 
   // room/students (04-02)
   static ROOM_STUDENTS_INVALID_INPUT = -40201;
   static ROOM_STUDENTS_CLASS_NOT_FOUND = -40202;
   static ROOM_STUDENTS_FORBIDDEN = -40203;
+
+  // room/check (04-03)
+  static ROOM_CHECK_INVALID_INPUT = -40301;
+  static ROOM_CHECK_CLASS_NOT_FOUND = -40302;
+
+  // room/seats (04-04)
+  static ROOM_SEATS_INVALID_INPUT = -40401;
+  static ROOM_SEATS_CLASS_NOT_FOUND = -40402;
+  static ROOM_SEATS_FORBIDDEN = -40403;
+
+  // room/kick (04-05)
+  static ROOM_KICK_INVALID_INPUT = -40501;
+  static ROOM_KICK_CLASS_NOT_FOUND = -40502;
+  static ROOM_KICK_FORBIDDEN = -40503;
+  static ROOM_KICK_DATABASE_ERROR = -40504;
 
   // file/add (05-01)
   static FILE_ADD_INVALID_INPUT = -50101;
@@ -156,6 +180,117 @@ export class ApiError extends Error {
   static FILE_NOTES_SET_FORBIDDEN = -50703;
   static FILE_NOTES_SET_DATABASE_ERROR = -50704;
   static FILE_NOTES_SET_STORAGE_ERROR = -50705;
+
+  // written/add (06-02)
+  static WRITTEN_ADD_INVALID_INPUT = -60201;
+  static WRITTEN_ADD_NAME_USED = -60202;
+  static WRITTEN_ADD_DATABASE_ERROR = -60203;
+
+  // written/update (06-03)
+  static WRITTEN_UPDATE_INVALID_INPUT = -60301;
+  static WRITTEN_UPDATE_NOT_FOUND = -60302;
+  static WRITTEN_UPDATE_FORBIDDEN = -60303;
+  static WRITTEN_UPDATE_NAME_USED = -60304;
+  static WRITTEN_UPDATE_DATABASE_ERROR = -60305;
+
+  // written/delete (06-04)
+  static WRITTEN_DELETE_INVALID_INPUT = -60401;
+  static WRITTEN_DELETE_NOT_FOUND = -60402;
+  static WRITTEN_DELETE_FORBIDDEN = -60403;
+  static WRITTEN_DELETE_DATABASE_ERROR = -60404;
+
+  // written/assign (06-05)
+  static WRITTEN_ASSIGN_INVALID_INPUT = -60501;
+  static WRITTEN_ASSIGN_CLASS_NOT_FOUND = -60502;
+  static WRITTEN_ASSIGN_CLASS_FORBIDDEN = -60503;
+  static WRITTEN_ASSIGN_NOT_FOUND = -60504;
+  static WRITTEN_ASSIGN_FORBIDDEN = -60505;
+  static WRITTEN_ASSIGN_ALREADY_ASSIGNED = -60506;
+  static WRITTEN_ASSIGN_DATABASE_ERROR = -60507;
+
+  // written/unassign (06-06)
+  static WRITTEN_UNASSIGN_INVALID_INPUT = -60601;
+  static WRITTEN_UNASSIGN_CLASS_NOT_FOUND = -60602;
+  static WRITTEN_UNASSIGN_CLASS_FORBIDDEN = -60603;
+  static WRITTEN_UNASSIGN_NOT_FOUND = -60604;
+  static WRITTEN_UNASSIGN_FORBIDDEN = -60605;
+  static WRITTEN_UNASSIGN_NOT_ASSIGNED = -60606;
+  static WRITTEN_UNASSIGN_DATABASE_ERROR = -60607;
+
+  // written/classroom (06-07)
+  static WRITTEN_CLASSROOM_INVALID_INPUT = -60701;
+  static WRITTEN_CLASSROOM_CLASS_NOT_FOUND = -60702;
+  static WRITTEN_CLASSROOM_CLASS_FORBIDDEN = -60703;
+
+  // written/timer (06-08)
+  static WRITTEN_TIMER_INVALID_INPUT = -60801;
+  static WRITTEN_TIMER_CLASS_NOT_FOUND = -60802;
+  static WRITTEN_TIMER_CLASS_FORBIDDEN = -60803;
+  static WRITTEN_TIMER_NOT_FOUND = -60804;
+  static WRITTEN_TIMER_FORBIDDEN = -60805;
+  static WRITTEN_TIMER_NOT_ASSIGNED = -60806;
+  static WRITTEN_TIMER_WRONG_STATE = -60807;
+  static WRITTEN_TIMER_DATABASE_ERROR = -60808;
+
+  // written/results (06-09)
+  static WRITTEN_RESULTS_INVALID_INPUT = -60901;
+  static WRITTEN_RESULTS_CLASS_NOT_FOUND = -60902;
+  static WRITTEN_RESULTS_CLASS_FORBIDDEN = -60903;
+  static WRITTEN_RESULTS_NOT_FOUND = -60904;
+  static WRITTEN_RESULTS_FORBIDDEN = -60905;
+  static WRITTEN_RESULTS_NOT_ASSIGNED = -60906;
+
+  // written/files-delete (06-10)
+  static WRITTEN_FILES_DELETE_INVALID_INPUT = -61001;
+  static WRITTEN_FILES_DELETE_CLASS_NOT_FOUND = -61002;
+  static WRITTEN_FILES_DELETE_CLASS_FORBIDDEN = -61003;
+  static WRITTEN_FILES_DELETE_NOT_FOUND = -61004;
+  static WRITTEN_FILES_DELETE_FORBIDDEN = -61005;
+  static WRITTEN_FILES_DELETE_NOT_ASSIGNED = -61006;
+  static WRITTEN_FILES_DELETE_DATABASE_ERROR = -61007;
+
+  // written/state (06-13)
+  static WRITTEN_STATE_INVALID_INPUT = -61301;
+  static WRITTEN_STATE_CLASS_NOT_FOUND = -61302;
+  static WRITTEN_STATE_NOT_FOUND = -61303;
+  static WRITTEN_STATE_NOT_ACTIVE = -61304;
+
+  // written/upload-init (06-14)
+  static WRITTEN_UPLOAD_INIT_INVALID_INPUT = -61401;
+  static WRITTEN_UPLOAD_INIT_CLASS_NOT_FOUND = -61402;
+  static WRITTEN_UPLOAD_INIT_NOT_FOUND = -61403;
+  static WRITTEN_UPLOAD_INIT_NO_SEAT = -61404;
+  static WRITTEN_UPLOAD_INIT_NOT_STARTED = -61405;
+  static WRITTEN_UPLOAD_INIT_EXPIRED = -61406;
+  static WRITTEN_UPLOAD_INIT_UNKNOWN_FILE = -61407;
+  static WRITTEN_UPLOAD_INIT_BAD_SIZE = -61408;
+  static WRITTEN_UPLOAD_INIT_BAD_TYPE = -61409;
+  static WRITTEN_UPLOAD_INIT_STORAGE_ERROR = -61410;
+  static WRITTEN_UPLOAD_INIT_DATABASE_ERROR = -61411;
+
+  // written/upload-chunk (06-15)
+  static WRITTEN_UPLOAD_CHUNK_INVALID_INPUT = -61501;
+  static WRITTEN_UPLOAD_CHUNK_NOT_FOUND = -61502;
+  static WRITTEN_UPLOAD_CHUNK_BAD_CHUNK = -61503;
+  static WRITTEN_UPLOAD_CHUNK_STORAGE_ERROR = -61504;
+
+  // written/upload-complete (06-16)
+  static WRITTEN_UPLOAD_COMPLETE_INVALID_INPUT = -61601;
+  static WRITTEN_UPLOAD_COMPLETE_NOT_FOUND = -61602;
+  static WRITTEN_UPLOAD_COMPLETE_INCOMPLETE = -61603;
+  static WRITTEN_UPLOAD_COMPLETE_BAD_TYPE = -61604;
+  static WRITTEN_UPLOAD_COMPLETE_STORAGE_ERROR = -61605;
+  static WRITTEN_UPLOAD_COMPLETE_DATABASE_ERROR = -61606;
+
+  // written/upload-delete (06-17)
+  static WRITTEN_UPLOAD_DELETE_INVALID_INPUT = -61701;
+  static WRITTEN_UPLOAD_DELETE_CLASS_NOT_FOUND = -61702;
+  static WRITTEN_UPLOAD_DELETE_NOT_FOUND = -61703;
+  static WRITTEN_UPLOAD_DELETE_NO_SEAT = -61704;
+  static WRITTEN_UPLOAD_DELETE_DATABASE_ERROR = -61705;
+
+  // written/list (06-01): no error code.
+  // written/download (06-11) and written/zip (06-12): only used as links.
 
   constructor(
     public readonly code: number,

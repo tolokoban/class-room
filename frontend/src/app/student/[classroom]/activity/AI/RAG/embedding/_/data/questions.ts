@@ -5,1654 +5,1654 @@
 import type { Questions } from "../types";
 
 export const QUESTIONS: Questions = {
-  "legs": [
+  legs: [
     {
-      "question": "Combien de pattes a-t-il ?",
-      "offset": 0
+      question: "Combien de pattes a-t-il ?",
+      offset: 0,
     },
     {
-      "question": "Il a combien de pattes ?",
-      "offset": 384
+      question: "Il a combien de pattes ?",
+      offset: 384,
     },
     {
-      "question": "Combien de jambes a-t-il ?",
-      "offset": 768
+      question: "Combien de jambes a-t-il ?",
+      offset: 768,
     },
     {
-      "question": "Sur combien de pattes marche-t-il ?",
-      "offset": 1152
+      question: "Sur combien de pattes marche-t-il ?",
+      offset: 1152,
     },
     {
-      "question": "Quel est son nombre de pattes ?",
-      "offset": 1536
+      question: "Quel est son nombre de pattes ?",
+      offset: 1536,
     },
     {
-      "question": "Il marche sur combien de pattes ?",
-      "offset": 1920
+      question: "Il marche sur combien de pattes ?",
+      offset: 1920,
     },
     {
-      "question": "Il en a combien, des pattes ?",
-      "offset": 2304
+      question: "Il en a combien, des pattes ?",
+      offset: 2304,
     },
     {
-      "question": "Combien de membres a-t-il pour se déplacer ?",
-      "offset": 2688
+      question: "Combien de membres a-t-il pour se déplacer ?",
+      offset: 2688,
     },
     {
-      "question": "Sur combien de pieds tient-il debout ?",
-      "offset": 3072
+      question: "Sur combien de pieds tient-il debout ?",
+      offset: 3072,
     },
     {
-      "question": "Compte ses pattes : ça fait combien ?",
-      "offset": 3456
-    }
+      question: "Compte ses pattes : ça fait combien ?",
+      offset: 3456,
+    },
   ],
-  "color": [
+  color: [
     {
-      "question": "De quelle couleur est-il ?",
-      "offset": 3840
+      question: "De quelle couleur est-il ?",
+      offset: 3840,
     },
     {
-      "question": "Quelle est sa couleur ?",
-      "offset": 4224
+      question: "Quelle est sa couleur ?",
+      offset: 4224,
     },
     {
-      "question": "Il est de quelle couleur ?",
-      "offset": 4608
+      question: "Il est de quelle couleur ?",
+      offset: 4608,
     },
     {
-      "question": "Quelle est la couleur de son pelage ?",
-      "offset": 4992
+      question: "Quelle est la couleur de son pelage ?",
+      offset: 4992,
     },
     {
-      "question": "Comment est-il coloré ?",
-      "offset": 5376
+      question: "Comment est-il coloré ?",
+      offset: 5376,
     },
     {
-      "question": "Quelle est la couleur de sa peau ?",
-      "offset": 5760
+      question: "Quelle est la couleur de sa peau ?",
+      offset: 5760,
     },
     {
-      "question": "Il ressemble à quoi, côté couleurs ?",
-      "offset": 6144
+      question: "Il ressemble à quoi, côté couleurs ?",
+      offset: 6144,
     },
     {
-      "question": "Quelles couleurs a-t-il sur le corps ?",
-      "offset": 6528
+      question: "Quelles couleurs a-t-il sur le corps ?",
+      offset: 6528,
     },
     {
-      "question": "Si je le dessine, quels crayons de couleur dois-je prendre ?",
-      "offset": 6912
+      question: "Si je le dessine, quels crayons de couleur dois-je prendre ?",
+      offset: 6912,
     },
     {
-      "question": "Quelle teinte a-t-il ?",
-      "offset": 7296
-    }
+      question: "Quelle teinte a-t-il ?",
+      offset: 7296,
+    },
   ],
-  "nocturnal": [
+  nocturnal: [
     {
-      "question": "Est-ce qu'il est nocturne ?",
-      "offset": 7680
+      question: "Est-ce qu'il est nocturne ?",
+      offset: 7680,
     },
     {
-      "question": "Vit-il la nuit ?",
-      "offset": 8064
+      question: "Vit-il la nuit ?",
+      offset: 8064,
     },
     {
-      "question": "Est-ce qu'il sort la nuit ?",
-      "offset": 8448
+      question: "Est-ce qu'il sort la nuit ?",
+      offset: 8448,
     },
     {
-      "question": "Est-il actif la nuit ?",
-      "offset": 8832
+      question: "Est-il actif la nuit ?",
+      offset: 8832,
     },
     {
-      "question": "Chasse-t-il la nuit ?",
-      "offset": 9216
+      question: "Chasse-t-il la nuit ?",
+      offset: 9216,
     },
     {
-      "question": "Est-ce un animal de nuit ?",
-      "offset": 9600
+      question: "Est-ce un animal de nuit ?",
+      offset: 9600,
     },
     {
-      "question": "Se réveille-t-il quand le soleil se couche ?",
-      "offset": 9984
+      question: "Se réveille-t-il quand le soleil se couche ?",
+      offset: 9984,
     },
     {
-      "question": "Dort-il pendant toute la journée ?",
-      "offset": 10368
+      question: "Dort-il pendant toute la journée ?",
+      offset: 10368,
     },
     {
-      "question": "Est-il actif quand il fait noir ?",
-      "offset": 10752
+      question: "Est-il actif quand il fait noir ?",
+      offset: 10752,
     },
     {
-      "question": "Il se balade plutôt après le coucher du soleil ?",
-      "offset": 11136
-    }
+      question: "Il se balade plutôt après le coucher du soleil ?",
+      offset: 11136,
+    },
   ],
-  "diurnal": [
+  diurnal: [
     {
-      "question": "Est-ce qu'il est diurne ?",
-      "offset": 11520
+      question: "Est-ce qu'il est diurne ?",
+      offset: 11520,
     },
     {
-      "question": "Vit-il le jour ?",
-      "offset": 11904
+      question: "Vit-il le jour ?",
+      offset: 11904,
     },
     {
-      "question": "Est-il actif pendant la journée ?",
-      "offset": 12288
+      question: "Est-il actif pendant la journée ?",
+      offset: 12288,
     },
     {
-      "question": "Sort-il le jour ?",
-      "offset": 12672
+      question: "Sort-il le jour ?",
+      offset: 12672,
     },
     {
-      "question": "Est-ce qu'il dort la nuit ?",
-      "offset": 13056
+      question: "Est-ce qu'il dort la nuit ?",
+      offset: 13056,
     },
     {
-      "question": "Est-ce un animal de jour ?",
-      "offset": 13440
+      question: "Est-ce un animal de jour ?",
+      offset: 13440,
     },
     {
-      "question": "Est-il réveillé quand le soleil brille ?",
-      "offset": 13824
+      question: "Est-il réveillé quand le soleil brille ?",
+      offset: 13824,
     },
     {
-      "question": "Il bouge plutôt en plein jour ?",
-      "offset": 14208
+      question: "Il bouge plutôt en plein jour ?",
+      offset: 14208,
     },
     {
-      "question": "Se lève-t-il avec le soleil ?",
-      "offset": 14592
+      question: "Se lève-t-il avec le soleil ?",
+      offset: 14592,
     },
     {
-      "question": "Est-il actif du matin jusqu'au soir ?",
-      "offset": 14976
-    }
+      question: "Est-il actif du matin jusqu'au soir ?",
+      offset: 14976,
+    },
   ],
-  "carnivore": [
+  carnivore: [
     {
-      "question": "Est-ce qu'il est carnivore ?",
-      "offset": 15360
+      question: "Est-ce qu'il est carnivore ?",
+      offset: 15360,
     },
     {
-      "question": "Mange-t-il de la viande ?",
-      "offset": 15744
+      question: "Mange-t-il de la viande ?",
+      offset: 15744,
     },
     {
-      "question": "Est-ce qu'il chasse d'autres animaux ?",
-      "offset": 16128
+      question: "Est-ce qu'il chasse d'autres animaux ?",
+      offset: 16128,
     },
     {
-      "question": "Mange-t-il d'autres animaux ?",
-      "offset": 16512
+      question: "Mange-t-il d'autres animaux ?",
+      offset: 16512,
     },
     {
-      "question": "Est-ce un prédateur ?",
-      "offset": 16896
+      question: "Est-ce un prédateur ?",
+      offset: 16896,
     },
     {
-      "question": "Est-ce qu'il mange de la chair ?",
-      "offset": 17280
+      question: "Est-ce qu'il mange de la chair ?",
+      offset: 17280,
     },
     {
-      "question": "Se nourrit-il de proies ?",
-      "offset": 17664
+      question: "Se nourrit-il de proies ?",
+      offset: 17664,
     },
     {
-      "question": "Est-ce un mangeur de viande ?",
-      "offset": 18048
+      question: "Est-ce un mangeur de viande ?",
+      offset: 18048,
     },
     {
-      "question": "Il mange du steak ?",
-      "offset": 18432
+      question: "Il mange du steak ?",
+      offset: 18432,
     },
     {
-      "question": "Son repas, ce sont d'autres bêtes ?",
-      "offset": 18816
-    }
+      question: "Son repas, ce sont d'autres bêtes ?",
+      offset: 18816,
+    },
   ],
-  "herbivore": [
+  herbivore: [
     {
-      "question": "Est-ce qu'il est herbivore ?",
-      "offset": 19200
+      question: "Est-ce qu'il est herbivore ?",
+      offset: 19200,
     },
     {
-      "question": "Mange-t-il de l'herbe ?",
-      "offset": 19584
+      question: "Mange-t-il de l'herbe ?",
+      offset: 19584,
     },
     {
-      "question": "Mange-t-il des plantes ?",
-      "offset": 19968
+      question: "Mange-t-il des plantes ?",
+      offset: 19968,
     },
     {
-      "question": "Est-il végétarien ?",
-      "offset": 20352
+      question: "Est-il végétarien ?",
+      offset: 20352,
     },
     {
-      "question": "Mange-t-il seulement des végétaux ?",
-      "offset": 20736
+      question: "Mange-t-il seulement des végétaux ?",
+      offset: 20736,
     },
     {
-      "question": "Est-ce qu'il broute ?",
-      "offset": 21120
+      question: "Est-ce qu'il broute ?",
+      offset: 21120,
     },
     {
-      "question": "Est-ce un mangeur de plantes ?",
-      "offset": 21504
+      question: "Est-ce un mangeur de plantes ?",
+      offset: 21504,
     },
     {
-      "question": "Il mange de la salade et des feuilles ?",
-      "offset": 21888
+      question: "Il mange de la salade et des feuilles ?",
+      offset: 21888,
     },
     {
-      "question": "Son repas, c'est de la verdure ?",
-      "offset": 22272
+      question: "Son repas, c'est de la verdure ?",
+      offset: 22272,
     },
     {
-      "question": "Se nourrit-il de végétaux et jamais de viande ?",
-      "offset": 22656
-    }
+      question: "Se nourrit-il de végétaux et jamais de viande ?",
+      offset: 22656,
+    },
   ],
-  "omnivore": [
+  omnivore: [
     {
-      "question": "Est-ce qu'il est omnivore ?",
-      "offset": 23040
+      question: "Est-ce qu'il est omnivore ?",
+      offset: 23040,
     },
     {
-      "question": "Mange-t-il de tout ?",
-      "offset": 23424
+      question: "Mange-t-il de tout ?",
+      offset: 23424,
     },
     {
-      "question": "Mange-t-il à la fois de la viande et des plantes ?",
-      "offset": 23808
+      question: "Mange-t-il à la fois de la viande et des plantes ?",
+      offset: 23808,
     },
     {
-      "question": "Est-ce qu'il mange n'importe quoi ?",
-      "offset": 24192
+      question: "Est-ce qu'il mange n'importe quoi ?",
+      offset: 24192,
     },
     {
-      "question": "A-t-il un régime alimentaire varié ?",
-      "offset": 24576
+      question: "A-t-il un régime alimentaire varié ?",
+      offset: 24576,
     },
     {
-      "question": "Il mange un peu de tout, comme nous ?",
-      "offset": 24960
+      question: "Il mange un peu de tout, comme nous ?",
+      offset: 24960,
     },
     {
-      "question": "Son menu contient-il des végétaux et des animaux ?",
-      "offset": 25344
+      question: "Son menu contient-il des végétaux et des animaux ?",
+      offset: 25344,
     },
     {
-      "question": "Est-ce qu'il mange de la viande et des légumes ?",
-      "offset": 25728
+      question: "Est-ce qu'il mange de la viande et des légumes ?",
+      offset: 25728,
     },
     {
-      "question": "N'est-il pas difficile pour la nourriture ?",
-      "offset": 26112
-    }
+      question: "N'est-il pas difficile pour la nourriture ?",
+      offset: 26112,
+    },
   ],
-  "hibernate": [
+  hibernate: [
     {
-      "question": "Est-ce qu'il hiberne ?",
-      "offset": 26496
+      question: "Est-ce qu'il hiberne ?",
+      offset: 26496,
     },
     {
-      "question": "Dort-il tout l'hiver ?",
-      "offset": 26880
+      question: "Dort-il tout l'hiver ?",
+      offset: 26880,
     },
     {
-      "question": "Est-ce qu'il dort pendant l'hiver ?",
-      "offset": 27264
+      question: "Est-ce qu'il dort pendant l'hiver ?",
+      offset: 27264,
     },
     {
-      "question": "Fait-il une longue sieste hivernale ?",
-      "offset": 27648
+      question: "Fait-il une longue sieste hivernale ?",
+      offset: 27648,
     },
     {
-      "question": "Passe-t-il l'hiver à dormir ?",
-      "offset": 28032
+      question: "Passe-t-il l'hiver à dormir ?",
+      offset: 28032,
     },
     {
-      "question": "S'endort-il jusqu'au printemps ?",
-      "offset": 28416
+      question: "S'endort-il jusqu'au printemps ?",
+      offset: 28416,
     },
     {
-      "question": "Il fait dodo pendant des mois quand il fait froid ?",
-      "offset": 28800
+      question: "Il fait dodo pendant des mois quand il fait froid ?",
+      offset: 28800,
     },
     {
-      "question": "Disparaît-il dans un terrier pour passer l'hiver ?",
-      "offset": 29184
+      question: "Disparaît-il dans un terrier pour passer l'hiver ?",
+      offset: 29184,
     },
     {
-      "question": "Tombe-t-il en léthargie pendant la saison froide ?",
-      "offset": 29568
-    }
+      question: "Tombe-t-il en léthargie pendant la saison froide ?",
+      offset: 29568,
+    },
   ],
-  "eggs": [
+  eggs: [
     {
-      "question": "Est-ce qu'il pond des œufs ?",
-      "offset": 29952
+      question: "Est-ce qu'il pond des œufs ?",
+      offset: 29952,
     },
     {
-      "question": "Pond-il des oeufs ?",
-      "offset": 30336
+      question: "Pond-il des oeufs ?",
+      offset: 30336,
     },
     {
-      "question": "Fait-il des œufs ?",
-      "offset": 30720
+      question: "Fait-il des œufs ?",
+      offset: 30720,
     },
     {
-      "question": "Ses petits sortent-ils d'un œuf ?",
-      "offset": 31104
+      question: "Ses petits sortent-ils d'un œuf ?",
+      offset: 31104,
     },
     {
-      "question": "Est-il ovipare ?",
-      "offset": 31488
+      question: "Est-il ovipare ?",
+      offset: 31488,
     },
     {
-      "question": "Ses bébés sortent-ils d'une coquille ?",
-      "offset": 31872
+      question: "Ses bébés sortent-ils d'une coquille ?",
+      offset: 31872,
     },
     {
-      "question": "La femelle pond-elle ?",
-      "offset": 32256
+      question: "La femelle pond-elle ?",
+      offset: 32256,
     },
     {
-      "question": "Ses petits éclosent-ils ?",
-      "offset": 32640
+      question: "Ses petits éclosent-ils ?",
+      offset: 32640,
     },
     {
-      "question": "Naît-il dans une coquille ?",
-      "offset": 33024
-    }
+      question: "Naît-il dans une coquille ?",
+      offset: 33024,
+    },
   ],
-  "swim": [
+  swim: [
     {
-      "question": "Est-ce qu'il sait nager ?",
-      "offset": 33408
+      question: "Est-ce qu'il sait nager ?",
+      offset: 33408,
     },
     {
-      "question": "Peut-il nager ?",
-      "offset": 33792
+      question: "Peut-il nager ?",
+      offset: 33792,
     },
     {
-      "question": "Nage-t-il ?",
-      "offset": 34176
+      question: "Nage-t-il ?",
+      offset: 34176,
     },
     {
-      "question": "Va-t-il dans l'eau ?",
-      "offset": 34560
+      question: "Va-t-il dans l'eau ?",
+      offset: 34560,
     },
     {
-      "question": "Est-ce qu'il nage bien ?",
-      "offset": 34944
+      question: "Est-ce qu'il nage bien ?",
+      offset: 34944,
     },
     {
-      "question": "Aime-t-il se baigner ?",
-      "offset": 35328
+      question: "Aime-t-il se baigner ?",
+      offset: 35328,
     },
     {
-      "question": "Se débrouille-t-il dans l'eau ?",
-      "offset": 35712
+      question: "Se débrouille-t-il dans l'eau ?",
+      offset: 35712,
     },
     {
-      "question": "Peut-il traverser une rivière à la nage ?",
-      "offset": 36096
+      question: "Peut-il traverser une rivière à la nage ?",
+      offset: 36096,
     },
     {
-      "question": "Est-il à l'aise dans une piscine ?",
-      "offset": 36480
+      question: "Est-il à l'aise dans une piscine ?",
+      offset: 36480,
     },
     {
-      "question": "Sait-il faire la brasse ?",
-      "offset": 36864
-    }
+      question: "Sait-il faire la brasse ?",
+      offset: 36864,
+    },
   ],
-  "fly": [
+  fly: [
     {
-      "question": "Est-ce qu'il peut voler ?",
-      "offset": 37248
+      question: "Est-ce qu'il peut voler ?",
+      offset: 37248,
     },
     {
-      "question": "Peut-il voler ?",
-      "offset": 37632
+      question: "Peut-il voler ?",
+      offset: 37632,
     },
     {
-      "question": "Sait-il voler ?",
-      "offset": 38016
+      question: "Sait-il voler ?",
+      offset: 38016,
     },
     {
-      "question": "A-t-il des ailes ?",
-      "offset": 38400
+      question: "A-t-il des ailes ?",
+      offset: 38400,
     },
     {
-      "question": "Vole-t-il ?",
-      "offset": 38784
+      question: "Vole-t-il ?",
+      offset: 38784,
     },
     {
-      "question": "Est-ce qu'il vole dans le ciel ?",
-      "offset": 39168
+      question: "Est-ce qu'il vole dans le ciel ?",
+      offset: 39168,
     },
     {
-      "question": "Peut-il s'envoler ?",
-      "offset": 39552
+      question: "Peut-il s'envoler ?",
+      offset: 39552,
     },
     {
-      "question": "Se déplace-t-il dans les airs ?",
-      "offset": 39936
+      question: "Se déplace-t-il dans les airs ?",
+      offset: 39936,
     },
     {
-      "question": "Est-il capable de décoller du sol ?",
-      "offset": 40320
+      question: "Est-il capable de décoller du sol ?",
+      offset: 40320,
     },
     {
-      "question": "Il plane au-dessus de nos têtes ?",
-      "offset": 40704
-    }
+      question: "Il plane au-dessus de nos têtes ?",
+      offset: 40704,
+    },
   ],
-  "fur": [
+  fur: [
     {
-      "question": "Est-ce qu'il a des poils ?",
-      "offset": 41088
+      question: "Est-ce qu'il a des poils ?",
+      offset: 41088,
     },
     {
-      "question": "Est-il poilu ?",
-      "offset": 41472
+      question: "Est-il poilu ?",
+      offset: 41472,
     },
     {
-      "question": "A-t-il de la fourrure ?",
-      "offset": 41856
+      question: "A-t-il de la fourrure ?",
+      offset: 41856,
     },
     {
-      "question": "A-t-il un pelage ?",
-      "offset": 42240
+      question: "A-t-il un pelage ?",
+      offset: 42240,
     },
     {
-      "question": "Est-ce qu'il a une toison ?",
-      "offset": 42624
+      question: "Est-ce qu'il a une toison ?",
+      offset: 42624,
     },
     {
-      "question": "Il a des poils partout ?",
-      "offset": 43008
+      question: "Il a des poils partout ?",
+      offset: 43008,
     },
     {
-      "question": "Est-ce une bête à poils ?",
-      "offset": 43392
+      question: "Est-ce une bête à poils ?",
+      offset: 43392,
     },
     {
-      "question": "Son corps est-il recouvert de poils ?",
-      "offset": 43776
+      question: "Son corps est-il recouvert de poils ?",
+      offset: 43776,
     },
     {
-      "question": "Porte-t-il un manteau de poils ?",
-      "offset": 44160
-    }
+      question: "Porte-t-il un manteau de poils ?",
+      offset: 44160,
+    },
   ],
-  "scales": [
+  scales: [
     {
-      "question": "Est-ce qu'il a des écailles ?",
-      "offset": 44544
+      question: "Est-ce qu'il a des écailles ?",
+      offset: 44544,
     },
     {
-      "question": "Est-il couvert d'écailles ?",
-      "offset": 44928
+      question: "Est-il couvert d'écailles ?",
+      offset: 44928,
     },
     {
-      "question": "Sa peau a-t-elle des écailles ?",
-      "offset": 45312
+      question: "Sa peau a-t-elle des écailles ?",
+      offset: 45312,
     },
     {
-      "question": "A-t-il une peau écailleuse ?",
-      "offset": 45696
+      question: "A-t-il une peau écailleuse ?",
+      offset: 45696,
     },
     {
-      "question": "Porte-t-il des écailles ?",
-      "offset": 46080
+      question: "Porte-t-il des écailles ?",
+      offset: 46080,
     },
     {
-      "question": "Son corps est-il protégé par des écailles ?",
-      "offset": 46464
+      question: "Son corps est-il protégé par des écailles ?",
+      offset: 46464,
     },
     {
-      "question": "Il a des écailles, comme un poisson ?",
-      "offset": 46848
+      question: "Il a des écailles, comme un poisson ?",
+      offset: 46848,
     },
     {
-      "question": "Est-il recouvert de petites plaques dures ?",
-      "offset": 47232
+      question: "Est-il recouvert de petites plaques dures ?",
+      offset: 47232,
     },
     {
-      "question": "Sa peau ressemble-t-elle à celle d'un serpent ?",
-      "offset": 47616
-    }
+      question: "Sa peau ressemble-t-elle à celle d'un serpent ?",
+      offset: 47616,
+    },
   ],
-  "feathers": [
+  feathers: [
     {
-      "question": "Est-ce qu'il a des plumes ?",
-      "offset": 48000
+      question: "Est-ce qu'il a des plumes ?",
+      offset: 48000,
     },
     {
-      "question": "Est-il couvert de plumes ?",
-      "offset": 48384
+      question: "Est-il couvert de plumes ?",
+      offset: 48384,
     },
     {
-      "question": "A-t-il un plumage ?",
-      "offset": 48768
+      question: "A-t-il un plumage ?",
+      offset: 48768,
     },
     {
-      "question": "Porte-t-il des plumes ?",
-      "offset": 49152
+      question: "Porte-t-il des plumes ?",
+      offset: 49152,
     },
     {
-      "question": "A-t-il des plumes sur le corps ?",
-      "offset": 49536
+      question: "A-t-il des plumes sur le corps ?",
+      offset: 49536,
     },
     {
-      "question": "Il a des plumes ou pas ?",
-      "offset": 49920
+      question: "Il a des plumes ou pas ?",
+      offset: 49920,
     },
     {
-      "question": "Son corps est-il recouvert de plumes ?",
-      "offset": 50304
+      question: "Son corps est-il recouvert de plumes ?",
+      offset: 50304,
     },
     {
-      "question": "Est-il emplumé ?",
-      "offset": 50688
+      question: "Est-il emplumé ?",
+      offset: 50688,
     },
     {
-      "question": "A-t-il du duvet et des plumes ?",
-      "offset": 51072
-    }
+      question: "A-t-il du duvet et des plumes ?",
+      offset: 51072,
+    },
   ],
-  "size": [
+  size: [
     {
-      "question": "Quelle taille fait-il ?",
-      "offset": 51456
+      question: "Quelle taille fait-il ?",
+      offset: 51456,
     },
     {
-      "question": "Quelle est sa taille ?",
-      "offset": 51840
+      question: "Quelle est sa taille ?",
+      offset: 51840,
     },
     {
-      "question": "Est-il grand ?",
-      "offset": 52224
+      question: "Est-il grand ?",
+      offset: 52224,
     },
     {
-      "question": "Est-il petit ?",
-      "offset": 52608
+      question: "Est-il petit ?",
+      offset: 52608,
     },
     {
-      "question": "Combien mesure-t-il ?",
-      "offset": 52992
+      question: "Combien mesure-t-il ?",
+      offset: 52992,
     },
     {
-      "question": "Il mesure combien ?",
-      "offset": 53376
+      question: "Il mesure combien ?",
+      offset: 53376,
     },
     {
-      "question": "Quelle longueur fait-il ?",
-      "offset": 53760
+      question: "Quelle longueur fait-il ?",
+      offset: 53760,
     },
     {
-      "question": "Il fait quelle hauteur ?",
-      "offset": 54144
+      question: "Il fait quelle hauteur ?",
+      offset: 54144,
     },
     {
-      "question": "Est-il plus grand que moi ?",
-      "offset": 54528
+      question: "Est-il plus grand que moi ?",
+      offset: 54528,
     },
     {
-      "question": "Est-ce un animal de grande taille ?",
-      "offset": 54912
-    }
+      question: "Est-ce un animal de grande taille ?",
+      offset: 54912,
+    },
   ],
-  "weight": [
+  weight: [
     {
-      "question": "Combien pèse-t-il ?",
-      "offset": 55296
+      question: "Combien pèse-t-il ?",
+      offset: 55296,
     },
     {
-      "question": "Quel est son poids ?",
-      "offset": 55680
+      question: "Quel est son poids ?",
+      offset: 55680,
     },
     {
-      "question": "Est-il lourd ?",
-      "offset": 56064
+      question: "Est-il lourd ?",
+      offset: 56064,
     },
     {
-      "question": "Est-il léger ?",
-      "offset": 56448
+      question: "Est-il léger ?",
+      offset: 56448,
     },
     {
-      "question": "Il pèse combien ?",
-      "offset": 56832
+      question: "Il pèse combien ?",
+      offset: 56832,
     },
     {
-      "question": "Il fait combien de kilos ?",
-      "offset": 57216
+      question: "Il fait combien de kilos ?",
+      offset: 57216,
     },
     {
-      "question": "Quelle est sa masse ?",
-      "offset": 57600
+      question: "Quelle est sa masse ?",
+      offset: 57600,
     },
     {
-      "question": "Que dit la balance quand il monte dessus ?",
-      "offset": 57984
+      question: "Que dit la balance quand il monte dessus ?",
+      offset: 57984,
     },
     {
-      "question": "Est-ce un poids plume ou un poids lourd ?",
-      "offset": 58368
-    }
+      question: "Est-ce un poids plume ou un poids lourd ?",
+      offset: 58368,
+    },
   ],
-  "retractableClaws": [
+  retractableClaws: [
     {
-      "question": "A-t-il des griffes rétractables ?",
-      "offset": 58752
+      question: "A-t-il des griffes rétractables ?",
+      offset: 58752,
     },
     {
-      "question": "Peut-il rentrer ses griffes ?",
-      "offset": 59136
+      question: "Peut-il rentrer ses griffes ?",
+      offset: 59136,
     },
     {
-      "question": "A-t-il des griffes ?",
-      "offset": 59520
+      question: "A-t-il des griffes ?",
+      offset: 59520,
     },
     {
-      "question": "Peut-il sortir ses griffes ?",
-      "offset": 59904
+      question: "Peut-il sortir ses griffes ?",
+      offset: 59904,
     },
     {
-      "question": "Cache-t-il ses griffes ?",
-      "offset": 60288
+      question: "Cache-t-il ses griffes ?",
+      offset: 60288,
     },
     {
-      "question": "Peut-il ranger ses griffes comme un chat ?",
-      "offset": 60672
+      question: "Peut-il ranger ses griffes comme un chat ?",
+      offset: 60672,
     },
     {
-      "question": "Ses griffes peuvent-elles se cacher dans ses pattes ?",
-      "offset": 61056
+      question: "Ses griffes peuvent-elles se cacher dans ses pattes ?",
+      offset: 61056,
     },
     {
-      "question": "Sort-il les griffes pour attaquer ?",
-      "offset": 61440
+      question: "Sort-il les griffes pour attaquer ?",
+      offset: 61440,
     },
     {
-      "question": "Ses griffes sont-elles escamotables ?",
-      "offset": 61824
-    }
+      question: "Ses griffes sont-elles escamotables ?",
+      offset: 61824,
+    },
   ],
-  "horns": [
+  horns: [
     {
-      "question": "A-t-il des cornes ?",
-      "offset": 62208
+      question: "A-t-il des cornes ?",
+      offset: 62208,
     },
     {
-      "question": "Porte-t-il des cornes ?",
-      "offset": 62592
+      question: "Porte-t-il des cornes ?",
+      offset: 62592,
     },
     {
-      "question": "A-t-il des cornes sur la tête ?",
-      "offset": 62976
+      question: "A-t-il des cornes sur la tête ?",
+      offset: 62976,
     },
     {
-      "question": "Est-ce qu'il a une corne ?",
-      "offset": 63360
+      question: "Est-ce qu'il a une corne ?",
+      offset: 63360,
     },
     {
-      "question": "A-t-il quelque chose de pointu sur la tête ?",
-      "offset": 63744
+      question: "A-t-il quelque chose de pointu sur la tête ?",
+      offset: 63744,
     },
     {
-      "question": "A-t-il des cornes comme une vache ?",
-      "offset": 64128
+      question: "A-t-il des cornes comme une vache ?",
+      offset: 64128,
     },
     {
-      "question": "Sa tête est-elle armée de cornes ?",
-      "offset": 64512
+      question: "Sa tête est-elle armée de cornes ?",
+      offset: 64512,
     },
     {
-      "question": "Il a des cornes ou pas ?",
-      "offset": 64896
+      question: "Il a des cornes ou pas ?",
+      offset: 64896,
     },
     {
-      "question": "Y a-t-il des cornes sur son crâne ?",
-      "offset": 65280
-    }
+      question: "Y a-t-il des cornes sur son crâne ?",
+      offset: 65280,
+    },
   ],
-  "hooves": [
+  hooves: [
     {
-      "question": "A-t-il des sabots ?",
-      "offset": 65664
+      question: "A-t-il des sabots ?",
+      offset: 65664,
     },
     {
-      "question": "A-t-il des sabots aux pieds ?",
-      "offset": 66048
+      question: "A-t-il des sabots aux pieds ?",
+      offset: 66048,
     },
     {
-      "question": "Marche-t-il sur des sabots ?",
-      "offset": 66432
+      question: "Marche-t-il sur des sabots ?",
+      offset: 66432,
     },
     {
-      "question": "Est-ce un ongulé ?",
-      "offset": 66816
+      question: "Est-ce un ongulé ?",
+      offset: 66816,
     },
     {
-      "question": "Ses pieds sont-ils des sabots ?",
-      "offset": 67200
+      question: "Ses pieds sont-ils des sabots ?",
+      offset: 67200,
     },
     {
-      "question": "Ses pattes se terminent-elles par un sabot ?",
-      "offset": 67584
+      question: "Ses pattes se terminent-elles par un sabot ?",
+      offset: 67584,
     },
     {
-      "question": "A-t-il des pieds durs comme ceux d'un cheval ?",
-      "offset": 67968
+      question: "A-t-il des pieds durs comme ceux d'un cheval ?",
+      offset: 67968,
     },
     {
-      "question": "Entend-on ses sabots claquer quand il marche ?",
-      "offset": 68352
+      question: "Entend-on ses sabots claquer quand il marche ?",
+      offset: 68352,
     },
     {
-      "question": "Il a des sabots ou des doigts ?",
-      "offset": 68736
-    }
+      question: "Il a des sabots ou des doigts ?",
+      offset: 68736,
+    },
   ],
-  "imaginary": [
+  imaginary: [
     {
-      "question": "Est-ce un animal imaginaire ?",
-      "offset": 69120
+      question: "Est-ce un animal imaginaire ?",
+      offset: 69120,
     },
     {
-      "question": "Est-ce un animal de légende ?",
-      "offset": 69504
+      question: "Est-ce un animal de légende ?",
+      offset: 69504,
     },
     {
-      "question": "Est-ce un animal fantastique ?",
-      "offset": 69888
+      question: "Est-ce un animal fantastique ?",
+      offset: 69888,
     },
     {
-      "question": "Vient-il d'un conte ?",
-      "offset": 70272
+      question: "Vient-il d'un conte ?",
+      offset: 70272,
     },
     {
-      "question": "Est-ce une créature mythologique ?",
-      "offset": 70656
+      question: "Est-ce une créature mythologique ?",
+      offset: 70656,
     },
     {
-      "question": "Est-il inventé ?",
-      "offset": 71040
+      question: "Est-il inventé ?",
+      offset: 71040,
     },
     {
-      "question": "Existe-t-il seulement dans les histoires ?",
-      "offset": 71424
+      question: "Existe-t-il seulement dans les histoires ?",
+      offset: 71424,
     },
     {
-      "question": "Est-ce une créature de fiction ?",
-      "offset": 71808
+      question: "Est-ce une créature de fiction ?",
+      offset: 71808,
     },
     {
-      "question": "Est-ce un animal magique ?",
-      "offset": 72192
+      question: "Est-ce un animal magique ?",
+      offset: 72192,
     },
     {
-      "question": "Sort-il de l'imagination des hommes ?",
-      "offset": 72576
-    }
+      question: "Sort-il de l'imagination des hommes ?",
+      offset: 72576,
+    },
   ],
-  "prehistoric": [
+  prehistoric: [
     {
-      "question": "Est-il préhistorique ?",
-      "offset": 72960
+      question: "Est-il préhistorique ?",
+      offset: 72960,
     },
     {
-      "question": "A-t-il vécu avant les hommes ?",
-      "offset": 73344
+      question: "A-t-il vécu avant les hommes ?",
+      offset: 73344,
     },
     {
-      "question": "Vivait-il à la préhistoire ?",
-      "offset": 73728
+      question: "Vivait-il à la préhistoire ?",
+      offset: 73728,
     },
     {
-      "question": "Ne le trouve-t-on plus qu'à l'état de fossile ?",
-      "offset": 74112
+      question: "Ne le trouve-t-on plus qu'à l'état de fossile ?",
+      offset: 74112,
     },
     {
-      "question": "A-t-il vécu il y a très longtemps ?",
-      "offset": 74496
+      question: "A-t-il vécu il y a très longtemps ?",
+      offset: 74496,
     },
     {
-      "question": "A-t-il disparu depuis des millions d'années ?",
-      "offset": 74880
+      question: "A-t-il disparu depuis des millions d'années ?",
+      offset: 74880,
     },
     {
-      "question": "Est-ce un animal des temps anciens ?",
-      "offset": 75264
+      question: "Est-ce un animal des temps anciens ?",
+      offset: 75264,
     },
     {
-      "question": "A-t-il disparu bien avant notre époque ?",
-      "offset": 75648
+      question: "A-t-il disparu bien avant notre époque ?",
+      offset: 75648,
     },
     {
-      "question": "Appartient-il à un passé très lointain ?",
-      "offset": 76032
-    }
+      question: "Appartient-il à un passé très lointain ?",
+      offset: 76032,
+    },
   ],
-  "hotCountries": [
+  hotCountries: [
     {
-      "question": "Vit-il dans les pays chauds ?",
-      "offset": 76416
+      question: "Vit-il dans les pays chauds ?",
+      offset: 76416,
     },
     {
-      "question": "Aime-t-il la chaleur ?",
-      "offset": 76800
+      question: "Aime-t-il la chaleur ?",
+      offset: 76800,
     },
     {
-      "question": "Vit-il sous les tropiques ?",
-      "offset": 77184
+      question: "Vit-il sous les tropiques ?",
+      offset: 77184,
     },
     {
-      "question": "Vit-il là où il fait chaud ?",
-      "offset": 77568
+      question: "Vit-il là où il fait chaud ?",
+      offset: 77568,
     },
     {
-      "question": "Habite-t-il dans un pays chaud ?",
-      "offset": 77952
+      question: "Habite-t-il dans un pays chaud ?",
+      offset: 77952,
     },
     {
-      "question": "Vit-il dans le désert ?",
-      "offset": 78336
+      question: "Vit-il dans le désert ?",
+      offset: 78336,
     },
     {
-      "question": "Vit-il sous un climat chaud ?",
-      "offset": 78720
+      question: "Vit-il sous un climat chaud ?",
+      offset: 78720,
     },
     {
-      "question": "Est-ce un animal des régions chaudes ?",
-      "offset": 79104
+      question: "Est-ce un animal des régions chaudes ?",
+      offset: 79104,
     },
     {
-      "question": "Supporte-t-il les grosses chaleurs ?",
-      "offset": 79488
+      question: "Supporte-t-il les grosses chaleurs ?",
+      offset: 79488,
     },
     {
-      "question": "Habite-t-il sous un soleil brûlant ?",
-      "offset": 79872
-    }
+      question: "Habite-t-il sous un soleil brûlant ?",
+      offset: 79872,
+    },
   ],
-  "coldCountries": [
+  coldCountries: [
     {
-      "question": "Vit-il dans les pays froids ?",
-      "offset": 80256
+      question: "Vit-il dans les pays froids ?",
+      offset: 80256,
     },
     {
-      "question": "Aime-t-il le froid ?",
-      "offset": 80640
+      question: "Aime-t-il le froid ?",
+      offset: 80640,
     },
     {
-      "question": "Vit-il là où il fait froid ?",
-      "offset": 81024
+      question: "Vit-il là où il fait froid ?",
+      offset: 81024,
     },
     {
-      "question": "Habite-t-il dans un pays froid ?",
-      "offset": 81408
+      question: "Habite-t-il dans un pays froid ?",
+      offset: 81408,
     },
     {
-      "question": "Supporte-t-il le froid ?",
-      "offset": 81792
+      question: "Supporte-t-il le froid ?",
+      offset: 81792,
     },
     {
-      "question": "Vit-il dans la neige ?",
-      "offset": 82176
+      question: "Vit-il dans la neige ?",
+      offset: 82176,
     },
     {
-      "question": "Vit-il sous un climat froid ?",
-      "offset": 82560
+      question: "Vit-il sous un climat froid ?",
+      offset: 82560,
     },
     {
-      "question": "Est-ce un animal des régions froides ?",
-      "offset": 82944
+      question: "Est-ce un animal des régions froides ?",
+      offset: 82944,
     },
     {
-      "question": "Le trouve-t-on dans le Grand Nord ?",
-      "offset": 83328
+      question: "Le trouve-t-on dans le Grand Nord ?",
+      offset: 83328,
     },
     {
-      "question": "Résiste-t-il aux températures glaciales ?",
-      "offset": 83712
-    }
+      question: "Résiste-t-il aux températures glaciales ?",
+      offset: 83712,
+    },
   ],
-  "africa": [
+  africa: [
     {
-      "question": "Habite-t-il en Afrique ?",
-      "offset": 84096
+      question: "Habite-t-il en Afrique ?",
+      offset: 84096,
     },
     {
-      "question": "Vit-il en Afrique ?",
-      "offset": 84480
+      question: "Vit-il en Afrique ?",
+      offset: 84480,
     },
     {
-      "question": "Le trouve-t-on en Afrique ?",
-      "offset": 84864
+      question: "Le trouve-t-on en Afrique ?",
+      offset: 84864,
     },
     {
-      "question": "Est-ce un animal africain ?",
-      "offset": 85248
+      question: "Est-ce un animal africain ?",
+      offset: 85248,
     },
     {
-      "question": "Existe-t-il en Afrique ?",
-      "offset": 85632
+      question: "Existe-t-il en Afrique ?",
+      offset: 85632,
     },
     {
-      "question": "Vient-il du continent africain ?",
-      "offset": 86016
+      question: "Vient-il du continent africain ?",
+      offset: 86016,
     },
     {
-      "question": "Est-il originaire d'Afrique ?",
-      "offset": 86400
+      question: "Est-il originaire d'Afrique ?",
+      offset: 86400,
     },
     {
-      "question": "Peut-on le voir pendant un safari en Afrique ?",
-      "offset": 86784
+      question: "Peut-on le voir pendant un safari en Afrique ?",
+      offset: 86784,
     },
     {
-      "question": "Vit-il au Kenya ?",
-      "offset": 87168
-    }
+      question: "Vit-il au Kenya ?",
+      offset: 87168,
+    },
   ],
-  "asia": [
+  asia: [
     {
-      "question": "Habite-t-il en Asie ?",
-      "offset": 87552
+      question: "Habite-t-il en Asie ?",
+      offset: 87552,
     },
     {
-      "question": "Vit-il en Asie ?",
-      "offset": 87936
+      question: "Vit-il en Asie ?",
+      offset: 87936,
     },
     {
-      "question": "Le trouve-t-on en Asie ?",
-      "offset": 88320
+      question: "Le trouve-t-on en Asie ?",
+      offset: 88320,
     },
     {
-      "question": "Est-ce un animal asiatique ?",
-      "offset": 88704
+      question: "Est-ce un animal asiatique ?",
+      offset: 88704,
     },
     {
-      "question": "Existe-t-il en Asie ?",
-      "offset": 89088
+      question: "Existe-t-il en Asie ?",
+      offset: 89088,
     },
     {
-      "question": "Vit-il en Chine ?",
-      "offset": 89472
+      question: "Vit-il en Chine ?",
+      offset: 89472,
     },
     {
-      "question": "Vit-il en Inde ?",
-      "offset": 89856
+      question: "Vit-il en Inde ?",
+      offset: 89856,
     },
     {
-      "question": "Vient-il du continent asiatique ?",
-      "offset": 90240
+      question: "Vient-il du continent asiatique ?",
+      offset: 90240,
     },
     {
-      "question": "Est-il originaire d'Asie ?",
-      "offset": 90624
+      question: "Est-il originaire d'Asie ?",
+      offset: 90624,
     },
     {
-      "question": "Peut-on le croiser en Asie ?",
-      "offset": 91008
+      question: "Peut-on le croiser en Asie ?",
+      offset: 91008,
     },
     {
-      "question": "Vit-il au Japon ?",
-      "offset": 91392
-    }
+      question: "Vit-il au Japon ?",
+      offset: 91392,
+    },
   ],
-  "europe": [
+  europe: [
     {
-      "question": "Habite-t-il en Europe ?",
-      "offset": 91776
+      question: "Habite-t-il en Europe ?",
+      offset: 91776,
     },
     {
-      "question": "Vit-il en Europe ?",
-      "offset": 92160
+      question: "Vit-il en Europe ?",
+      offset: 92160,
     },
     {
-      "question": "Le trouve-t-on en Europe ?",
-      "offset": 92544
+      question: "Le trouve-t-on en Europe ?",
+      offset: 92544,
     },
     {
-      "question": "Est-ce un animal européen ?",
-      "offset": 92928
+      question: "Est-ce un animal européen ?",
+      offset: 92928,
     },
     {
-      "question": "Existe-t-il en Europe ?",
-      "offset": 93312
+      question: "Existe-t-il en Europe ?",
+      offset: 93312,
     },
     {
-      "question": "Vit-il en France ?",
-      "offset": 93696
+      question: "Vit-il en France ?",
+      offset: 93696,
     },
     {
-      "question": "Vit-il en Suisse ?",
-      "offset": 94080
+      question: "Vit-il en Suisse ?",
+      offset: 94080,
     },
     {
-      "question": "Vient-il du continent européen ?",
-      "offset": 94464
+      question: "Vient-il du continent européen ?",
+      offset: 94464,
     },
     {
-      "question": "Est-il originaire d'Europe ?",
-      "offset": 94848
+      question: "Est-il originaire d'Europe ?",
+      offset: 94848,
     },
     {
-      "question": "Peut-on le croiser en Europe ?",
-      "offset": 95232
+      question: "Peut-on le croiser en Europe ?",
+      offset: 95232,
     },
     {
-      "question": "Vit-il en Allemagne ?",
-      "offset": 95616
-    }
+      question: "Vit-il en Allemagne ?",
+      offset: 95616,
+    },
   ],
-  "america": [
+  america: [
     {
-      "question": "Habite-t-il en Amérique ?",
-      "offset": 96000
+      question: "Habite-t-il en Amérique ?",
+      offset: 96000,
     },
     {
-      "question": "Vit-il en Amérique ?",
-      "offset": 96384
+      question: "Vit-il en Amérique ?",
+      offset: 96384,
     },
     {
-      "question": "Le trouve-t-on en Amérique ?",
-      "offset": 96768
+      question: "Le trouve-t-on en Amérique ?",
+      offset: 96768,
     },
     {
-      "question": "Est-ce un animal américain ?",
-      "offset": 97152
+      question: "Est-ce un animal américain ?",
+      offset: 97152,
     },
     {
-      "question": "Existe-t-il en Amérique ?",
-      "offset": 97536
+      question: "Existe-t-il en Amérique ?",
+      offset: 97536,
     },
     {
-      "question": "Vit-il aux États-Unis ?",
-      "offset": 97920
+      question: "Vit-il aux États-Unis ?",
+      offset: 97920,
     },
     {
-      "question": "Vit-il au Brésil ?",
-      "offset": 98304
+      question: "Vit-il au Brésil ?",
+      offset: 98304,
     },
     {
-      "question": "Vient-il du continent américain ?",
-      "offset": 98688
+      question: "Vient-il du continent américain ?",
+      offset: 98688,
     },
     {
-      "question": "Est-il originaire d'Amérique ?",
-      "offset": 99072
+      question: "Est-il originaire d'Amérique ?",
+      offset: 99072,
     },
     {
-      "question": "Peut-on le croiser en Amérique ?",
-      "offset": 99456
+      question: "Peut-on le croiser en Amérique ?",
+      offset: 99456,
     },
     {
-      "question": "Vit-il au Canada ?",
-      "offset": 99840
-    }
+      question: "Vit-il au Canada ?",
+      offset: 99840,
+    },
   ],
-  "iceFloe": [
+  iceFloe: [
     {
-      "question": "Est-il sur la banquise ?",
-      "offset": 100224
+      question: "Est-il sur la banquise ?",
+      offset: 100224,
     },
     {
-      "question": "Vit-il sur la banquise ?",
-      "offset": 100608
+      question: "Vit-il sur la banquise ?",
+      offset: 100608,
     },
     {
-      "question": "Vit-il sur la glace ?",
-      "offset": 100992
+      question: "Vit-il sur la glace ?",
+      offset: 100992,
     },
     {
-      "question": "Vit-il près des pôles ?",
-      "offset": 101376
+      question: "Vit-il près des pôles ?",
+      offset: 101376,
     },
     {
-      "question": "Marche-t-il sur la glace ?",
-      "offset": 101760
+      question: "Marche-t-il sur la glace ?",
+      offset: 101760,
     },
     {
-      "question": "Se promène-t-il sur la mer gelée ?",
-      "offset": 102144
+      question: "Se promène-t-il sur la mer gelée ?",
+      offset: 102144,
     },
     {
-      "question": "Habite-t-il dans les glaces polaires ?",
-      "offset": 102528
+      question: "Habite-t-il dans les glaces polaires ?",
+      offset: 102528,
     },
     {
-      "question": "Vit-il au pôle Nord ou au pôle Sud ?",
-      "offset": 102912
+      question: "Vit-il au pôle Nord ou au pôle Sud ?",
+      offset: 102912,
     },
     {
-      "question": "Le trouve-t-on sur les plaques de glace qui flottent ?",
-      "offset": 103296
-    }
+      question: "Le trouve-t-on sur les plaques de glace qui flottent ?",
+      offset: 103296,
+    },
   ],
-  "dangerous": [
+  dangerous: [
     {
-      "question": "Est-il dangereux ?",
-      "offset": 103680
+      question: "Est-il dangereux ?",
+      offset: 103680,
     },
     {
-      "question": "Peut-il attaquer l'homme ?",
-      "offset": 104064
+      question: "Peut-il attaquer l'homme ?",
+      offset: 104064,
     },
     {
-      "question": "Est-ce qu'il est méchant ?",
-      "offset": 104448
+      question: "Est-ce qu'il est méchant ?",
+      offset: 104448,
     },
     {
-      "question": "Peut-il me faire du mal ?",
-      "offset": 104832
+      question: "Peut-il me faire du mal ?",
+      offset: 104832,
     },
     {
-      "question": "Faut-il en avoir peur ?",
-      "offset": 105216
+      question: "Faut-il en avoir peur ?",
+      offset: 105216,
     },
     {
-      "question": "Est-il agressif ?",
-      "offset": 105600
+      question: "Est-il agressif ?",
+      offset: 105600,
     },
     {
-      "question": "Est-ce risqué de s'approcher de lui ?",
-      "offset": 105984
+      question: "Est-ce risqué de s'approcher de lui ?",
+      offset: 105984,
     },
     {
-      "question": "Peut-il blesser quelqu'un ?",
-      "offset": 106368
+      question: "Peut-il blesser quelqu'un ?",
+      offset: 106368,
     },
     {
-      "question": "Vaut-il mieux se méfier de lui ?",
-      "offset": 106752
+      question: "Vaut-il mieux se méfier de lui ?",
+      offset: 106752,
     },
     {
-      "question": "Représente-t-il un danger pour les humains ?",
-      "offset": 107136
-    }
+      question: "Représente-t-il un danger pour les humains ?",
+      offset: 107136,
+    },
   ],
-  "domestic": [
+  domestic: [
     {
-      "question": "Est-il domestique ?",
-      "offset": 107520
+      question: "Est-il domestique ?",
+      offset: 107520,
     },
     {
-      "question": "Est-ce un animal de compagnie ?",
-      "offset": 107904
+      question: "Est-ce un animal de compagnie ?",
+      offset: 107904,
     },
     {
-      "question": "Peut-on l'avoir à la maison ?",
-      "offset": 108288
+      question: "Peut-on l'avoir à la maison ?",
+      offset: 108288,
     },
     {
-      "question": "Vit-il avec les humains ?",
-      "offset": 108672
+      question: "Vit-il avec les humains ?",
+      offset: 108672,
     },
     {
-      "question": "Est-ce un animal de la ferme ?",
-      "offset": 109056
+      question: "Est-ce un animal de la ferme ?",
+      offset: 109056,
     },
     {
-      "question": "Est-il apprivoisé ?",
-      "offset": 109440
+      question: "Est-il apprivoisé ?",
+      offset: 109440,
     },
     {
-      "question": "Peut-on l'adopter ?",
-      "offset": 109824
+      question: "Peut-on l'adopter ?",
+      offset: 109824,
     },
     {
-      "question": "A-t-il été domestiqué par l'homme ?",
-      "offset": 110208
+      question: "A-t-il été domestiqué par l'homme ?",
+      offset: 110208,
     },
     {
-      "question": "Peut-il avoir un maître ?",
-      "offset": 110592
+      question: "Peut-il avoir un maître ?",
+      offset: 110592,
     },
     {
-      "question": "Les humains l'élèvent-ils ?",
-      "offset": 110976
+      question: "Les humains l'élèvent-ils ?",
+      offset: 110976,
     },
     {
-      "question": "Peut-on le garder chez soi ?",
-      "offset": 111360
-    }
+      question: "Peut-on le garder chez soi ?",
+      offset: 111360,
+    },
   ],
-  "endangered": [
+  endangered: [
     {
-      "question": "Est-il en voie d'extinction ?",
-      "offset": 111744
+      question: "Est-il en voie d'extinction ?",
+      offset: 111744,
     },
     {
-      "question": "Est-ce une espèce menacée ?",
-      "offset": 112128
+      question: "Est-ce une espèce menacée ?",
+      offset: 112128,
     },
     {
-      "question": "Risque-t-il de disparaître ?",
-      "offset": 112512
+      question: "Risque-t-il de disparaître ?",
+      offset: 112512,
     },
     {
-      "question": "Est-ce une espèce protégée ?",
-      "offset": 112896
+      question: "Est-ce une espèce protégée ?",
+      offset: 112896,
     },
     {
-      "question": "Est-il menacé de disparition ?",
-      "offset": 113280
+      question: "Est-il menacé de disparition ?",
+      offset: 113280,
     },
     {
-      "question": "Reste-t-il peu d'individus de son espèce ?",
-      "offset": 113664
+      question: "Reste-t-il peu d'individus de son espèce ?",
+      offset: 113664,
     },
     {
-      "question": "Est-il de plus en plus rare ?",
-      "offset": 114048
+      question: "Est-il de plus en plus rare ?",
+      offset: 114048,
     },
     {
-      "question": "Faut-il le protéger pour qu'il ne disparaisse pas ?",
-      "offset": 114432
+      question: "Faut-il le protéger pour qu'il ne disparaisse pas ?",
+      offset: 114432,
     },
     {
-      "question": "Est-il sur la liste rouge des espèces ?",
-      "offset": 114816
-    }
+      question: "Est-il sur la liste rouge des espèces ?",
+      offset: 114816,
+    },
   ],
-  "mollusc": [
+  mollusc: [
     {
-      "question": "Est-ce un mollusque ?",
-      "offset": 115200
+      question: "Est-ce un mollusque ?",
+      offset: 115200,
     },
     {
-      "question": "Fait-il partie des mollusques ?",
-      "offset": 115584
+      question: "Fait-il partie des mollusques ?",
+      offset: 115584,
     },
     {
-      "question": "A-t-il un corps mou ?",
-      "offset": 115968
+      question: "A-t-il un corps mou ?",
+      offset: 115968,
     },
     {
-      "question": "Est-ce de la famille des mollusques ?",
-      "offset": 116352
+      question: "Est-ce de la famille des mollusques ?",
+      offset: 116352,
     },
     {
-      "question": "Est-ce un mollusque, comme la moule ?",
-      "offset": 116736
+      question: "Est-ce un mollusque, comme la moule ?",
+      offset: 116736,
     },
     {
-      "question": "Est-ce un cousin de l'escargot ?",
-      "offset": 117120
+      question: "Est-ce un cousin de l'escargot ?",
+      offset: 117120,
     },
     {
-      "question": "Appartient-il au groupe des mollusques ?",
-      "offset": 117504
+      question: "Appartient-il au groupe des mollusques ?",
+      offset: 117504,
     },
     {
-      "question": "Le range-t-on parmi les mollusques ?",
-      "offset": 117888
+      question: "Le range-t-on parmi les mollusques ?",
+      offset: 117888,
     },
     {
-      "question": "Est-ce une sorte de coquillage ou de limace ?",
-      "offset": 118272
-    }
+      question: "Est-ce une sorte de coquillage ou de limace ?",
+      offset: 118272,
+    },
   ],
-  "mammal": [
+  mammal: [
     {
-      "question": "Est-ce un mammifère ?",
-      "offset": 118656
+      question: "Est-ce un mammifère ?",
+      offset: 118656,
     },
     {
-      "question": "Fait-il partie des mammifères ?",
-      "offset": 119040
+      question: "Fait-il partie des mammifères ?",
+      offset: 119040,
     },
     {
-      "question": "Allaite-t-il ses petits ?",
-      "offset": 119424
+      question: "Allaite-t-il ses petits ?",
+      offset: 119424,
     },
     {
-      "question": "Ses petits boivent-ils du lait ?",
-      "offset": 119808
+      question: "Ses petits boivent-ils du lait ?",
+      offset: 119808,
     },
     {
-      "question": "Est-il de la famille des mammifères ?",
-      "offset": 120192
+      question: "Est-il de la famille des mammifères ?",
+      offset: 120192,
     },
     {
-      "question": "Les bébés tètent-ils leur mère ?",
-      "offset": 120576
+      question: "Les bébés tètent-ils leur mère ?",
+      offset: 120576,
     },
     {
-      "question": "Appartient-il au groupe des mammifères ?",
-      "offset": 120960
+      question: "Appartient-il au groupe des mammifères ?",
+      offset: 120960,
     },
     {
-      "question": "Le range-t-on parmi les mammifères ?",
-      "offset": 121344
+      question: "Le range-t-on parmi les mammifères ?",
+      offset: 121344,
     },
     {
-      "question": "Est-ce un mammifère, comme nous ?",
-      "offset": 121728
-    }
+      question: "Est-ce un mammifère, comme nous ?",
+      offset: 121728,
+    },
   ],
-  "sound": [
+  sound: [
     {
-      "question": "Quel bruit fait-il ?",
-      "offset": 122112
+      question: "Quel bruit fait-il ?",
+      offset: 122112,
     },
     {
-      "question": "Quel est son cri ?",
-      "offset": 122496
+      question: "Quel est son cri ?",
+      offset: 122496,
     },
     {
-      "question": "Fait-il du bruit ?",
-      "offset": 122880
+      question: "Fait-il du bruit ?",
+      offset: 122880,
     },
     {
-      "question": "Comment crie-t-il ?",
-      "offset": 123264
+      question: "Comment crie-t-il ?",
+      offset: 123264,
     },
     {
-      "question": "Quel son fait-il ?",
-      "offset": 123648
+      question: "Quel son fait-il ?",
+      offset: 123648,
     },
     {
-      "question": "Est-ce qu'il chante ?",
-      "offset": 124032
+      question: "Est-ce qu'il chante ?",
+      offset: 124032,
     },
     {
-      "question": "Comment s'appelle son cri ?",
-      "offset": 124416
+      question: "Comment s'appelle son cri ?",
+      offset: 124416,
     },
     {
-      "question": "Qu'est-ce qu'on entend quand il crie ?",
-      "offset": 124800
+      question: "Qu'est-ce qu'on entend quand il crie ?",
+      offset: 124800,
     },
     {
-      "question": "Il fait quoi comme bruit ?",
-      "offset": 125184
+      question: "Il fait quoi comme bruit ?",
+      offset: 125184,
     },
     {
-      "question": "Quel cri pousse-t-il ?",
-      "offset": 125568
+      question: "Quel cri pousse-t-il ?",
+      offset: 125568,
     },
     {
-      "question": "Peux-tu imiter son cri ?",
-      "offset": 125952
-    }
+      question: "Peux-tu imiter son cri ?",
+      offset: 125952,
+    },
   ],
-  "bird": [
+  bird: [
     {
-      "question": "Est-ce un oiseau ?",
-      "offset": 126336
+      question: "Est-ce un oiseau ?",
+      offset: 126336,
     },
     {
-      "question": "C'est un oiseau ?",
-      "offset": 126720
+      question: "C'est un oiseau ?",
+      offset: 126720,
     },
     {
-      "question": "Fait-il partie des oiseaux ?",
-      "offset": 127104
+      question: "Fait-il partie des oiseaux ?",
+      offset: 127104,
     },
     {
-      "question": "Est-il de la famille des oiseaux ?",
-      "offset": 127488
+      question: "Est-il de la famille des oiseaux ?",
+      offset: 127488,
     },
     {
-      "question": "Est-ce un volatile ?",
-      "offset": 127872
+      question: "Est-ce un volatile ?",
+      offset: 127872,
     },
     {
-      "question": "Est-ce un oiseau, comme le moineau ?",
-      "offset": 128256
+      question: "Est-ce un oiseau, comme le moineau ?",
+      offset: 128256,
     },
     {
-      "question": "Appartient-il au groupe des oiseaux ?",
-      "offset": 128640
+      question: "Appartient-il au groupe des oiseaux ?",
+      offset: 128640,
     },
     {
-      "question": "Le range-t-on parmi les oiseaux ?",
-      "offset": 129024
+      question: "Le range-t-on parmi les oiseaux ?",
+      offset: 129024,
     },
     {
-      "question": "A-t-il un bec et des plumes ?",
-      "offset": 129408
-    }
+      question: "A-t-il un bec et des plumes ?",
+      offset: 129408,
+    },
   ],
-  "fish": [
+  fish: [
     {
-      "question": "Est-ce un poisson ?",
-      "offset": 129792
+      question: "Est-ce un poisson ?",
+      offset: 129792,
     },
     {
-      "question": "C'est un poisson ?",
-      "offset": 130176
+      question: "C'est un poisson ?",
+      offset: 130176,
     },
     {
-      "question": "Fait-il partie des poissons ?",
-      "offset": 130560
+      question: "Fait-il partie des poissons ?",
+      offset: 130560,
     },
     {
-      "question": "Est-il de la famille des poissons ?",
-      "offset": 130944
+      question: "Est-il de la famille des poissons ?",
+      offset: 130944,
     },
     {
-      "question": "Respire-t-il avec des branchies ?",
-      "offset": 131328
+      question: "Respire-t-il avec des branchies ?",
+      offset: 131328,
     },
     {
-      "question": "Est-ce un poisson, comme la truite ?",
-      "offset": 131712
+      question: "Est-ce un poisson, comme la truite ?",
+      offset: 131712,
     },
     {
-      "question": "Appartient-il au groupe des poissons ?",
-      "offset": 132096
+      question: "Appartient-il au groupe des poissons ?",
+      offset: 132096,
     },
     {
-      "question": "Le range-t-on parmi les poissons ?",
-      "offset": 132480
+      question: "Le range-t-on parmi les poissons ?",
+      offset: 132480,
     },
     {
-      "question": "A-t-il des nageoires et des branchies ?",
-      "offset": 132864
-    }
+      question: "A-t-il des nageoires et des branchies ?",
+      offset: 132864,
+    },
   ],
-  "insect": [
+  insect: [
     {
-      "question": "Est-ce un insecte ?",
-      "offset": 133248
+      question: "Est-ce un insecte ?",
+      offset: 133248,
     },
     {
-      "question": "C'est un insecte ?",
-      "offset": 133632
+      question: "C'est un insecte ?",
+      offset: 133632,
     },
     {
-      "question": "Fait-il partie des insectes ?",
-      "offset": 134016
+      question: "Fait-il partie des insectes ?",
+      offset: 134016,
     },
     {
-      "question": "Est-il de la famille des insectes ?",
-      "offset": 134400
+      question: "Est-il de la famille des insectes ?",
+      offset: 134400,
     },
     {
-      "question": "Est-ce une petite bestiole à six pattes ?",
-      "offset": 134784
+      question: "Est-ce une petite bestiole à six pattes ?",
+      offset: 134784,
     },
     {
-      "question": "Est-ce un insecte, comme la fourmi ?",
-      "offset": 135168
+      question: "Est-ce un insecte, comme la fourmi ?",
+      offset: 135168,
     },
     {
-      "question": "Appartient-il au groupe des insectes ?",
-      "offset": 135552
+      question: "Appartient-il au groupe des insectes ?",
+      offset: 135552,
     },
     {
-      "question": "Le range-t-on parmi les insectes ?",
-      "offset": 135936
+      question: "Le range-t-on parmi les insectes ?",
+      offset: 135936,
     },
     {
-      "question": "Son corps est-il en trois parties, avec des antennes ?",
-      "offset": 136320
-    }
+      question: "Son corps est-il en trois parties, avec des antennes ?",
+      offset: 136320,
+    },
   ],
-  "arachnid": [
+  arachnid: [
     {
-      "question": "Est-ce un arachnide ?",
-      "offset": 136704
+      question: "Est-ce un arachnide ?",
+      offset: 136704,
     },
     {
-      "question": "C'est un arachnide ?",
-      "offset": 137088
+      question: "C'est un arachnide ?",
+      offset: 137088,
     },
     {
-      "question": "Fait-il partie des arachnides ?",
-      "offset": 137472
+      question: "Fait-il partie des arachnides ?",
+      offset: 137472,
     },
     {
-      "question": "Est-ce de la famille des araignées ?",
-      "offset": 137856
+      question: "Est-ce de la famille des araignées ?",
+      offset: 137856,
     },
     {
-      "question": "Est-ce un cousin du scorpion ?",
-      "offset": 138240
+      question: "Est-ce un cousin du scorpion ?",
+      offset: 138240,
     },
     {
-      "question": "Est-ce une sorte d'araignée ?",
-      "offset": 138624
+      question: "Est-ce une sorte d'araignée ?",
+      offset: 138624,
     },
     {
-      "question": "Appartient-il au groupe des arachnides ?",
-      "offset": 139008
+      question: "Appartient-il au groupe des arachnides ?",
+      offset: 139008,
     },
     {
-      "question": "Le range-t-on parmi les arachnides ?",
-      "offset": 139392
+      question: "Le range-t-on parmi les arachnides ?",
+      offset: 139392,
     },
     {
-      "question": "Est-il parent avec la tarentule ?",
-      "offset": 139776
-    }
+      question: "Est-il parent avec la tarentule ?",
+      offset: 139776,
+    },
   ],
-  "reptile": [
+  reptile: [
     {
-      "question": "Est-ce un reptile ?",
-      "offset": 140160
+      question: "Est-ce un reptile ?",
+      offset: 140160,
     },
     {
-      "question": "C'est un reptile ?",
-      "offset": 140544
+      question: "C'est un reptile ?",
+      offset: 140544,
     },
     {
-      "question": "Fait-il partie des reptiles ?",
-      "offset": 140928
+      question: "Fait-il partie des reptiles ?",
+      offset: 140928,
     },
     {
-      "question": "Est-il de la famille des reptiles ?",
-      "offset": 141312
+      question: "Est-il de la famille des reptiles ?",
+      offset: 141312,
     },
     {
-      "question": "Est-ce de la famille des lézards et des serpents ?",
-      "offset": 141696
+      question: "Est-ce de la famille des lézards et des serpents ?",
+      offset: 141696,
     },
     {
-      "question": "Est-ce un reptile, comme le crocodile ?",
-      "offset": 142080
+      question: "Est-ce un reptile, comme le crocodile ?",
+      offset: 142080,
     },
     {
-      "question": "Appartient-il au groupe des reptiles ?",
-      "offset": 142464
+      question: "Appartient-il au groupe des reptiles ?",
+      offset: 142464,
     },
     {
-      "question": "Le range-t-on parmi les reptiles ?",
-      "offset": 142848
+      question: "Le range-t-on parmi les reptiles ?",
+      offset: 142848,
     },
     {
-      "question": "Est-ce une sorte de serpent, de lézard ou de tortue ?",
-      "offset": 143232
-    }
+      question: "Est-ce une sorte de serpent, de lézard ou de tortue ?",
+      offset: 143232,
+    },
   ],
-  "amphibian": [
+  amphibian: [
     {
-      "question": "Est-ce un amphibien ?",
-      "offset": 143616
+      question: "Est-ce un amphibien ?",
+      offset: 143616,
     },
     {
-      "question": "C'est un amphibien ?",
-      "offset": 144000
+      question: "C'est un amphibien ?",
+      offset: 144000,
     },
     {
-      "question": "Fait-il partie des amphibiens ?",
-      "offset": 144384
+      question: "Fait-il partie des amphibiens ?",
+      offset: 144384,
     },
     {
-      "question": "Est-ce un batracien ?",
-      "offset": 144768
+      question: "Est-ce un batracien ?",
+      offset: 144768,
     },
     {
-      "question": "Est-il de la famille des amphibiens ?",
-      "offset": 145152
+      question: "Est-il de la famille des amphibiens ?",
+      offset: 145152,
     },
     {
-      "question": "Est-ce un amphibien, comme la grenouille ?",
-      "offset": 145536
+      question: "Est-ce un amphibien, comme la grenouille ?",
+      offset: 145536,
     },
     {
-      "question": "Appartient-il au groupe des amphibiens ?",
-      "offset": 145920
+      question: "Appartient-il au groupe des amphibiens ?",
+      offset: 145920,
     },
     {
-      "question": "Le range-t-on parmi les amphibiens ?",
-      "offset": 146304
+      question: "Le range-t-on parmi les amphibiens ?",
+      offset: 146304,
     },
     {
-      "question": "Était-il un têtard quand il était petit ?",
-      "offset": 146688
-    }
+      question: "Était-il un têtard quand il était petit ?",
+      offset: 146688,
+    },
   ],
-  "dinosaur": [
+  dinosaur: [
     {
-      "question": "Est-ce un dinosaure ?",
-      "offset": 147072
+      question: "Est-ce un dinosaure ?",
+      offset: 147072,
     },
     {
-      "question": "C'est un dinosaure ?",
-      "offset": 147456
+      question: "C'est un dinosaure ?",
+      offset: 147456,
     },
     {
-      "question": "Fait-il partie des dinosaures ?",
-      "offset": 147840
+      question: "Fait-il partie des dinosaures ?",
+      offset: 147840,
     },
     {
-      "question": "Est-ce un dino ?",
-      "offset": 148224
+      question: "Est-ce un dino ?",
+      offset: 148224,
     },
     {
-      "question": "Est-il de la famille des dinosaures ?",
-      "offset": 148608
+      question: "Est-il de la famille des dinosaures ?",
+      offset: 148608,
     },
     {
-      "question": "Est-ce un dinosaure, comme le diplodocus ?",
-      "offset": 148992
+      question: "Est-ce un dinosaure, comme le diplodocus ?",
+      offset: 148992,
     },
     {
-      "question": "Appartient-il au groupe des dinosaures ?",
-      "offset": 149376
+      question: "Appartient-il au groupe des dinosaures ?",
+      offset: 149376,
     },
     {
-      "question": "Le range-t-on parmi les dinosaures ?",
-      "offset": 149760
+      question: "Le range-t-on parmi les dinosaures ?",
+      offset: 149760,
     },
     {
-      "question": "Est-ce un de ces géants du Jurassique ?",
-      "offset": 150144
-    }
-  ]
+      question: "Est-ce un de ces géants du Jurassique ?",
+      offset: 150144,
+    },
+  ],
 };

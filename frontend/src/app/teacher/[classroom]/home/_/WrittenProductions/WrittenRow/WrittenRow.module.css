@@ -1,0 +1,65 @@
+/*
+ * +---+------------------------------+
+ * |   | name of the production       |
+ * | > +------------------------------+
+ * |   | status, files, icons...      |
+ * +---+------------------------------+
+ */
+.writtenRow {
+  display: grid;
+  grid-template-columns: 3em 1fr;
+  grid-template-rows: auto auto;
+  align-items: center;
+  gap: 0.25em 0.5em;
+  padding: 0.25em 0.5em;
+  border-radius: 0.25em;
+  background: var(--theme-color-primary-4);
+  color: var(--theme-color-on-primary-4);
+
+  /* Activation icon */
+  > div:first-child {
+    grid-row: 1 / span 2;
+    display: flex;
+    justify-content: center;
+  }
+
+  /* Name of the written production */
+  > a,
+  > a:visited {
+    overflow-wrap: anywhere;
+    font-weight: bold;
+    color: var(--theme-color-secondary-5);
+  }
+
+  /* Status, files and actions */
+  > div:last-child {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 0.25em 1em;
+    font-size: 0.9em;
+
+    > span:nth-child(2) {
+      flex: 1 1 auto;
+      white-space: nowrap;
+      opacity: 0.8;
+    }
+
+    > .actions {
+      display: flex;
+      flex-wrap: nowrap;
+      align-items: center;
+      margin-left: auto;
+    }
+  }
+
+  &.active {
+    background: var(--theme-color-secondary-7);
+    color: var(--theme-color-on-secondary-7);
+
+    > a,
+    > a:visited {
+      color: var(--theme-color-on-secondary-7);
+    }
+  }
+}

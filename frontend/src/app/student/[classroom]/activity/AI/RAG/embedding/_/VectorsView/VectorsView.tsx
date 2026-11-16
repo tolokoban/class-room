@@ -22,18 +22,18 @@ export interface VectorsViewProps {
  */
 export function VectorsView({ className, vectors, probe }: VectorsViewProps) {
   const tr = useTranslation();
-  const { refCanvas, handlePointerDown, handlePointerMove, handlePointerUp, handlePointerLeave } =
-    useVectorsView(vectors, probe);
+  const { refCanvas, refOverlay, handlePointerMove, handlePointerLeave } = useVectorsView(
+    vectors,
+    probe,
+  );
   return (
     <div className={$.join(className, Styles.vectorsView)}>
       <canvas
         ref={refCanvas}
-        onPointerDown={handlePointerDown}
         onPointerMove={handlePointerMove}
-        onPointerUp={handlePointerUp}
-        onPointerCancel={handlePointerUp}
         onPointerLeave={handlePointerLeave}
       />
+      <canvas ref={refOverlay} />
       <small>{tr.hint}</small>
     </div>
   );

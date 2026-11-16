@@ -1,0 +1,63 @@
+.page {
+  position: absolute;
+  inset: 0;
+  overflow: auto;
+  padding: 1em;
+  /* Two columns that become two consecutive blocks on small screens. */
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-start;
+  align-content: flex-start;
+  justify-content: center;
+  gap: 1em;
+
+  > section {
+    flex: 3 1 min(22em, 100%);
+    max-width: 50em;
+    border-radius: 0.25em;
+    overflow: hidden;
+    background: var(--theme-color-primary-3);
+    color: var(--theme-color-on-primary-3);
+
+    > header {
+      background: var(--theme-color-primary-5);
+      color: var(--theme-color-on-primary-5);
+      padding: 0.5em;
+      font-weight: bold;
+      font-size: 1.2em;
+    }
+
+    > div {
+      padding: 0.5em 1em;
+    }
+  }
+
+  > aside {
+    flex: 2 1 min(15em, 100%);
+    max-width: 25em;
+    display: flex;
+    flex-direction: column;
+    gap: 1em;
+
+    > header {
+      font-weight: bold;
+    }
+
+    > .message {
+      padding: 0.5em;
+      border-radius: 0.25em;
+      background: var(--theme-color-secondary-7);
+      color: var(--theme-color-on-secondary-7);
+    }
+
+    > .message.notSeated,
+    > .message.expired {
+      background: color-mix(in srgb, var(--theme-color-error) 25%, var(--theme-color-neutral-9));
+      color: var(--theme-color-on-neutral-9);
+    }
+  }
+
+  .error {
+    color: var(--theme-color-error);
+  }
+}
