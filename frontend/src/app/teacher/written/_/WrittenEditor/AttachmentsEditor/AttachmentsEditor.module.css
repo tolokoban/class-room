@@ -1,0 +1,35 @@
+div.attachmentsEditor {
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  gap: 0.5em;
+
+  > h2 {
+    margin: 0;
+    font-size: 1.2em;
+  }
+
+  > p {
+    margin: 0;
+    font-size: 0.9em;
+    opacity: 0.8;
+  }
+
+  > .progress {
+    display: flex;
+    align-items: center;
+    gap: 1em;
+
+    > span {
+      overflow-wrap: anywhere;
+    }
+
+    > progress {
+      flex: 1 1 auto;
+    }
+  }
+
+  > :last-child {
+    align-self: flex-start;
+  }
+}

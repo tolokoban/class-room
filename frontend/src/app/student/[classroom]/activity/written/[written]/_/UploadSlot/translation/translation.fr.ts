@@ -1,5 +1,8 @@
 const FR = {
   empty: "Aucun fichier déposé.",
+  paste: "Coller",
+  clipboardEmpty: "Le presse-papier ne contient pas de texte.",
+  clipboardDenied: "Impossible de lire le presse-papier.",
   upload: "Déposer",
   replace: "Remplacer",
   maxSize: "max. $1",

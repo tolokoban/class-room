@@ -1,0 +1,18 @@
+div.prompt {
+  border-radius: 0.25em;
+  background: var(--theme-color-neutral-2);
+  color: var(--theme-color-on-neutral-2);
+
+  > pre {
+    margin: 0;
+    padding: 0.5em;
+    white-space: pre-wrap;
+    overflow-wrap: anywhere;
+  }
+
+  > footer {
+    display: flex;
+    justify-content: flex-end;
+    padding: 0.125em 0.5em;
+  }
+}

@@ -5,6 +5,7 @@ import { UiActionDelete } from "@/components/UiActionDelete";
 import { WrittenTimer } from "@/components/WrittenTimer";
 import { WrittenClassroomItem } from "@/service/calls/written";
 
+import { DragHandle, DragHandleEvents } from "./DragHandle";
 import { useWrittenRow } from "./hooks";
 import { useTranslation } from "./translation";
 
@@ -21,49 +22,71 @@ export interface WrittenRowProps {
   now: number;
   /** Is it the current activity of the class room? */
   active: boolean;
+  /** Events of the handle used to reorder the list. */
+  handle: DragHandleEvents;
+  /** Is this row being dragged? */
+  dragging: boolean;
 }
 
 /**
  * A written production assigned to a class room.
  */
-export function WrittenRow({ className, classroom, item, now, active }: WrittenRowProps) {
+export function WrittenRow({
+  className,
+  classroom,
+  item,
+  now,
+  active,
+  handle,
+  dragging,
+}: WrittenRowProps) {
   const tr = useTranslation();
   const row = useWrittenRow(classroom, item);
 
   return (
-    <li className={$.join(className, Styles.writtenRow, active && Styles.active)}>
-      <a href={row.studentUrl} title={tr.preview}>
-        {item.name}
-      </a>
+    <li
+      className={$.join(
+        className,
+        Styles.writtenRow,
+        active && Styles.active,
+        dragging && Styles.dragging,
+      )}
+    >
+      <DragHandle {...handle} />
       <div>
-        <WrittenTimer size="small" timer={item.timer} now={now} />
-        <span>
-          {tr.files$(String(item.count))} • <HumanSize bytes={item.size} />
-        </span>
-        <span className={Styles.actions}>
-          {active ? (
-            <span className={Styles.current} title={tr.active}>
-              <IconStar /> {tr.activeLabel}
-            </span>
-          ) : (
-            <span title={tr.activate}>
-              <ViewButton icon={IconPlay} waiting={row.isActivating} onClick={row.activate}>
-                {tr.activateLabel}
+        <a href={row.studentUrl} title={tr.preview}>
+          {item.name}
+        </a>
+        <div>
+          <WrittenTimer size="small" timer={item.timer} now={now} />
+          <span>
+            {tr.files$(String(item.count))} • <HumanSize bytes={item.size} />
+          </span>
+          <span className={Styles.actions}>
+            {active ? (
+              <span className={Styles.current} title={tr.active}>
+                <IconStar /> {tr.activeLabel}
+              </span>
+            ) : (
+              <span title={tr.activate}>
+                <ViewButton icon={IconPlay} waiting={row.isActivating} onClick={row.activate}>
+                  {tr.activateLabel}
+                </ViewButton>
+              </span>
+            )}
+            <span title={tr.results}>
+              <ViewButton icon={IconBook} onClick={row.resultsUrl}>
+                {tr.resultsLabel}
               </ViewButton>
             </span>
-          )}
-          <span title={tr.results}>
-            <ViewButton icon={IconBook} onClick={row.resultsUrl}>
-              {tr.resultsLabel}
-            </ViewButton>
+            <UiActionDelete
+              label={tr.unassignLabel}
+              confirm={tr.unassignConfirm$(item.name)}
+              waiting={row.isUnassigning}
+              onDelete={row.unassign}
+            />
           </span>
-          <UiActionDelete
-            label={tr.unassignLabel}
-            confirm={tr.unassignConfirm$(item.name)}
-            waiting={row.isUnassigning}
-            onDelete={row.unassign}
-          />
-        </span>
+        </div>
       </div>
     </li>
   );

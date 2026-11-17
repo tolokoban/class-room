@@ -1,0 +1,47 @@
+section.writtenAttachments {
+  border-radius: 0.25em;
+  overflow: hidden;
+  background: var(--theme-color-primary-3);
+  color: var(--theme-color-on-primary-3);
+
+  > header {
+    padding: 0.5em;
+    background: var(--theme-color-primary-5);
+    color: var(--theme-color-on-primary-5);
+    font-weight: bold;
+  }
+
+  > ul {
+    list-style: none;
+    margin: 0;
+    padding: 0.5em;
+    display: flex;
+    flex-direction: column;
+    gap: 0.25em;
+
+    > li > a {
+      display: flex;
+      align-items: center;
+      gap: 0.5em;
+      padding: 0.25em 0.5em;
+      border-radius: 0.25em;
+      color: inherit;
+      text-decoration: none;
+
+      &:hover {
+        background: var(--theme-color-primary-4);
+        color: var(--theme-color-on-primary-4);
+      }
+
+      > span:nth-child(2) {
+        flex: 1 1 auto;
+        overflow-wrap: anywhere;
+        text-decoration: underline;
+      }
+
+      > span:last-child {
+        opacity: 0.8;
+      }
+    }
+  }
+}

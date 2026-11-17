@@ -1,4 +1,11 @@
-import { IconCheck, IconImport, Theme, ViewInputFile, ViewProgress } from "@tolokoban/ui";
+import {
+  IconCheck,
+  IconImport,
+  Theme,
+  ViewButton,
+  ViewInputFile,
+  ViewProgress,
+} from "@tolokoban/ui";
 
 import { HumanSize } from "@/components/HumanSize";
 import { getAcceptAttribute, MimePresets } from "@/components/MimePresets";
@@ -61,23 +68,30 @@ export function UploadSlot({
       </div>
       {isUploading && <ViewProgress value={Math.round(100 * (slot.progress ?? 0))} />}
       <footer>
-        {upload && enabled && !isUploading && (
-          <UiActionDelete
-            confirm={tr.deleteConfirm$(file.name)}
-            waiting={slot.isDeleting}
-            onDelete={slot.remove}
-          />
+        {slot.paste && (
+          <ViewButton enabled={enabled && !isUploading} onClick={slot.paste}>
+            {tr.paste}
+          </ViewButton>
         )}
-        <ViewInputFile
-          ref={slot.refInput}
-          icon={IconImport}
-          accept={getAcceptAttribute(file.mimeTypes)}
-          enabled={enabled && !isUploading}
-          waiting={isUploading}
-          onLoad={slot.upload}
-        >
-          {upload ? tr.replace : tr.upload}
-        </ViewInputFile>
+        <div>
+          {upload && enabled && !isUploading && (
+            <UiActionDelete
+              confirm={tr.deleteConfirm$(file.name)}
+              waiting={slot.isDeleting}
+              onDelete={slot.remove}
+            />
+          )}
+          <ViewInputFile
+            ref={slot.refInput}
+            icon={IconImport}
+            accept={getAcceptAttribute(file.mimeTypes)}
+            enabled={enabled && !isUploading}
+            waiting={isUploading}
+            onLoad={slot.upload}
+          >
+            {upload ? tr.replace : tr.upload}
+          </ViewInputFile>
+        </div>
       </footer>
     </article>
   );

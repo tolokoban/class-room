@@ -1,0 +1,37 @@
+div.preview {
+  & blockquote {
+    margin-left: 0;
+    padding: 0.125em 0.5em 0.125em 1em;
+    border-left: 0.25em solid var(--theme-color-primary-5);
+  }
+
+  & code {
+    padding: 0 0.25em;
+    border-radius: 0.25em;
+    background: var(--theme-color-neutral-7);
+    color: var(--theme-color-on-neutral-7);
+  }
+
+  & pre {
+    padding: 0.5em;
+    border-radius: 0.25em;
+    background: var(--theme-color-neutral-7);
+    color: var(--theme-color-on-neutral-7);
+
+    > code {
+      padding: 0;
+    }
+  }
+
+  & hr {
+    border: none;
+    border-top: 2px solid currentColor;
+  }
+
+  & .highlight,
+  &.highlight {
+    outline: 3px solid var(--theme-color-error);
+    outline-offset: 2px;
+    border-radius: 0.25em;
+  }
+}

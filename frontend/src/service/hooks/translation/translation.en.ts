@@ -44,6 +44,12 @@ const EN: typeof FR = {
   all30503: "You are not the owner of this class room.",
   all30504: "Database error while setting the current activity.",
 
+  // activity/result-get
+  all30601: "Invalid input.",
+  all30602: "This class room does not exist.",
+  all30603: "This nickname is already used on another computer.",
+  all30604: "Database error while reading the result.",
+
   // room/enter
   all40101: "Invalid input.",
   all40102: "This class room does not exist.",
@@ -196,6 +202,31 @@ const EN: typeof FR = {
   all61703: "This written production is not available in this class room.",
   all61704: "You are not connected to this class room anymore.",
   all61705: "Database error.",
+  all61801: "Invalid input.",
+  all61802: "This class room does not exist.",
+  all61803: "You are not the owner of this class room.",
+  all61804: "The list of written productions of this class room has changed. Please try again.",
+  all61805: "Database error.",
+  all61901: "Invalid input.",
+  all61902: "This written production does not exist.",
+  all61903: "You are not the owner of this written production.",
+  all61904: "There are already 20 attached files: delete one before adding another.",
+  all61905: "The file is too large (100 MB maximum) or empty.",
+  all61906: "Not enough space on the server, or unable to store the file.",
+  all61907: "Database error.",
+  all62001: "Invalid input.",
+  all62002: "This upload does not exist or has been cancelled.",
+  all62003: "Invalid file chunk.",
+  all62004: "Unable to store the file on the server.",
+  all62101: "Invalid input.",
+  all62102: "This upload does not exist or has been cancelled.",
+  all62103: "The file has not been completely sent.",
+  all62104: "Unable to store the file on the server.",
+  all62105: "Database error.",
+  all62201: "Invalid input.",
+  all62202: "This attached file does not exist.",
+  all62203: "You are not the owner of this attached file.",
+  all62204: "Database error.",
 };
 
 export default EN;

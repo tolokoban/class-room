@@ -2,7 +2,7 @@ import React from "react";
 
 import { useConfirm } from "@/components/Confirm";
 import { Notif } from "@/components/Notification";
-import { WrittenItem } from "@/service/calls/written";
+import { makeWrittenAttachmentResolver, WrittenItem } from "@/service/calls/written";
 import { useApiErrorTranslator } from "@/service/hooks/apiError";
 import {
   useServiceWrittenAdd,
@@ -29,6 +29,12 @@ export function useWrittenEditor(
 ) {
   const [draft, setDraft] = React.useState<Draft>(() => itemToDraft(item));
   const [tab, setTab] = React.useState<string | undefined>("edit");
+  const attachments = item?.attachments;
+  /** Turns the `attachment:name` links of the preview into download URLs. */
+  const resolveUrl = React.useMemo(
+    () => makeWrittenAttachmentResolver(attachments ?? []),
+    [attachments],
+  );
   const update = (patch: Partial<Draft>) => setDraft((current) => ({ ...current, ...patch }));
   const updateFile = (key: string, patch: Partial<DraftFile>) =>
     setDraft((current) => ({
@@ -40,6 +46,7 @@ export function useWrittenEditor(
     draft,
     tab,
     setTab,
+    resolveUrl,
     update,
     updateFile,
     addFile: () => update({ files: [...draft.files, makeDraftFile()] }),

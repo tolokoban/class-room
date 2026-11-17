@@ -44,6 +44,12 @@ const IT: typeof FR = {
   all30503: "Non sei il proprietario di questa classe.",
   all30504: "Errore del database durante la scelta dell'attività corrente.",
 
+  // activity/result-get
+  all30601: "Dati non validi.",
+  all30602: "Questa classe non esiste.",
+  all30603: "Questo pseudonimo è già usato su un altro computer.",
+  all30604: "Errore del database durante la lettura del risultato.",
+
   // room/enter
   all40101: "Dati non validi.",
   all40102: "Questa classe non esiste.",
@@ -196,6 +202,31 @@ const IT: typeof FR = {
   all61703: "Questa produzione scritta non è disponibile in questa classe.",
   all61704: "Non sei più connesso a questa classe.",
   all61705: "Errore del database.",
+  all61801: "Dati non validi.",
+  all61802: "Questa classe non esiste.",
+  all61803: "Non sei il proprietario di questa classe.",
+  all61804: "L'elenco delle produzioni scritte di questa classe è cambiato. Riprova.",
+  all61805: "Errore del database.",
+  all61901: "Dati non validi.",
+  all61902: "Questa produzione scritta non esiste.",
+  all61903: "Non sei il proprietario di questa produzione scritta.",
+  all61904: "Ci sono già 20 file allegati: eliminane uno prima di aggiungerne un altro.",
+  all61905: "Il file è troppo grande (massimo 100 MB) o vuoto.",
+  all61906: "Spazio insufficiente sul server, o impossibile salvare il file.",
+  all61907: "Errore del database.",
+  all62001: "Dati non validi.",
+  all62002: "Questo caricamento non esiste o è stato annullato.",
+  all62003: "Parte del file non valida.",
+  all62004: "Impossibile salvare il file sul server.",
+  all62101: "Dati non validi.",
+  all62102: "Questo caricamento non esiste o è stato annullato.",
+  all62103: "Il file non è stato inviato completamente.",
+  all62104: "Impossibile salvare il file sul server.",
+  all62105: "Errore del database.",
+  all62201: "Dati non validi.",
+  all62202: "Questo file allegato non esiste.",
+  all62203: "Non sei il proprietario di questo file allegato.",
+  all62204: "Errore del database.",
 };
 
 export default IT;

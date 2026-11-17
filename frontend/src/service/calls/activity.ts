@@ -26,6 +26,33 @@ export async function activityResultSet(input: ActivityResultSetInput): Promise<
   });
 }
 
+export interface ActivityResultGetInput {
+  /** Field `code` of table `class`. */
+  classroomCode: string;
+  activityCode: string;
+  /** Unique identifier of the student's computer. */
+  computer: string;
+  nickname: string;
+}
+
+/**
+ * @returns The result a student stored for an activity (see `activityResultSet()`),
+ * or `null` if there is none yet.
+ */
+export async function activityResultGet(input: ActivityResultGetInput): Promise<string | null> {
+  const result = await api("activity/result-get", input);
+  throwIfError(result, {
+    [ApiError.ACTIVITY_RESULT_GET_INVALID_INPUT]: "Invalid input.",
+    [ApiError.ACTIVITY_RESULT_GET_CLASS_NOT_FOUND]: `Class room "${input.classroomCode}" does not exist.`,
+    [ApiError.ACTIVITY_RESULT_GET_NICKNAME_TAKEN]: `Nickname "${input.nickname}" is already used on another computer.`,
+    [ApiError.ACTIVITY_RESULT_GET_DATABASE_ERROR]: "Database error while reading the result.",
+  });
+  if (result !== null && !isString(result)) {
+    throw new ApiErrorTypeAssertion('Invalid response for "activity/result-get"');
+  }
+  return result;
+}
+
 export interface ActivityResultAllInput {
   /** Field `code` of table `class`. */
   classroomCode: string;

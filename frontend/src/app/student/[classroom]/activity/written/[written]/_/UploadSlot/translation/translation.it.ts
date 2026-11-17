@@ -2,6 +2,9 @@ import FR from "./translation.fr";
 
 const IT: typeof FR = {
   empty: "Nessun file caricato.",
+  paste: "Incolla",
+  clipboardEmpty: "Gli appunti non contengono testo.",
+  clipboardDenied: "Impossibile leggere gli appunti.",
   upload: "Carica",
   replace: "Sostituisci",
   maxSize: "max. $1",

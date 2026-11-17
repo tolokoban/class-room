@@ -6,4 +6,14 @@
     & > :last-child {
         margin-bottom: 0;
     }
+
+    & table {
+        border-collapse: collapse;
+    }
+
+    & th,
+    & td {
+        border: 1px solid currentColor;
+        padding: 0.125em 0.5em;
+    }
 }

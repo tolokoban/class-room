@@ -1,15 +1,15 @@
-import { Theme, ViewSpinner } from "@tolokoban/ui";
+import { ViewSpinner } from "@tolokoban/ui";
 
 import { Md } from "@/components/Md";
+import { WrittenAttachments } from "@/components/WrittenAttachments";
 import { WrittenTimer } from "@/components/WrittenTimer";
 
+import { StatusMessage } from "./_/StatusMessage";
 import { UploadSlot } from "./_/UploadSlot";
 import { useWrittenStudentPage } from "./hooks";
 import { useTranslation } from "./translation";
 
 import Styles from "./page.module.css";
-
-const $ = Theme.classNames;
 
 /**
  * Generic activity "Production écrite": the student uploads the files expected by the teacher.
@@ -32,14 +32,17 @@ export default function Page() {
   const canUpload = status === "open" || status === "over";
   return (
     <div className={Styles.page}>
-      <section>
-        <header>{data.name}</header>
-        <Md value={data.description} />
-      </section>
+      <div className={Styles.main}>
+        <section className={Styles.description}>
+          <header>{data.name}</header>
+          <Md value={data.description} resolveUrl={page.resolveUrl} />
+        </section>
+        <WrittenAttachments attachments={data.attachments} classroomCode={page.classroom} />
+      </div>
       <aside>
         <WrittenTimer timer={data.timer} now={data.now} />
         {status !== "open" && (
-          <div className={$.join(Styles.message, Styles[status])}>{tr[status]}</div>
+          <StatusMessage status={status} resultsUrl={page.resultsUrl} editUrl={page.editUrl} />
         )}
         <header>{tr.files}</header>
         {data.files.map((file) => (

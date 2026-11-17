@@ -52,7 +52,7 @@ export function WrittenProductions({
             {section.error && <div className={Styles.error}>{section.error.message}</div>}
             {section.data && section.items.length === 0 && <em>{tr.empty}</em>}
             {section.items.length > 0 && (
-              <ul>
+              <ul ref={section.drag.listRef}>
                 {section.items.map((item) => (
                   <WrittenRow
                     key={item.id}
@@ -60,6 +60,8 @@ export function WrittenProductions({
                     item={item}
                     now={section.data?.now ?? 0}
                     active={section.currentActivity === getWrittenActivityCode(item.id)}
+                    handle={section.drag.handle(item.id)}
+                    dragging={section.drag.draggedId === item.id}
                   />
                 ))}
               </ul>

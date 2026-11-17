@@ -25,6 +25,7 @@ $ROLE = "teacher";
  *   duration: number
  *   expiration: number
  *   files: Array<{ name: string, mimeTypes: string[], maxSize: number }>
+ *   attachments: Array<{ id: number, name: string, mime: string, size: number }> // See `written/attachment-get`.
  *   timer: Timer // See `getTimer()` in `written.php`.
  *   // Complete uploads, sorted by nickname and expected file.
  *   uploads: Array<{

@@ -4,6 +4,7 @@ import { API } from "@/service/calls";
 import { ApiError } from "@/service/calls/service";
 import {
   WrittenClassroom,
+  WrittenClassroomItem,
   WrittenItem,
   WrittenRef,
   WrittenResults,
@@ -129,3 +130,39 @@ export const useServiceWrittenTimer = () => useWrittenMutation(API.written.timer
 export const useServiceWrittenFilesDelete = () => useWrittenMutation(API.written.filesDelete);
 export const useServiceWrittenUpload = () => useWrittenMutation(API.written.upload);
 export const useServiceWrittenUploadDelete = () => useWrittenMutation(API.written.uploadDelete);
+export const useServiceWrittenAttachmentUpload = () =>
+  useWrittenMutation(API.written.attachmentUpload);
+export const useServiceWrittenAttachmentDelete = () =>
+  useWrittenMutation(API.written.attachmentDelete);
+
+/**
+ * Change the order of the written productions of a class room.
+ * The cached list is updated immediately, to avoid flickering while the server answers.
+ */
+export function useServiceWrittenReorder(): WrittenMutationResult<
+  { classroomCode: string; writtenIds: number[] },
+  void
+> {
+  const queryClient = useQueryClient();
+  const mutation = useWrittenMutation(API.written.reorder);
+  return {
+    ...mutation,
+    mutate(input) {
+      const queryKey = [WRITTEN_KEY, "classroom", input.classroomCode];
+      void queryClient.cancelQueries({ queryKey });
+      queryClient.setQueryData<WrittenClassroom>(
+        queryKey,
+        (data) => data && { ...data, items: sortItems(data.items, input.writtenIds) },
+      );
+      return mutation.mutate(input);
+    },
+  };
+}
+
+function sortItems(items: WrittenClassroomItem[], ids: number[]): WrittenClassroomItem[] {
+  const rank = (item: WrittenClassroomItem) => {
+    const index = ids.indexOf(item.id);
+    return index < 0 ? ids.length : index;
+  };
+  return [...items].sort((a, b) => rank(a) - rank(b));
+}

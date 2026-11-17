@@ -2,6 +2,7 @@ import { IconArrowLeft, IconEdit, ViewButton, ViewSpinner } from "@tolokoban/ui"
 
 import { Md } from "@/components/Md";
 import { TeacherOnly } from "@/components/TeacherOnly";
+import { WrittenAttachments } from "@/components/WrittenAttachments";
 import { isTeacher, State } from "@/state";
 
 import { ExpirationPanel } from "./_/ExpirationPanel";
@@ -53,8 +54,9 @@ export default function Page() {
           <StudentUploads writtenRef={writtenRef} uploads={data.uploads} />
           <section className={Styles.description}>
             <header>{tr.description}</header>
-            <Md value={data.description} />
+            <Md value={data.description} resolveUrl={page.resolveUrl} />
           </section>
+          <WrittenAttachments attachments={data.attachments} />
         </>
       )}
     </div>

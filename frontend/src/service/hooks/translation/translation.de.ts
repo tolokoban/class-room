@@ -44,6 +44,12 @@ const DE: typeof FR = {
   all30503: "Sie sind nicht der Eigentümer dieser Klasse.",
   all30504: "Datenbankfehler beim Festlegen der aktuellen Aktivität.",
 
+  // activity/result-get
+  all30601: "Ungültige Eingabe.",
+  all30602: "Diese Klasse existiert nicht.",
+  all30603: "Dieser Spitzname wird bereits auf einem anderen Computer verwendet.",
+  all30604: "Datenbankfehler beim Lesen des Ergebnisses.",
+
   // room/enter
   all40101: "Ungültige Daten.",
   all40102: "Diese Klasse existiert nicht.",
@@ -197,6 +203,34 @@ const DE: typeof FR = {
   all61703: "Diese schriftliche Arbeit ist in dieser Klasse nicht verfügbar.",
   all61704: "Sie sind nicht mehr mit dieser Klasse verbunden.",
   all61705: "Datenbankfehler.",
+  all61801: "Ungültige Daten.",
+  all61802: "Diese Klasse existiert nicht.",
+  all61803: "Sie sind nicht der Besitzer dieser Klasse.",
+  all61804:
+    "Die Liste der schriftlichen Arbeiten dieser Klasse hat sich geändert. Bitte versuchen Sie es erneut.",
+  all61805: "Datenbankfehler.",
+  all61901: "Ungültige Daten.",
+  all61902: "Diese schriftliche Arbeit existiert nicht.",
+  all61903: "Sie sind nicht der Besitzer dieser schriftlichen Arbeit.",
+  all61904:
+    "Es sind bereits 20 Dateien angehängt: Löschen Sie eine, bevor Sie eine weitere hinzufügen.",
+  all61905: "Die Datei ist zu groß (maximal 100 MB) oder leer.",
+  all61906:
+    "Nicht genug Speicherplatz auf dem Server, oder die Datei kann nicht gespeichert werden.",
+  all61907: "Datenbankfehler.",
+  all62001: "Ungültige Daten.",
+  all62002: "Dieser Upload existiert nicht oder wurde abgebrochen.",
+  all62003: "Ungültiger Dateiteil.",
+  all62004: "Die Datei kann nicht auf dem Server gespeichert werden.",
+  all62101: "Ungültige Daten.",
+  all62102: "Dieser Upload existiert nicht oder wurde abgebrochen.",
+  all62103: "Die Datei wurde nicht vollständig gesendet.",
+  all62104: "Die Datei kann nicht auf dem Server gespeichert werden.",
+  all62105: "Datenbankfehler.",
+  all62201: "Ungültige Daten.",
+  all62202: "Diese angehängte Datei existiert nicht.",
+  all62203: "Sie sind nicht der Besitzer dieser angehängten Datei.",
+  all62204: "Datenbankfehler.",
 };
 
 export default DE;

@@ -6,7 +6,7 @@ $ROLE = "teacher";
 
 /**
  * List the written productions assigned to a class room owned by the current user,
- * sorted by name, with the state of their timer and the size of the uploaded files.
+ * sorted by position (see `written/reorder`), with the state of their timer and the size of the uploaded files.
  *
  * @param mixed $input
  * ```ts
@@ -51,7 +51,7 @@ function entrypoint($input)
              WHERE `u`.`assignment` = `a`.`id` AND `u`.`complete` = 1) AS `size`
          FROM `{$DB->table("written_assignment")}` AS `a`
          JOIN `{$DB->table("written")}` AS `w` ON `w`.`id` = `a`.`written`
-         WHERE `a`.`classroom` = ? ORDER BY `w`.`name`",
+         WHERE `a`.`classroom` = ? ORDER BY `a`.`position`, `a`.`id`",
         $class["id"]
     );
     $rows = $stmt === false ? [] : $stmt->fetchAll();

@@ -8,6 +8,7 @@ $ROLE = "teacher";
 /**
  * Assign a written production to a class room (both owned by the current user).
  * The timer of the new assignment is not started.
+ * It is put at the end of the list of the class room.
  *
  * @param mixed $input
  * ```ts
@@ -42,8 +43,11 @@ function entrypoint($input)
     $class = findClassByCode($input["classroomCode"]);
     try {
         $stmt = $DB->query(
-            "INSERT INTO `{$DB->table("written_assignment")}` (`written`, `classroom`) VALUES (?, ?)",
+            "INSERT INTO `{$DB->table("written_assignment")}` (`written`, `classroom`, `position`)
+             SELECT ?, ?, COALESCE(MAX(`position`), 0) + 1
+             FROM `{$DB->table("written_assignment")}` WHERE `classroom` = ?",
             $input["writtenId"],
+            $class["id"],
             $class["id"]
         );
     } catch (Exception $exception) {

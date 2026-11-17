@@ -1,0 +1,5 @@
+section.codePane {
+  > header > span {
+    flex: 1;
+  }
+}

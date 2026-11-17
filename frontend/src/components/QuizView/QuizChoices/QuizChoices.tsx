@@ -23,6 +23,7 @@ export interface QuizChoicesProps {
 export function QuizChoices({ className, item, selection, onToggle }: QuizChoicesProps) {
   const lang = useLangValue();
   const teacher = isTeacher(State.user.useValue());
+  const showAnswers = teacher && State.showQuizAnswers.useValue();
   const { revealedId, reveal, hide } = useRevealedAnswer(item);
   if (teacher && revealedId !== null) {
     return (
@@ -42,7 +43,7 @@ export function QuizChoices({ className, item, selection, onToggle }: QuizChoice
           choice={MultiLang.get(value, lang)}
           selected={selection.includes(id)}
           onClick={() => onToggle(id)}
-          onCheck={teacher && id in item.answers ? () => reveal(id) : undefined}
+          onCheck={showAnswers && id in item.answers ? () => reveal(id) : undefined}
         />
       ))}
     </div>

@@ -42,6 +42,12 @@ const FR = {
   all30503: "Vous n'êtes pas le propriétaire de cette classe.",
   all30504: "Erreur de base de données lors du choix de l'activité courante.",
 
+  // activity/result-get
+  all30601: "Données invalides.",
+  all30602: "Cette classe n'existe pas.",
+  all30603: "Ce pseudo est déjà utilisé sur un autre ordinateur.",
+  all30604: "Erreur de base de données lors de la lecture du résultat.",
+
   // room/enter
   all40101: "Données invalides.",
   all40102: "Cette classe n'existe pas.",
@@ -194,6 +200,31 @@ const FR = {
   all61703: "Cette production écrite n'est pas disponible dans cette classe.",
   all61704: "Vous n'êtes plus connecté à cette classe.",
   all61705: "Erreur de base de données.",
+  all61801: "Données invalides.",
+  all61802: "Cette classe n'existe pas.",
+  all61803: "Vous n'êtes pas le propriétaire de cette classe.",
+  all61804: "La liste des productions écrites de cette classe a changé. Veuillez réessayer.",
+  all61805: "Erreur de base de données.",
+  all61901: "Données invalides.",
+  all61902: "Cette production écrite n'existe pas.",
+  all61903: "Vous n'êtes pas le propriétaire de cette production écrite.",
+  all61904: "Il y a déjà 20 fichiers joints : supprimez-en un avant d'en ajouter un autre.",
+  all61905: "Le fichier est trop volumineux (100 Mo maximum) ou vide.",
+  all61906: "Pas assez de place sur le serveur, ou impossible d'y enregistrer le fichier.",
+  all61907: "Erreur de base de données.",
+  all62001: "Données invalides.",
+  all62002: "Ce téléversement n'existe pas ou a été annulé.",
+  all62003: "Morceau de fichier invalide.",
+  all62004: "Impossible d'enregistrer le fichier sur le serveur.",
+  all62101: "Données invalides.",
+  all62102: "Ce téléversement n'existe pas ou a été annulé.",
+  all62103: "Le fichier n'a pas été complètement envoyé.",
+  all62104: "Impossible d'enregistrer le fichier sur le serveur.",
+  all62105: "Erreur de base de données.",
+  all62201: "Données invalides.",
+  all62202: "Ce fichier joint n'existe pas.",
+  all62203: "Vous n'êtes pas le propriétaire de ce fichier joint.",
+  all62204: "Erreur de base de données.",
 } satisfies Record<string, string>;
 
 export default FR;

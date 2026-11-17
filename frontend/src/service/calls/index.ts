@@ -3,6 +3,7 @@ import {
   activityCurrent,
   activityCurrentSet,
   activityResultAll,
+  activityResultGet,
   activityResultSet,
 } from "./activity";
 import { classAdd, classDelete, classList, classUpdate } from "./class";
@@ -12,10 +13,13 @@ import { userLogin, userLogout } from "./user";
 import {
   writtenAdd,
   writtenAssign,
+  writtenAttachmentDelete,
+  writtenAttachmentUpload,
   writtenClassroom,
   writtenDelete,
   writtenFilesDelete,
   writtenList,
+  writtenReorder,
   writtenResults,
   writtenState,
   writtenTimer,
@@ -32,6 +36,7 @@ export const API = {
     current: activityCurrent,
     currentSet: activityCurrentSet,
     resultAll: activityResultAll,
+    resultGet: activityResultGet,
     resultSet: activityResultSet,
   },
   class: {
@@ -62,10 +67,13 @@ export const API = {
   written: {
     add: writtenAdd,
     assign: writtenAssign,
+    attachmentDelete: writtenAttachmentDelete,
+    attachmentUpload: writtenAttachmentUpload,
     classroom: writtenClassroom,
     delete: writtenDelete,
     filesDelete: writtenFilesDelete,
     list: writtenList,
+    reorder: writtenReorder,
     results: writtenResults,
     state: writtenState,
     timer: writtenTimer,

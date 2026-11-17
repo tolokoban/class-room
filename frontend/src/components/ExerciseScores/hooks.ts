@@ -19,6 +19,7 @@ export function useExerciseScores(
   classroom: string,
   activityCode: string,
   exercisesDefinition: Record<string, { title: Record<string, string> }>,
+  parseResult: (result: string) => Scores = parseScores,
 ) {
   const lang = useLangValue();
   const results = useServiceActivityResultAll(classroom, activityCode);
@@ -29,7 +30,7 @@ export function useExerciseScores(
   }));
   const students = Object.entries(results.data ?? {})
     .map(([nickname, result]) => {
-      const scores = parseScores(result);
+      const scores = parseResult(result);
       return { nickname, scores, average: average(Object.values(scores)) };
     })
     .sort((a, b) => a.nickname.localeCompare(b.nickname));

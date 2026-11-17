@@ -34,6 +34,19 @@ const WRITTEN_PENDING_TIMEOUT = 3600;
 const WRITTEN_MAX_FILES = 20;
 
 /**
+ * The files attached by the teacher (table `written_attachment`) are stored here.
+ * They are uploaded by chunks, like the students' files:
+ * `written/attachment-init`, `written/attachment-chunk` and `written/attachment-complete`.
+ */
+const WRITTEN_ATTACHMENTS_ROOT = WRITTEN_ROOT . "/attachments";
+
+/** Maximum size (in bytes) of a file attached by the teacher. */
+const WRITTEN_MAX_ATTACHMENT_SIZE = 100 * 1024 * 1024;
+
+/** Maximum number of files attached to a written production. */
+const WRITTEN_MAX_ATTACHMENTS = 20;
+
+/**
  * Extension to give to a file, depending on its mime type.
  */
 const WRITTEN_MIME_EXTENSIONS = [
@@ -485,6 +498,7 @@ function getWrittenInfos(array $written): array
         "duration" => $written["duration"],
         "expiration" => $written["expiration"],
         "files" => $written["files"],
+        "attachments" => listAttachments($written["id"]),
     ];
 }
 
@@ -502,11 +516,132 @@ function isClassOwner(array $class): bool
  */
 function getUploadPath(int $id, string $ext, bool $partial = false): string
 {
+    return getStoragePath(WRITTEN_ROOT, $id, $ext, $partial);
+}
+
+/**
+ * Absolute path where the content of a file attached by the teacher is stored.
+ */
+function getAttachmentPath(int $id, string $ext, bool $partial = false): string
+{
+    return getStoragePath(WRITTEN_ATTACHMENTS_ROOT, $id, $ext, $partial);
+}
+
+/**
+ * The ID is split in groups of 2 digits to avoid too many files in a folder:
+ * `{root}/00/12/34.{ext}` for ID 1234.
+ */
+function getStoragePath(string $root, int $id, string $ext, bool $partial): string
+{
     $digits = (string) $id;
     $length = max(6, strlen($digits) + strlen($digits) % 2);
     $groups = str_split(str_pad($digits, $length, "0", STR_PAD_LEFT), 2);
-    $path = WRITTEN_ROOT . "/" . implode("/", $groups);
+    $path = $root . "/" . implode("/", $groups);
     return $partial ? "$path.part" : "$path.$ext";
+}
+
+/**
+ * The complete files attached to a written production, sorted by name, as sent to the frontend:
+ * `Array<{ id: number, name: string, mime: string, size: number }>`.
+ */
+function listAttachments(int $writtenId): array
+{
+    global $DB;
+
+    $stmt = $DB->query(
+        "SELECT `id`, `name`, `mime`, `size` FROM `{$DB->table("written_attachment")}`
+         WHERE `written` = ? AND `complete` = 1 ORDER BY `name`",
+        $writtenId
+    );
+    $rows = $stmt === false ? [] : $stmt->fetchAll();
+    return array_map(fn($row) => [
+        "id" => (int) $row["id"],
+        "name" => $row["name"],
+        "mime" => $row["mime"],
+        "size" => (int) $row["size"],
+    ], $rows);
+}
+
+/**
+ * An attachment with the ID of the owner of its written production.
+ *
+ * @return array|false `["id", "written", "owner", "name", "mime", "ext", "size", "received", "complete", "time"]`,
+ * or `false` if it does not exist.
+ */
+function findAttachment(int $id)
+{
+    global $DB;
+
+    $stmt = $DB->query(
+        "SELECT `t`.*, `w`.`user` AS `owner` FROM `{$DB->table("written_attachment")}` AS `t`
+         JOIN `{$DB->table("written")}` AS `w` ON `w`.`id` = `t`.`written`
+         WHERE `t`.`id` = ?",
+        $id
+    );
+    $row = $stmt === false ? false : $stmt->fetch();
+    if ($row === false) {
+        return false;
+    }
+    return [
+        "id" => (int) $row["id"],
+        "written" => (int) $row["written"],
+        "owner" => (int) $row["owner"],
+        "name" => $row["name"],
+        "mime" => $row["mime"],
+        "ext" => $row["ext"],
+        "size" => (int) $row["size"],
+        "received" => (int) $row["received"],
+        "complete" => (int) $row["complete"] === 1,
+        "time" => (int) $row["time"],
+    ];
+}
+
+/**
+ * An attachment that belongs to a written production of the current user.
+ *
+ * @return array|string The attachment (see `findAttachment()`),
+ * or "missing" if it does not exist, or "forbidden" if the current user does not own it.
+ */
+function findOwnedAttachment(int $id)
+{
+    $attachment = findAttachment($id);
+    if ($attachment === false) {
+        return "missing";
+    }
+    $user = $_SESSION["USER"] ?? null;
+    if ($user === null || $attachment["owner"] !== $user["id"]) {
+        return "forbidden";
+    }
+    return $attachment;
+}
+
+/**
+ * Delete the attachments matching a SQL condition on the columns of `written_attachment` (rows and content).
+ *
+ * @return int Number of deleted attachments.
+ */
+function deleteAttachments(string $where, ...$params): int
+{
+    global $DB;
+
+    $stmt = $DB->query("SELECT `id`, `ext` FROM `{$DB->table("written_attachment")}` WHERE $where", ...$params);
+    $rows = $stmt === false ? [] : $stmt->fetchAll();
+    foreach ($rows as $row) {
+        $id = (int) $row["id"];
+        $DB->query("DELETE FROM `{$DB->table("written_attachment")}` WHERE `id` = ?", $id);
+        deleteUploadContent(getAttachmentPath($id, $row["ext"], true));
+        deleteUploadContent(getAttachmentPath($id, $row["ext"]));
+    }
+    return count($rows);
+}
+
+/**
+ * The browsers do not always know the mime type of a file (Markdown for instance).
+ * In this case, we try to deduce it from the extension of the file name.
+ */
+function guessAttachmentMime(string $declaredMime, string $name): string
+{
+    return guessMime($declaredMime, $name, ["mimeTypes" => []]);
 }
 
 /**
@@ -572,6 +707,10 @@ function collectWrittenGarbage(): void
         );
         if ($count > 0) {
             error_log("[written] $count expired or abandoned upload(s) deleted.");
+        }
+        $count = deleteAttachments("`complete` = 0 AND `time` < ?", $now - WRITTEN_PENDING_TIMEOUT);
+        if ($count > 0) {
+            error_log("[written] $count abandoned attachment(s) deleted.");
         }
     } catch (Exception $exception) {
         error_log("[written] Garbage collection failed: " . $exception->getMessage());

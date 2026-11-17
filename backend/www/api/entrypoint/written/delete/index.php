@@ -6,7 +6,7 @@ $ROLE = "teacher";
 
 /**
  * Delete a written production owned by the current user,
- * with its assignments and all the files uploaded by the students.
+ * with its assignments, its attachments and all the files uploaded by the students.
  * If it is the current activity of a class room, this class room has no current activity anymore.
  *
  * @param mixed $input
@@ -33,6 +33,7 @@ function entrypoint($input)
 
     try {
         deleteUploads("`a`.`written` = ?", $written["id"]);
+        deleteAttachments("`written` = ?", $written["id"]);
         $DB->query(
             "UPDATE `{$DB->table("class")}` SET `activity` = NULL WHERE `user` = ? AND `activity` = ?",
             $written["user"],

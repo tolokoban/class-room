@@ -1,6 +1,6 @@
 import { Theme, ViewButton, ViewSpinner } from "@tolokoban/ui";
 
-import { useExerciseScores } from "./hooks";
+import { type Scores, useExerciseScores } from "./hooks";
 import { ScoreCell } from "./ScoreCell";
 import { useTranslation } from "./translation";
 
@@ -17,6 +17,11 @@ export interface ExerciseScoresProps {
   activityCode: string;
   /** Exercises of the activity, in display order. */
   exercises: Record<string, { title: Record<string, string> }>;
+  /**
+   * Conversion of a student's result into scores (percentage per exercise id).
+   * By default, the result is expected to be such a JSON map.
+   */
+  parseResult?(this: void, result: string): Scores;
   onBack(): void;
 }
 
@@ -29,6 +34,7 @@ export function ExerciseScores({
   classroom,
   activityCode,
   exercises: definition,
+  parseResult,
   onBack,
 }: ExerciseScoresProps) {
   const tr = useTranslation();
@@ -36,6 +42,7 @@ export function ExerciseScores({
     classroom,
     activityCode,
     definition,
+    parseResult,
   );
   return (
     <div className={$.join(className, Styles.exerciseScores)}>

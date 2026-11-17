@@ -24,8 +24,8 @@ importers:
         specifier: ^0.9.0
         version: 0.9.0
       '@tolokoban/ui':
-        specifier: ^0.25.12
-        version: 0.25.12(react@19.3.1)
+        specifier: ^0.25.13
+        version: 0.25.13(react@19.3.1)
       build-react-routes:
         specifier: ^0.14.0
         version: 0.14.0
@@ -41,6 +41,12 @@ importers:
       react-markdown:
         specifier: ^10.1.0
         version: 10.1.0(@types/react@19.3.0)(react@19.3.1)
+      remark-parse:
+        specifier: 11.0.0
+        version: 11.0.0
+      unified:
+        specifier: 11.0.5
+        version: 11.0.5
     devDependencies:
       '@rspack/cli':
         specifier: ^2.3.2
@@ -51,6 +57,9 @@ importers:
       '@rspack/dev-server':
         specifier: ^2.2.2
         version: 2.2.2(@rspack/core@2.3.2)
+      '@types/mdast':
+        specifier: 4.0.4
+        version: 4.0.4
       '@types/react':
         specifier: ^19.3.0
         version: 19.3.0
@@ -1665,8 +1674,8 @@ packages:
   '@tolokoban/type-guards@0.9.0':
     resolution: {integrity: sha512-MLOlLsGBrvol1yR25K/kai7/DoZtVYHmedRxKmjS8We7vwwas/9wyVvijAg0bcAucOSNOyWtviNikLkmvri9lQ==}
 
-  '@tolokoban/ui@0.25.12':
-    resolution: {integrity: sha512-vMxALXi+UgEQT7qAv/hURHAKDntLxZgxZFYDLt2Bta/e1KIY8y+/AZAtTe0UsvF8CfBFPwAeXu+WnoCjLFtlzA==}
+  '@tolokoban/ui@0.25.13':
+    resolution: {integrity: sha512-rPMiFgFXvyvp2XfO+XZemxgkEImt11YDUEUOYQT+eMJ7oUm4AnY9U106zUMu8GG6mJpmcF/DDYkc9anx2alCvw==}
     peerDependencies:
       react: ^19.2.4
 
@@ -5448,7 +5457,7 @@ snapshots:
 
   '@tolokoban/type-guards@0.9.0': {}
 
-  '@tolokoban/ui@0.25.12(react@19.3.1)':
+  '@tolokoban/ui@0.25.13(react@19.3.1)':
     dependencies:
       json5: 2.2.3
       react: 19.3.1

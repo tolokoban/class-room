@@ -6,7 +6,7 @@ type Activity = [name: string, children?: Activity[]];
 
 export const ACTIVITIES: Activity[] = [
   ["AI", [["bilan-1"], ["chess"], ["CRAFT"], ["eliza"], ["GPS"], ["le-chat-mange-la"], ["mycin"], ["neural-network"], ["perceptron"], ["RAG", [["embedding"]]], ["types-ia-generatives"], ["usage"]]],
-  ["office", [["file-explorer"], ["selection"], ["spreadsheet"]]],
+  ["office", [["file-explorer"], ["markdown"], ["selection"], ["spreadsheet"]]],
   ["security", [["personal-data", [["AI-Act"], ["anonymous"], ["RGPD"]]]]],
 ];
 
@@ -65,6 +65,10 @@ export const INFOS: Record<
   "office/file-explorer": {
     title: "Sélectionner des fichiers",
     description: "Reproduire une sélection de fichiers dans l'explorateur avec la souris et les touches `Ctrl` et `Maj`, en un minimum de clics.",
+  },
+  "office/markdown": {
+    title: "Écrire en Markdown",
+    description: "Mettre en forme un texte avec la syntaxe Markdown : titres, gras, listes, code, liens, tableaux… Une nouvelle syntaxe à chaque exercice.",
   },
   "office/selection": {
     title: "Sélectionner au clavier",

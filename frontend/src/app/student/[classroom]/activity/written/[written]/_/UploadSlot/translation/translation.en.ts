@@ -2,6 +2,9 @@ import FR from "./translation.fr";
 
 const EN: typeof FR = {
   empty: "No file uploaded.",
+  paste: "Paste",
+  clipboardEmpty: "The clipboard does not contain any text.",
+  clipboardDenied: "Unable to read the clipboard.",
   upload: "Upload",
   replace: "Replace",
   maxSize: "max. $1",

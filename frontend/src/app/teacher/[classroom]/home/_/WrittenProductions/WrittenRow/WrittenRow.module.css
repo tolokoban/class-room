@@ -1,54 +1,68 @@
 /*
- * +-------------------------------------------------+
- * | name of the production                          |
- * +-------------------------------------------------+
- * | status, files          > Launch  Results  Remove|
- * +-------------------------------------------------+
+ * +---+---------------------------------------------+
+ * |   | name of the production                      |
+ * | ⇕ +---------------------------------------------+
+ * |   | status, files      > Launch  Results  Remove|
+ * +---+---------------------------------------------+
  */
 .writtenRow {
-  display: flex;
-  flex-direction: column;
-  gap: 0.25em;
-  padding: 0.5em;
+  display: grid;
+  grid-template-columns: auto 1fr;
   border-radius: 0.25em;
+  overflow: hidden;
   background: var(--theme-color-primary-4);
   color: var(--theme-color-on-primary-4);
 
-  /* Name of the written production */
-  > a,
-  > a:visited {
-    overflow-wrap: anywhere;
-    font-weight: bold;
-    color: var(--theme-color-secondary-5);
+  /* Handle to reorder the list by drag & drop */
+  > div:first-child {
+    background: var(--theme-color-primary-5);
+    color: var(--theme-color-on-primary-5);
   }
 
-  /* Status, files and actions */
-  > div {
+  /* Content of the card */
+  > div:last-child {
     display: flex;
-    flex-wrap: wrap;
-    align-items: center;
-    gap: 0.25em 1em;
-    font-size: 0.9em;
+    flex-direction: column;
+    gap: 0.25em;
+    padding: 0.5em;
+    min-width: 0;
 
-    > span:nth-child(2) {
-      flex: 1 1 auto;
-      white-space: nowrap;
-      opacity: 0.8;
+    /* Name of the written production */
+    > a,
+    > a:visited {
+      overflow-wrap: anywhere;
+      font-weight: bold;
+      color: var(--theme-color-secondary-5);
     }
 
-    > .actions {
+    /* Status, files and actions */
+    > div {
       display: flex;
-      flex-wrap: nowrap;
+      flex-wrap: wrap;
       align-items: center;
-      gap: 0.25em;
-      margin-left: auto;
+      gap: 0.25em 1em;
+      font-size: 0.9em;
 
-      > .current {
-        display: inline-flex;
+      > span:nth-child(2) {
+        flex: 1 1 auto;
+        white-space: nowrap;
+        opacity: 0.8;
+      }
+
+      > .actions {
+        display: flex;
+        flex-wrap: nowrap;
         align-items: center;
         gap: 0.25em;
-        padding: 0 0.5em;
-        font-weight: bold;
+        margin-left: auto;
+
+        > .current {
+          display: inline-flex;
+          align-items: center;
+          gap: 0.25em;
+          padding: 0 0.5em;
+          font-weight: bold;
+        }
       }
     }
   }
@@ -57,9 +71,20 @@
     background: var(--theme-color-secondary-7);
     color: var(--theme-color-on-secondary-7);
 
-    > a,
-    > a:visited {
+    > div:first-child {
+      background: var(--theme-color-secondary-6);
+      color: var(--theme-color-on-secondary-6);
+    }
+
+    > div:last-child > a,
+    > div:last-child > a:visited {
       color: var(--theme-color-on-secondary-7);
     }
+  }
+
+  /* While being dragged */
+  &.dragging {
+    opacity: 0.7;
+    outline: 0.125em dashed var(--theme-color-secondary-5);
   }
 }

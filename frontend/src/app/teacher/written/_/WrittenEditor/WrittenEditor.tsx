@@ -13,6 +13,7 @@ import { Md } from "@/components/Md";
 import { UiActionDelete } from "@/components/UiActionDelete";
 import { WrittenItem } from "@/service/calls/written";
 
+import { AttachmentsEditor } from "./AttachmentsEditor";
 import { ExpectedFileEditor } from "./ExpectedFileEditor";
 import { useWrittenEditor } from "./hooks";
 import { useTranslation } from "./translation";
@@ -72,9 +73,10 @@ export function WrittenEditor({ className, item, onSaved, onDeleted }: WrittenEd
             />
           </ViewTab>
           <ViewTab key="view" label={tr.view}>
-            <Md value={draft.description} />
+            <Md value={draft.description} resolveUrl={editor.resolveUrl} />
           </ViewTab>
         </ViewTabs>
+        <AttachmentsEditor writtenId={item?.id} attachments={item?.attachments ?? []} />
         <h2>{tr.files}</h2>
         <p>{tr.filesHint}</p>
         {draft.files.map((file) => (

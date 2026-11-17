@@ -134,10 +134,38 @@ CREATE TABLE `classroom_written_assignment` (
   -- When the uploaded files must be deleted (`end_time` + `expiration` + `extension`), NULL if not started.
   -- It does not change while the timer is paused.
   `expires_at` BIGINT DEFAULT NULL,
+  -- Position of the written production in the list of the class room (ascending order).
+  `position` integer NOT NULL DEFAULT 0,
   UNIQUE (`written`, `classroom`)
 );
 ALTER TABLE `classroom_written_assignment` ADD FOREIGN KEY (`written`) REFERENCES `classroom_written` (`id`) ON DELETE CASCADE;
 ALTER TABLE `classroom_written_assignment` ADD FOREIGN KEY (`classroom`) REFERENCES `classroom_class` (`id`) ON DELETE CASCADE;
+
+-- Files attached by the teacher to a written production, that the students can download
+-- while it is the current activity of their class room (see `written/attachment-get`).
+-- They are shared by all the class rooms the written production is assigned to, and never expire.
+-- The content is stored in `www/files/written/attachments/` (see `backend/www/api/written.php`).
+-- A Markdown description can link to an attachment with `[text](attachment:name.ext)`.
+CREATE TABLE `classroom_written_attachment` (
+  `id` integer PRIMARY KEY AUTO_INCREMENT,
+  `written` integer NOT NULL,
+  -- Name of the file, with its extension but without any folder.
+  -- Uploading a file with the same name replaces the previous one.
+  `name` VARCHAR(255) NOT NULL,
+  `mime` VARCHAR(255) NOT NULL,
+  -- Extension of the stored file, deduced from its mime type.
+  `ext` VARCHAR(16) NOT NULL,
+  -- Declared size of the file in bytes.
+  `size` BIGINT NOT NULL,
+  -- Number of bytes received so far.
+  `received` BIGINT NOT NULL DEFAULT 0,
+  -- 0 while the chunks are being sent, 1 once the file is complete.
+  `complete` TINYINT NOT NULL DEFAULT 0,
+  -- UNIX timestamp of the last change.
+  `time` BIGINT NOT NULL,
+  INDEX (`written`, `name`)
+);
+ALTER TABLE `classroom_written_attachment` ADD FOREIGN KEY (`written`) REFERENCES `classroom_written` (`id`) ON DELETE CASCADE;
 
 -- Files uploaded by the students for a written production.
 -- The content is stored in `www/files/written/` (see `backend/www/api/written.php`).

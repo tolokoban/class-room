@@ -1,5 +1,7 @@
+import React from "react";
+
 import { useRouteParamAsInt, useRouteParamAsString } from "@/app/routes";
-import { WrittenState } from "@/service/calls/written";
+import { makeWrittenAttachmentResolver, WrittenState } from "@/service/calls/written";
 import { useServiceWrittenState } from "@/service/hooks/written";
 import { isTeacher, State } from "@/state";
 
@@ -25,12 +27,21 @@ export function useWrittenStudentPage() {
     // The teacher has no seat in the class room.
     computer: isTeacher(user) ? undefined : computer,
   });
+  const attachments = query.data?.attachments;
+  /** Turns the `attachment:name` links of the description into download URLs. */
+  const resolveUrl = React.useMemo(
+    () => makeWrittenAttachmentResolver(attachments ?? [], classroom),
+    [attachments, classroom],
+  );
 
   return {
     ...query,
     classroom,
     writtenId,
     computer,
+    resolveUrl,
+    resultsUrl: `#/teacher/${classroom}/written/${writtenId}`,
+    editUrl: `#/teacher/written/${writtenId}`,
     status: query.data ? getUploadStatus(query.data) : "notStarted",
   };
 }

@@ -32,6 +32,7 @@ $ROLE = "";
  *   duration: number // Minutes.
  *   expiration: number // Hours.
  *   files: Array<{ name: string, mimeTypes: string[], maxSize: number }>
+ *   attachments: Array<{ id: number, name: string, mime: string, size: number }> // See `written/attachment-get`.
  *   timer: Timer // See `getTimer()` in `written.php`.
  *   uploads: Array<{ slot: string, original: string, mime: string, size: number, late: boolean, time: number }>
  * }

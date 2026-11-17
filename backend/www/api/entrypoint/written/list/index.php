@@ -17,6 +17,7 @@ $ROLE = "teacher";
  *   duration: number // Minutes.
  *   expiration: number // Hours.
  *   files: Array<{ name: string, mimeTypes: string[], maxSize: number }>
+ *   attachments: Array<{ id: number, name: string, mime: string, size: number }> // See `written/attachment-get`.
  *   // Codes of the class rooms this written production is assigned to.
  *   classrooms: string[]
  *   // Number of uploaded files for each expected file (all the class rooms together).

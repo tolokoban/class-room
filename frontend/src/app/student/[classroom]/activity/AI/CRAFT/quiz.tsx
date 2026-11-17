@@ -1,4 +1,13 @@
+import { Prompt } from "./_/Prompt";
 import { Quiz } from "@/types";
+
+const CHOICES = {
+  C: "**C**ontexte",
+  R: "**R**ôle (identité)",
+  A: "**A**ction",
+  F: "**F**ormat",
+  T: "**T**on",
+};
 
 export const QUIZ: Quiz = {
   id: "craft-methodology-territorial-ai",
@@ -6,14 +15,10 @@ export const QUIZ: Quiz = {
   items: {
     q2: {
       kind: "qcm",
-      question: `En tant que directeur des ressources humaines de la communauté de communes, je te demande de rédiger la note interne visant à informer l'ensemble des agents de la généralisation du télétravail dès le mois prochain.`,
-      choices: {
-        C: "**C**ontexte",
-        R: "**R**ôle (identité)",
-        A: "**A**ction",
-        F: "**F**ormat",
-        T: "**T**on",
-      },
+      question: (
+        <Prompt>{`En tant que directeur des ressources humaines de la communauté de communes, je te demande de rédiger la **note interne** visant à informer l'ensemble des agents de la généralisation du *télétravail* dès le mois prochain.`}</Prompt>
+      ),
+      choices: CHOICES,
       answers: {
         R: "Le rôle est donné (« En tant que directeur des ressources humaines de la communauté de communes »).",
         A: "L'action est claire (« rédiger la note interne visant à informer l'ensemble des agents... »).",
@@ -21,18 +26,16 @@ export const QUIZ: Quiz = {
     },
     q3: {
       kind: "qcm",
-      question: `Notre commune traverse une période de sécheresse estivale sévère et nous devons inciter les résidents à réduire leur consommation d'eau potable.
+      question: (
+        <Prompt>{`<contexte>
+Notre commune traverse une période de sécheresse estivale sévère et nous devons inciter les résidents à réduire leur consommation d'eau potable.
+</contexte>
 
-Mets-toi dans la peau d'un chargé de mission transition écologique et rédige un communiqué de presse destiné au journal local.
+Mets-toi dans la peau d'un chargé de mission transition écologique et rédige un **communiqué de presse** destiné au journal local.
 
-Ton texte doit conserver un ton sérieux, factuel et pédagogue.`,
-      choices: {
-        C: "**C**ontexte",
-        R: "**R**ôle (identité)",
-        A: "**A**ction",
-        F: "**F**ormat",
-        T: "**T**on",
-      },
+Ton texte doit conserver un ton *sérieux*, *factuel* et *pédagogue*.`}</Prompt>
+      ),
+      choices: CHOICES,
       answers: {
         C: "Le contexte est bien posé (« Notre commune traverse une période de sécheresse estivale sévère... »).",
         R: "Le rôle est assigné (« Mets-toi dans la peau d'un chargé de mission transition écologique »).",
@@ -42,23 +45,19 @@ Ton texte doit conserver un ton sérieux, factuel et pédagogue.`,
     },
     q1: {
       kind: "qcm",
-      question: `Agis en tant que community manager aguerri de la métropole.
+      question: (
+        <Prompt>{`Agis en tant que community manager aguerri de la métropole.
 
 Nous lançons une nouvelle application mobile citoyenne permettant aux habitants de signaler les incivilités et les dégradations de voirie.
 
-Rédige un post d'annonce pour notre page LinkedIn respectant les contraintes suivantes :
-- 150 mots maximum
-- 3 hashtags pertinents
+Rédige un **post d'annonce** pour notre page LinkedIn respectant les contraintes suivantes :
+- **150 mots** maximum
+- **3 hashtags** pertinents
 - Un appel à l'action clair
 
-Adopte un ton dynamique, bienveillant et engageant.`,
-      choices: {
-        C: "**C**ontexte",
-        R: "**R**ôle (identité)",
-        A: "**A**ction",
-        F: "**F**ormat",
-        T: "**T**on",
-      },
+Adopte un ton dynamique, bienveillant et engageant.`}</Prompt>
+      ),
+      choices: CHOICES,
       answers: {
         C: "Le contexte est précisé (« Nous lançons une nouvelle application mobile citoyenne... »).",
         R: "Le rôle est clairement assigné (« Agis en tant que community manager aguerri de la métropole »).",
@@ -69,14 +68,14 @@ Adopte un ton dynamique, bienveillant et engageant.`,
     },
     q4: {
       kind: "qcm",
-      question: `Présente sous la forme d'un tableau comparatif à 3 colonnes (*Avantages*, *Inconvénients*, *Coût estimé*) une analyse d'opportunité pour l'installation de panneaux photovoltaïques sur le toit de l'Hôtel de Ville.`,
-      choices: {
-        C: "**C**ontexte",
-        R: "**R**ôle (identité)",
-        A: "**A**ction",
-        F: "**F**ormat",
-        T: "**T**on",
-      },
+      question: (
+        <Prompt>{`Présente sous la forme d'un tableau comparatif à 3 colonnes une analyse d'opportunité pour l'installation de panneaux photovoltaïques sur le toit de l'Hôtel de Ville.
+
+| Avantages | Inconvénients | Coût estimé |
+|-----------|---------------|-------------|
+| ...       | ...           | ...         |`}</Prompt>
+      ),
+      choices: CHOICES,
       answers: {
         A: "L'action est claire (« Présente [...] une analyse d'opportunité... »).",
         F: "Le format est précisément structuré (« sous la forme d'un tableau comparatif à 3 colonnes »).",
@@ -84,18 +83,16 @@ Adopte un ton dynamique, bienveillant et engageant.`,
     },
     q5: {
       kind: "qcm",
-      question: `Tu incarnes un médiateur culturel passionné au sein d'un office de tourisme intercommunal.
+      question: (
+        <Prompt>{`<role>
+Tu incarnes un médiateur culturel passionné au sein d'un office de tourisme intercommunal.
+</role>
 
-Conçois une foire aux questions (FAQ) à destination des visiteurs étrangers découvrant notre patrimoine cet été.
+Conçois une **foire aux questions (FAQ)** à destination des visiteurs étrangers découvrant notre patrimoine cet été.
 
-Organise le contenu sous forme de liste à puces synthétique, avec un style chaleureux, accueillant et très accessible.`,
-      choices: {
-        C: "**C**ontexte",
-        R: "**R**ôle (identité)",
-        A: "**A**ction",
-        F: "**F**ormat",
-        T: "**T**on",
-      },
+Organise le contenu sous forme de liste à puces synthétique, avec un style chaleureux, accueillant et très accessible.`}</Prompt>
+      ),
+      choices: CHOICES,
       answers: {
         R: "Le rôle est clairement établi (« Tu incarnes un médiateur culturel passionné... »).",
         A: "L'action est définie (« Conçois une foire aux questions (FAQ) »).",
@@ -105,16 +102,14 @@ Organise le contenu sous forme de liste à puces synthétique, avec un style cha
     },
     q6: {
       kind: "qcm",
-      question: `Des travaux de réfection du réseau d'eau vont paralyser la rue de la République du 15 au 30 novembre, entraînant l'interdiction du stationnement et la déviation des navettes de centre-ville.
+      question: (
+        <Prompt>{`Des travaux de réfection du réseau d'eau vont paralyser la rue de la République **du 15 au 30 novembre**, entraînant l'interdiction du stationnement et la déviation des navettes de centre-ville.
 
-Rédige une lettre d'information destinée à être distribuée dans les boîtes aux lettres des riverains du quartier.`,
-      choices: {
-        C: "**C**ontexte",
-        R: "**R**ôle (identité)",
-        A: "**A**ction",
-        F: "**F**ormat",
-        T: "**T**on",
-      },
+<action>
+Rédige une **lettre d'information** destinée à être distribuée dans les boîtes aux lettres des riverains du quartier.
+</action>`}</Prompt>
+      ),
+      choices: CHOICES,
       answers: {
         C: "Le contexte est précis et détaillé (« Des travaux de réfection [...] vont paralyser la rue de la République... »).",
         A: "L'action est explicite (« Rédige une lettre d'information »).",
@@ -122,16 +117,12 @@ Rédige une lettre d'information destinée à être distribuée dans les boîtes
     },
     q7: {
       kind: "qcm",
-      question: `Prends la posture d'un expert en finances locales.
+      question: (
+        <Prompt>{`Prends la posture d'un expert en finances locales.
 
-Pour aider le conseil municipal à préparer le prochain débat d'orientations budgétaires, rédige une note de synthèse d'exactement 3 paragraphes afin d'analyser l'évolution des dépenses d'investissement de la commune sur les 3 derniers exercices.`,
-      choices: {
-        C: "**C**ontexte",
-        R: "**R**ôle (identité)",
-        A: "**A**ction",
-        F: "**F**ormat",
-        T: "**T**on",
-      },
+Pour aider le conseil municipal à préparer le prochain débat d'orientations budgétaires, rédige une **note de synthèse** d'exactement **3 paragraphes** afin d'analyser l'évolution des dépenses d'investissement de la commune sur les 3 derniers exercices.`}</Prompt>
+      ),
+      choices: CHOICES,
       answers: {
         C: "Le contexte organisationnel est énoncé (« Pour aider le conseil municipal à préparer le prochain débat d'orientations budgétaires... »).",
         R: "Le rôle est précisé (« Prends la posture d'un expert en finances locales »).",
@@ -141,16 +132,14 @@ Pour aider le conseil municipal à préparer le prochain débat d'orientations b
     },
     q8: {
       kind: "qcm",
-      question: `À l'occasion de l'inauguration du nouveau pôle de santé pluriprofessionnel de l'agglomération, prépare la trame d'allocution de 5 minutes que prononcera Monsieur le Maire devant les professionnels de santé et la presse.
+      question: (
+        <Prompt>{`À l'occasion de l'inauguration du nouveau pôle de santé pluriprofessionnel de l'agglomération, prépare la trame d'allocution de **5 minutes** que prononcera Monsieur le Maire devant les professionnels de santé et la presse.
 
-Adopte un ton solennel, rassembleur et résolument optimiste.`,
-      choices: {
-        C: "**C**ontexte",
-        R: "**R**ôle (identité)",
-        A: "**A**ction",
-        F: "**F**ormat",
-        T: "**T**on",
-      },
+<ton>
+Adopte un ton solennel, rassembleur et résolument optimiste.
+</ton>`}</Prompt>
+      ),
+      choices: CHOICES,
       answers: {
         C: "Le contexte est posé (« À l'occasion de l'inauguration du nouveau pôle de santé... »).",
         A: "L'action est claire (« prépare la trame d'allocution [...] que prononcera Monsieur le Maire »).",
@@ -160,23 +149,21 @@ Adopte un ton solennel, rassembleur et résolument optimiste.`,
     },
     q9: {
       kind: "qcm",
-      question: `Dans le cadre de l'organisation du marché de Noël, nous devons relancer les artisans locaux qui n'ont pas encore retourné leur dossier d'inscription.
+      question: (
+        <Prompt>{`Dans le cadre de l'organisation du marché de Noël, nous devons relancer les artisans locaux qui n'ont pas encore retourné leur dossier d'inscription.
 
 En tant que chargé du développement économique, rédige un e-mail de relance prêt à l'envoi.
 
+<format>
 Le courriel doit respecter la structure suivante :
-- Un objet percutant
-- Une salutation formelle
-- Un récapitulatif des 3 pièces justificatives manquantes sous forme de liste à puces
+1. Un objet percutant
+2. Une salutation formelle
+3. Un récapitulatif des 3 pièces justificatives manquantes sous forme de liste à puces
+</format>
 
-Conserve une tonalité courtoise mais ferme.`,
-      choices: {
-        C: "**C**ontexte",
-        R: "**R**ôle (identité)",
-        A: "**A**ction",
-        F: "**F**ormat",
-        T: "**T**on",
-      },
+Conserve une tonalité *courtoise mais ferme*.`}</Prompt>
+      ),
+      choices: CHOICES,
       answers: {
         C: "Le contexte de travail est précisé (« Dans le cadre de l'organisation du marché de Noël... »).",
         R: "Le rôle est clairement identifié (« En tant que chargé du développement économique »).",
@@ -187,18 +174,14 @@ Conserve une tonalité courtoise mais ferme.`,
     },
     q10: {
       kind: "qcm",
-      question: `Suite à une coupure d'eau imprévue dans le quartier de la gare due à une rupture de canalisation ce matin :
+      question: (
+        <Prompt>{`Suite à une coupure d'eau imprévue dans le quartier de la gare due à une rupture de canalisation ce matin :
 
-Prépare la publication d'urgence à poster directement sur le compte Facebook de la ville pour avertir les résidents.
+Prépare la **publication d'urgence** à poster directement sur le compte Facebook de la ville pour avertir les résidents.
 
-Le texte doit être direct et rassurer la population sur l'intervention des équipes techniques en cours.`,
-      choices: {
-        C: "**C**ontexte",
-        R: "**R**ôle (identité)",
-        A: "**A**ction",
-        F: "**F**ormat",
-        T: "**T**on",
-      },
+Le texte doit être direct et rassurer la population sur l'intervention des équipes techniques en cours.`}</Prompt>
+      ),
+      choices: CHOICES,
       answers: {
         C: "Le contexte d'urgence est clair (« Suite à une coupure d'eau imprévue dans le quartier de la gare... »).",
         A: "L'action de publication directe est énoncée (« prépare la publication d'urgence à poster directement sur le compte Facebook »).",

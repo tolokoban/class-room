@@ -4,6 +4,7 @@ const FR = {
   clear: "Effacer tous les résultats",
   clearConfirm: "Voulez-vous vraiment effacer les réponses de tous les élèves pour cette activité ?",
   cleared: "Les résultats ont été effacés.",
+  showAnswers: "Afficher les bonnes réponses",
 } satisfies Record<string, string>;
 
 export default FR;

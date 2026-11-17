@@ -1,5 +1,6 @@
-import { Theme, ViewButton, ViewDialog } from "@tolokoban/ui";
+import { Theme, ViewButton, ViewDialog, ViewSwitch } from "@tolokoban/ui";
 
+import { State } from "@/state";
 import { StudentsList } from "./StudentsList";
 import { useClearResults, useQuizMenu, useStudentsAnswers } from "./hooks";
 import { useTranslation } from "./translation";
@@ -23,6 +24,7 @@ export function QuizMenu({ className, classroom, activity, title, onClose }: Qui
   const menu = useQuizMenu(classroom, activity, onClose);
   const { isLoading, students, hasAnswers, refresh } = useStudentsAnswers(classroom, activity);
   const handleClear = useClearResults(classroom, activity);
+  const [showAnswers, setShowAnswers] = State.showQuizAnswers.useState();
 
   return (
     <ViewDialog className={$.join(className, Styles.quizMenu)} title={title}>
@@ -30,6 +32,9 @@ export function QuizMenu({ className, classroom, activity, title, onClose }: Qui
         <ViewButton variant="text" color="secondary-5" onClick={menu.results}>
           {tr.results}
         </ViewButton>
+        <ViewSwitch value={showAnswers} onChange={setShowAnswers}>
+          {tr.showAnswers}
+        </ViewSwitch>
         {menu.canSelect && (
           <ViewButton color="secondary-5" waiting={menu.isPending} onClick={menu.select}>
             {tr.select}

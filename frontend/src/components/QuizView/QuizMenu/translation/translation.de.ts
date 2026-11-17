@@ -6,6 +6,7 @@ const DE: typeof FR = {
   clear: "Alle Ergebnisse löschen",
   clearConfirm: "Möchten Sie wirklich die Antworten aller Schüler für diese Aktivität löschen?",
   cleared: "Die Ergebnisse wurden gelöscht.",
+  showAnswers: "Richtige Antworten anzeigen",
 };
 
 export default DE;

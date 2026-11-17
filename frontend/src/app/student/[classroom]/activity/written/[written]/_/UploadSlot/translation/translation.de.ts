@@ -2,6 +2,9 @@ import FR from "./translation.fr";
 
 const DE: typeof FR = {
   empty: "Keine Datei hochgeladen.",
+  paste: "Einfügen",
+  clipboardEmpty: "Die Zwischenablage enthält keinen Text.",
+  clipboardDenied: "Die Zwischenablage kann nicht gelesen werden.",
   upload: "Hochladen",
   replace: "Ersetzen",
   maxSize: "max. $1",

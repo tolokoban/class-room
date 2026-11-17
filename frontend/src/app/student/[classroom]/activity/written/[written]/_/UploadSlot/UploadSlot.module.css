@@ -46,12 +46,19 @@
 
   > footer {
     display: flex;
-    justify-content: flex-end;
+    justify-content: space-between;
     align-items: center;
     gap: 1em;
     padding: 0.5em;
     background: var(--theme-color-primary-2);
     color: var(--theme-color-on-primary-2);
+
+    > div {
+      display: flex;
+      align-items: center;
+      gap: 1em;
+      margin-left: auto;
+    }
   }
 
   &.done > header {

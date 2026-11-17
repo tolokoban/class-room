@@ -5,6 +5,7 @@ import {
   ActivityClearInput,
   ActivityCurrentSetInput,
   ActivityResultAllOutput,
+  ActivityResultGetInput,
   ActivityResultSetInput,
 } from "@/service/calls/activity";
 import { ApiError } from "@/service/calls/service";
@@ -24,6 +25,13 @@ export interface ActivityCurrentResult {
   error: ApiError | null;
   data: string | null | undefined;
   refresh(): void;
+}
+
+export interface ActivityResultGetResult {
+  isLoading: boolean;
+  error: ApiError | null;
+  /** The stored result, `null` if there is none yet, `undefined` while loading. */
+  data: string | null | undefined;
 }
 
 export interface ActivityMutationResult<Input> {
@@ -53,6 +61,32 @@ export function useServiceActivityResultAll(
     refresh() {
       return queryClient.invalidateQueries({ queryKey });
     },
+  };
+}
+
+/**
+ * Fetch the result a student stored for an activity.
+ * Nothing is fetched if `input` is `null` (for instance when the user is not a student).
+ */
+export function useServiceActivityResultGet(
+  input: ActivityResultGetInput | null,
+): ActivityResultGetResult {
+  const { data, isLoading, error } = useQuery({
+    queryKey: [
+      "activity/result-get",
+      input?.classroomCode,
+      input?.activityCode,
+      input?.computer,
+      input?.nickname,
+    ],
+    queryFn: () => (input ? API.activity.resultGet(input) : null),
+    enabled: input !== null,
+  });
+
+  return {
+    isLoading,
+    error: useApiError(error),
+    data,
   };
 }
 
@@ -99,7 +133,8 @@ export function useServiceActivityCurrentSet(): ActivityMutationResult<ActivityC
 
 /**
  * Store the result of a student for an activity.
- * The matching `useServiceActivityResultAll()` is refreshed on success.
+ * The matching `useServiceActivityResultAll()` and `useServiceActivityResultGet()`
+ * are refreshed on success.
  */
 export function useServiceActivityResultSet(): ActivityMutationResult<ActivityResultSetInput> {
   const queryClient = useQueryClient();
@@ -108,6 +143,9 @@ export function useServiceActivityResultSet(): ActivityMutationResult<ActivityRe
     onSuccess(_, { classroomCode, activityCode }) {
       void queryClient.invalidateQueries({
         queryKey: ["activity/result-all", classroomCode, activityCode],
+      });
+      void queryClient.invalidateQueries({
+        queryKey: ["activity/result-get", classroomCode, activityCode],
       });
     },
   });

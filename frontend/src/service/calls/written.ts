@@ -42,8 +42,19 @@ export interface WrittenDefinition {
   files: WrittenExpectedFile[];
 }
 
+/** A file attached by the teacher, that the students can download. */
+export interface WrittenAttachment {
+  id: number;
+  /** Name of the file, with its extension. */
+  name: string;
+  mime: string;
+  /** Size in bytes. */
+  size: number;
+}
+
 export interface WrittenItem extends WrittenDefinition {
   id: number;
+  attachments: WrittenAttachment[];
   /** Codes of the class rooms this production is assigned to. */
   classrooms: string[];
   /** Number of uploaded files for each expected file. */
@@ -100,6 +111,7 @@ export interface WrittenTeacherUpload extends WrittenStudentUpload {
 
 export interface WrittenResults extends WrittenDefinition {
   id: number;
+  attachments: WrittenAttachment[];
   now: number;
   timer: WrittenTimer;
   uploads: WrittenTeacherUpload[];
@@ -107,6 +119,7 @@ export interface WrittenResults extends WrittenDefinition {
 
 export interface WrittenState extends WrittenDefinition {
   id: number;
+  attachments: WrittenAttachment[];
   now: number;
   /** `true` for the owner of the class room. */
   preview: boolean;
@@ -135,6 +148,12 @@ const DEFINITION: Record<string, TypeDef> = {
   duration: "number",
   expiration: "number",
   files: ["array", EXPECTED_FILE],
+};
+const ATTACHMENT: TypeDef = {
+  id: "number",
+  name: "string",
+  mime: "string",
+  size: "number",
 };
 const TIMER: TypeDef = {
   state: ["literal", "idle", "running", "paused"],
@@ -168,7 +187,13 @@ async function call<T>(entrypoint: string, input: unknown, type: TypeDef): Promi
 export function writtenList(): Promise<WrittenItem[]> {
   return call("written/list", null, [
     "array",
-    { ...DEFINITION, id: "number", classrooms: ["array", "string"], uploads: ["map", "number"] },
+    {
+      ...DEFINITION,
+      id: "number",
+      attachments: ["array", ATTACHMENT],
+      classrooms: ["array", "string"],
+      uploads: ["map", "number"],
+    },
   ]);
 }
 
@@ -196,6 +221,15 @@ export function writtenUnassign(input: WrittenRef): Promise<number> {
   return call("written/unassign", input, "number");
 }
 
+/** Change the order of the written productions assigned to a class room. */
+export async function writtenReorder(input: {
+  classroomCode: string;
+  /** IDs of all the written productions assigned to the class room, in the new order. */
+  writtenIds: number[];
+}): Promise<void> {
+  await call("written/reorder", input, "number");
+}
+
 export function writtenClassroom(input: { classroomCode: string }): Promise<WrittenClassroom> {
   return call("written/classroom", input, {
     now: "number",
@@ -216,6 +250,7 @@ export function writtenResults(input: WrittenRef): Promise<WrittenResults> {
   return call("written/results", input, {
     ...DEFINITION,
     id: "number",
+    attachments: ["array", ATTACHMENT],
     now: "number",
     timer: TIMER,
     uploads: [
@@ -247,6 +282,7 @@ export function writtenState(input: WrittenRef & { computer?: string }): Promise
   return call("written/state", input, {
     ...DEFINITION,
     id: "number",
+    attachments: ["array", ATTACHMENT],
     now: "number",
     preview: "boolean",
     seated: "boolean",
@@ -292,16 +328,73 @@ export async function writtenUpload({
     { uploadId: "number", chunkSize: "number" },
   );
   const { uploadId, chunkSize } = init;
+  await sendChunks({ file, chunkSize, onProgress, signal }, (offset, data) =>
+    call("written/upload-chunk", { uploadId, computer, offset, data }, { received: "number" }),
+  );
+  return call("written/upload-complete", { uploadId, computer }, STUDENT_UPLOAD);
+}
+
+export interface WrittenAttachmentUploadInput {
+  writtenId: number;
+  file: File;
+  /** Called after each chunk with a value between 0 and 1. */
+  onProgress?(progress: number): void;
+  /** Abort the upload. */
+  signal?: AbortSignal;
+}
+
+/** Maximum size (in bytes) of a file attached by the teacher. */
+export const WRITTEN_MAX_ATTACHMENT_SIZE = 100 * 1024 * 1024;
+
+/** Maximum number of files attached to a written production. */
+export const WRITTEN_MAX_ATTACHMENTS = 20;
+
+/**
+ * Attach a file to a written production, by chunks: `written/attachment-init`,
+ * `written/attachment-chunk` (as many as needed) and `written/attachment-complete`.
+ * An attachment with the same name is replaced.
+ */
+export async function writtenAttachmentUpload({
+  writtenId,
+  file,
+  onProgress,
+  signal,
+}: WrittenAttachmentUploadInput): Promise<WrittenAttachment> {
+  const init = await call<{ attachmentId: number; chunkSize: number }>(
+    "written/attachment-init",
+    { writtenId, name: file.name, size: file.size, mime: file.type },
+    { attachmentId: "number", chunkSize: "number" },
+  );
+  const { attachmentId, chunkSize } = init;
+  await sendChunks({ file, chunkSize, onProgress, signal }, (offset, data) =>
+    call("written/attachment-chunk", { attachmentId, offset, data }, { received: "number" }),
+  );
+  return call("written/attachment-complete", { attachmentId }, ATTACHMENT);
+}
+
+export async function writtenAttachmentDelete(input: { attachmentId: number }): Promise<void> {
+  await call("written/attachment-delete", input, "number");
+}
+
+/**
+ * Send the content of a file chunk by chunk, each one encoded in base64.
+ */
+async function sendChunks(
+  {
+    file,
+    chunkSize,
+    onProgress,
+    signal,
+  }: { file: File; chunkSize: number; onProgress?(progress: number): void; signal?: AbortSignal },
+  sendChunk: (offset: number, data: string) => Promise<unknown>,
+): Promise<void> {
   onProgress?.(0);
   for (let offset = 0; offset < file.size; offset += chunkSize) {
     signal?.throwIfAborted();
     const data = await readAsBase64(file.slice(offset, offset + chunkSize));
-    await withRetry(() =>
-      call("written/upload-chunk", { uploadId, computer, offset, data }, { received: "number" }),
-    );
+    await withRetry(() => sendChunk(offset, data));
     onProgress?.(Math.min(1, (offset + chunkSize) / file.size));
   }
-  return call("written/upload-complete", { uploadId, computer }, STUDENT_UPLOAD);
 }
 
 async function withRetry<T>(action: () => Promise<T>): Promise<T> {
@@ -351,4 +444,54 @@ export async function writtenUploadContent(uploadId: number): Promise<string> {
 /** URL to download all the files of a written production of a class room as a ZIP archive. */
 export function getWrittenZipUrl({ writtenId, classroomCode }: WrittenRef): string {
   return `api/written/zip?writtenId=${writtenId}&classroomCode=${encodeURIComponent(classroomCode)}`;
+}
+
+/**
+ * URL to download a file attached to a written production.
+ * `classroomCode` is needed for the students (the owner of the written production does not need it).
+ */
+export function getWrittenAttachmentUrl(attachmentId: number, classroomCode?: string): string {
+  const url = `api/written/attachment-get?attachmentId=${attachmentId}`;
+  return classroomCode ? `${url}&classroomCode=${encodeURIComponent(classroomCode)}` : url;
+}
+
+/** In the Markdown description, `[text](attachment:name.ext)` links to an attached file. */
+export const WRITTEN_ATTACHMENT_PROTOCOL = "attachment:";
+
+/**
+ * @returns The Markdown link to an attached file: `[name](attachment:name)`.
+ */
+export function getWrittenAttachmentLink(name: string): string {
+  const label = name.replace(/[[\]\\]/g, (char) => `\\${char}`);
+  return `[${label}](${WRITTEN_ATTACHMENT_PROTOCOL}${encodeURIComponent(name)})`;
+}
+
+/**
+ * @returns A function that turns `attachment:{name}` URLs into the download URL of the attached file,
+ * or `undefined` for any other URL. Meant for the `resolveUrl` property of `<Md />`.
+ */
+export function makeWrittenAttachmentResolver(
+  attachments: WrittenAttachment[],
+  classroomCode?: string,
+): (url: string) => string | undefined {
+  return (url: string) => {
+    if (!url.toLowerCase().startsWith(WRITTEN_ATTACHMENT_PROTOCOL)) return undefined;
+
+    const name = safeDecodeURIComponent(url.slice(WRITTEN_ATTACHMENT_PROTOCOL.length)).trim();
+    const attachment =
+      attachments.find((item) => item.name === name) ??
+      attachments.find((item) => item.name.toLowerCase() === name.toLowerCase());
+    if (!attachment) return "";
+
+    // An absolute URL opens in a new tab (see `<Md />`): the student does not leave the exercise.
+    return new URL(getWrittenAttachmentUrl(attachment.id, classroomCode), document.baseURI).href;
+  };
+}
+
+function safeDecodeURIComponent(value: string): string {
+  try {
+    return decodeURIComponent(value);
+  } catch {
+    return value;
+  }
 }

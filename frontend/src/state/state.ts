@@ -32,6 +32,11 @@ export const State = {
   user: new AtomicState<null | string | Teacher>(null),
   /** `true` while we are asking the other tabs who is connected. */
   userPending: new AtomicState(false),
+  /**
+   * If `true`, a teacher sees the checkboxes over the right answers of a quiz.
+   * Off by default, because the screen can be shown to the students on a videoprojector.
+   */
+  showQuizAnswers: new AtomicState(false),
 };
 
 export interface Teacher {
