@@ -88,6 +88,23 @@ export function useServiceWrittenState(
 }
 
 /**
+ * Text content of a file uploaded by a student.
+ * Nothing is loaded while `enabled` is `false`.
+ */
+export function useServiceWrittenUploadContent(
+  uploadId: number,
+  enabled = true,
+): WrittenQueryResult<string> {
+  const { data, isLoading, error } = useQuery({
+    queryKey: [WRITTEN_KEY, "content", uploadId],
+    queryFn: () => API.written.uploadContent(uploadId),
+    staleTime: Infinity,
+    enabled,
+  });
+  return { isLoading, error: useApiError(error), data };
+}
+
+/**
  * A mutation that refreshes all the queries about written productions on success.
  */
 function useWrittenMutation<Input, Output>(

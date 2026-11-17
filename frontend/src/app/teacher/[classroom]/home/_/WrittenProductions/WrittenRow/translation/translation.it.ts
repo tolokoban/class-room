@@ -10,6 +10,10 @@ const IT: typeof FR = {
   unassignConfirm:
     "Rimuovere «$1» da questa classe? I file caricati dagli studenti per questa produzione scritta saranno eliminati definitivamente.",
   unassigned: "«$1» è stata rimossa da questa classe.",
+  activeLabel: "In corso",
+  activateLabel: "Avvia",
+  resultsLabel: "Risultati",
+  unassignLabel: "Rimuovi",
 };
 
 export default IT;

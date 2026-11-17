@@ -45,13 +45,17 @@ export function StudentUploads({ className, writtenRef, uploads }: StudentUpload
             <ul>
               {group.uploads.map((upload) => (
                 <li key={upload.id} title={tr.original$(upload.original)}>
-                  <a
-                    href={getWrittenUploadUrl(upload.id)}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                  >
-                    {upload.downloadName}
-                  </a>
+                  {list.hasViewer(upload) ? (
+                    <a href={list.viewerUrl(upload)}>{upload.downloadName}</a>
+                  ) : (
+                    <a
+                      href={getWrittenUploadUrl(upload.id)}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                    >
+                      {upload.downloadName}
+                    </a>
+                  )}
                   <HumanSize bytes={upload.size} />
                   <span>{list.formatTime(upload.time)}</span>
                   {upload.late && <span className={Styles.late}>{tr.late}</span>}

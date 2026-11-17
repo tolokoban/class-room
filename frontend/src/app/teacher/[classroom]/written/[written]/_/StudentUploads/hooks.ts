@@ -5,6 +5,7 @@ import { Notif } from "@/components/Notification";
 import { getWrittenZipUrl, WrittenRef, WrittenTeacherUpload } from "@/service/calls/written";
 import { useApiErrorTranslator } from "@/service/hooks/apiError";
 import { useServiceWrittenFilesDelete } from "@/service/hooks/written";
+import { getWrittenViewerKind } from "@/utils/viewer";
 
 import { useTranslation } from "./translation";
 
@@ -38,6 +39,9 @@ export function useStudentUploads(writtenRef: WrittenRef, uploads: WrittenTeache
     formatTime: (time: number) =>
       new Date(time * 1000).toLocaleTimeString(lang, { hour: "2-digit", minute: "2-digit" }),
     zipUrl: getWrittenZipUrl(writtenRef),
+    hasViewer: (upload: WrittenTeacherUpload) => getWrittenViewerKind(upload) !== null,
+    viewerUrl: (upload: WrittenTeacherUpload) =>
+      `#/teacher/${writtenRef.classroomCode}/written/${writtenRef.writtenId}/view/${upload.id}`,
     isDeleting: deleting.isPending,
     deleteAll,
   };

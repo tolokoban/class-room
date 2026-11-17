@@ -10,6 +10,10 @@ const DE: typeof FR = {
   unassignConfirm:
     "„$1“ aus dieser Klasse entfernen? Die von den Schülern für diese schriftliche Arbeit hochgeladenen Dateien werden endgültig gelöscht.",
   unassigned: "„$1“ wurde aus dieser Klasse entfernt.",
+  activeLabel: "Aktuell",
+  activateLabel: "Starten",
+  resultsLabel: "Ergebnisse",
+  unassignLabel: "Entfernen",
 };
 
 export default DE;

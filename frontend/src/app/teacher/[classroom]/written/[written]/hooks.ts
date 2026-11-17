@@ -7,5 +7,10 @@ export function useWrittenResultsPage() {
   const writtenRef = { classroomCode: classroom, writtenId };
   const query = useServiceWrittenResults(writtenRef);
 
-  return { ...query, writtenRef, backUrl: `#/teacher/${classroom}/home` };
+  return {
+    ...query,
+    writtenRef,
+    backUrl: `#/teacher/${classroom}/home`,
+    editUrl: `#/teacher/written/${writtenId}`,
+  };
 }

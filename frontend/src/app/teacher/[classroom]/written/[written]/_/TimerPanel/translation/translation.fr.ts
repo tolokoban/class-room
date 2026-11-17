@@ -1,5 +1,8 @@
 const FR = {
   start: "Démarrer",
+  duration: "Durée (minutes)",
+  launch: "Lancer",
+  launchTooltip: "Afficher cette production écrite aux stagiaires",
   pause: "Pause",
   resume: "Reprendre",
   minutes: "Minutes",

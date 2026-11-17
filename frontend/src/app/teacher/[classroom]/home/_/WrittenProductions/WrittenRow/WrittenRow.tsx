@@ -32,23 +32,6 @@ export function WrittenRow({ className, classroom, item, now, active }: WrittenR
 
   return (
     <li className={$.join(className, Styles.writtenRow, active && Styles.active)}>
-      <div>
-        {active ? (
-          <span title={tr.active}>
-            <IconStar />
-          </span>
-        ) : (
-          <span title={tr.activate}>
-            <ViewButton
-              variant="text"
-              label=""
-              icon={IconPlay}
-              waiting={row.isActivating}
-              onClick={row.activate}
-            />
-          </span>
-        )}
-      </div>
       <a href={row.studentUrl} title={tr.preview}>
         {item.name}
       </a>
@@ -58,10 +41,24 @@ export function WrittenRow({ className, classroom, item, now, active }: WrittenR
           {tr.files$(String(item.count))} • <HumanSize bytes={item.size} />
         </span>
         <span className={Styles.actions}>
+          {active ? (
+            <span className={Styles.current} title={tr.active}>
+              <IconStar /> {tr.activeLabel}
+            </span>
+          ) : (
+            <span title={tr.activate}>
+              <ViewButton icon={IconPlay} waiting={row.isActivating} onClick={row.activate}>
+                {tr.activateLabel}
+              </ViewButton>
+            </span>
+          )}
           <span title={tr.results}>
-            <ViewButton variant="text" label="" icon={IconBook} onClick={row.resultsUrl} />
+            <ViewButton icon={IconBook} onClick={row.resultsUrl}>
+              {tr.resultsLabel}
+            </ViewButton>
           </span>
           <UiActionDelete
+            label={tr.unassignLabel}
             confirm={tr.unassignConfirm$(item.name)}
             waiting={row.isUnassigning}
             onDelete={row.unassign}

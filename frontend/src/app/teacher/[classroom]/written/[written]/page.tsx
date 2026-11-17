@@ -1,4 +1,4 @@
-import { IconArrowLeft, ViewButton, ViewSpinner } from "@tolokoban/ui";
+import { IconArrowLeft, IconEdit, ViewButton, ViewSpinner } from "@tolokoban/ui";
 
 import { Md } from "@/components/Md";
 import { TeacherOnly } from "@/components/TeacherOnly";
@@ -29,13 +29,21 @@ export default function Page() {
         <ViewButton variant="text" icon={IconArrowLeft} onClick={page.backUrl}>
           {tr.back}
         </ViewButton>
+        <ViewButton variant="text" icon={IconEdit} onClick={page.editUrl}>
+          {tr.edit}
+        </ViewButton>
       </nav>
       {page.isLoading && <ViewSpinner />}
       {page.error && <div className={Styles.error}>{page.error.message}</div>}
       {data && (
         <>
           <h1>{data.name}</h1>
-          <TimerPanel writtenRef={writtenRef} timer={data.timer} now={data.now} />
+          <TimerPanel
+            writtenRef={writtenRef}
+            timer={data.timer}
+            now={data.now}
+            duration={data.duration}
+          />
           <ExpirationPanel
             writtenRef={writtenRef}
             timer={data.timer}

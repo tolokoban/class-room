@@ -24,24 +24,42 @@ export interface TimerPanelProps {
   timer: WrittenTimerData;
   /** UNIX timestamp (seconds) of the server when `timer` has been fetched. */
   now: number;
+  /** Default duration of the exercise, in minutes. */
+  duration: number;
 }
 
 /**
  * The timer of a written production, with the buttons to control it.
  */
-export function TimerPanel({ className, writtenRef, timer, now }: TimerPanelProps) {
+export function TimerPanel({ className, writtenRef, timer, now, duration }: TimerPanelProps) {
   const tr = useTranslation();
-  const panel = useTimerPanel(writtenRef);
+  const panel = useTimerPanel(writtenRef, duration);
   const { state } = timer;
 
   return (
     <section className={$.join(className, Styles.timerPanel)}>
       <WrittenTimer timer={timer} now={now} />
       <footer>
-        {state === "idle" && (
-          <ViewButton icon={IconPlay} waiting={panel.isPending} onClick={panel.start}>
-            {tr.start}
-          </ViewButton>
+        {state === "idle" && panel.isCurrent === false && (
+          <span title={tr.launchTooltip}>
+            <ViewButton icon={IconPlay} waiting={panel.isLaunching} onClick={panel.launch}>
+              {tr.launch}
+            </ViewButton>
+          </span>
+        )}
+        {state === "idle" && panel.isCurrent === true && (
+          <div>
+            <ViewInputNumber
+              label={tr.duration}
+              min={1}
+              max={1440}
+              value={panel.duration}
+              onChange={panel.setDuration}
+            />
+            <ViewButton icon={IconPlay} waiting={panel.isPending} onClick={panel.start}>
+              {tr.start}
+            </ViewButton>
+          </div>
         )}
         {state === "running" && (
           <ViewButton icon={IconPause} waiting={panel.isPending} onClick={panel.pause}>

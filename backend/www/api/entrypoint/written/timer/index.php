@@ -8,7 +8,8 @@ $ROLE = "teacher";
  * Control the timer of a written production in a class room.
  *
  * Actions:
- * * "start": Start the exercise (only if not started yet). The students can upload files.
+ * * "start": Start the exercise (only if not started yet) for `value` minutes
+ *   (the duration of the written production if missing). The students can upload files.
  * * "pause": Pause the timer (only if running). The students can still upload files.
  * * "resume": Restart a paused timer.
  * * "add": Add `value` minutes to the timer (running or paused).
@@ -24,7 +25,8 @@ $ROLE = "teacher";
  *   writtenId: number // Field `id` of table `written`.
  *   classroomCode: string // Field `code` of table `class`.
  *   action: "start" | "pause" | "resume" | "add" | "extend" | "reset"
- *   // Minutes for "add" (between 1 and 600), hours for "extend" (between 1 and 8760).
+ *   // Minutes for "start" (between 1 and 1440, optional) and "add" (between 1 and 600),
+ *   // hours for "extend" (between 1 and 8760).
  *   value?: number
  * }
  * ```
@@ -45,10 +47,11 @@ function entrypoint($input)
 
     $action = $input["action"] ?? null;
     $value = $input["value"] ?? null;
-    $limits = ["add" => 600, "extend" => 24 * 365];
+    $limits = ["start" => 24 * 60, "add" => 600, "extend" => 24 * 365];
+    $optional = $action === "start" && $value === null;
     if (
         !in_array($action, ["start", "pause", "resume", "add", "extend", "reset"], true)
-        || (isset($limits[$action]) && (!is_int($value) || $value < 1 || $value > $limits[$action]))
+        || (isset($limits[$action]) && !$optional && (!is_int($value) || $value < 1 || $value > $limits[$action]))
     ) {
         error_log("[written/timer] Invalid input.");
         return -60801;
@@ -99,7 +102,7 @@ function computeNextTimer(string $action, $value, array $written, array $assignm
             if ($state !== "idle") {
                 return false;
             }
-            $next["endTime"] = $now + 60 * $written["duration"];
+            $next["endTime"] = $now + 60 * ($value ?? $written["duration"]);
             break;
         case "pause":
             if ($state !== "running") {

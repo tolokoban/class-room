@@ -23,11 +23,17 @@ const NOTES_FILE_NAME = "notes.md";
 const NOTES_MIME = "text/markdown";
 
 /**
- * Mime types the browser can display in a tab without any risk.
+ * Mime types sent with `Content-Disposition: inline` without any risk:
+ * * the browser can display them in a tab (images, PDF, plain text, audio, video),
+ * * or it cannot display them at all, and lets the application mapped to the type
+ *   in its settings open them (Word, LibreOffice and PowerPoint documents).
  * Everything else (HTML, SVG, ...) is downloaded: displaying it inline
  * would run its scripts in the origin of the application.
  */
-const INLINE_MIME_PATTERN = '#^(image/(png|jpeg|gif|webp|avif|bmp)|application/pdf|text/plain|audio/.+|video/.+)$#';
+const INLINE_MIME_PATTERN = '#^(image/(png|jpeg|gif|webp|avif|bmp)|application/pdf|text/plain|audio/.+|video/.+'
+    . '|application/(msword|vnd\.ms-excel|vnd\.ms-powerpoint)'
+    . '|application/vnd\.openxmlformats-officedocument\.(wordprocessingml\.document|spreadsheetml\.sheet|presentationml\.presentation)'
+    . '|application/vnd\.oasis\.opendocument\.(text|spreadsheet|presentation))$#';
 
 /**
  * Is this name reserved (case insensitive, like the database collation)?

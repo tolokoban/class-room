@@ -54,7 +54,10 @@ export const ROUTES: RoutePath[] = [
     "/teacher/[classroom]/students",
     "/teacher/[classroom]/written",
     "/teacher/[classroom]/written/[written]",
+    "/teacher/[classroom]/written/[written]/view",
+    "/teacher/[classroom]/written/[written]/view/[upload]",
     "/teacher/written",
+    "/teacher/written/[written]",
 ]
 
 /**

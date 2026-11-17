@@ -1,27 +1,18 @@
 /*
- * +---+------------------------------+
- * |   | name of the production       |
- * | > +------------------------------+
- * |   | status, files, icons...      |
- * +---+------------------------------+
+ * +-------------------------------------------------+
+ * | name of the production                          |
+ * +-------------------------------------------------+
+ * | status, files          > Launch  Results  Remove|
+ * +-------------------------------------------------+
  */
 .writtenRow {
-  display: grid;
-  grid-template-columns: 3em 1fr;
-  grid-template-rows: auto auto;
-  align-items: center;
-  gap: 0.25em 0.5em;
-  padding: 0.25em 0.5em;
+  display: flex;
+  flex-direction: column;
+  gap: 0.25em;
+  padding: 0.5em;
   border-radius: 0.25em;
   background: var(--theme-color-primary-4);
   color: var(--theme-color-on-primary-4);
-
-  /* Activation icon */
-  > div:first-child {
-    grid-row: 1 / span 2;
-    display: flex;
-    justify-content: center;
-  }
 
   /* Name of the written production */
   > a,
@@ -32,7 +23,7 @@
   }
 
   /* Status, files and actions */
-  > div:last-child {
+  > div {
     display: flex;
     flex-wrap: wrap;
     align-items: center;
@@ -49,7 +40,16 @@
       display: flex;
       flex-wrap: nowrap;
       align-items: center;
+      gap: 0.25em;
       margin-left: auto;
+
+      > .current {
+        display: inline-flex;
+        align-items: center;
+        gap: 0.25em;
+        padding: 0 0.5em;
+        font-weight: bold;
+      }
     }
   }
 

@@ -2,6 +2,9 @@ import FR from "./translation.fr";
 
 const IT: typeof FR = {
   start: "Avvia",
+  duration: "Durata (minuti)",
+  launch: "Avvia",
+  launchTooltip: "Mostra questa produzione scritta agli studenti",
   pause: "Pausa",
   resume: "Riprendi",
   minutes: "Minuti",

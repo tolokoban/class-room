@@ -657,6 +657,11 @@ function detectMime(string $path, string $declaredMime): string
     if (!is_string($detected) || $detected === "" || in_array($detected, WRITTEN_GENERIC_MIMES, true)) {
         return $declaredMime;
     }
+    // A text or Markdown file can look like HTML or source code (Markdown can contain HTML):
+    // it is still served as text, so it can never run in the browser.
+    if (in_array($declaredMime, ["text/plain", "text/markdown"], true) && str_starts_with($detected, "text/")) {
+        return $declaredMime;
+    }
     return normalizeMime($detected);
 }
 

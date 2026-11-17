@@ -47,7 +47,9 @@ const Page37 = React.lazy(() => import("./teacher/[classroom]/home/page"))
 const Page39 = React.lazy(() => import("./teacher/[classroom]/results/page"))
 const Page41 = React.lazy(() => import("./teacher/[classroom]/students/page"))
 const Page44 = React.lazy(() => import("./teacher/[classroom]/written/[written]/page"))
-const Page46 = React.lazy(() => import("./teacher/written/page"))
+const Page47 = React.lazy(() => import("./teacher/[classroom]/written/[written]/view/[upload]/page"))
+const Page49 = React.lazy(() => import("./teacher/written/page"))
+const Page50 = React.lazy(() => import("./teacher/written/[written]/page"))
 
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 export default function App({ lang }: { lang?: string }) {
@@ -81,7 +83,9 @@ export default function App({ lang }: { lang?: string }) {
     const pg39 = Page39
     const pg41 = Page41
     const pg44 = Page44
-    const pg46 = Page46
+    const pg47 = Page47
+    const pg49 = Page49
+    const pg50 = Page50
     return (
         <Route path="/" def={[pg0, ly0, fb0, , NotFound0]} context={context}>
             <Route path="/student" def={[, , fb0, , NotFound0]} context={context}>
@@ -145,10 +149,17 @@ export default function App({ lang }: { lang?: string }) {
                     <Route path="/teacher/[classroom]/written" def={[, , fb0, , NotFound0]} context={context}>
                         <Route path="/teacher/[classroom]/written/[written]" def={[pg44, , fb0, , NotFound0]} context={context}>
                             <Route path="/teacher/[classroom]/written/[written]/translation" def={[, , fb0, , NotFound0]} context={context}/>
+                            <Route path="/teacher/[classroom]/written/[written]/view" def={[, , fb0, , NotFound0]} context={context}>
+                                <Route path="/teacher/[classroom]/written/[written]/view/[upload]" def={[pg47, , fb0, , NotFound0]} context={context}>
+                                    <Route path="/teacher/[classroom]/written/[written]/view/[upload]/translation" def={[, , fb0, , NotFound0]} context={context}/>
+                                </Route>
+                            </Route>
                         </Route>
                     </Route>
                 </Route>
-                <Route path="/teacher/written" def={[pg46, , fb0, , NotFound0]} context={context}/>
+                <Route path="/teacher/written" def={[pg49, , fb0, , NotFound0]} context={context}>
+                    <Route path="/teacher/written/[written]" def={[pg50, , fb0, , NotFound0]} context={context}/>
+                </Route>
             </Route>
         </Route>
     )

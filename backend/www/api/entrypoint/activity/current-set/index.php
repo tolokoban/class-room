@@ -4,6 +4,9 @@ require_once __DIR__ . "/../../../activity.php";
 
 $ROLE = "teacher";
 
+/** For instance "AI/RAG" or "written/12", but not "written/[written]". */
+const ACTIVITY_CODE_PATTERN = '#^[A-Za-z0-9_-]+(/[A-Za-z0-9_-]+)*$#';
+
 /**
  * Set the code of the activity the students of a class room owned by
  * the current user must display.
@@ -12,7 +15,9 @@ $ROLE = "teacher";
  * ```ts
  * {
  *   classroomCode: string // Field `code` of table `class`.
- *   activityCode: string | null // `null` means "no current activity".
+ *   // `null` means "no current activity". Otherwise, a path made of letters, digits, "_" and "-"
+ *   // separated by "/" (for instance "AI/RAG" or "written/12").
+ *   activityCode: string | null
  * }
  * ```
  * @return int
@@ -31,7 +36,7 @@ function entrypoint($input)
 
     if (
         !isNonEmptyString($classroomCode)
-        || ($activityCode !== null && !isNonEmptyString($activityCode))
+        || ($activityCode !== null && (!is_string($activityCode) || !preg_match(ACTIVITY_CODE_PATTERN, $activityCode)))
     ) {
         error_log("[activity/current-set] Invalid input.");
         return -30501;

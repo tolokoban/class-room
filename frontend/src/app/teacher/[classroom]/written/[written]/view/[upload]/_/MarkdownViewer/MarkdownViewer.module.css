@@ -1,0 +1,17 @@
+.markdownViewer {
+  border-radius: 0.25em;
+  padding: 0.5em;
+  background: var(--theme-color-primary-3);
+  color: var(--theme-color-on-primary-3);
+
+  pre {
+    margin: 0.5em 0 0;
+    padding: 0.5em 1em;
+    border-radius: 0.25em;
+    white-space: pre-wrap;
+    overflow-wrap: anywhere;
+    font-family: monospace;
+    background: var(--theme-color-neutral-9);
+    color: var(--theme-color-on-neutral-9);
+  }
+}

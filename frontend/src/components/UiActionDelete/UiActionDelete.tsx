@@ -14,12 +14,20 @@ export interface UiActionDeleteProps {
   onDelete(this: void): void;
   /** If `true`, the icon spins and the button is disabled. */
   waiting?: boolean;
+  /** Optional text next to the icon. */
+  label?: string;
 }
 
 /**
  * Icon button to delete something, after a confirmation.
  */
-export function UiActionDelete({ className, confirm, onDelete, waiting }: UiActionDeleteProps) {
+export function UiActionDelete({
+  className,
+  confirm,
+  onDelete,
+  waiting,
+  label = "",
+}: UiActionDeleteProps) {
   const handleClick = useActionDelete(confirm, onDelete);
 
   return (
@@ -27,7 +35,7 @@ export function UiActionDelete({ className, confirm, onDelete, waiting }: UiActi
       className={$.join(className, Styles.uiActionDelete)}
       variant="text"
       color="error"
-      label=""
+      label={label}
       icon={IconDelete}
       waiting={waiting}
       onClick={handleClick}

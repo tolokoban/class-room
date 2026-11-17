@@ -1,0 +1,49 @@
+.page {
+  position: absolute;
+  inset: 0;
+  overflow: auto;
+  padding: 1em max(1em, calc(50% - 30em));
+  display: flex;
+  flex-direction: column;
+  gap: 1em;
+
+  /* The sections must not shrink to fit in the page: it scrolls. */
+  > * {
+    flex-shrink: 0;
+  }
+
+  > nav {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    gap: 1em;
+  }
+
+  > header {
+    > h1 {
+      margin: 0;
+      font-size: 1.5em;
+      overflow-wrap: anywhere;
+    }
+
+    > small {
+      opacity: 0.8;
+      overflow-wrap: anywhere;
+    }
+  }
+
+  > pre {
+    margin: 0;
+    padding: 0.5em 1em;
+    border-radius: 0.25em;
+    white-space: pre-wrap;
+    overflow-wrap: anywhere;
+    font-family: monospace;
+    background: var(--theme-color-neutral-9);
+    color: var(--theme-color-on-neutral-9);
+  }
+
+  > .error {
+    color: var(--theme-color-error);
+  }
+}

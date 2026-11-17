@@ -338,6 +338,16 @@ export function getWrittenUploadUrl(uploadId: number): string {
   return `api/written/download?uploadId=${uploadId}`;
 }
 
+/**
+ * @returns The content of a file uploaded by a student, decoded as UTF-8 text.
+ */
+export async function writtenUploadContent(uploadId: number): Promise<string> {
+  const response = await fetch(getWrittenUploadUrl(uploadId), { credentials: "same-origin" });
+  if (!response.ok) throw new Error(`Unable to load file #${uploadId}: HTTP ${response.status}`);
+
+  return response.text();
+}
+
 /** URL to download all the files of a written production of a class room as a ZIP archive. */
 export function getWrittenZipUrl({ writtenId, classroomCode }: WrittenRef): string {
   return `api/written/zip?writtenId=${writtenId}&classroomCode=${encodeURIComponent(classroomCode)}`;

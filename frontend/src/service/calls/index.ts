@@ -22,6 +22,7 @@ import {
   writtenUnassign,
   writtenUpdate,
   writtenUpload,
+  writtenUploadContent,
   writtenUploadDelete,
 } from "./written";
 
@@ -72,5 +73,6 @@ export const API = {
     update: writtenUpdate,
     upload: writtenUpload,
     uploadDelete: writtenUploadDelete,
+    uploadContent: writtenUploadContent,
   },
 };

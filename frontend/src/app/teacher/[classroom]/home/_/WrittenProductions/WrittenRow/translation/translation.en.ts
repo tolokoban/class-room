@@ -10,6 +10,10 @@ const EN: typeof FR = {
   unassignConfirm:
     'Remove "$1" from this class room? The files uploaded by the students for this written production will be permanently deleted.',
   unassigned: '"$1" has been removed from this class room.',
+  activeLabel: "Current",
+  activateLabel: "Launch",
+  resultsLabel: "Results",
+  unassignLabel: "Remove",
 };
 
 export default EN;
