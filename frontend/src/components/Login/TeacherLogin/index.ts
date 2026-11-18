@@ -1,1 +1,1 @@
-export * from "./TeacherLogin"
+export * from "./TeacherLogin";

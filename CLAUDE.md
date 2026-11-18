@@ -27,6 +27,14 @@ The error code is build with this formula : `- 10000*{group} + 100*{action} + {e
 For instance, with `backend/www/api/entrypoint/class/delete/index.php`, the `group` is "class" (2)
 and the `action` is "delete" (4). Groups: user = 1, class = 2, activity = 3, room = 4, file = 5, written = 6.
 
+### Demo mode
+
+In demo mode (the fake "Demo Teacher", see `frontend/src/service/demo/`), nothing is sent to the backend:
+every entrypoint is served by a TypeScript translation of it, on an IndexedDB replica of the database.
+Whenever you add, remove or change an entrypoint (input, output, error codes) or the database structure,
+update `frontend/src/service/demo/entrypoint/{group}/{action}.ts` (and `demo/db/tables.ts`) in the same change.
+The test `frontend/src/service/demo/sync.test.ts` fails if an entrypoint has no demo handler.
+
 ## Frontend
 
 ### Translations

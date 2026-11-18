@@ -1,5 +1,7 @@
 import { isString, isType } from "@tolokoban/type-guards";
 
+import { resolveApiUrl } from "@/service/demo/links";
+
 import { api, ApiError, ApiErrorTypeAssertion, throwIfError } from "./service";
 
 /**
@@ -182,7 +184,7 @@ export async function fileNotesSet(input: FileNotesSetInput): Promise<void> {
  * otherwise it downloads it.
  */
 export function getFileUrl(fileId: number): string {
-  return `api/file/get?fileId=${fileId}`;
+  return resolveApiUrl(`api/file/get?fileId=${fileId}`);
 }
 
 /**

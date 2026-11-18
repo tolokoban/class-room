@@ -1,5 +1,7 @@
 import { isType$, TypeDef } from "@tolokoban/type-guards";
 
+import { resolveApiUrl } from "@/service/demo/links";
+
 import { api, ApiErrorTypeAssertion, throwIfError } from "./service";
 
 /**
@@ -428,7 +430,7 @@ function readAsBase64(blob: Blob): Promise<string> {
 
 /** URL to open (or download) a file uploaded by a student. */
 export function getWrittenUploadUrl(uploadId: number): string {
-  return `api/written/download?uploadId=${uploadId}`;
+  return resolveApiUrl(`api/written/download?uploadId=${uploadId}`);
 }
 
 /**
@@ -443,7 +445,9 @@ export async function writtenUploadContent(uploadId: number): Promise<string> {
 
 /** URL to download all the files of a written production of a class room as a ZIP archive. */
 export function getWrittenZipUrl({ writtenId, classroomCode }: WrittenRef): string {
-  return `api/written/zip?writtenId=${writtenId}&classroomCode=${encodeURIComponent(classroomCode)}`;
+  return resolveApiUrl(
+    `api/written/zip?writtenId=${writtenId}&classroomCode=${encodeURIComponent(classroomCode)}`,
+  );
 }
 
 /**
@@ -452,7 +456,9 @@ export function getWrittenZipUrl({ writtenId, classroomCode }: WrittenRef): stri
  */
 export function getWrittenAttachmentUrl(attachmentId: number, classroomCode?: string): string {
   const url = `api/written/attachment-get?attachmentId=${attachmentId}`;
-  return classroomCode ? `${url}&classroomCode=${encodeURIComponent(classroomCode)}` : url;
+  return resolveApiUrl(
+    classroomCode ? `${url}&classroomCode=${encodeURIComponent(classroomCode)}` : url,
+  );
 }
 
 /** In the Markdown description, `[text](attachment:name.ext)` links to an attached file. */

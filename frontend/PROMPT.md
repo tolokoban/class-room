@@ -1,20 +1,21 @@
-I need a new activity `office/markdown` to teach students how to use Markdown format.
+Demo mode soundd great. But here what I really want in the end.
 
-this activity will be very similar to activity `frontend/src/app/student/[classroom]/activity/office/selection`:
+In demo mode we act as if the current user was a teacher.
+The login nickname will be "Demo Teacher" and the only difference
+with a real teacher is that nothing is never sent to the backend.
+We use the IndexDB for all entrypoints.
+For files uploads, we need a special table in IndexDB.
 
-- On the right, the markdown preview of what is expected (not the code)
-- On the left, the code to edit in order to reach the preview in the right
+In the future, I will add Stripe to let people rent a teacher period and then access the full potential of applications.
+So, I need a header above everything else, with strong colors and a short message saying that you can become a teacher by contacting the website admin. A button will open an email client with `contact@tolokoban.org`.
 
-The initial code is the text content of what makes the right preview without all the formatting syntax. The student will have to add this syntax to get the correct result.
+All the fetches of AI models are allowed.
 
-Each exercise must introduce a new Markdown syntax, in order to teach them progressively. And the text of the exercises must talk about this new syntax, without writing examples.
+For now, we don't want to generate any seed data.
+The demo must only show what a teacher can do, not a student.
 
-We do not count the number of key strokes here. On;ly the final result counts and we check it only once the student slicks on the "Suivant" button at the right of the activity header (just before the help floating button).
+Thats's why we need a link just below the teacher login box, that will start the demo mode by logging the user as the fake "Demo Teacher".
 
-The help opens a modal with all the syntaxes of markdown (Github flavored) with examples.
+Always remember to keep in sync the demoAPi with the real API.
 
-We also need a "Précédent" button just before the "Suivant" to go back to the previous exercise.
-
-"Suivant" first checks if the solution is reached. That means that the markdown written by the student must be equivalent to the expected one. To be equivalent, two markdown must produce the same preview (not counting extra spaces at the end or where they are invisible).
-
-What do you think? Are they some caveats? Do you have other ideas?
+What do you think of this proposition?

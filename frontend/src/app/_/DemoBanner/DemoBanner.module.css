@@ -1,0 +1,16 @@
+div.demoBanner {
+  background-color: var(--theme-color-secondary-5);
+  color: var(--theme-color-on-secondary-5);
+  padding: 0.5em 1em;
+  display: flex;
+  flex-wrap: wrap;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  gap: 1em;
+  font-size: 1.2em;
+
+  > div {
+    flex: 1 1 20em;
+  }
+}

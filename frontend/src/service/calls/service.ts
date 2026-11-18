@@ -1,5 +1,6 @@
 import { assertType, isNumber, isType, TypeDef } from "@tolokoban/type-guards";
 
+import { isDemoMode } from "@/service/demo/user";
 import { isTeacher, State } from "@/state";
 
 /**
@@ -9,6 +10,12 @@ import { isTeacher, State } from "@/state";
 const HTTP_FORBIDDEN = 403;
 
 export async function api(entrypoint: string, input: unknown = null): Promise<unknown> {
+  // In demo mode, nothing is sent to the backend.
+  if (isDemoMode()) {
+    const { demoApi } = await import("@/service/demo/api");
+    return demoApi(entrypoint, input);
+  }
+
   const resp = await post(entrypoint, input);
   if (resp.ok) return await resp.json();
 

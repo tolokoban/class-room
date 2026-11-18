@@ -5,10 +5,12 @@ div.layout {
     width: 100%;
     height: 100%;
     display: grid;
-    grid-template-rows: auto 1fr;
+    /* The first row is for the banner of the demo mode (empty otherwise). */
+    grid-template-rows: auto auto 1fr;
     gap: 0;
 
     >header {
+        grid-row: 2;
         background-color: var(--theme-color-primary-3);
         color: var(--theme-color-on-primary-3);
         padding: .25em 1em;
@@ -34,6 +36,7 @@ div.layout {
     }
 
     >main {
+        grid-row: 3;
         position: relative;
     }
 }

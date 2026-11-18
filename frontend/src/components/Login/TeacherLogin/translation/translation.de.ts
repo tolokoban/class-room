@@ -5,6 +5,7 @@ const DE: typeof FR = {
   user: "Benutzer",
   password: "Passwort",
   connect: "Anmelden",
+  demo: "Demo ausprobieren, ohne Konto",
   notTeacher: "Dieser Benutzer ist kein Ausbilder.",
 };
 

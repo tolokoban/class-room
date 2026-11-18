@@ -1,5 +1,6 @@
 import React from "react";
 
+import { goto } from "@/app/routes";
 import { Notif } from "@/components/Notification";
 import { useApiErrorTranslator } from "@/service/hooks/apiError";
 import { useServiceClassAdd } from "@/service/hooks/class";
@@ -28,6 +29,7 @@ export function useTeacherHome() {
       .then(() => {
         setName("");
         Notif.info(tr.created$(value));
+        goto("/teacher/[classroom]/home", value);
       })
       .catch((error: unknown) => Notif.error(translateError(error)));
   };

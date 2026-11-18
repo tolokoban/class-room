@@ -12,6 +12,9 @@ import "./index.css";
 import { NotificationProvider } from "./components/Notification";
 
 const queryClient = new QueryClient();
+// The data of a user must never be shown to another one
+// (for instance, between a real teacher and the "Demo Teacher").
+State.user.addListener(() => queryClient.clear());
 
 async function start() {
   Theme.apply({

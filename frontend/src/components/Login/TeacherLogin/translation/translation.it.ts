@@ -5,6 +5,7 @@ const IT: typeof FR = {
   user: "Utente",
   password: "Password",
   connect: "Accedi",
+  demo: "Prova la demo, senza account",
   notTeacher: "Questo utente non è un formatore.",
 };
 

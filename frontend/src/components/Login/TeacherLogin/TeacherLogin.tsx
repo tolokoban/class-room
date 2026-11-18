@@ -1,5 +1,6 @@
-import { ViewDialog, ViewInputText, ViewPanel } from "@tolokoban/ui";
+import { IconPlay, ViewButton, ViewDialog, ViewInputText, ViewPanel } from "@tolokoban/ui";
 
+import { startDemo } from "@/service/demo/user";
 import { useTeacherLogin } from "./hooks";
 import { useTranslation } from "./translation";
 
@@ -29,6 +30,9 @@ export function TeacherLogin() {
           />
         </ViewPanel>
       </ViewDialog>
+      <ViewButton variant="text" icon={IconPlay} onClick={startDemo}>
+        {tr.demo}
+      </ViewButton>
     </div>
   );
 }
