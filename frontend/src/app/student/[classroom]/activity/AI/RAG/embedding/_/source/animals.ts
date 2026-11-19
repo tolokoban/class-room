@@ -40,7 +40,21 @@ export type BooleanKey =
   | "horns"
   | "hooves"
   | "imaginary"
-  | "prehistoric";
+  | "prehistoric"
+  | "aggressive"
+  /** When missing, it is the opposite of `aggressive` (see `OPPOSITES` in `generate.mts`). */
+  | "peaceful"
+  | "bite"
+  | "lick"
+  | "sting"
+  | "scratch"
+  | "beak"
+  | "crawl"
+  | "jump"
+  | "climb"
+  | "run"
+  | "dig"
+  | "dive";
 
 /**
  * Missing boolean facts are `false`.
@@ -79,6 +93,13 @@ export const ANIMALS: AnimalFacts[] = [
     swim: [true, "Il sait nager, mais il préfère nettement que l'eau reste dans la gamelle."],
     fur: [true, "Des poils, et chez le mâle une crinière digne d'une star de rock."],
     retractableClaws: true,
+    aggressive: [true, "Surtout quand on s'approche de sa troupe ou de son repas."],
+    bite: true,
+    lick: [true, "Les membres de la troupe se lèchent pour se dire qu'ils s'aiment bien."],
+    scratch: true,
+    jump: true,
+    climb: [false, "Rarement, même si certains font la sieste dans les arbres."],
+    run: [true, "Jusqu'à 80 km/h, mais seulement sur une courte distance."],
   },
   {
     name: "le tigre",
@@ -99,6 +120,12 @@ export const ANIMALS: AnimalFacts[] = [
     swim: [true, "Il adore l'eau, contrairement à beaucoup de ses cousins."],
     fur: true,
     retractableClaws: true,
+    aggressive: [true, "C'est un chasseur solitaire qui n'aime pas être dérangé."],
+    bite: true,
+    lick: [true, "Sa langue est si râpeuse qu'elle peut arracher la peau."],
+    scratch: true,
+    jump: [true, "Il peut bondir à plus de 8 mètres !"],
+    run: true,
   },
   {
     name: "le chat",
@@ -123,6 +150,13 @@ export const ANIMALS: AnimalFacts[] = [
     swim: [true, "Il sait nager, mais seulement sous protestation officielle."],
     fur: true,
     retractableClaws: true,
+    aggressive: [false, "Ça dépend de son humeur… et de la tienne."],
+    bite: [true, "Quand il en a assez des caresses, il le fait savoir."],
+    lick: [true, "Il passe des heures à faire sa toilette avec sa langue râpeuse."],
+    scratch: [true, "Ses griffes sortent quand il joue… ou quand il en a assez."],
+    jump: [true, "Il peut sauter jusqu'à cinq fois sa hauteur."],
+    climb: [true, "Monter, il sait. Redescendre, c'est une autre histoire."],
+    run: true,
   },
   {
     name: "le chien",
@@ -145,6 +179,13 @@ export const ANIMALS: AnimalFacts[] = [
     omnivore: [true, "Croquettes, viande, légumes, et la chaussette que tu cherches depuis hier."],
     swim: true,
     fur: true,
+    aggressive: [false, "Généralement non, mais un chien mal éduqué peut le devenir."],
+    bite: [true, "Un chien bien éduqué ne mord pas, mais il en est capable."],
+    lick: [true, "Il adore donner des coups de langue pour dire bonjour."],
+    scratch: [false, "Il gratte, mais il ne griffe pas comme un chat."],
+    jump: true,
+    run: true,
+    dig: [true, "Il adore creuser pour cacher ses os."],
   },
   {
     name: "le cheval",
@@ -167,6 +208,10 @@ export const ANIMALS: AnimalFacts[] = [
     swim: true,
     fur: true,
     hooves: true,
+    bite: [true, "Ça arrive, alors on évite de lui tendre les doigts."],
+    lick: true,
+    jump: [true, "Il saute par-dessus les obstacles."],
+    run: [true, "Il galope à plus de 60 km/h."],
   },
   {
     name: "la vache",
@@ -190,6 +235,8 @@ export const ANIMALS: AnimalFacts[] = [
     fur: true,
     horns: [true, "Ses cornes sont deux croissants de lune posés sur la tête."],
     hooves: true,
+    bite: [false, "Il n'a même pas de dents devant, en haut !"],
+    lick: [true, "Sa grande langue lui sert même à se nettoyer le nez."],
   },
   {
     name: "l'éléphant",
@@ -211,6 +258,9 @@ export const ANIMALS: AnimalFacts[] = [
     fur: [false, "Juste quelques poils épars, comme une barbe de trois jours."],
     horns: [false, "Ce que tu prends pour des cornes, ce sont des défenses : des dents géantes !"],
     hooves: [false, "Il marche sur de larges coussins, avec des ongles, mais sans sabots."],
+    peaceful: [true, "Mais quand il se fâche, mieux vaut ne pas être sur son chemin."],
+    jump: [false, "C'est même l'un des rares mammifères qui ne peuvent pas sauter du tout !"],
+    run: [false, "Pas très vite, mais quand même plus vite que toi !"],
   },
   {
     name: "la girafe",
@@ -236,6 +286,8 @@ export const ANIMALS: AnimalFacts[] = [
     fur: true,
     horns: [true, "Deux ossicônes : de petites cornes recouvertes de peau et de poils."],
     hooves: true,
+    lick: [true, "Sa langue mesure près de 50 centimètres !"],
+    run: [true, "Plus de 50 km/h, avec ses grandes jambes."],
   },
   {
     name: "l'ours brun",
@@ -256,6 +308,13 @@ export const ANIMALS: AnimalFacts[] = [
     hibernate: [true, "Disons qu'il fait une très, très longue sieste dans sa tanière."],
     swim: true,
     fur: true,
+    aggressive: [true, "Surtout une maman qui protège ses petits."],
+    bite: true,
+    lick: [true, "Il lèche le miel… et ses petits, pour les laver."],
+    scratch: true,
+    climb: [true, "Surtout les jeunes, pour échapper au danger."],
+    run: [true, "Plus vite qu'un cheval sur une courte distance !"],
+    dig: [true, "Il creuse sa tanière pour l'hiver."],
   },
   {
     name: "le loup",
@@ -275,6 +334,12 @@ export const ANIMALS: AnimalFacts[] = [
     carnivore: true,
     swim: true,
     fur: true,
+    aggressive: [false, "Il est plutôt craintif avec les humains."],
+    peaceful: [false, "C'est un chasseur, même s'il évite les humains."],
+    bite: true,
+    lick: [true, "Dans la meute, les petits lèchent le museau des adultes pour réclamer à manger."],
+    jump: true,
+    run: [true, "Et il peut courir pendant des heures."],
   },
   {
     name: "le renard",
@@ -293,6 +358,11 @@ export const ANIMALS: AnimalFacts[] = [
     omnivore: [true, "Il adore la viande, mais il ne dit pas non à une poignée de mûres."],
     swim: true,
     fur: true,
+    bite: [true, "S'il se sent coincé."],
+    lick: true,
+    jump: [true, "Il bondit sur les souris cachées sous la neige, tête la première !"],
+    run: true,
+    dig: [true, "Il creuse son terrier, ou il emprunte celui d'un autre."],
   },
   {
     name: "le lapin",
@@ -311,6 +381,12 @@ export const ANIMALS: AnimalFacts[] = [
     herbivore: [true, "Carottes, trèfle, herbe tendre : il grignote toute la journée."],
     swim: [true, "Il sait nager, mais seulement en cas d'urgence absolue."],
     fur: true,
+    bite: [true, "Seulement s'il a très peur."],
+    lick: [true, "Il fait sa toilette comme un chat."],
+    scratch: [true, "Ses pattes arrière peuvent griffer quand il se débat."],
+    jump: true,
+    run: [true, "Il court en zigzag pour échapper aux prédateurs."],
+    dig: [true, "Il creuse des terriers avec plein de galeries."],
   },
   {
     name: "le hérisson",
@@ -332,6 +408,8 @@ export const ANIMALS: AnimalFacts[] = [
       true,
       "Des poils sur le ventre, et sur le dos des milliers de piquants, qui sont des poils transformés.",
     ],
+    bite: [false, "Il préfère se rouler en boule et laisser parler ses piquants."],
+    sting: [true, "Avec ses piquants, si tu le touches !"],
   },
   {
     name: "la chauve-souris",
@@ -356,6 +434,8 @@ export const ANIMALS: AnimalFacts[] = [
     hibernate: true,
     fly: [true, "C'est le seul mammifère capable de vraiment voler !"],
     fur: true,
+    bite: [true, "Ne l'attrape jamais à mains nues !"],
+    climb: [false, "Il préfère se suspendre la tête en bas."],
   },
   {
     name: "le dauphin",
@@ -376,6 +456,9 @@ export const ANIMALS: AnimalFacts[] = [
     carnivore: true,
     swim: [true, "Il nage, il saute, il fait des pirouettes : un vrai champion olympique."],
     fur: [false, "Il naît avec quelques poils sur le museau, qu'il perd très vite."],
+    bite: [false, "Il a beaucoup de dents, mais il ne s'en sert pas contre nous."],
+    jump: [true, "Il fait des sauts spectaculaires hors de l'eau !"],
+    dive: true,
   },
   {
     name: "la baleine bleue",
@@ -397,6 +480,8 @@ export const ANIMALS: AnimalFacts[] = [
     diurnal: true,
     carnivore: [true, "Il avale des tonnes de krill, de minuscules crevettes."],
     swim: true,
+    bite: [false, "Il n'a même pas de dents, mais des fanons !"],
+    dive: true,
   },
   {
     name: "le kangourou",
@@ -416,6 +501,12 @@ export const ANIMALS: AnimalFacts[] = [
     herbivore: true,
     swim: true,
     fur: true,
+    aggressive: [false, "Les mâles boxent entre eux, mais il évite les humains."],
+    bite: [false, "Il préfère boxer et donner des coups de pattes."],
+    lick: [true, "Il se lèche les bras pour se rafraîchir quand il fait chaud."],
+    scratch: [true, "Ses pattes ont des griffes puissantes."],
+    jump: [true, "Il ne marche pas : il se déplace en faisant des bonds de plusieurs mètres !"],
+    run: [true, "Plutôt en sautant qu'en courant, mais à plus de 50 km/h."],
   },
   {
     name: "le dromadaire",
@@ -435,6 +526,8 @@ export const ANIMALS: AnimalFacts[] = [
     swim: true,
     fur: true,
     hooves: [false, "Il marche sur de larges coussinets, parfaits pour le sable."],
+    bite: [true, "Quand il est de mauvaise humeur, il mord… et il crache !"],
+    run: [true, "Il peut galoper à 60 km/h dans le désert."],
   },
   {
     name: "le panda géant",
@@ -462,6 +555,10 @@ export const ANIMALS: AnimalFacts[] = [
     ],
     swim: true,
     fur: true,
+    bite: [true, "Sa mâchoire broie le bambou : mieux vaut ne pas y mettre la main."],
+    lick: true,
+    scratch: [true, "Ses griffes lui servent surtout à grimper aux arbres."],
+    climb: [true, "Il grimpe aux arbres pour se reposer ou pour se cacher."],
   },
   {
     name: "la marmotte",
@@ -481,6 +578,8 @@ export const ANIMALS: AnimalFacts[] = [
     hibernate: [true, "Il dort six mois par an. Il est devenu célèbre pour ça."],
     swim: true,
     fur: true,
+    bite: [true, "Si on l'embête."],
+    dig: [true, "Il creuse des terriers où il passe tout l'hiver."],
   },
   {
     name: "l'hippopotame",
@@ -503,6 +602,11 @@ export const ANIMALS: AnimalFacts[] = [
       false,
       "Il a quatre doigts terminés par des ongles qui ressemblent à de petits sabots.",
     ],
+    aggressive: [true, "Il est très territorial et charge sans prévenir."],
+    bite: [true, "Ses énormes dents peuvent couper un bateau en deux !"],
+    jump: [false, "Il ne peut pas sauter : il est bien trop lourd."],
+    run: [true, "Plus vite que toi, malgré son poids !"],
+    dive: [true, "Il marche au fond de la rivière, sans nager."],
   },
   {
     name: "le rhinocéros",
@@ -526,6 +630,9 @@ export const ANIMALS: AnimalFacts[] = [
     swim: true,
     horns: [true, "Ses cornes sont faites de kératine, la même matière que tes ongles."],
     hooves: [true, "Trois doigts à chaque patte, chacun avec son petit sabot."],
+    aggressive: [true, "Il voit mal, alors il charge au moindre bruit suspect."],
+    bite: [false, "Il charge avec sa corne plutôt que de mordre."],
+    run: [true, "Il peut charger à 50 km/h."],
   },
   {
     name: "l'ornithorynque",
@@ -553,6 +660,11 @@ export const ANIMALS: AnimalFacts[] = [
     ],
     swim: true,
     fur: true,
+    bite: [false, "Il n'a pas de dents !"],
+    sting: [true, "Le mâle a un ergot venimeux sur les pattes arrière."],
+    beak: [true, "Un bec de canard, sur un mammifère : la nature a de l'humour."],
+    dig: [true, "Il creuse son terrier dans les berges des rivières."],
+    dive: [true, "Il ferme les yeux sous l'eau et cherche sa nourriture avec son bec."],
   },
   {
     name: "l'écureuil",
@@ -575,6 +687,12 @@ export const ANIMALS: AnimalFacts[] = [
     ],
     swim: true,
     fur: true,
+    bite: [true, "Ses dents cassent les noisettes : gare aux doigts."],
+    scratch: [true, "Ses griffes lui servent à grimper aux arbres."],
+    jump: [true, "Il saute de branche en branche."],
+    climb: [true, "Il grimpe aux arbres à toute vitesse, même la tête en bas."],
+    run: true,
+    dig: [true, "Il creuse des petits trous pour cacher ses noisettes."],
   },
 
   // Birds
@@ -597,6 +715,9 @@ export const ANIMALS: AnimalFacts[] = [
     eggs: true,
     fly: [true, "Il plane si haut qu'il voit un lapin à plus d'un kilomètre."],
     feathers: true,
+    peaceful: [false, "C'est un chasseur redoutable, même s'il ne s'en prend pas aux humains."],
+    scratch: [true, "Avec ses serres, qui attrapent les lièvres !"],
+    beak: [true, "Un bec crochu, pour déchirer ses proies."],
   },
   {
     name: "le manchot empereur",
@@ -620,6 +741,10 @@ export const ANIMALS: AnimalFacts[] = [
     swim: [true, "Sous l'eau, il file comme une torpille en smoking."],
     fly: [false, "Ses ailes sont devenues des nageoires : il vole… sous l'eau."],
     feathers: true,
+    beak: true,
+    crawl: [false, "Mais il se laisse glisser sur le ventre, comme une luge !"],
+    jump: [true, "Il saute hors de l'eau pour remonter sur la glace."],
+    dive: [true, "Il peut plonger à plus de 500 mètres de profondeur !"],
   },
   {
     name: "la chouette",
@@ -641,6 +766,8 @@ export const ANIMALS: AnimalFacts[] = [
     eggs: true,
     fly: true,
     feathers: true,
+    scratch: [true, "Avec ses serres, qui attrapent les souris."],
+    beak: [true, "Un petit bec crochu, caché dans ses plumes."],
   },
   {
     name: "l'autruche",
@@ -663,6 +790,13 @@ export const ANIMALS: AnimalFacts[] = [
     swim: true,
     fly: [false, "Il ne vole pas, mais il court à 70 km/h. Qui a besoin d'ailes ?"],
     feathers: true,
+    aggressive: [
+      true,
+      "Surtout quand elle se sent menacée : elle donne des coups de pattes terribles.",
+    ],
+    scratch: [true, "Un coup de patte avec sa grande griffe peut être terrible."],
+    beak: true,
+    run: [true, "Jusqu'à 70 km/h : c'est l'oiseau le plus rapide à la course."],
   },
   {
     name: "le perroquet",
@@ -684,6 +818,9 @@ export const ANIMALS: AnimalFacts[] = [
     eggs: true,
     fly: true,
     feathers: true,
+    bite: [true, "Il n'a pas de dents, mais son bec pince très fort !"],
+    beak: [true, "Un bec crochu, assez fort pour casser des noix."],
+    climb: [true, "Il grimpe en s'aidant de son bec et de ses pattes."],
   },
   {
     name: "la poule",
@@ -710,6 +847,7 @@ export const ANIMALS: AnimalFacts[] = [
     eggs: [true, "Presque un œuf par jour ! Un vrai champion."],
     fly: [false, "Il vole un tout petit peu, juste assez pour franchir une barrière."],
     feathers: true,
+    beak: [true, "Il picore les graines avec."],
   },
   {
     name: "le flamant rose",
@@ -731,6 +869,7 @@ export const ANIMALS: AnimalFacts[] = [
     swim: true,
     fly: true,
     feathers: true,
+    beak: [true, "Un bec courbé, qui filtre l'eau la tête en bas."],
   },
   {
     name: "le colibri",
@@ -751,6 +890,12 @@ export const ANIMALS: AnimalFacts[] = [
     eggs: [true, "Des œufs pas plus gros qu'un petit pois."],
     fly: [true, "Il peut même voler en marche arrière !"],
     feathers: true,
+    aggressive: [false, "Pas avec toi. Mais il chasse sans pitié ses rivaux de ses fleurs."],
+    lick: [
+      true,
+      "Il lèche le nectar des fleurs avec sa longue langue, plus de dix fois par seconde.",
+    ],
+    beak: [true, "Un bec long et fin, pour aller au fond des fleurs."],
   },
 
   // Reptiles and amphibians
@@ -776,6 +921,10 @@ export const ANIMALS: AnimalFacts[] = [
     swim: true,
     scales: true,
     prehistoric: [false, "Pourtant, sa famille existait déjà au temps des dinosaures !"],
+    aggressive: true,
+    bite: [true, "Sa mâchoire est l'une des plus puissantes du monde."],
+    crawl: [true, "Il rampe sur le ventre, mais il peut aussi galoper !"],
+    dive: true,
   },
   {
     name: "la tortue",
@@ -798,6 +947,10 @@ export const ANIMALS: AnimalFacts[] = [
     eggs: true,
     swim: true,
     scales: [true, "Des écailles sur les pattes, et une carapace sur le dos en guise de maison."],
+    bite: [true, "Il n'a pas de dents, mais son bec pince fort."],
+    beak: [true, "Il n'a pas de dents, mais un bec corné."],
+    crawl: [false, "Il marche, très lentement."],
+    dive: [true, "Surtout ses cousins qui vivent dans la mer."],
   },
   {
     name: "le cobra",
@@ -817,6 +970,11 @@ export const ANIMALS: AnimalFacts[] = [
     eggs: true,
     swim: true,
     scales: true,
+    peaceful: [false, "Il préfère fuir, mais s'il se dresse, recule !"],
+    bite: [true, "Et sa morsure est venimeuse !"],
+    lick: [false, "Il sort sa langue pour sentir les odeurs, pas pour lécher."],
+    sting: [false, "On dit parfois qu'un serpent pique, mais en vrai, il mord."],
+    crawl: [true, "Il n'a pas de pattes : il ondule sur le sol."],
   },
   {
     name: "le caméléon",
@@ -834,6 +992,8 @@ export const ANIMALS: AnimalFacts[] = [
     carnivore: [true, "Il attrape les insectes avec une langue plus longue que son corps."],
     eggs: true,
     scales: true,
+    lick: [false, "Il ne lèche pas : il projette sa langue comme une catapulte !"],
+    climb: [true, "Il s'accroche aux branches avec ses pattes et sa queue."],
   },
   {
     name: "la grenouille",
@@ -857,6 +1017,9 @@ export const ANIMALS: AnimalFacts[] = [
     hibernate: [true, "Il passe l'hiver enfoui dans la vase, au fond de la mare."],
     eggs: true,
     swim: true,
+    lick: [false, "Il ne lèche pas : il projette sa langue pour attraper les mouches."],
+    jump: [true, "Il peut sauter jusqu'à vingt fois sa longueur."],
+    dive: true,
   },
 
   // Fish
@@ -884,6 +1047,14 @@ export const ANIMALS: AnimalFacts[] = [
     ],
     swim: [true, "S'il arrête de nager, il ne respire plus. Alors il nage, toujours."],
     scales: [true, "Des écailles minuscules, comme du papier de verre."],
+    aggressive: [
+      false,
+      "Moins qu'on le croit : il attaque rarement l'homme, qu'il confond parfois avec un phoque.",
+    ],
+    peaceful: [false, "C'est un grand prédateur, même s'il attaque rarement l'homme."],
+    bite: [true, "Avec plusieurs rangées de dents tranchantes !"],
+    jump: [true, "Il peut jaillir hors de l'eau pour attraper un phoque."],
+    dive: true,
   },
   {
     name: "le poisson rouge",
@@ -907,6 +1078,8 @@ export const ANIMALS: AnimalFacts[] = [
       "Il fait le tour de son bocal, encore et encore, et chaque fois c'est une découverte.",
     ],
     scales: true,
+    jump: [true, "Parfois même hors de son bocal : attention !"],
+    dive: [true, "Il vit sous l'eau, alors il n'a pas besoin de plonger."],
   },
 
   // Invertebrates
@@ -931,6 +1104,13 @@ export const ANIMALS: AnimalFacts[] = [
     carnivore: [true, "Il tisse une toile pour attraper les insectes. Un artiste et un chasseur."],
     eggs: true,
     fur: [true, "De fins poils sensibles, qui lui servent à sentir les vibrations."],
+    bite: [true, "Avec ses crochets : c'est ainsi qu'il injecte son venin."],
+    sting: [false, "Il ne pique pas, il mord avec ses crochets."],
+    jump: [
+      false,
+      "Mais certains de ses cousins, les « sauteurs », font des bonds impressionnants.",
+    ],
+    climb: [true, "Il grimpe partout, même au plafond."],
   },
   {
     name: "l'abeille",
@@ -958,6 +1138,7 @@ export const ANIMALS: AnimalFacts[] = [
     eggs: [true, "Seule la reine pond, jusqu'à 2000 œufs par jour !"],
     fly: true,
     fur: [true, "Il est couvert de poils où s'accroche le pollen."],
+    sting: [true, "Seulement pour se défendre, et il en meurt."],
   },
   {
     name: "le papillon",
@@ -981,6 +1162,7 @@ export const ANIMALS: AnimalFacts[] = [
       true,
       "Ses ailes sont couvertes de milliers d'écailles minuscules, comme une poussière colorée.",
     ],
+    crawl: [false, "Pas maintenant, mais quand il était chenille, oui !"],
   },
   {
     name: "l'escargot",
@@ -999,6 +1181,12 @@ export const ANIMALS: AnimalFacts[] = [
     herbivore: [true, "Il adore les salades du potager, au grand désespoir du jardinier."],
     hibernate: [true, "Il ferme sa coquille avec un petit couvercle et dort tout l'hiver."],
     eggs: true,
+    bite: [
+      false,
+      "Mais il râpe les feuilles avec une langue couverte de milliers de minuscules dents.",
+    ],
+    crawl: [true, "Il glisse sur sa bave, très lentement."],
+    climb: [true, "Il grimpe même le long des murs."],
   },
   {
     name: "la pieuvre",
@@ -1022,6 +1210,10 @@ export const ANIMALS: AnimalFacts[] = [
     ],
     eggs: true,
     swim: [true, "Il nage en projetant de l'eau, comme une fusée."],
+    bite: [true, "Avec son bec, caché au milieu de ses bras."],
+    beak: [true, "Un bec de perroquet, caché au milieu de ses bras !"],
+    crawl: [true, "Il rampe au fond de la mer avec ses bras."],
+    dive: true,
   },
 
   // Prehistoric animals
@@ -1053,6 +1245,13 @@ export const ANIMALS: AnimalFacts[] = [
       "Peut-être un peu de duvet quand il était bébé : les scientifiques en débattent encore.",
     ],
     prehistoric: true,
+    aggressive: [true, "Un des plus grands prédateurs de tous les temps."],
+    bite: [true, "Sa morsure était la plus puissante de tous les animaux terrestres."],
+    scratch: [true, "Ses petits bras avaient deux griffes."],
+    run: [
+      false,
+      "Les scientifiques pensent qu'il marchait plutôt vite, mais sans vraiment courir.",
+    ],
   },
   {
     name: "le tricératops",
@@ -1077,6 +1276,8 @@ export const ANIMALS: AnimalFacts[] = [
     scales: true,
     horns: [true, "Trois cornes sur la tête, et une grande collerette en bonus."],
     prehistoric: true,
+    aggressive: [false, "Il était herbivore, mais il savait se défendre avec ses cornes."],
+    beak: [true, "Un bec de perroquet, pour couper les plantes."],
   },
   {
     name: "le mammouth",
@@ -1131,6 +1332,8 @@ export const ANIMALS: AnimalFacts[] = [
     horns: [true, "Une seule corne, torsadée et magique."],
     hooves: true,
     imaginary: true,
+    jump: [true, "Par-dessus les arcs-en-ciel, dit-on."],
+    run: [true, "Plus vite que le vent, selon les légendes."],
   },
   {
     name: "le dragon",
@@ -1156,6 +1359,9 @@ export const ANIMALS: AnimalFacts[] = [
     scales: true,
     horns: [true, "Des cornes pointues, qui font très bon effet dans les légendes."],
     imaginary: true,
+    aggressive: [true, "Ne touche surtout pas à son trésor."],
+    bite: true,
+    scratch: true,
   },
   {
     name: "le phénix",
@@ -1177,5 +1383,6 @@ export const ANIMALS: AnimalFacts[] = [
     fly: true,
     feathers: [true, "Des plumes de feu, qui ne brûlent jamais."],
     imaginary: true,
+    beak: true,
   },
 ];

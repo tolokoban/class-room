@@ -7,9 +7,6 @@ export const EXERCISES = {
   paragraphs: {
     title: { fr: "Paragraphes", en: "Paragraphs", de: "Absätze", it: "Paragrafi" },
   },
-  lineBreak: {
-    title: { fr: "Retours à la ligne", en: "Line breaks", de: "Zeilenumbrüche", it: "A capo" },
-  },
   title: {
     title: { fr: "Titres", en: "Headings", de: "Überschriften", it: "Titoli" },
   },
@@ -83,6 +80,9 @@ export const EXERCISES = {
   },
   codeBlock: {
     title: { fr: "Blocs de code", en: "Code blocks", de: "Codeblöcke", it: "Blocchi di codice" },
+  },
+  lineBreak: {
+    title: { fr: "Retours à la ligne", en: "Line breaks", de: "Zeilenumbrüche", it: "A capo" },
   },
   escape: {
     title: { fr: "Échappement", en: "Escaping", de: "Maskieren", it: "Escape" },

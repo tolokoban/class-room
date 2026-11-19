@@ -88,6 +88,25 @@ function merge(shared: string[], notes: string[]): string[] {
   return notes.length >= MIN_ANSWERS ? notes : [...shared, ...notes];
 }
 
+/**
+ * When an animal does not give a value for the key, it takes the opposite value of the other key.
+ * Only the value is taken, not the specific answers: they answer the other question.
+ */
+const OPPOSITES: Partial<Record<BooleanKey, BooleanKey>> = {
+  peaceful: "aggressive",
+};
+
+/**
+ * @returns The value of the boolean fact `key` of `animal`, with its specific answers.
+ * A missing fact is the opposite of its key in `OPPOSITES`, if any, or else `false`.
+ */
+function getBooleanFact(animal: AnimalFacts, key: BooleanKey): [boolean, string[]] {
+  const opposite = OPPOSITES[key];
+  if (animal[key] === undefined && opposite) return [!split(animal[opposite], false)[0], []];
+
+  return split(animal[key], false);
+}
+
 function makeAnswers(animal: AnimalFacts): Record<QuestionKey, string[]> {
   const [legs, legsNotes] = split(animal.legs, 0);
   const answers: Partial<Record<QuestionKey, string[]>> = {
@@ -99,7 +118,7 @@ function makeAnswers(animal: AnimalFacts): Record<QuestionKey, string[]> {
   };
   const [omnivore] = split(animal.omnivore, false);
   for (const [key, templates] of Object.entries(YES_NO)) {
-    const [value, notes] = split(animal[key as BooleanKey], false);
+    const [value, notes] = getBooleanFact(animal, key as BooleanKey);
     const shared = value
       ? templates.yes
       : omnivore && templates.omnivore

@@ -13,7 +13,13 @@ const EN: typeof FR = {
   reveal: "It was $1!",
   closestQuestion: "Closest question: “$1” (similarity: $2)",
   closestAnimal: "Closest animal: $1 (similarity: $2)",
+  alreadyAsked: "You have already asked an almost identical question!",
+  previousQuestion: "Question already asked: “$1” (similarity: $2), understood as: “$3”",
+  notUnderstood: "not understood",
   error: "Unable to load the model: $1",
+  summary: "Summary of your questions:",
+  summaryEmpty: "You haven't asked any question yet.",
+  summaryButton: "Summary of the questions",
 };
 
 export default EN;

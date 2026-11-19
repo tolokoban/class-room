@@ -14,7 +14,13 @@ const IT: typeof FR = {
   reveal: "Era $1!",
   closestQuestion: "Domanda più vicina: «$1» (somiglianza: $2)",
   closestAnimal: "Animale più vicino: $1 (somiglianza: $2)",
+  alreadyAsked: "Hai già fatto una domanda quasi identica!",
+  previousQuestion: "Domanda già fatta: «$1» (somiglianza: $2), capita come: «$3»",
+  notUnderstood: "non capita",
   error: "Impossibile caricare il modello: $1",
+  summary: "Riepilogo delle tue domande:",
+  summaryEmpty: "Non hai ancora fatto nessuna domanda.",
+  summaryButton: "Riepilogo delle domande",
 };
 
 export default IT;

@@ -1,4 +1,4 @@
-import { ViewButton } from "@tolokoban/ui";
+import { IconHelp, ViewButton, ViewFloatingButton } from "@tolokoban/ui";
 
 import { Conversation } from "./_/Conversation";
 import { useGame } from "./_/hooks";
@@ -22,6 +22,7 @@ export default function Page() {
     handleKeyDown,
     handleGiveUp,
     handleNewGame,
+    handleSummary,
   } = useGame();
   return (
     <div className={Styles.page}>
@@ -36,15 +37,20 @@ export default function Page() {
             {embedder.status === "error" && (
               <p className={Styles.error}>{tr.error$(embedder.message)}</p>
             )}
-            <input
-              ref={refInput}
-              type="text"
-              value={input}
-              placeholder={tr.placeholder}
-              disabled={!ready || over}
-              onChange={(event) => setInput(event.target.value)}
-              onKeyDown={handleKeyDown}
-            />
+            <div className={Styles.ask}>
+              <input
+                ref={refInput}
+                type="text"
+                value={input}
+                placeholder={tr.placeholder}
+                disabled={!ready || over}
+                onChange={(event) => setInput(event.target.value)}
+                onKeyDown={handleKeyDown}
+              />
+              <span title={tr.summaryButton}>
+                <ViewFloatingButton size="S" icon={IconHelp} onClick={handleSummary} />
+              </span>
+            </div>
           </main>
           <footer>
             <ViewButton color="neutral-5" enabled={ready && !over} onClick={handleGiveUp}>

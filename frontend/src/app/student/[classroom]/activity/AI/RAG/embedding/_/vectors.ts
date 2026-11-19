@@ -27,6 +27,15 @@ function float16ToFloat32(bits: number): number {
 }
 
 /**
+ * Cosine similarity between two normalized vectors of the same size.
+ */
+export function dot(a: ArrayLike<number>, b: ArrayLike<number>): number {
+  let sum = 0;
+  for (let i = 0; i < a.length; i++) sum += a[i] * b[i];
+  return sum;
+}
+
+/**
  * Cosine similarity between `vector` and the embedding starting at `offset` in `vectors`.
  * All the vectors are normalized, so the dot product is the cosine similarity.
  */

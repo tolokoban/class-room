@@ -64,6 +64,7 @@ For each animal and each question, the generator builds a list of at least **10 
 - **Shared answers** come from `templates.ts`. "$" is replaced by the animal's value: `"Il porte un habit $, taillé sur mesure par Dame Nature."` + `color: "jaune et noir"`.
 - **Value questions** (legs, color, size, weight, sound) use the animal's value in the templates. For the legs, 0 has its own templates ("Aucune patte !").
 - **Yes/no questions** use the `yes` or `no` templates, depending on the animal's fact. Missing facts are `false`.
+- **Opposite questions.** "Est-il pacifique ?" is the opposite of "Est-il agressif ?". They are two different questions, because the same answer cannot fit both ("Oui" would mean the opposite). To avoid writing every fact twice, `OPPOSITES` in `generate.mts` says that a missing `peaceful` fact is the opposite of `aggressive`. Only the value is taken, not the specific answers, because they answer the other question. Set `peaceful` explicitly when the opposite is wrong: the wolf is not aggressive, but it is not peaceful either.
 - **Omnivores** get special answers for "Est-il carnivore ?" and "Est-il herbivore ?" ("Pas seulement…"), because neither yes nor no is correct.
 - **Continents** share one set of templates, with "$" replaced by "en Afrique", "en Asie"…
 - **Specific answers.** A fact can be written `[value, "answer", "answer"…]`. These answers are **added** to the shared ones. If there are 10 or more, they **replace** them. Use this for nuances: the platypus is a mammal that lays eggs, the hippo walks on the river bed instead of swimming.
@@ -89,7 +90,7 @@ The generator also computes how to draw the 384-dimension vectors in 3D, and wri
 All the vectors are written one after the other in `data/vectors.dat`:
 
 - **Format:** 16-bit floats (float16), little-endian, with no header.
-- **Size:** 384 values × 2 bytes = 768 bytes per vector. There are currently 541 vectors (about 415 KB).
+- **Size:** 384 values × 2 bytes = 768 bytes per vector. There are currently 673 vectors (about 517 KB).
 - **Precision:** float16 keeps about 3 significant digits, which is plenty for values between -1 and 1. A stored question compared with its live embedding still scores 0.997. The difference comes from the 8-bit model as much as from float16.
 
 `data/questions.ts` and `data/animals.ts` don't contain vectors, only **offsets**. An offset is the index of the first value of a vector, counted in values (not bytes), once the file is decoded as a `Float32Array`. Vector `n` starts at offset `n × 384`.
@@ -121,7 +122,13 @@ For each sentence of the student:
    - **Answer:** otherwise, if the best question scores ≥ 0.9 and is ahead of the next **question** by ≥ 0.01. The game picks one of the hidden animal's answers to that question.
    - **Too vague:** otherwise, randomly "Soyez plus précis dans votre question." or "Votre question est un peu vague."
 
+5. **Almost the same, but understood differently?** Compare the sentence with the student's previous sentences of the current game (`findRepeat()`). If the closest one scores ≥ 0.94 but was understood differently (another question, another animal, or "too vague" on one side only, see `understandingOf()`), the answer is followed by "Tu as déjà posé une question presque identique !" in a box of a different color. Its small text shows the previous sentence, the similarity between the two sentences, and what the previous one was understood as. Two sentences that look almost the same can get different answers: "il vit en Afrique ?" and "il vit en Amérique ?" score 0.941. The box draws the students' attention to it.
+
 Each reply shows the closest question (or name) and its similarity in small text. Students can see how the machine "understood" them, which is the point of the activity.
+
+#### The threshold for "almost the same"
+
+It compares two sentences of the student, not a sentence with a known question. It does not tell whether they ask the same thing: only the matching does. It tells whether they look almost the same. Most rewordings of the same question score between 0.94 and 0.99 ("Il vole ?" and "Peut-il voler ?": 0.943), and so do some sentences that ask different things ("il vit en Afrique ?" and "il vit en Amérique ?": 0.941). That second case is what the box is for. Sentences that look more different are not compared: "Il mord" and "Est-ce qu'il mord ?" only score 0.905.
 
 #### Why a margin, and not only a threshold?
 
@@ -142,7 +149,7 @@ When a reasonable question is not understood, prefer **adding a wording** to `so
 #### Known limits
 
 - **Animals that are not in the game** get a wrong answer. "c'est un hibou ?" is answered as the hibernation question, and "c'est un pingouin ?" as the size question. The owl and the penguin are in the game, but "hibou" and "pingouin" are deliberately not aliases, because they are different animals.
-- **Close but different meanings** can be confused. "il mange du poisson ?" is answered as "Est-ce un poisson ?".
+- **Close but different meanings** can be confused. "il mange du poisson ?" is answered as "Est-ce un poisson ?". "il a des griffes ?" is "too vague", because it is as close to the retractable claws as to "Il griffe ?". "il marche ?" and "il se déplace comment ?" are "too vague" too: they are as close to "Il court ?" as to "Il rampe ?" or "Il saute ?". There is no question about walking, because almost every animal walks.
 - **Tense:** extinct and imaginary animals are described in the present tense in the shared answers. Their specific answers correct this where it matters.
 
 ## The 3D view
@@ -174,7 +181,7 @@ Add it to the question's array in `source/questions.ts`, then run `npm run embed
 ### Add a question
 
 1. Add a key and its wordings in `source/questions.ts`.
-2. **Yes/no question:** add the key to `BooleanKey` in `source/animals.ts`, its `yes` and `no` answers (at least 10 each) to `YES_NO` in `source/templates.ts`, and set the fact for the animals where it is true.
+2. **Yes/no question:** add the key to `BooleanKey` in `source/animals.ts`, its `yes` and `no` answers (at least 10 each) to `YES_NO` in `source/templates.ts`, and set the fact for the animals where it is true. If it is the opposite of another question, add it to `OPPOSITES` in `generate.mts`.
 3. **Value question** (like color or sound): add a field to `AnimalFacts`, templates with "$", and a line in `makeAnswers()` in `generate.mts`.
 4. Run `npm run embeddings`. It fails if an animal lacks answers.
 

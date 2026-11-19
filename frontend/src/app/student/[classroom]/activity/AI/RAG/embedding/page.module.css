@@ -47,7 +47,19 @@
       min-height: 0;
     }
 
-    > input {
+    > div.ask {
+      flex: none;
+      display: flex;
+      align-items: center;
+      gap: 0.5em;
+
+      > input {
+        flex: 1;
+        min-width: 0;
+      }
+    }
+
+    input {
       font: inherit;
       padding: 0.5em;
       border: none;

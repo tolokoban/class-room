@@ -13,6 +13,12 @@ div.conversation {
       margin: 0;
     }
 
+    > ul {
+      margin: 0.25em 0 0;
+      padding-left: 1.25em;
+      font-size: 0.875em;
+    }
+
     > small {
       display: block;
       margin-top: 0.25em;
@@ -26,6 +32,11 @@ div.game {
   align-self: flex-start;
   background: var(--theme-color-neutral-9);
   color: var(--theme-color-on-neutral-9);
+}
+
+div.game.repeat {
+  background: var(--theme-color-tertiary-7);
+  color: var(--theme-color-on-tertiary-7);
 }
 
 div.student {

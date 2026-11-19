@@ -1,16 +1,20 @@
 import React from "react";
 
 import { Notif } from "@/components/Notification/manager";
-import type { Message } from "./Conversation";
+import type { Exchange, Message } from "./Conversation";
 import { addProgressListener, embed, loadModel, type Model } from "./embedder";
 import {
   type Animal,
   farthestQuestion,
+  findRepeat,
+  isUnderstoodDifferently,
   nearestQuestions,
   pickAnimal,
   pickOne,
+  type PreviousQuestion,
   type Reply,
   reply,
+  understandingOf,
 } from "./game";
 import { useTranslation } from "./translation";
 import type { Probe } from "./VectorsView";
@@ -64,6 +68,10 @@ export function useGame() {
   const [busy, setBusy] = React.useState(false);
   const [probe, setProbe] = React.useState<Probe | null>(null);
   const refInput = React.useRef<HTMLInputElement | null>(null);
+  /** The student's sentences of the current game, with what they have been understood as. */
+  const refHistory = React.useRef<PreviousQuestion[]>([]);
+  /** The questions of the current game that got an answer or were guesses, with their replies. */
+  const refExchanges = React.useRef<Exchange[]>([]);
   const ready = embedder.status === "ready";
   React.useEffect(() => {
     if (ready && !over) refInput.current?.focus();
@@ -101,14 +109,35 @@ export function useGame() {
     setBusy(true);
     embed(embedder.extractor, text)
       .then((vector) => {
-        const answer = reply(animal, vector, embedder.vectors);
         setProbe({
           text,
           vector,
           neighbours: nearestQuestions(vector, embedder.vectors, NEIGHBOURS_COUNT),
           farthest: farthestQuestion(vector, embedder.vectors),
         });
-        say(makeMessage(answer));
+        const answer = reply(animal, vector, embedder.vectors);
+        const message = makeMessage(answer);
+        const understanding = understandingOf(answer);
+        // Almost the same sentence as before, but understood differently:
+        // we draw the attention of the student on it.
+        const previous = findRepeat(vector, refHistory.current);
+        if (previous && isUnderstoodDifferently(previous.understanding, understanding)) {
+          say(message, {
+            from: "game",
+            repeat: true,
+            text: tr.alreadyAsked,
+            detail: tr.previousQuestion$(
+              previous.text,
+              previous.similarity.toFixed(3),
+              previous.understanding?.label ?? tr.notUnderstood,
+            ),
+          });
+        } else {
+          say(message);
+        }
+        refHistory.current.push({ text, vector, understanding });
+        if (answer.type !== "vague")
+          refExchanges.current.push({ question: text, answer: message.text });
         if (answer.type === "guess" && answer.found) setOver(true);
       })
       .catch((error: unknown) => Notif.error(error))
@@ -118,9 +147,15 @@ export function useGame() {
     say({ from: "game", text: tr.reveal$(animal.name) });
     setOver(true);
   };
+  const handleSummary = () => {
+    const summary = [...refExchanges.current];
+    say({ from: "game", text: summary.length > 0 ? tr.summary : tr.summaryEmpty, summary });
+  };
   const handleNewGame = () => {
     setAnimal(pickAnimal(animal));
     setMessages([]);
+    refHistory.current = [];
+    refExchanges.current = [];
     setProbe(null);
     setOver(false);
   };
@@ -141,5 +176,6 @@ export function useGame() {
     handleKeyDown,
     handleGiveUp,
     handleNewGame,
+    handleSummary,
   };
 }

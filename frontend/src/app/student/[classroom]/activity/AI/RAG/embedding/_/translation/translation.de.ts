@@ -14,7 +14,13 @@ const DE: typeof FR = {
   reveal: "Es war $1!",
   closestQuestion: "Ähnlichste Frage: „$1“ (Ähnlichkeit: $2)",
   closestAnimal: "Ähnlichstes Tier: $1 (Ähnlichkeit: $2)",
+  alreadyAsked: "Du hast schon eine fast gleiche Frage gestellt!",
+  previousQuestion: "Bereits gestellte Frage: „$1“ (Ähnlichkeit: $2), verstanden als: „$3“",
+  notUnderstood: "nicht verstanden",
   error: "Das Modell kann nicht geladen werden: $1",
+  summary: "Zusammenfassung deiner Fragen:",
+  summaryEmpty: "Du hast noch keine Frage gestellt.",
+  summaryButton: "Zusammenfassung der Fragen",
 };
 
 export default DE;

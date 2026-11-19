@@ -1,7 +1,7 @@
 import { ANIMALS } from "./data/animals";
 import { QUESTIONS } from "./data/questions";
 import type { Animals } from "./types";
-import { similarity } from "./vectors";
+import { dot, similarity } from "./vectors";
 
 export type Animal = Animals[number];
 
@@ -15,10 +15,23 @@ const QUESTION_MIN_SIMILARITY = 0.9;
 const QUESTION_MIN_MARGIN = 0.01;
 const ANIMAL_MIN_SIMILARITY = 0.905;
 const ANIMAL_MIN_MARGIN = 0.02;
+/**
+ * Two sentences of the student are considered the same question above this similarity.
+ * Rewordings of the same question score between 0.94 and 0.99, but different questions
+ * can reach 0.92 ("c'est un chat ?" and "c'est un chien ?", "il est agressif" and "il est pacifique").
+ */
+const REPEAT_MIN_SIMILARITY = 0.94;
 
 export type Reply =
   /** The student asked a known question. */
-  | { type: "answer"; answer: string; question: string; similarity: number }
+  | {
+      type: "answer";
+      answer: string;
+      /** Key of the question in `QUESTIONS`: all its wordings share the same key. */
+      key: string;
+      question: string;
+      similarity: number;
+    }
   /** The student guessed an animal, the right one or not. */
   | {
       type: "guess";
@@ -75,6 +88,63 @@ export function farthestQuestion(vector: number[], vectors: Float32Array): Neigh
   return { ...last.item[last.index], similarity: last.similarity };
 }
 
+/** What the game understood a sentence of the student as. */
+export interface Understanding {
+  /** Two sentences understood the same way have the same id. */
+  id: string;
+  /** What to show the student: the closest wording, or the guessed animal. */
+  label: string;
+}
+
+/**
+ * @returns What the game understood the student's sentence as,
+ * or `null` if it did not understand it.
+ */
+export function understandingOf(reply: Reply): Understanding | null {
+  switch (reply.type) {
+    case "answer":
+      return { id: `question:${reply.key}`, label: reply.question };
+    case "guess":
+      return { id: `animal:${reply.name}`, label: reply.name };
+    case "vague":
+      return null;
+  }
+}
+
+/** A sentence the student has already sent during the current game. */
+export interface PreviousQuestion {
+  text: string;
+  /** Normalized embedding of `text`. */
+  vector: number[];
+  understanding: Understanding | null;
+}
+
+/**
+ * @returns `true` if the two sentences have not been understood the same way.
+ * Two sentences that were both too vague are understood the same way.
+ */
+export function isUnderstoodDifferently(a: Understanding | null, b: Understanding | null): boolean {
+  return a?.id !== b?.id;
+}
+
+/**
+ * @param vector Normalized embedding of the student's new sentence.
+ * @returns The previous question that is almost the same as the new one, or `null`.
+ * If several match, the closest one.
+ */
+export function findRepeat(
+  vector: number[],
+  history: PreviousQuestion[],
+): (PreviousQuestion & { similarity: number }) | null {
+  let best: (PreviousQuestion & { similarity: number }) | null = null;
+  for (const previous of history) {
+    const value = dot(vector, previous.vector);
+    if (value >= REPEAT_MIN_SIMILARITY && value > (best?.similarity ?? 0))
+      best = { ...previous, similarity: value };
+  }
+  return best;
+}
+
 export function pickAnimal(previous?: Animal): Animal {
   const candidates = ANIMALS.filter((animal) => animal !== previous);
   return pickOne(candidates);
@@ -119,6 +189,7 @@ export function reply(animal: Animal, vector: number[], vectors: Float32Array): 
     return {
       type: "answer",
       answer: pickOne(animal.answers[key]),
+      key,
       question: text,
       similarity: question.similarity,
     };
