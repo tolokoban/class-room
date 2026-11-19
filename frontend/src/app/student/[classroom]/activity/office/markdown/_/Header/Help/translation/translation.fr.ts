@@ -5,6 +5,7 @@
 const FR = {
   title: "Aide-mémoire Markdown",
   close: "Fermer",
+  download: "Télécharger",
   code: "Code",
   result: "Résultat",
 

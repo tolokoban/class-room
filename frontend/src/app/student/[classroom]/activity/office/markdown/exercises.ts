@@ -13,19 +13,13 @@ export const EXERCISES = {
   title: {
     title: { fr: "Titres", en: "Headings", de: "Überschriften", it: "Titoli" },
   },
-  subtitles: {
-    title: {
-      fr: "Niveaux de titres",
-      en: "Heading levels",
-      de: "Überschriftenebenen",
-      it: "Livelli dei titoli",
-    },
-  },
   bold: {
-    title: { fr: "Gras", en: "Bold", de: "Fett", it: "Grassetto" },
-  },
-  italic: {
-    title: { fr: "Italique", en: "Italic", de: "Kursiv", it: "Corsivo" },
+    title: {
+      fr: "Gras & Italique",
+      en: "Bold & Italic",
+      de: "Fett & Kursiv",
+      it: "Grassetto & Corsivo",
+    },
   },
   bulletList: {
     title: {
@@ -50,17 +44,6 @@ export const EXERCISES = {
       de: "Verschachtelte Listen",
       it: "Elenchi annidati",
     },
-  },
-  inlineCode: {
-    title: {
-      fr: "Code dans le texte",
-      en: "Inline code",
-      de: "Code im Text",
-      it: "Codice nel testo",
-    },
-  },
-  codeBlock: {
-    title: { fr: "Blocs de code", en: "Code blocks", de: "Codeblöcke", it: "Blocchi di codice" },
   },
   quote: {
     title: { fr: "Citations", en: "Quotes", de: "Zitate", it: "Citazioni" },
@@ -89,6 +72,17 @@ export const EXERCISES = {
       de: "Aufgabenlisten",
       it: "Elenchi di attività",
     },
+  },
+  inlineCode: {
+    title: {
+      fr: "Code dans le texte",
+      en: "Inline code",
+      de: "Code im Text",
+      it: "Codice nel testo",
+    },
+  },
+  codeBlock: {
+    title: { fr: "Blocs de code", en: "Code blocks", de: "Codeblöcke", it: "Blocchi di codice" },
   },
   escape: {
     title: { fr: "Échappement", en: "Escaping", de: "Maskieren", it: "Escape" },

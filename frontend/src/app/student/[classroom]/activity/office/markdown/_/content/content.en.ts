@@ -20,9 +20,7 @@ A heading stands alone on its line.
 
 To turn a line into a heading, you start it with a hash sign followed by a space.
 
-The heading is then displayed big and bold.`,
-
-  subtitles: `# Heading levels
+The heading is then displayed big and bold.
 
 The number of hash signs gives the level of the heading.
 
@@ -38,9 +36,9 @@ Three hash signs give a sub-subheading. You can go up to six levels.`,
 
 To put words in **bold**, you surround them with **two asterisks** on each side.
 
-There must be **no space** between the asterisks and the text they surround.`,
+There must be **no space** between the asterisks and the text they surround.
 
-  italic: `# Italic
+# Italic
 
 *Italic* is obtained with *a single asterisk* on each side of the text.
 

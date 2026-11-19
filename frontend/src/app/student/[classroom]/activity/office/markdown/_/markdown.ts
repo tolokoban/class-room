@@ -1,4 +1,4 @@
-import type { Nodes, Root } from "mdast";
+import type { List, Nodes, Root } from "mdast";
 import remarkGfm from "remark-gfm";
 import remarkParse from "remark-parse";
 import { unified } from "unified";
@@ -168,18 +168,38 @@ export function remarkHighlight(path: NodePath | undefined, className: string) {
   return () => (tree: Root) => {
     if (!path) return;
 
+    let parent: Nodes | null = null;
     let node: Nodes = tree;
     let target: Nodes | null = null;
     for (const index of path) {
       const child: Nodes | undefined = childrenOf(node)[index];
       if (!child) break;
 
+      if (isDisplayed(child, node, parent)) target = child;
+      parent = node;
       node = child;
-      if (child.type !== "text") target = child;
     }
     if (!target) return;
 
     const data = (target.data ?? {}) as { hProperties?: Record<string, unknown> };
     target.data = { ...data, hProperties: { ...data.hProperties, className: [className] } };
   };
+}
+
+/**
+ * @returns `false` if `node` is not displayed as an HTML element: a text,
+ * or a paragraph of an item of a tight list (its `<p>` is removed, only its content is kept).
+ */
+function isDisplayed(node: Nodes, parent: Nodes, grandParent: Nodes | null): boolean {
+  if (node.type === "text") return false;
+  if (node.type !== "paragraph" || parent.type !== "listItem") return true;
+
+  return grandParent?.type === "list" && isLooseList(grandParent);
+}
+
+/** Same rule as `mdast-util-to-hast` to decide if the items of a list keep their paragraphs. */
+function isLooseList(list: List): boolean {
+  return (
+    list.spread === true || list.children.some((item) => item.spread ?? item.children.length > 1)
+  );
 }

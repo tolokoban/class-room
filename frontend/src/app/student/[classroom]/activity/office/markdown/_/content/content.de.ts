@@ -20,9 +20,7 @@ Eine Überschrift steht allein in ihrer Zeile.
 
 Um eine Zeile in eine Überschrift zu verwandeln, beginnt man sie mit einer Raute, gefolgt von einem Leerzeichen.
 
-Die Überschrift wird dann groß und fett angezeigt.`,
-
-  subtitles: `# Überschriftenebenen
+Die Überschrift wird dann groß und fett angezeigt.
 
 Die Anzahl der Rauten gibt die Ebene der Überschrift an.
 
@@ -38,9 +36,9 @@ Drei Rauten ergeben eine Unter-Unterüberschrift. Man kann bis zu sechs Ebenen v
 
 Um Wörter **fett** zu schreiben, umgibt man sie auf jeder Seite mit **zwei Sternchen**.
 
-Zwischen den Sternchen und dem umgebenen Text darf **kein Leerzeichen** stehen.`,
+Zwischen den Sternchen und dem umgebenen Text darf **kein Leerzeichen** stehen.
 
-  italic: `# Kursivschrift
+# Kursivschrift
 
 *Kursivschrift* erhält man mit *einem einzigen Sternchen* auf jeder Seite des Textes.
 

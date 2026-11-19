@@ -5,9 +5,9 @@ const IT: typeof FR = {
   notYet: "Non ancora! La prima differenza è cerchiata in rosso.",
   success: "Bravo! Esercizio «$1» riuscito.",
   alreadyDone:
-    "Hai già risolto l'esercizio «$1». Puoi passare al successivo senza far correggere il tuo codice.",
-  skipCheck: "Salta la correzione",
-  checkAnyway: "Correggi comunque",
+    "Il tuo codice non dà ancora il risultato atteso, ma hai già risolto l'esercizio «$1». Puoi passare al successivo senza finirlo.",
+  skipCheck: "Passa al successivo",
+  showDifference: "Mostra la differenza",
 };
 
 export default IT;

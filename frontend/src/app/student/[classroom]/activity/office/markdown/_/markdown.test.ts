@@ -1,4 +1,6 @@
-import { findDifference, stripMarkdown } from "./markdown";
+import type { Nodes } from "mdast";
+
+import { findDifference, parseMarkdown, remarkHighlight, stripMarkdown } from "./markdown";
 
 describe("office/markdown/markdown", () => {
   describe("findDifference()", () => {
@@ -76,5 +78,31 @@ describe("office/markdown/markdown", () => {
         expect(stripMarkdown(source)).toBe(text);
       });
     }
+  });
+
+  describe("remarkHighlight()", () => {
+    const highlighted = (source: string, path: number[]): string[] => {
+      const tree = parseMarkdown(source);
+      remarkHighlight(path, "hl")()(tree);
+      const found: string[] = [];
+      const visit = (node: Nodes) => {
+        const data = node.data as { hProperties?: { className?: string[] } } | undefined;
+        if (data?.hProperties?.className?.includes("hl")) found.push(node.type);
+        if ("children" in node) node.children.forEach(visit);
+      };
+      visit(tree);
+      return found;
+    };
+
+    it("should highlight the item of a tight list, whose paragraph is not displayed", () => {
+      const expected = "- a\n- b **c**";
+      const difference = findDifference(expected, "- a\n- b c");
+      expect(difference).not.toBeNull();
+      expect(highlighted("- a\n- b c", difference?.student ?? [])).toEqual(["listItem"]);
+    });
+
+    it("should highlight the paragraph of an item of a loose list", () => {
+      expect(highlighted("- a\n\n- b c", [0, 1, 0, 0])).toEqual(["paragraph"]);
+    });
   });
 });

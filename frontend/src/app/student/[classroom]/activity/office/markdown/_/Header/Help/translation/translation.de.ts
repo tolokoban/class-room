@@ -3,6 +3,7 @@ import FR from "./translation.fr";
 const DE: typeof FR = {
   title: "Markdown-Spickzettel",
   close: "Schließen",
+  download: "Herunterladen",
   code: "Code",
   result: "Ergebnis",
 

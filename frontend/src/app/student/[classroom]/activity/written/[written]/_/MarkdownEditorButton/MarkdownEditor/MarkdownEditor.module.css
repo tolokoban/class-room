@@ -1,0 +1,69 @@
+div.markdownEditor {
+  width: 100vw;
+  height: 100vh;
+  display: grid;
+  grid-template-rows: auto 1fr;
+  background: var(--theme-color-neutral-1);
+  color: var(--theme-color-on-neutral-1);
+
+  > header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1em;
+    padding: 0.5em;
+    background: var(--theme-color-primary-5);
+    color: var(--theme-color-on-primary-5);
+
+    > h1 {
+      margin: 0;
+      font-size: 1.2em;
+    }
+  }
+
+  > main {
+    min-height: 0;
+    padding: 0.5em;
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+    /* Headers and bodies of both sections share the same rows (see the subgrid below),
+       so the two headers always have the exact same height. */
+    grid-template-rows: auto minmax(0, 1fr);
+    gap: 0.5em;
+
+    /* Portrait screens: one panel above the other. */
+    @media (orientation: portrait) {
+      grid-template-columns: minmax(0, 1fr);
+      grid-template-rows: auto minmax(0, 1fr) auto minmax(0, 1fr);
+    }
+
+    > section {
+      grid-row: span 2;
+      display: grid;
+      grid-template-rows: subgrid;
+      row-gap: 0;
+      overflow: hidden;
+      border-radius: 0.25em;
+      background: var(--theme-color-neutral-9);
+      color: var(--theme-color-on-neutral-9);
+
+      > header {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 1em;
+        min-height: 2em;
+        padding: 0.125em 0.5em;
+        background: var(--theme-color-primary-5);
+        color: var(--theme-color-on-primary-5);
+        font-weight: bold;
+      }
+
+      > div {
+        min-height: 0;
+        padding: 0.5em;
+        overflow: auto;
+      }
+    }
+  }
+}

@@ -18,11 +18,12 @@ export interface HelpProps {
  * Every Markdown syntax (Github flavored), with an example.
  */
 export function Help({ className, section, onClose }: HelpProps) {
-  const { tr, ref, sections } = useHelp(section);
+  const { tr, ref, sections, handleDownload } = useHelp(section);
   return (
     <ViewDialog
       className={$.join(className, Styles.help)}
       title={tr.title}
+      buttonCancel={{ children: tr.download, onClick: handleDownload }}
       buttonValidate={{ children: tr.close, onClick: onClose }}
     >
       <div ref={ref}>

@@ -3,6 +3,7 @@ import FR from "./translation.fr";
 const IT: typeof FR = {
   title: "Promemoria Markdown",
   close: "Chiudi",
+  download: "Scarica",
   code: "Codice",
   result: "Risultato",
 

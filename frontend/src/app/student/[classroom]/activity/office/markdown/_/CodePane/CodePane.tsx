@@ -1,9 +1,10 @@
 import { IconReset, Theme, ViewButton, ViewSwitch } from "@tolokoban/ui";
 import React from "react";
 
+import { CodeEditor } from "@/components/CodeEditor";
+
 import { type NodePath } from "../markdown";
 import { Preview } from "../Preview";
-import { Editor } from "./Editor";
 import { useTranslation } from "./translation";
 
 import Styles from "./CodePane.module.css";
@@ -34,7 +35,7 @@ export function CodePane({ className, value, onChange, onReset, highlight }: Cod
         <ViewSwitch value={preview} onChange={setPreview}>
           {tr.preview}
         </ViewSwitch>
-        <ViewButton variant="text" color="primary-5" icon={IconReset} onClick={onReset}>
+        <ViewButton variant="text" icon={IconReset} onClick={onReset}>
           {tr.reset}
         </ViewButton>
       </header>
@@ -42,7 +43,7 @@ export function CodePane({ className, value, onChange, onReset, highlight }: Cod
         {preview ? (
           <Preview value={value} highlight={highlight} />
         ) : (
-          <Editor value={value} onChange={onChange} />
+          <CodeEditor value={value} onChange={onChange} />
         )}
       </div>
     </section>

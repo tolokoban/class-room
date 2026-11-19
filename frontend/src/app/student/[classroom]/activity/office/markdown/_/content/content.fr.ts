@@ -25,9 +25,7 @@ Un titre se trouve seul sur sa ligne.
 
 Pour transformer une ligne en titre, on la commence par un dièse suivi d'une espace.
 
-Le titre est alors affiché en grand et en gras.`,
-
-  subtitles: `# Les niveaux de titres
+Le titre est alors affiché en grand et en gras.
 
 Le nombre de dièses indique le niveau du titre.
 
@@ -43,9 +41,9 @@ Trois dièses donnent un sous-sous-titre. On peut aller jusqu'à six niveaux.`,
 
 Pour mettre des mots en **gras**, on les entoure de **deux astérisques** de chaque côté.
 
-Il ne faut **pas d'espace** entre les astérisques et le texte qu'ils entourent.`,
+Il ne faut **pas d'espace** entre les astérisques et le texte qu'ils entourent.
 
-  italic: `# L'italique
+# L'italique
 
 L'*italique* s'obtient avec *un seul astérisque* de chaque côté du texte.
 

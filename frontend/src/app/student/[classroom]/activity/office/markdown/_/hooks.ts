@@ -35,22 +35,22 @@ export function useMarkdownActivity() {
   const handleNext = async () => {
     if (!id) return;
 
-    // An exercise already done can be skipped, to get back where the student stopped.
-    if (done.includes(id)) {
-      const skip = await confirm({
-        content: tr.alreadyDone$(title),
-        labelOK: tr.skipCheck,
-        labelCancel: tr.checkAnyway,
-        accent: true,
-      });
-      if (skip) {
-        goTo(index + 1);
-        return;
-      }
-    }
     const found = findDifference(expected, code);
-    setDifference(found);
     if (found) {
+      // An exercise already done can be skipped, to get back where the student stopped.
+      if (done.includes(id)) {
+        const skip = await confirm({
+          content: tr.alreadyDone$(title),
+          labelOK: tr.skipCheck,
+          labelCancel: tr.showDifference,
+          accent: true,
+        });
+        if (skip) {
+          goTo(index + 1);
+          return;
+        }
+      }
+      setDifference(found);
       Notif.warn(tr.notYet);
       return;
     }

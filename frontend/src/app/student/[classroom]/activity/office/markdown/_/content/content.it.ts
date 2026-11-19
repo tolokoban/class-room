@@ -20,9 +20,7 @@ Un titolo si trova da solo sulla sua riga.
 
 Per trasformare una riga in un titolo, la si inizia con un cancelletto seguito da uno spazio.
 
-Il titolo viene allora visualizzato grande e in grassetto.`,
-
-  subtitles: `# I livelli dei titoli
+Il titolo viene allora visualizzato grande e in grassetto.
 
 Il numero di cancelletti indica il livello del titolo.
 
@@ -38,9 +36,9 @@ Tre cancelletti danno un sotto-sottotitolo. Si può arrivare fino a sei livelli.
 
 Per mettere delle parole in **grassetto**, le si circonda con **due asterischi** da ogni lato.
 
-Non ci deve essere **nessuno spazio** tra gli asterischi e il testo che circondano.`,
+Non ci deve essere **nessuno spazio** tra gli asterischi e il testo che circondano.
 
-  italic: `# Il corsivo
+# Il corsivo
 
 Il *corsivo* si ottiene con *un solo asterisco* da ogni lato del testo.
 

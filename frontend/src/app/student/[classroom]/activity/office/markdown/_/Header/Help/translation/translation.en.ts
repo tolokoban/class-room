@@ -3,6 +3,7 @@ import FR from "./translation.fr";
 const EN: typeof FR = {
   title: "Markdown cheat sheet",
   close: "Close",
+  download: "Download",
   code: "Code",
   result: "Result",
 

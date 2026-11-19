@@ -1,11 +1,59 @@
-.help {
+/*
+ * The dialog fits the screen: only its `main` scrolls,
+ * so that the header (title) and the footer (buttons) are always visible.
+ */
+div.help {
   width: min(60em, 90vw);
+  max-height: 90vh;
+  display: grid;
+  grid-template-rows: auto minmax(0, 1fr) auto;
 
-  > div {
-    max-height: 70vh;
+  > main {
     overflow: auto;
-    display: flex;
-    flex-direction: column;
-    gap: 1em;
+
+    > div {
+      display: flex;
+      flex-direction: column;
+      gap: 1em;
+    }
   }
+}
+
+/*
+ * Body of the hidden document printed to get a PDF (see `print.ts`).
+ * The global styles of the app make `html` and `body` fit the screen without scrolling:
+ * that must be undone, otherwise only the first page would be printed.
+ */
+html:has(> .printable),
+.printable {
+  position: static;
+  width: auto;
+  height: auto;
+  overflow: visible;
+}
+
+.printable {
+  margin: 0;
+  font-size: 11pt;
+  background: none;
+  print-color-adjust: exact;
+  -webkit-print-color-adjust: exact;
+
+  > h1 {
+    margin: 0 0 1em;
+  }
+
+  /* Block layout (not flex), so that the sections can be spread over several pages. */
+  > div {
+    display: block;
+
+    > section {
+      margin: 0 0 1em;
+      break-inside: avoid;
+    }
+  }
+}
+
+@page {
+  margin: 1.5cm;
 }

@@ -1,7 +1,10 @@
 import React from "react";
 
+import { printAsPdf } from "./print";
 import { SECTIONS } from "./sections";
 import { useTranslation } from "./translation";
+
+import Styles from "./Help.module.css";
 
 export function useHelp(section: string | undefined) {
   const tr = useTranslation();
@@ -19,5 +22,8 @@ export function useHelp(section: string | undefined) {
     text: tr[`${id}Text`],
     example: tr[`${id}Example`],
   }));
-  return { tr, ref, sections };
+  const handleDownload = () => {
+    if (ref.current) void printAsPdf(tr.title, ref.current, Styles.printable);
+  };
+  return { tr, ref, sections, handleDownload };
 }

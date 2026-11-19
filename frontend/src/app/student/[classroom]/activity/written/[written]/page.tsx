@@ -4,6 +4,7 @@ import { Md } from "@/components/Md";
 import { WrittenAttachments } from "@/components/WrittenAttachments";
 import { WrittenTimer } from "@/components/WrittenTimer";
 
+import { MarkdownEditorButton } from "./_/MarkdownEditorButton";
 import { StatusMessage } from "./_/StatusMessage";
 import { UploadSlot } from "./_/UploadSlot";
 import { useWrittenStudentPage } from "./hooks";
@@ -38,6 +39,7 @@ export default function Page() {
           <Md value={data.description} resolveUrl={page.resolveUrl} />
         </section>
         <WrittenAttachments attachments={data.attachments} classroomCode={page.classroom} />
+        <MarkdownEditorButton writtenId={page.writtenId} />
       </div>
       <aside>
         <WrittenTimer timer={data.timer} now={data.now} />
