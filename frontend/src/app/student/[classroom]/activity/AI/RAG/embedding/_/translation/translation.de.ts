@@ -17,6 +17,7 @@ const DE: typeof FR = {
   alreadyAsked: "Du hast schon eine fast gleiche Frage gestellt!",
   previousQuestion: "Bereits gestellte Frage: „$1“ (Ähnlichkeit: $2), verstanden als: „$3“",
   notUnderstood: "nicht verstanden",
+  loadingModels: "Die Modelle für Embedding und grammatikalische Analyse werden geladen…",
   error: "Das Modell kann nicht geladen werden: $1",
   summary: "Zusammenfassung deiner Fragen:",
   summaryEmpty: "Du hast noch keine Frage gestellt.",

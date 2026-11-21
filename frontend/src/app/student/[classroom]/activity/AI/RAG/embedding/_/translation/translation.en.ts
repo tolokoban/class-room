@@ -16,6 +16,7 @@ const EN: typeof FR = {
   alreadyAsked: "You have already asked an almost identical question!",
   previousQuestion: "Question already asked: “$1” (similarity: $2), understood as: “$3”",
   notUnderstood: "not understood",
+  loadingModels: "Loading the embedding and grammatical analysis models…",
   error: "Unable to load the model: $1",
   summary: "Summary of your questions:",
   summaryEmpty: "You haven't asked any question yet.",

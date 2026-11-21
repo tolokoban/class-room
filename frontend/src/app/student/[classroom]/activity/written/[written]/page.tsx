@@ -42,7 +42,7 @@ export default function Page() {
         <MarkdownEditorButton writtenId={page.writtenId} />
       </div>
       <aside>
-        <WrittenTimer timer={data.timer} now={data.now} />
+        <WrittenTimer timer={data.timer} now={data.now} hideWhenOver />
         {status !== "open" && (
           <StatusMessage status={status} resultsUrl={page.resultsUrl} editUrl={page.editUrl} />
         )}

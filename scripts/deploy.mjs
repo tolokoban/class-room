@@ -31,6 +31,8 @@ const ENV_FILE = resolve(ROOT, ".env")
 const HOST = "home405998676.1and1-data.host"
 const USER = "u68074545"
 const PORT = 22
+// Number of remote `.hash` files read in parallel.
+const HASH_READ_CONCURRENCY = 8
 // Paths relative to `backend/www` that must never be uploaded.
 const EXCLUDED = new Set(["api/env.php"])
 // The files uploaded by the teachers live on the server: only their `.htaccess` is uploaded.
@@ -112,15 +114,35 @@ async function listRemoteFiles(sftp, dir, prefix = "", files = new Set()) {
 async function readRemoteHashes(sftp, remoteDir, files) {
     const remoteFiles = await listRemoteFiles(sftp, remoteDir)
     const hashes = new Map()
-    await Promise.all(
-        files
-            .filter((file) => remoteFiles.has(`${file.path}.hash`))
-            .map(async (file) => {
-                const content = await sftp.get(posix.join(remoteDir, `${file.path}.hash`))
-                hashes.set(file.path, content.toString("utf8").trim())
-            })
-    )
+    const queue = files.filter((file) => remoteFiles.has(`${file.path}.hash`))
+    // The server fails ("get: Failure") when too many files are opened at the same time.
+    const worker = async () => {
+        for (let file = queue.shift(); file; file = queue.shift()) {
+            const hash = await readRemoteHash(sftp, posix.join(remoteDir, `${file.path}.hash`))
+            if (hash) hashes.set(file.path, hash)
+        }
+    }
+    await Promise.all(Array.from({ length: HASH_READ_CONCURRENCY }, worker))
     return hashes
+}
+
+/**
+ * Read a remote `.hash` file, trying again a few times if the server fails.
+ * @returns {Promise<string | undefined>} The hash, or `undefined` if it could
+ *   not be read: the file is then considered changed and uploaded again.
+ */
+async function readRemoteHash(sftp, remote, attempts = 3) {
+    for (let attempt = 1; attempt <= attempts; attempt++) {
+        try {
+            const content = await sftp.get(remote)
+            return content.toString("utf8").trim()
+        } catch (ex) {
+            if (attempt === attempts) {
+                console.warn(`Unable to read ${remote} (${ex.message}): the file will be uploaded again.`)
+            }
+        }
+    }
+    return undefined
 }
 
 async function connect(env) {

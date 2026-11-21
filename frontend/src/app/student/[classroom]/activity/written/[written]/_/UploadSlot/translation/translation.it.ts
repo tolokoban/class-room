@@ -8,7 +8,6 @@ const IT: typeof FR = {
   upload: "Carica",
   replace: "Sostituisci",
   maxSize: "max. $1",
-  late: "in ritardo",
   tooLarge: "Il file «$1» è troppo grande (max. $2).",
   emptyFile: "Il file «$1» è vuoto.",
   uploaded: "Il file «$1» è stato caricato.",

@@ -1,8 +1,11 @@
 import React from "react";
 
 import { Notif } from "@/components/Notification/manager";
+import { embed } from "../../_/embedder";
+import { useEmbedder } from "../../_/hooks";
+import type { Probe } from "../../_/VectorsView";
 import type { Exchange, Message } from "./Conversation";
-import { addProgressListener, embed, loadModel, type Model } from "./embedder";
+import { PROJECTION } from "./data/projection";
 import {
   type Animal,
   farthestQuestion,
@@ -16,51 +19,19 @@ import {
   reply,
   understandingOf,
 } from "./game";
+import { makeScene } from "./scene";
+import { loadTagger } from "./syntax/tagger";
 import { useTranslation } from "./translation";
-import type { Probe } from "./VectorsView";
+
+import VectorsUrl from "./data/vectors.dat";
 
 /** Number of questions linked to the student's sentence in the 3D view. */
 const NEIGHBOURS_COUNT = 3;
 
-export type EmbedderState =
-  | { status: "loading"; progress: number; remaining: number | null }
-  | { status: "error"; message: string }
-  | ({ status: "ready" } & Model);
-
-export function useEmbedder(): EmbedderState {
-  const [state, setState] = React.useState<EmbedderState>({
-    status: "loading",
-    progress: 0,
-    remaining: null,
-  });
-  React.useEffect(() => {
-    let alive = true;
-    const removeListener = addProgressListener((progress, remaining) => {
-      if (alive) setState({ status: "loading", progress, remaining });
-    });
-    loadModel()
-      .then((model) => {
-        if (alive) setState({ status: "ready", ...model });
-      })
-      .catch((error: unknown) => {
-        if (alive)
-          setState({
-            status: "error",
-            message: error instanceof Error ? error.message : String(error),
-          });
-      })
-      .finally(removeListener);
-    return () => {
-      alive = false;
-      removeListener();
-    };
-  }, []);
-  return state;
-}
-
 export function useGame() {
   const tr = useTranslation();
-  const embedder = useEmbedder();
+  // The game starts only when the part-of-speech model is loaded too.
+  const embedder = useEmbedder(VectorsUrl, loadTagger);
   const [animal, setAnimal] = React.useState<Animal>(() => pickAnimal());
   const [over, setOver] = React.useState(false);
   const [messages, setMessages] = React.useState<Message[]>([]);
@@ -73,6 +44,8 @@ export function useGame() {
   /** The questions of the current game that got an answer or were guesses, with their replies. */
   const refExchanges = React.useRef<Exchange[]>([]);
   const ready = embedder.status === "ready";
+  const vectors = ready ? embedder.vectors : null;
+  const scene = React.useMemo(() => (vectors ? makeScene(vectors) : []), [vectors]);
   React.useEffect(() => {
     if (ready && !over) refInput.current?.focus();
   }, [ready, over]);
@@ -166,7 +139,8 @@ export function useGame() {
     tr,
     embedder,
     ready,
-    vectors: embedder.status === "ready" ? embedder.vectors : null,
+    scene,
+    projection: PROJECTION,
     probe,
     refInput,
     messages,

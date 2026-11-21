@@ -10,13 +10,26 @@ An embedding model turns a sentence into a vector of 384 numbers. Sentences with
 
 ## Files
 
+The model, the 3D view and the loading are shared with the activity "Retrouve la fable"
+(`../embedding2/`): they live in `../_/`.
+
 ```text
+RAG/_/                          Shared by the RAG activities.
+├── model.ts                    Model name, dtype, vector size and text prefix.
+│                               Shared by the browser AND the generators.
+├── generator.mts               Helpers for the generators: embedding, `vectors.dat`, projection.
+├── lda.ts                      Fisher LDA, used by the generators for the 3D view.
+├── projection.ts               Places an embedding in the 3D view.
+├── vectors.ts                  Decoding of `vectors.dat` and cosine similarity.
+├── embedder.ts                 Loads the model and a `vectors.dat`, embeds a sentence.
+├── hooks.ts                    `useEmbedder()`: loading state of the model.
+├── LoadingOverlay/             Progress bar shown while the model downloads.
+└── VectorsView/                The 3D view of the embeddings and the student's sentence.
+
 embedding/
 ├── page.tsx, page.module.css   The page: the game on the left, the 3D view on the right.
 ├── info.fr.md                  Title and description shown in the activities list.
 └── _/
-    ├── model.ts                Model name, dtype, vector size and text prefix.
-    │                           Shared by the browser AND the generator.
     ├── types.ts                `Animals` and `Questions` types.
     ├── source/                 What humans edit.
     │   ├── questions.ts        The questions, several wordings per question.
@@ -28,15 +41,12 @@ embedding/
     │   ├── animals.ts          Animals with their answers and the offsets of their names.
     │   ├── projection.ts       Mean and axes of the 3D projection (Fisher LDA).
     │   └── vectors.dat         All the embeddings, in binary.
-    ├── lda.ts                  Fisher LDA, used by the generator for the 3D view.
-    ├── projection.ts           Places an embedding in the 3D view.
-    ├── vectors.ts              Decoding of `vectors.dat` and cosine similarity.
-    ├── embedder.ts             Loads the model and `vectors.dat`, embeds a sentence.
     ├── game.ts                 Matching logic: question, guess, or "too vague".
+    ├── scene.ts                The wordings of the questions, placed in the 3D view.
     ├── hooks.ts                React state of the game.
     ├── Conversation/           The list of messages.
-    ├── LoadingOverlay/         Progress bar shown while the model downloads.
-    ├── VectorsView/            The 3D view of the questions and the student's sentence.
+    │   └── Analysis/           Grammatical analysis shown under each question (experimental).
+    ├── syntax/                 Normalization, part-of-speech tagging and word groups.
     └── translation/            UI texts in fr, en, de and it.
 ```
 
@@ -44,14 +54,14 @@ The game content (questions and answers) is in French only. Only the UI texts ar
 
 ## The model
 
-`Xenova/multilingual-e5-small` (see `_/model.ts`):
+`Xenova/multilingual-e5-small` (see `../_/model.ts`):
 
 - **Size:** about 120 MB, quantized to 8 bits (`dtype: "q8"`).
 - **Output:** vectors of 384 dimensions.
 - **Prefix:** E5 models expect a prefix. We use `"query: "` for every text, because we compare a question with other questions (a symmetric task). `prepareText()` adds it.
 - **Normalization:** the vectors are mean-pooled and normalized to a length of 1, so the cosine similarity is a plain dot product.
 
-The browser and the generator **must** use the same model, dtype and prefix, otherwise the vectors are not comparable. That is why all of them live in `model.ts`.
+The browser and the generator **must** use the same model, dtype and prefix, otherwise the vectors are not comparable. That is why all of them live in `../_/model.ts`, shared by both RAG activities.
 
 ## From sources to data: `npm run embeddings`
 
@@ -99,7 +109,7 @@ Keeping the vectors out of the TypeScript makes the JavaScript bundle much small
 
 ## In the browser
 
-### Loading (`embedder.ts`)
+### Loading (`../_/embedder.ts`)
 
 `loadModel()` downloads two things in parallel:
 
@@ -152,11 +162,23 @@ When a reasonable question is not understood, prefer **adding a wording** to `so
 - **Close but different meanings** can be confused. "il mange du poisson ?" is answered as "Est-ce un poisson ?". "il a des griffes ?" is "too vague", because it is as close to the retractable claws as to "Il griffe ?". "il marche ?" and "il se déplace comment ?" are "too vague" too: they are as close to "Il court ?" as to "Il rampe ?" or "Il saute ?". There is no question about walking, because almost every animal walks.
 - **Tense:** extinct and imaginary animals are described in the present tense in the shared answers. Their specific answers correct this where it matters.
 
+## Grammatical analysis (experimental)
+
+The goal is to make the matching more reliable by cutting the question into groups (action, complement…) and matching each group in a smaller space. For now, the analysis is only **displayed** under each question of the student. It does not change the answer.
+
+Everything runs in the browser, so the Python parsers (spaCy, Stanza…) cannot be used. Instead, `syntax/` does it in three steps:
+
+1. **Normalization** (`normalize.ts`): the question is lowercased and rewritten as a statement ("Mange-t-il de la viande ?" → "il mange de la viande ?"). The tagging model has been trained on newspapers: on inverted questions, it takes "Vit" for a noun and cuts "Mange" into "M" + "ange".
+2. **Part-of-speech tagging** (`tagger.ts`, `words.ts`): the model `Xenova/french-camembert-postag-model` (≈ 110 Mo, French only) gives each word a tag of the French Treebank (`V`, `NC`, `DET`, `P`, `CLS`…). It is downloaded in the background once the embedding model is ready.
+3. **Word groups** (`groups.ts`): simple rules on the tags make the groups subject, action, complement, question and link.
+
+Hover a word or a group to see its name. Known limits: there is no real syntactic parser, so all the groups after the verb are "complements" ("de la viande" and "la nuit" alike), and the question word is not moved ("combien de pattes il a ?").
+
 ## The 3D view
 
-`VectorsView` draws every wording of every question as a point, with one color per question. When the student types a sentence, it appears as a bigger point, linked to its **3 nearest questions**, each labeled with its similarity. Students can drag to rotate the view, use the wheel to zoom, and hover over a point to read its wording. The animals' names are not shown: 91 groups would be too crowded.
+`VectorsView` (in `../_/`) draws every wording of every question as a point, with one color per question. When the student types a sentence, it appears as a bigger point, linked to its **3 nearest questions**, each labeled with its similarity. Students can drag to rotate the view, use the wheel to zoom, and hover over a point to read its wording. The animals' names are not shown: 91 groups would be too crowded.
 
-The spheres, the links and the cube are painted with WebGL by `@tolokoban/tgd` (`VectorsView/renderer.ts` and `painters.ts`). The colors come from a palette texture with one pixel per color. The highlighted objects (the sentence, its nearest questions, the links between them, and the hovered question) glow. `bloom.ts` paints the scene in a framebuffer, and the highlighted objects in another one at a quarter of the resolution, cleared to opaque black so that nothing else glows. This glow is blurred, then a last filter paints the scene on the canvas and adds the glow. While a sentence is shown, this filter also dims and desaturates the scene, so that the glowing objects stand out. WebGL cannot write text, so the labels are drawn on a transparent 2D canvas on top of it (`overlay.ts`), at the positions given by `camera.apply()`.
+The spheres, the links and the cube are painted with WebGL by `@tolokoban/tgd` (`VectorsView/renderer.ts` and `painters.ts`). The colors come from a palette texture with one pixel per color. The highlighted objects (the sentence, its nearest questions, the links between them, and the hovered question) glow. `bloom.ts` paints the scene in a framebuffer, and the highlighted objects in another one at a quarter of the resolution, cleared to opaque black so that nothing else glows. This glow is blurred, then a last filter paints the scene on the canvas and adds the glow. While a sentence is shown, this filter also dims and desaturates the scene, so that the glowing objects stand out. WebGL cannot write text, so the labels are drawn on a transparent 2D canvas on top of it (`overlay.ts`), at the positions given by `camera.apply()`. `scene.ts` gives the view its points: one per wording, colored by question.
 
 ### Why a Fisher LDA, and not a PCA?
 
@@ -191,6 +213,6 @@ Add an entry in `source/animals.ts` with its name (with the article), aliases, l
 
 ### Change the model
 
-1. Change `MODEL_ID`, `MODEL_DTYPE`, `EMBEDDING_SIZE` and `prepareText()` in `model.ts`, following the new model's documentation.
+1. Change `MODEL_ID`, `MODEL_DTYPE`, `EMBEDDING_SIZE` and `prepareText()` in `../_/model.ts`, following the new model's documentation. It changes both RAG activities: run `npm run embeddings:fables` too.
 2. Run `npm run embeddings`. It fails if the vector size does not match `EMBEDDING_SIZE`. It also recomputes the 3D projection.
 3. Re-tune the constants in `game.ts`: every model has its own similarity range.

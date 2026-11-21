@@ -14,6 +14,7 @@ const FR = {
   alreadyAsked: "Tu as déjà posé une question presque identique !",
   previousQuestion: "Question déjà posée : « $1 » (similarité : $2), comprise comme : « $3 »",
   notUnderstood: "pas comprise",
+  loadingModels: "Chargement des modèles d'embedding et d'analyse grammaticale…",
   error: "Impossible de charger le modèle : $1",
   summary: "Récapitulatif de tes questions :",
   summaryEmpty: "Tu n'as encore posé aucune question.",

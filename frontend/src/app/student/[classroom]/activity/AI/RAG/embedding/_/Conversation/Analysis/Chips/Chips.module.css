@@ -1,0 +1,61 @@
+div.chips {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: 0.25em;
+
+  > div {
+    display: inline-block;
+    padding: 0 0.25em;
+    border-radius: 0.25em;
+    cursor: help;
+  }
+}
+
+/* Parts of speech */
+
+div.verb,
+div.action {
+  background: var(--theme-color-tertiary-5);
+  color: var(--theme-color-on-tertiary-5);
+}
+
+div.pronoun,
+div.subject {
+  background: var(--theme-color-primary-8);
+  color: var(--theme-color-on-primary-8);
+}
+
+div.noun,
+div.complement {
+  background: var(--theme-color-secondary-7);
+  color: var(--theme-color-on-secondary-7);
+}
+
+div.adjective {
+  background: var(--theme-color-secondary-4);
+  color: var(--theme-color-on-secondary-4);
+}
+
+div.determiner,
+div.preposition {
+  background: var(--theme-color-neutral-8);
+  color: var(--theme-color-on-neutral-8);
+}
+
+div.adverb {
+  background: var(--theme-color-tertiary-8);
+  color: var(--theme-color-on-tertiary-8);
+}
+
+div.link {
+  background: var(--theme-color-neutral-6);
+  color: var(--theme-color-on-neutral-6);
+}
+
+/* Word groups */
+
+div.question {
+  background: color-mix(in srgb, var(--theme-color-error) 25%, var(--theme-color-neutral-9));
+  color: var(--theme-color-on-neutral-9);
+}

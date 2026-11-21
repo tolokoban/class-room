@@ -8,7 +8,6 @@ const DE: typeof FR = {
   upload: "Hochladen",
   replace: "Ersetzen",
   maxSize: "max. $1",
-  late: "verspätet",
   tooLarge: "Die Datei „$1“ ist zu groß (max. $2).",
   emptyFile: "Die Datei „$1“ ist leer.",
   uploaded: "Die Datei „$1“ wurde hochgeladen.",

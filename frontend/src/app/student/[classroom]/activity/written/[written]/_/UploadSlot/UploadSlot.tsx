@@ -60,7 +60,6 @@ export function UploadSlot({
             <IconCheck />
             <span>{upload.original}</span>
             <HumanSize bytes={upload.size} />
-            {upload.late && <span className={Styles.late}>{tr.late}</span>}
           </>
         ) : (
           <em>{tr.empty}</em>

@@ -1,7 +1,8 @@
+import { dot, similarity } from "../../_/vectors";
+import type { Neighbour } from "../../_/VectorsView";
 import { ANIMALS } from "./data/animals";
 import { QUESTIONS } from "./data/questions";
 import type { Animals } from "./types";
-import { dot, similarity } from "./vectors";
 
 export type Animal = Animals[number];
 
@@ -53,17 +54,9 @@ interface Match<T> {
   margin: number;
 }
 
-/** A question close to the student's sentence, through its closest wording. */
-export interface Neighbour {
-  /** The closest wording of the question. */
-  question: string;
-  /** Offset of its embedding in `vectors`. */
-  offset: number;
-  similarity: number;
-}
-
 /**
- * @returns The `count` questions that are the closest to `vector`, the closest first.
+ * @returns The `count` questions that are the closest to `vector`, the closest first,
+ * through their closest wording.
  */
 export function nearestQuestions(
   vector: number[],
@@ -72,7 +65,7 @@ export function nearestQuestions(
 ): Neighbour[] {
   return rank(vector, vectors, Object.values(QUESTIONS), (list) => list.map(({ offset }) => offset))
     .slice(0, count)
-    .map(({ item, index, similarity }) => ({ ...item[index], similarity }));
+    .map(({ item, index, similarity }) => toNeighbour(item[index], similarity));
 }
 
 /**
@@ -85,7 +78,15 @@ export function farthestQuestion(vector: number[], vectors: Float32Array): Neigh
   const last = ranking[ranking.length - 1];
   if (!last) return null;
 
-  return { ...last.item[last.index], similarity: last.similarity };
+  return toNeighbour(last.item[last.index], last.similarity);
+}
+
+/** A wording of a question, as the 3D view expects it. */
+function toNeighbour(
+  { question, offset }: { question: string; offset: number },
+  similarity: number,
+): Neighbour {
+  return { text: question, offset, similarity };
 }
 
 /** What the game understood a sentence of the student as. */

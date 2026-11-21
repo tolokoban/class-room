@@ -1,0 +1,17 @@
+.analysis {
+  display: grid;
+  grid-template-columns: auto 1fr;
+  align-items: baseline;
+  gap: 0.25em 0.5em;
+  margin-top: 0.5em;
+  font-size: 0.875em;
+
+  > span {
+    opacity: 0.8;
+  }
+}
+
+small.analysis {
+  display: block;
+  opacity: 0.7;
+}

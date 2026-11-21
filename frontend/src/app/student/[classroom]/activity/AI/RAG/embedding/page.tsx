@@ -1,9 +1,9 @@
 import { IconHelp, ViewButton, ViewFloatingButton } from "@tolokoban/ui";
 
+import { LoadingOverlay } from "../_/LoadingOverlay";
+import { VectorsView } from "../_/VectorsView";
 import { Conversation } from "./_/Conversation";
 import { useGame } from "./_/hooks";
-import { LoadingOverlay } from "./_/LoadingOverlay";
-import { VectorsView } from "./_/VectorsView";
 
 import Styles from "./page.module.css";
 
@@ -12,7 +12,8 @@ export default function Page() {
     tr,
     embedder,
     ready,
-    vectors,
+    scene,
+    projection,
     probe,
     refInput,
     messages,
@@ -61,10 +62,14 @@ export default function Page() {
             </ViewButton>
           </footer>
         </section>
-        <VectorsView vectors={vectors} probe={probe} />
+        <VectorsView scene={scene} projection={projection} probe={probe} />
       </div>
       {embedder.status === "loading" && (
-        <LoadingOverlay progress={embedder.progress} remaining={embedder.remaining} />
+        <LoadingOverlay
+          title={tr.loadingModels}
+          progress={embedder.progress}
+          remaining={embedder.remaining}
+        />
       )}
     </div>
   );

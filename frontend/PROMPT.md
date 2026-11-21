@@ -1,21 +1,21 @@
-Demo mode soundd great. But here what I really want in the end.
+I nedd to improve activity `frontend/src/app/student/[classroom]/activity/AI/RAG/embedding`.
 
-In demo mode we act as if the current user was a teacher.
-The login nickname will be "Demo Teacher" and the only difference
-with a real teacher is that nothing is never sent to the backend.
-We use the IndexDB for all entrypoints.
-For files uploads, we need a special table in IndexDB.
+Today, we use an embedding model to match prerecorded questions with the one asked by the student.
+But this is not reliable enough.
 
-In the future, I will add Stripe to let people rent a teacher period and then access the full potential of applications.
-So, I need a header above everything else, with strong colors and a short message saying that you can become a teacher by contacting the website admin. A button will open an email client with `contact@tolokoban.org`.
+so I want to try a new approach: first we try to tag the questions with the dependency parsing model "spaCy", "Stanza", "Trankit", or a SRL model (from hugging face).
 
-All the fetches of AI models are allowed.
+I need help to choose the correct model, ans it must perform well in english and french.
 
-For now, we don't want to generate any seed data.
-The demo must only show what a teacher can do, not a student.
+The main idea is to decompose the question and then have more smaller spaces to match with my embedding model.
 
-Thats's why we need a link just below the teacher login box, that will start the demo mode by logging the user as the fake "Demo Teacher".
+For instance, we can first look for verbs (actions), like "manger", "vivre", ... And depending on the nearest, we can then search for the object.
 
-Always remember to keep in sync the demoAPi with the real API.
+Let's take an example: "Mange-t-il de la viande".
+The action is "Mange" and the object "de la viande".
+In the space of actions, deduced from the prerecorded questions, we may have "mange", "dévore", "se nourrit", "vole", "vit", ... so we match the group made of "mange", "dévore" and "se nourrit". And then we search for the object in a subset of thinks that can be eaten. so "Il vit la nuit" won't be searched for.
 
-What do you think of this proposition?
+The first step I wold like to implement, is that after every question form the student, we display the question with highlighting of the tags, and when the mouse hovers, we display a tooltip with the name og the tag.
+This way I can better see how the tagging works, and we will see for the rest later.
+
+What do you think?

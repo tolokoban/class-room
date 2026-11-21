@@ -17,6 +17,7 @@ const IT: typeof FR = {
   alreadyAsked: "Hai già fatto una domanda quasi identica!",
   previousQuestion: "Domanda già fatta: «$1» (somiglianza: $2), capita come: «$3»",
   notUnderstood: "non capita",
+  loadingModels: "Caricamento dei modelli di embedding e di analisi grammaticale…",
   error: "Impossibile caricare il modello: $1",
   summary: "Riepilogo delle tue domande:",
   summaryEmpty: "Non hai ancora fatto nessuna domanda.",

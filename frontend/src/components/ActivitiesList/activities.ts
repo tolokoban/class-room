@@ -5,7 +5,7 @@
 type Activity = [name: string, children?: Activity[]];
 
 export const ACTIVITIES: Activity[] = [
-  ["AI", [["bilan-1"], ["chess"], ["CRAFT"], ["eliza"], ["GPS"], ["le-chat-mange-la"], ["mycin"], ["neural-network"], ["perceptron"], ["RAG", [["embedding"]]], ["types-ia-generatives"], ["usage"]]],
+  ["AI", [["bilan-1"], ["chess"], ["CRAFT"], ["eliza"], ["GPS"], ["le-chat-mange-la"], ["mycin"], ["neural-network"], ["perceptron"], ["RAG", [["embedding"], ["embedding2"]]], ["types-ia-generatives"], ["usage"]]],
   ["office", [["file-explorer"], ["markdown"], ["selection"], ["spreadsheet"]]],
   ["security", [["personal-data", [["AI-Act"], ["anonymous"], ["RGPD"]]]]],
 ];
@@ -56,6 +56,10 @@ export const INFOS: Record<
   "AI/RAG/embedding": {
     title: "Devine l'animal",
     description: "Un jeu pour découvrir les _embeddings_ : chaque question est transformée en vecteur, puis comparée aux questions connues.",
+  },
+  "AI/RAG/embedding2": {
+    title: "Retrouve la fable",
+    description: "Une recherche sémantique dans les fables d'Ésope, de Phèdre et de La Fontaine : chaque passage est transformé en vecteur, puis comparé à la description de la fable que tu cherches.",
   },
   "AI/types-ia-generatives": {},
   "AI/usage": {},

@@ -1,6 +1,8 @@
 import React from "react";
 import { Theme } from "@tolokoban/ui";
 
+import { Analysis } from "./Analysis";
+
 import Styles from "./Conversation.module.css";
 
 const $ = Theme.classNames;
@@ -39,6 +41,7 @@ export function Conversation({ className, messages }: ConversationProps) {
       {messages.map(({ from, text, detail, repeat, summary }, index) => (
         <div key={index} className={$.join(Styles[from], repeat && Styles.repeat)}>
           <p>{text}</p>
+          {from === "student" && <Analysis question={text} />}
           {summary && summary.length > 0 && (
             <ul>
               {summary.map(({ question, answer }, line) => (

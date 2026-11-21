@@ -25,6 +25,7 @@
     "scripts": {
         "activities": "node ../scripts/activities.mts",
         "embeddings": "node \"src/app/student/[classroom]/activity/AI/RAG/embedding/_/generate.mts\"",
+        "embeddings:fables": "node \"src/app/student/[classroom]/activity/AI/RAG/embedding2/_/generate.mts\"",
         "perceptron": "node \"src/app/student/[classroom]/activity/AI/perceptron/_/train.mts\"",
         "generate": "npm run activities && npm run routes",
         "routes": "build-react-routes ./src/app",

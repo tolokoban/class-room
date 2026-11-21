@@ -1,0 +1,14 @@
+div.results {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5em;
+  overflow-y: auto;
+
+  > header {
+    font-weight: bold;
+  }
+
+  > small {
+    opacity: 0.8;
+  }
+}

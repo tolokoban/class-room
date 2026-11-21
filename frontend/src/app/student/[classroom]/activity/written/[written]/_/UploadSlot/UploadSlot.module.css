@@ -29,13 +29,6 @@
     > span:first-of-type {
       overflow-wrap: anywhere;
     }
-
-    > .late {
-      padding: 0.125em 0.5em;
-      border-radius: 0.25em;
-      background: var(--theme-color-error);
-      color: var(--theme-color-on-error);
-    }
   }
 
   > progress {

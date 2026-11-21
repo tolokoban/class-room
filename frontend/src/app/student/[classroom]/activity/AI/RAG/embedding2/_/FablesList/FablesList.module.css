@@ -1,0 +1,38 @@
+/*
+ * The dialog fits the screen: only its `main` scrolls,
+ * so that the header (title) and the footer (button) are always visible.
+ */
+div.fablesList {
+  width: min(50em, 90vw);
+  max-height: 90vh;
+  display: grid;
+  grid-template-rows: auto minmax(0, 1fr) auto;
+
+  > main {
+    overflow: auto;
+
+    > div {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1em;
+
+      > section {
+        > h2 {
+          margin: 0 0 0.5em;
+          font-size: 1.1em;
+        }
+
+        > ul {
+          margin: 0;
+          padding-left: 1.5em;
+        }
+      }
+    }
+  }
+}
+
+@media (max-width: 600px) {
+  div.fablesList > main > div {
+    grid-template-columns: 1fr;
+  }
+}

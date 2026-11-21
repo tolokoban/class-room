@@ -2,7 +2,7 @@
     position: absolute;
     inset: 0;
     display: grid;
-    grid-template-rows: auto 1fr 1fr;
+    grid-template-rows: auto 3fr 1fr;
 }
 
 .quizView>header {

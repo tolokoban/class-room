@@ -1,0 +1,96 @@
+.page {
+  position: absolute;
+  inset: 0;
+  display: grid;
+  grid-template-rows: auto 1fr;
+
+  > header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 1em;
+    padding: 0.5em 1em;
+    background: var(--theme-color-primary-5);
+    color: var(--theme-color-on-primary-5);
+
+    > h1 {
+      margin: 0;
+      font-size: 1.25em;
+    }
+  }
+
+  > div.columns {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    min-height: 0;
+  }
+}
+
+.search {
+  display: flex;
+  flex-direction: column;
+  gap: 1em;
+  padding: 1em;
+  min-height: 0;
+  overflow-y: auto;
+  background: var(--theme-color-primary-3);
+  color: var(--theme-color-on-primary-3);
+
+  > p {
+    margin: 0;
+  }
+
+  > label {
+    font-weight: bold;
+  }
+
+  /* Nothing shrinks: the whole column scrolls as one block. */
+  > * {
+    flex: none;
+  }
+
+  > div.ask {
+    display: flex;
+    align-items: center;
+    gap: 0.5em;
+
+    > input {
+      flex: 1;
+      min-width: 0;
+      font: inherit;
+      padding: 0.5em;
+      border: none;
+      border-radius: 0.25em;
+      background: var(--theme-color-neutral-9);
+      color: var(--theme-color-on-neutral-9);
+    }
+  }
+
+  > .results {
+    overflow: visible;
+  }
+}
+
+/* Small screens: one column, and the whole page scrolls. */
+@media (max-width: 800px) {
+  .page {
+    grid-template-rows: auto auto;
+    overflow-y: auto;
+
+    > div.columns {
+      grid-template-columns: 1fr;
+
+      > section {
+        min-height: 85dvh;
+      }
+
+      > :last-child {
+        min-height: 85dvh;
+      }
+    }
+  }
+}
+
+.error {
+  color: var(--theme-color-error);
+}

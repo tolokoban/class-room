@@ -1,0 +1,92 @@
+details.result {
+  flex: none;
+  border-radius: 0.25em;
+  background: var(--theme-color-neutral-9);
+  color: var(--theme-color-on-neutral-9);
+
+  > summary {
+    display: flex;
+    align-items: center;
+    gap: 0.5em;
+    padding: 0.5em;
+    cursor: pointer;
+
+    > strong {
+      flex: 1;
+    }
+
+    > em {
+      opacity: 0.8;
+    }
+  }
+
+  &[open] > summary {
+    border-bottom: 1px solid var(--theme-color-neutral-7);
+  }
+
+  > div {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5em;
+    padding: 0.5em;
+
+    > p {
+      margin: 0;
+    }
+
+    > blockquote {
+      margin: 0;
+      padding: 0.5em 1em;
+      border-left: 0.25em solid var(--theme-color-secondary-5);
+      background: var(--theme-color-neutral-8);
+      color: var(--theme-color-on-neutral-8);
+      /* The verses of La Fontaine are separated by line breaks. */
+      white-space: pre-line;
+      font-style: italic;
+      max-height: 20em;
+      overflow-y: auto;
+    }
+
+    > small {
+      opacity: 0.8;
+    }
+
+    > a {
+      align-self: flex-end;
+      color: var(--theme-color-primary-3);
+    }
+  }
+}
+
+span.dot {
+  flex: none;
+  width: 0.75em;
+  height: 0.75em;
+  border-radius: 50%;
+}
+
+span.confidence {
+  flex: none;
+  display: flex;
+  align-items: center;
+  gap: 0.5em;
+
+  > b {
+    min-width: 3.5em;
+    text-align: right;
+  }
+}
+
+span.bar {
+  width: 6em;
+  height: 0.5em;
+  border-radius: 0.25em;
+  overflow: hidden;
+  background: var(--theme-color-neutral-7);
+
+  > span {
+    display: block;
+    height: 100%;
+    background: var(--theme-color-secondary-5);
+  }
+}

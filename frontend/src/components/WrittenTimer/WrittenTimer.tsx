@@ -16,15 +16,26 @@ export interface WrittenTimerProps {
   now: number;
   /** Default to "large". */
   size?: "large" | "small";
+  /** If `true`, nothing is displayed once the time is over. Default to `false`. */
+  hideWhenOver?: boolean;
 }
 
 /**
  * Time left before the end of a written production.
+ * Once the time is over, display the time elapsed since the end, unless `hideWhenOver` is set.
  */
-export function WrittenTimer({ className, timer, now, size = "large" }: WrittenTimerProps) {
+export function WrittenTimer({
+  className,
+  timer,
+  now,
+  size = "large",
+  hideWhenOver = false,
+}: WrittenTimerProps) {
   const tr = useTranslation();
   const { state, seconds } = useTimerValue(timer, now);
   const isOver = state !== "idle" && seconds < 0;
+  if (isOver && hideWhenOver) return null;
+
   const label = isOver ? tr.over : tr[state];
 
   return (
