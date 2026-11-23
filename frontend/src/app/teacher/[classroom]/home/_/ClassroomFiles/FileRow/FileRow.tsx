@@ -2,6 +2,7 @@ import { IconImport, Theme, ViewInputFile } from "@tolokoban/ui";
 
 import { UiActionDelete } from "@/components/UiActionDelete";
 import { FileItem, getFileUrl } from "@/service/calls/file";
+import { UploadProgress } from "../UploadProgress";
 import { useFileRow } from "./hooks";
 import { getMimeIcon } from "./mime";
 import { useTranslation } from "./translation";
@@ -29,6 +30,7 @@ export function FileRow({ className, file }: FileRowProps) {
         <a href={getFileUrl(file.id)} target="_blank" rel="noopener noreferrer">
           {file.name}
         </a>
+        {row.progress && <UploadProgress progress={row.progress} />}
       </td>
       <td>{row.size}</td>
       <td>
@@ -38,7 +40,8 @@ export function FileRow({ className, file }: FileRowProps) {
           label=""
           icon={IconImport}
           accept={row.accept}
-          waiting={row.isReplacing}
+          enabled={row.progress === null}
+          waiting={row.progress !== null}
           onLoad={row.replace}
         />
       </td>

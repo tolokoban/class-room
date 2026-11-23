@@ -5,6 +5,7 @@ import { SectionHeader } from "@/components/SectionHeader";
 import { FileRow } from "./FileRow";
 import { useClassroomFiles } from "./hooks";
 import { useTranslation } from "./translation";
+import { UploadProgress } from "./UploadProgress";
 
 import Styles from "./ClassroomFiles.module.css";
 
@@ -49,11 +50,13 @@ export function ClassroomFiles({ className, classroom, expanded, onToggle }: Cla
             )}
           </div>
           <footer>
+            {files.progress && <UploadProgress progress={files.progress} showName />}
             <ViewInputFile
               ref={files.refInput}
               multiple
               icon={IconAdd}
-              waiting={files.isPending}
+              enabled={files.progress === null}
+              waiting={files.progress !== null}
               onLoad={files.add}
             >
               {tr.add}

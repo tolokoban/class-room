@@ -1,0 +1,38 @@
+.studentWritten {
+  display: flex;
+  flex-direction: column;
+  gap: 1em;
+
+  > h2 {
+    margin: 0;
+    font-size: 1.25em;
+
+    > small {
+      font-weight: normal;
+      opacity: 0.8;
+    }
+  }
+
+  > section {
+    border-radius: 0.25em;
+    overflow: hidden;
+    background: var(--theme-color-primary-3);
+    color: var(--theme-color-on-primary-3);
+
+    > header {
+      background: var(--theme-color-primary-5);
+      color: var(--theme-color-on-primary-5);
+      padding: 0.5em;
+      font-weight: bold;
+    }
+
+    > em {
+      display: block;
+      padding: 0.5em;
+    }
+  }
+}
+
+.error {
+  color: var(--theme-color-error);
+}

@@ -2,6 +2,7 @@ import { isType$, TypeDef } from "@tolokoban/type-guards";
 
 import { resolveApiUrl } from "@/service/demo/links";
 
+import { sendChunks } from "./chunks";
 import { api, ApiErrorTypeAssertion, throwIfError } from "./service";
 
 /**
@@ -310,9 +311,6 @@ export interface WrittenUploadInput extends WrittenRef {
   signal?: AbortSignal;
 }
 
-/** Number of attempts to send a chunk before giving up. */
-const CHUNK_ATTEMPTS = 3;
-
 /**
  * Upload a file by chunks: `written/upload-init`, `written/upload-chunk` (as many as needed)
  * and `written/upload-complete`.
@@ -376,56 +374,6 @@ export async function writtenAttachmentUpload({
 
 export async function writtenAttachmentDelete(input: { attachmentId: number }): Promise<void> {
   await call("written/attachment-delete", input, "number");
-}
-
-/**
- * Send the content of a file chunk by chunk, each one encoded in base64.
- */
-async function sendChunks(
-  {
-    file,
-    chunkSize,
-    onProgress,
-    signal,
-  }: { file: File; chunkSize: number; onProgress?(progress: number): void; signal?: AbortSignal },
-  sendChunk: (offset: number, data: string) => Promise<unknown>,
-): Promise<void> {
-  onProgress?.(0);
-  for (let offset = 0; offset < file.size; offset += chunkSize) {
-    signal?.throwIfAborted();
-    const data = await readAsBase64(file.slice(offset, offset + chunkSize));
-    await withRetry(() => sendChunk(offset, data));
-    onProgress?.(Math.min(1, (offset + chunkSize) / file.size));
-  }
-}
-
-async function withRetry<T>(action: () => Promise<T>): Promise<T> {
-  for (let attempt = 1; ; attempt++) {
-    try {
-      return await action();
-    } catch (error) {
-      if (attempt >= CHUNK_ATTEMPTS) throw error;
-
-      await new Promise((resolve) => globalThis.setTimeout(resolve, 1000 * attempt));
-    }
-  }
-}
-
-/**
- * @returns The content of a blob encoded in base64 (without the `data:` prefix).
- */
-function readAsBase64(blob: Blob): Promise<string> {
-  return new Promise((resolve, reject) => {
-    const reader = new FileReader();
-    reader.addEventListener("load", () => {
-      const url = String(reader.result);
-      resolve(url.slice(url.indexOf(",") + 1));
-    });
-    reader.addEventListener("error", () =>
-      reject(reader.error ?? new Error("Unable to read the file!")),
-    );
-    reader.readAsDataURL(blob);
-  });
 }
 
 /** URL to open (or download) a file uploaded by a student. */

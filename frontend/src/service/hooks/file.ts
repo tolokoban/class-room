@@ -2,11 +2,10 @@ import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 
 import { API } from "@/service/calls";
 import {
-  FileAddInput,
   FileDeleteInput,
   FileItem,
   FileNotesSetInput,
-  FileReplaceInput,
+  FileUploadInput,
 } from "@/service/calls/file";
 import { ApiError } from "@/service/calls/service";
 
@@ -51,29 +50,13 @@ export function useServiceFileList(classroomCode: string): FileListResult {
 }
 
 /**
- * Upload a new file in a class room.
- * The matching `useServiceFileList()` is refreshed on success.
- */
-export function useServiceFileAdd(): FileMutationResult<FileAddInput, number> {
-  const queryClient = useQueryClient();
-  const { mutateAsync, isPending, error } = useMutation({
-    mutationFn: API.file.add,
-    onSuccess(_, { classroomCode }) {
-      void queryClient.invalidateQueries({ queryKey: [FILE_LIST_KEY, classroomCode] });
-    },
-  });
-
-  return { isPending, error: useApiError(error), mutate: mutateAsync };
-}
-
-/**
- * Replace an existing file.
+ * Upload a new file in a class room, or replace an existing one (see `API.file.upload()`).
  * Every `useServiceFileList()` is refreshed on success.
  */
-export function useServiceFileReplace(): FileMutationResult<FileReplaceInput, number> {
+export function useServiceFileUpload(): FileMutationResult<FileUploadInput, number> {
   const queryClient = useQueryClient();
   const { mutateAsync, isPending, error } = useMutation({
-    mutationFn: API.file.replace,
+    mutationFn: API.file.upload,
     onSuccess() {
       void queryClient.invalidateQueries({ queryKey: [FILE_LIST_KEY] });
     },

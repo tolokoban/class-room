@@ -61,25 +61,6 @@ const FR = {
   // Erreurs HTTP
   all413: "Le fichier est trop volumineux pour le serveur.",
 
-  // file/add
-  all50101: "Données invalides.",
-  all50102: "Cette classe n'existe pas.",
-  all50103: "Vous n'êtes pas le propriétaire de cette classe.",
-  all50104: "Un fichier porte déjà ce nom dans cette classe. Utilisez le remplacement.",
-  all50105: "Erreur de base de données lors de l'ajout du fichier.",
-  all50106: "Impossible d'enregistrer le fichier sur le serveur.",
-  all50107: "Le nom « notes.md » est réservé aux notes de la classe.",
-
-  // file/replace
-  all50201: "Données invalides.",
-  all50202: "Ce fichier n'existe pas.",
-  all50203: "Vous n'êtes pas le propriétaire de ce fichier.",
-  all50204: "Un autre fichier porte déjà ce nom dans cette classe.",
-  all50205: "Le nouveau fichier doit être du même type que celui qu'il remplace.",
-  all50206: "Erreur de base de données lors du remplacement du fichier.",
-  all50207: "Impossible d'enregistrer le fichier sur le serveur.",
-  all50208: "Le nom « notes.md » est réservé aux notes de la classe.",
-
   // file/delete
   all50301: "Données invalides.",
   all50302: "Ce fichier n'existe pas.",
@@ -103,6 +84,33 @@ const FR = {
   all50703: "Vous n'êtes pas le propriétaire de cette classe.",
   all50704: "Erreur de base de données lors de l'enregistrement des notes.",
   all50705: "Impossible d'enregistrer les notes sur le serveur.",
+
+  // file/upload-init
+  all50801: "Données invalides.",
+  all50802: "Cette classe n'existe pas.",
+  all50803: "Ce fichier n'existe pas.",
+  all50804: "Vous n'êtes pas le propriétaire de cette classe.",
+  all50805:
+    "Un autre fichier porte déjà ce nom dans cette classe. Pour remplacer un fichier, utilisez le bouton de remplacement.",
+  all50806: "Le nom « notes.md » est réservé aux notes de la classe.",
+  all50807: "Le nouveau fichier doit être du même type que celui qu'il remplace.",
+  all50808: "Le fichier est trop volumineux (100 Mo au maximum).",
+  all50809: "Pas assez de place sur le serveur, ou impossible d'y enregistrer le fichier.",
+  all50810: "Erreur de base de données lors de l'envoi du fichier.",
+
+  // file/upload-chunk
+  all50901: "Données invalides.",
+  all50902: "Cet envoi de fichier n'existe pas (ou a expiré).",
+  all50903: "Morceau de fichier invalide.",
+  all50904: "Impossible d'enregistrer le fichier sur le serveur.",
+
+  // file/upload-complete
+  all51001: "Données invalides.",
+  all51002: "Cet envoi de fichier n'existe pas (ou a expiré).",
+  all51003: "Des morceaux du fichier sont manquants.",
+  all51004: "Un autre fichier porte déjà ce nom dans cette classe.",
+  all51005: "Impossible d'enregistrer le fichier sur le serveur.",
+  all51006: "Erreur de base de données lors de l'enregistrement du fichier.",
   // room/enter, room/check, room/seats, room/kick, class/update, written/*
   all20301: "Données invalides.",
   all20302: "Cette classe n'existe pas.",

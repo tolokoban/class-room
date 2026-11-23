@@ -748,15 +748,6 @@ function getUploadExtension(string $mime, string $originalName): string
 }
 
 /**
- * Normalize a mime type given by the browser.
- */
-function normalizeMime($mime): string
-{
-    $mime = is_string($mime) ? strtolower(trim($mime)) : "";
-    return preg_match('#^[a-z0-9!\#$&^_.+-]+/[a-z0-9!\#$&^_.+-]+$#', $mime) ? $mime : "application/octet-stream";
-}
-
-/**
  * The browsers do not always know the mime type of a file (Markdown for instance).
  * In this case, we try to deduce it from the extension of the file name.
  *

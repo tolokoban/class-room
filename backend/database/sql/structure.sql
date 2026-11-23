@@ -83,6 +83,27 @@ CREATE TABLE `classroom_files` (
 );
 ALTER TABLE `classroom_files` ADD FOREIGN KEY (`classroom`) REFERENCES `classroom_class` (`id`) ON DELETE CASCADE;
 
+-- Files of the table `files` being uploaded by chunks:
+-- `file/upload-init`, `file/upload-chunk` and `file/upload-complete`.
+-- The content is stored in `www/files/uploads/` (see `backend/www/api/file.php`).
+CREATE TABLE `classroom_file_upload` (
+  `id` integer PRIMARY KEY AUTO_INCREMENT,
+  `classroom` integer NOT NULL,
+  -- File to replace, or NULL to add a new file.
+  `file` integer NULL,
+  -- Name of the file, with its extension but without any folder.
+  `name` VARCHAR(255) NOT NULL,
+  `mime` VARCHAR(255) NOT NULL,
+  -- Declared size of the file in bytes.
+  `size` BIGINT NOT NULL,
+  -- Number of bytes received so far.
+  `received` BIGINT NOT NULL DEFAULT 0,
+  -- UNIX timestamp of the last change.
+  `time` BIGINT NOT NULL
+);
+ALTER TABLE `classroom_file_upload` ADD FOREIGN KEY (`classroom`) REFERENCES `classroom_class` (`id`) ON DELETE CASCADE;
+ALTER TABLE `classroom_file_upload` ADD FOREIGN KEY (`file`) REFERENCES `classroom_files` (`id`) ON DELETE CASCADE;
+
 -- The students that have joined a class room. A seat is reserved for a computer
 -- until the teacher frees it (see `room/kick`). The number of seats of a class room
 -- is limited by `class.max_students`.

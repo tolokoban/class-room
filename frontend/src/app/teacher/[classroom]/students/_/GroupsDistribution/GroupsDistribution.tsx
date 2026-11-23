@@ -47,7 +47,9 @@ export function GroupsDistribution({ className, classroom }: GroupsDistributionP
           {distribution.groups.map((group, index) => (
             <li key={index}>
               {group.map((name) => (
-                <span key={name}>{name}</span>
+                <a key={name} href={distribution.studentUrl(name)}>
+                  {name}
+                </a>
               ))}
             </li>
           ))}

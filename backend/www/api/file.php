@@ -15,6 +15,22 @@ require_once __DIR__ . "/db.php";
 const FILES_ROOT = __DIR__ . "/../files";
 
 /**
+ * The files are uploaded by chunks (table `file_upload`):
+ * `file/upload-init`, `file/upload-chunk` and `file/upload-complete`.
+ * While being uploaded, the content is stored here, with the extension `.part`.
+ */
+const FILE_UPLOADS_ROOT = FILES_ROOT . "/uploads";
+
+/** Maximum size (in bytes) of a file. */
+const FILE_MAX_SIZE = 100 * 1024 * 1024;
+
+/** Maximum size (in bytes) of a decoded chunk. */
+const FILE_MAX_CHUNK_SIZE = 1024 * 1024;
+
+/** Incomplete uploads are deleted after this number of seconds without any new chunk. */
+const FILE_UPLOAD_TIMEOUT = 3600;
+
+/**
  * The Markdown notes of a class room are stored as a file with this name
  * (see `file/notes-get` and `file/notes-set`). The teacher cannot upload
  * a file with this name, and it is not listed by `file/list`.
@@ -68,11 +84,27 @@ function findNotesFile(int $classroom)
  */
 function getFilePath(int $id, string $name): string
 {
+    return FILES_ROOT . "/" . getIdFolders($id) . "." . getFileExtension($name);
+}
+
+/**
+ * Absolute path where the content of a file being uploaded is stored.
+ *
+ * @param int $id Field `id` of table `file_upload`.
+ */
+function getFileUploadPath(int $id): string
+{
+    return FILE_UPLOADS_ROOT . "/" . getIdFolders($id) . ".part";
+}
+
+/**
+ * An ID split in groups of two digits (at least 3 groups): "04/72/11" for 47211.
+ */
+function getIdFolders(int $id): string
+{
     $digits = (string) $id;
-    // At least 3 groups of 2 digits.
     $length = max(6, strlen($digits) + strlen($digits) % 2);
-    $groups = str_split(str_pad($digits, $length, "0", STR_PAD_LEFT), 2);
-    return FILES_ROOT . "/" . implode("/", $groups) . "." . getFileExtension($name);
+    return implode("/", str_split(str_pad($digits, $length, "0", STR_PAD_LEFT), 2));
 }
 
 /**
@@ -108,30 +140,13 @@ function sanitizeFileName($name)
 }
 
 /**
- * Decode a data URL (`data:<mime>;base64,<content>`), as produced
- * by `FileReader.readAsDataURL()` in the browser.
- *
- * @return array|false `["mime" => string, "content" => string]`,
- * or `false` if this is not a valid base64 data URL.
+ * Normalize a mime type given by the browser.
+ * An invalid or missing type becomes "application/octet-stream".
  */
-function parseDataUrl($file)
+function normalizeMime($mime): string
 {
-    if (!is_string($file) || !preg_match('/^data:([^;,]*)((?:;[^;,]*)*),/', $file, $matches)) {
-        return false;
-    }
-    $params = array_map("trim", explode(";", strtolower($matches[2])));
-    if (!in_array("base64", $params, true)) {
-        return false;
-    }
-    $content = base64_decode(substr($file, strlen($matches[0])), true);
-    if ($content === false) {
-        return false;
-    }
-    $mime = strtolower(trim($matches[1]));
-    if (!preg_match('#^[a-z0-9!\#$&^_.+-]+/[a-z0-9!\#$&^_.+-]+$#', $mime)) {
-        $mime = "application/octet-stream";
-    }
-    return ["mime" => $mime, "content" => $content];
+    $mime = is_string($mime) ? strtolower(trim($mime)) : "";
+    return preg_match('#^[a-z0-9!\#$&^_.+-]+/[a-z0-9!\#$&^_.+-]+$#', $mime) ? $mime : "application/octet-stream";
 }
 
 /**
@@ -206,6 +221,86 @@ function writeFileContent(string $path, string $content): bool
         return false;
     }
     return true;
+}
+
+/**
+ * Move a content (a complete upload) to its final path, creating the missing folders.
+ * An existing file at `$to` is replaced.
+ */
+function moveFileContent(string $from, string $to): bool
+{
+    $dir = dirname($to);
+    if (!is_dir($dir) && !@mkdir($dir, 0775, true) && !is_dir($dir)) {
+        error_log("[file] Unable to create folder \"$dir\".");
+        return false;
+    }
+    if (!@rename($from, $to)) {
+        error_log("[file] Unable to rename \"$from\" into \"$to\".");
+        return false;
+    }
+    return true;
+}
+
+/**
+ * An upload in progress, if it belongs to a class room of the current user.
+ *
+ * @return array|false `["id", "classroom", "file", "name", "mime", "size", "received", "time"]`
+ * (`file` is `null` for a new file), or `false` if there is no such upload for the current user.
+ */
+function findOwnedFileUpload(int $id)
+{
+    global $DB;
+
+    $stmt = $DB->query(
+        "SELECT `u`.*, `c`.`user` FROM `{$DB->table("file_upload")}` AS `u`
+         JOIN `{$DB->table("class")}` AS `c` ON `c`.`id` = `u`.`classroom`
+         WHERE `u`.`id` = ?",
+        $id
+    );
+    $row = $stmt === false ? false : $stmt->fetch();
+    $user = $_SESSION["USER"] ?? null;
+    if ($row === false || $user === null || (int) $row["user"] !== $user["id"]) {
+        return false;
+    }
+
+    return [
+        "id" => (int) $row["id"],
+        "classroom" => (int) $row["classroom"],
+        "file" => $row["file"] === null ? null : (int) $row["file"],
+        "name" => $row["name"],
+        "mime" => $row["mime"],
+        "size" => (int) $row["size"],
+        "received" => (int) $row["received"],
+        "time" => (int) $row["time"],
+    ];
+}
+
+/**
+ * Delete the uploads in progress that have not received any chunk
+ * for `FILE_UPLOAD_TIMEOUT` seconds (rows and content).
+ * There is no CRON: this function is called by `file/upload-init`.
+ */
+function collectFileUploadGarbage(): void
+{
+    global $DB;
+
+    try {
+        $stmt = $DB->query(
+            "SELECT `id` FROM `{$DB->table("file_upload")}` WHERE `time` < ?",
+            time() - FILE_UPLOAD_TIMEOUT
+        );
+        $rows = $stmt === false ? [] : $stmt->fetchAll();
+        foreach ($rows as $row) {
+            $id = (int) $row["id"];
+            $DB->query("DELETE FROM `{$DB->table("file_upload")}` WHERE `id` = ?", $id);
+            deleteFileContent(getFileUploadPath($id));
+        }
+        if (count($rows) > 0) {
+            error_log("[file] " . count($rows) . " abandoned upload(s) deleted.");
+        }
+    } catch (Exception $exception) {
+        error_log("[file] Garbage collection failed: " . $exception->getMessage());
+    }
 }
 
 /**

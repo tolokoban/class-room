@@ -63,26 +63,6 @@ const DE: typeof FR = {
   // HTTP-Fehler
   all413: "Die Datei ist zu groß für den Server.",
 
-  // file/add
-  all50101: "Ungültige Daten.",
-  all50102: "Diese Klasse existiert nicht.",
-  all50103: "Sie sind nicht der Eigentümer dieser Klasse.",
-  all50104:
-    "In dieser Klasse gibt es bereits eine Datei mit diesem Namen. Verwenden Sie stattdessen das Ersetzen.",
-  all50105: "Datenbankfehler beim Hinzufügen der Datei.",
-  all50106: "Die Datei kann nicht auf dem Server gespeichert werden.",
-  all50107: "Der Name „notes.md“ ist für die Notizen der Klasse reserviert.",
-
-  // file/replace
-  all50201: "Ungültige Daten.",
-  all50202: "Diese Datei existiert nicht.",
-  all50203: "Sie sind nicht der Eigentümer dieser Datei.",
-  all50204: "Eine andere Datei in dieser Klasse hat bereits diesen Namen.",
-  all50205: "Die neue Datei muss vom gleichen Typ sein wie die ersetzte Datei.",
-  all50206: "Datenbankfehler beim Ersetzen der Datei.",
-  all50207: "Die Datei kann nicht auf dem Server gespeichert werden.",
-  all50208: "Der Name „notes.md“ ist für die Notizen der Klasse reserviert.",
-
   // file/delete
   all50301: "Ungültige Daten.",
   all50302: "Diese Datei existiert nicht.",
@@ -106,6 +86,34 @@ const DE: typeof FR = {
   all50703: "Sie sind nicht der Eigentümer dieser Klasse.",
   all50704: "Datenbankfehler beim Speichern der Notizen.",
   all50705: "Die Notizen können nicht auf dem Server gespeichert werden.",
+
+  // file/upload-init
+  all50801: "Ungültige Daten.",
+  all50802: "Diese Klasse existiert nicht.",
+  all50803: "Diese Datei existiert nicht.",
+  all50804: "Sie sind nicht der Eigentümer dieser Klasse.",
+  all50805:
+    "Eine andere Datei in dieser Klasse hat bereits diesen Namen. Um eine Datei zu ersetzen, verwenden Sie ihre Schaltfläche zum Ersetzen.",
+  all50806: "Der Name „notes.md“ ist für die Notizen der Klasse reserviert.",
+  all50807: "Die neue Datei muss vom gleichen Typ sein wie die ersetzte Datei.",
+  all50808: "Die Datei ist zu groß (höchstens 100 MB).",
+  all50809:
+    "Nicht genug Speicherplatz auf dem Server, oder die Datei kann nicht gespeichert werden.",
+  all50810: "Datenbankfehler beim Hochladen der Datei.",
+
+  // file/upload-chunk
+  all50901: "Ungültige Daten.",
+  all50902: "Dieser Upload existiert nicht (oder ist abgelaufen).",
+  all50903: "Ungültiger Teil der Datei.",
+  all50904: "Die Datei kann nicht auf dem Server gespeichert werden.",
+
+  // file/upload-complete
+  all51001: "Ungültige Daten.",
+  all51002: "Dieser Upload existiert nicht (oder ist abgelaufen).",
+  all51003: "Teile der Datei fehlen.",
+  all51004: "Eine andere Datei in dieser Klasse hat bereits diesen Namen.",
+  all51005: "Die Datei kann nicht auf dem Server gespeichert werden.",
+  all51006: "Datenbankfehler beim Speichern der Datei.",
   // room/enter, room/check, room/seats, room/kick, class/update, written/*
   all20301: "Ungültige Daten.",
   all20302: "Diese Klasse existiert nicht.",

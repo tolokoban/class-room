@@ -7,7 +7,7 @@ import {
   activityResultSet,
 } from "./activity";
 import { classAdd, classDelete, classList, classUpdate } from "./class";
-import { fileAdd, fileDelete, fileList, fileNotesGet, fileNotesSet, fileReplace } from "./file";
+import { fileDelete, fileList, fileNotesGet, fileNotesSet, fileUpload } from "./file";
 import { roomCheck, roomEnter, roomKick, roomSeats, roomStudents } from "./room";
 import { userLogin, userLogout } from "./user";
 import {
@@ -46,12 +46,11 @@ export const API = {
     update: classUpdate,
   },
   file: {
-    add: fileAdd,
     delete: fileDelete,
     list: fileList,
     notesGet: fileNotesGet,
     notesSet: fileNotesSet,
-    replace: fileReplace,
+    upload: fileUpload,
   },
   room: {
     check: roomCheck,

@@ -41,6 +41,22 @@ export interface FilesRow {
   mime: string;
 }
 
+/**
+ * A file of table `files` being uploaded by chunks.
+ * The content is stored in `contents` under the key `file_upload/{id}`.
+ */
+export interface FileUploadRow {
+  id: number;
+  classroom: number;
+  /** File to replace, or `null` to add a new file. */
+  file: number | null;
+  name: string;
+  mime: string;
+  size: number;
+  received: number;
+  time: number;
+}
+
 export interface SeatRow {
   classroom: number;
   computer: string;
@@ -106,6 +122,7 @@ export interface Tables {
   activity: ActivityRow;
   room: RoomRow;
   files: FilesRow;
+  file_upload: FileUploadRow;
   seat: SeatRow;
   written: WrittenRow;
   written_assignment: WrittenAssignmentRow;
@@ -121,6 +138,7 @@ export const PRIMARY_KEYS: { [T in TableName]: Array<keyof Tables[T]> } = {
   activity: ["id"],
   room: ["computer"],
   files: ["id"],
+  file_upload: ["id"],
   seat: ["classroom", "computer"],
   written: ["id"],
   written_assignment: ["id"],
@@ -141,6 +159,8 @@ export const FOREIGN_KEYS: ForeignKey[] = [
   { table: "activity", column: "classroom", references: "class" },
   { table: "room", column: "classroom", references: "class" },
   { table: "files", column: "classroom", references: "class" },
+  { table: "file_upload", column: "classroom", references: "class" },
+  { table: "file_upload", column: "file", references: "files" },
   { table: "seat", column: "classroom", references: "class" },
   { table: "written_assignment", column: "written", references: "written" },
   { table: "written_assignment", column: "classroom", references: "class" },
@@ -152,7 +172,12 @@ export const FOREIGN_KEYS: ForeignKey[] = [
  * Tables whose rows have a content (a `Blob`), stored under the key `{table}/{id}`.
  * The content is deleted with the row.
  */
-export const TABLES_WITH_CONTENT: TableName[] = ["files", "written_attachment", "written_upload"];
+export const TABLES_WITH_CONTENT: TableName[] = [
+  "files",
+  "file_upload",
+  "written_attachment",
+  "written_upload",
+];
 
 export function getContentKey(table: TableName, id: number): string {
   return `${table}/${id}`;

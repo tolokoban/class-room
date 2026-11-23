@@ -3,10 +3,11 @@ import React from "react";
 
 import { useConfirm } from "@/components/Confirm";
 import { Notif } from "@/components/Notification";
-import { FileItem, getFileMime, isReservedFileName, readFileAsDataUrl } from "@/service/calls/file";
+import { FileItem, getFileMime, isReservedFileName } from "@/service/calls/file";
 import { useApiErrorTranslator } from "@/service/hooks/apiError";
-import { useServiceFileDelete, useServiceFileReplace } from "@/service/hooks/file";
+import { useServiceFileDelete } from "@/service/hooks/file";
 
+import { useFileUploader } from "../UploadProgress";
 import { useTranslation } from "./translation";
 
 const KB = 1024;
@@ -15,24 +16,24 @@ const GB = MB * 1024;
 
 export function useFileRow(file: FileItem) {
   const translateError = useApiErrorTranslator();
-  const replacing = useServiceFileReplace();
+  const uploader = useFileUploader();
   const deleting = useServiceFileDelete();
 
   return {
     size: useHumanFriendlySize(file.size),
     // "application/octet-stream" would hide the files without a known type.
     accept: file.mime === "application/octet-stream" ? undefined : file.mime,
-    isReplacing: replacing.isPending,
+    /** Progress of the replacement, or `null`. */
+    progress: uploader.progress,
     isDeleting: deleting.isPending,
-    ...useFileReplace(file, replacing.mutate, translateError),
+    ...useFileReplace(file, uploader.upload),
     remove: useFileDelete(file, deleting.mutate, translateError),
   };
 }
 
 function useFileReplace(
   file: FileItem,
-  mutate: ReturnType<typeof useServiceFileReplace>["mutate"],
-  translateError: ReturnType<typeof useApiErrorTranslator>,
+  upload: ReturnType<typeof useFileUploader>["upload"],
 ) {
   const tr = useTranslation();
   const confirm = useConfirm();
@@ -54,12 +55,8 @@ function useFileReplace(
     if (!(await confirm({ content: tr.replaceConfirm$(file.name, picked.name), accent: true })))
       return;
 
-    try {
-      const content = await readFileAsDataUrl(picked);
-      await mutate({ fileId: file.id, name: picked.name, file: content });
+    if (await upload({ fileId: file.id }, picked)) {
       Notif.info(tr.replaced$(file.name));
-    } catch (error) {
-      Notif.error(translateError(error));
     }
   };
 

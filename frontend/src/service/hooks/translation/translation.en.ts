@@ -63,25 +63,6 @@ const EN: typeof FR = {
   // HTTP errors
   all413: "The file is too large for the server.",
 
-  // file/add
-  all50101: "Invalid input.",
-  all50102: "This class room does not exist.",
-  all50103: "You are not the owner of this class room.",
-  all50104: "A file with this name already exists in this class room. Use the replacement instead.",
-  all50105: "Database error while adding the file.",
-  all50106: "Unable to store the file on the server.",
-  all50107: "The name “notes.md” is reserved for the notes of the class room.",
-
-  // file/replace
-  all50201: "Invalid input.",
-  all50202: "This file does not exist.",
-  all50203: "You are not the owner of this file.",
-  all50204: "Another file already has this name in this class room.",
-  all50205: "The new file must be of the same type as the one it replaces.",
-  all50206: "Database error while replacing the file.",
-  all50207: "Unable to store the file on the server.",
-  all50208: "The name “notes.md” is reserved for the notes of the class room.",
-
   // file/delete
   all50301: "Invalid input.",
   all50302: "This file does not exist.",
@@ -105,6 +86,33 @@ const EN: typeof FR = {
   all50703: "You are not the owner of this class room.",
   all50704: "Database error while saving the notes.",
   all50705: "Unable to store the notes on the server.",
+
+  // file/upload-init
+  all50801: "Invalid input.",
+  all50802: "This class room does not exist.",
+  all50803: "This file does not exist.",
+  all50804: "You are not the owner of this class room.",
+  all50805:
+    "Another file already has this name in this class room. To replace a file, use its replace button.",
+  all50806: "The name “notes.md” is reserved for the notes of the class room.",
+  all50807: "The new file must be of the same type as the one it replaces.",
+  all50808: "The file is too large (100 MB at most).",
+  all50809: "Not enough space on the server, or unable to store the file.",
+  all50810: "Database error while uploading the file.",
+
+  // file/upload-chunk
+  all50901: "Invalid input.",
+  all50902: "This upload does not exist (or has expired).",
+  all50903: "Invalid part of the file.",
+  all50904: "Unable to store the file on the server.",
+
+  // file/upload-complete
+  all51001: "Invalid input.",
+  all51002: "This upload does not exist (or has expired).",
+  all51003: "Some parts of the file are missing.",
+  all51004: "Another file already has this name in this class room.",
+  all51005: "Unable to store the file on the server.",
+  all51006: "Database error while saving the file.",
   // room/enter, room/check, room/seats, room/kick, class/update, written/*
   all20301: "Invalid input.",
   all20302: "This class room does not exist.",

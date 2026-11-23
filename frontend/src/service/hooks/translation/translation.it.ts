@@ -63,25 +63,6 @@ const IT: typeof FR = {
   // Errori HTTP
   all413: "Il file è troppo grande per il server.",
 
-  // file/add
-  all50101: "Dati non validi.",
-  all50102: "Questa classe non esiste.",
-  all50103: "Non sei il proprietario di questa classe.",
-  all50104: "Esiste già un file con questo nome in questa classe. Usa la sostituzione.",
-  all50105: "Errore del database durante l'aggiunta del file.",
-  all50106: "Impossibile salvare il file sul server.",
-  all50107: "Il nome «notes.md» è riservato alle note della classe.",
-
-  // file/replace
-  all50201: "Dati non validi.",
-  all50202: "Questo file non esiste.",
-  all50203: "Non sei il proprietario di questo file.",
-  all50204: "Un altro file ha già questo nome in questa classe.",
-  all50205: "Il nuovo file deve essere dello stesso tipo di quello che sostituisce.",
-  all50206: "Errore del database durante la sostituzione del file.",
-  all50207: "Impossibile salvare il file sul server.",
-  all50208: "Il nome «notes.md» è riservato alle note della classe.",
-
   // file/delete
   all50301: "Dati non validi.",
   all50302: "Questo file non esiste.",
@@ -105,6 +86,33 @@ const IT: typeof FR = {
   all50703: "Non sei il proprietario di questa classe.",
   all50704: "Errore del database durante il salvataggio delle note.",
   all50705: "Impossibile salvare le note sul server.",
+
+  // file/upload-init
+  all50801: "Dati non validi.",
+  all50802: "Questa classe non esiste.",
+  all50803: "Questo file non esiste.",
+  all50804: "Non sei il proprietario di questa classe.",
+  all50805:
+    "Un altro file ha già questo nome in questa classe. Per sostituire un file, usa il suo pulsante di sostituzione.",
+  all50806: "Il nome «notes.md» è riservato alle note della classe.",
+  all50807: "Il nuovo file deve essere dello stesso tipo di quello che sostituisce.",
+  all50808: "Il file è troppo grande (al massimo 100 MB).",
+  all50809: "Spazio insufficiente sul server, o impossibile salvare il file.",
+  all50810: "Errore del database durante l'invio del file.",
+
+  // file/upload-chunk
+  all50901: "Dati non validi.",
+  all50902: "Questo invio di file non esiste (o è scaduto).",
+  all50903: "Parte del file non valida.",
+  all50904: "Impossibile salvare il file sul server.",
+
+  // file/upload-complete
+  all51001: "Dati non validi.",
+  all51002: "Questo invio di file non esiste (o è scaduto).",
+  all51003: "Mancano alcune parti del file.",
+  all51004: "Un altro file ha già questo nome in questa classe.",
+  all51005: "Impossibile salvare il file sul server.",
+  all51006: "Errore del database durante il salvataggio del file.",
   // room/enter, room/check, room/seats, room/kick, class/update, written/*
   all20301: "Dati non validi.",
   all20302: "Questa classe non esiste.",

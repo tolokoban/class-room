@@ -1,0 +1,13 @@
+div.uploadProgress {
+  display: flex;
+  align-items: center;
+  gap: 1em;
+
+  > span {
+    overflow-wrap: anywhere;
+  }
+
+  > progress {
+    flex: 1 1 auto;
+  }
+}

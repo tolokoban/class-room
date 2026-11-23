@@ -28,7 +28,8 @@ export function getKey(table: TableName, row: Row): Key {
 }
 
 const DB_NAME = "class-room-demo";
-const DB_VERSION = 1;
+/** Increase it whenever a table is added: `upgradeneeded` creates the missing stores. */
+const DB_VERSION = 2;
 const CONTENTS = "contents";
 
 /**

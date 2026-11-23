@@ -48,11 +48,12 @@ const Page38 = React.lazy(() => import("./teacher/[classroom]/activity/office/ma
 const Page39 = React.lazy(() => import("./teacher/[classroom]/activity/office/selection/page"))
 const Page40 = React.lazy(() => import("./teacher/[classroom]/home/page"))
 const Page42 = React.lazy(() => import("./teacher/[classroom]/results/page"))
-const Page44 = React.lazy(() => import("./teacher/[classroom]/students/page"))
-const Page47 = React.lazy(() => import("./teacher/[classroom]/written/[written]/page"))
-const Page50 = React.lazy(() => import("./teacher/[classroom]/written/[written]/view/[upload]/page"))
-const Page52 = React.lazy(() => import("./teacher/written/page"))
-const Page53 = React.lazy(() => import("./teacher/written/[written]/page"))
+const Page45 = React.lazy(() => import("./teacher/[classroom]/student/[student]/page"))
+const Page47 = React.lazy(() => import("./teacher/[classroom]/students/page"))
+const Page50 = React.lazy(() => import("./teacher/[classroom]/written/[written]/page"))
+const Page53 = React.lazy(() => import("./teacher/[classroom]/written/[written]/view/[upload]/page"))
+const Page55 = React.lazy(() => import("./teacher/written/page"))
+const Page56 = React.lazy(() => import("./teacher/written/[written]/page"))
 
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 export default function App({ lang }: { lang?: string }) {
@@ -87,11 +88,12 @@ export default function App({ lang }: { lang?: string }) {
     const pg39 = Page39
     const pg40 = Page40
     const pg42 = Page42
-    const pg44 = Page44
+    const pg45 = Page45
     const pg47 = Page47
     const pg50 = Page50
-    const pg52 = Page52
     const pg53 = Page53
+    const pg55 = Page55
+    const pg56 = Page56
     return (
         <Route path="/" def={[pg0, ly0, fb0, , NotFound0]} context={context}>
             <Route path="/student" def={[, , fb0, , NotFound0]} context={context}>
@@ -152,22 +154,27 @@ export default function App({ lang }: { lang?: string }) {
                     <Route path="/teacher/[classroom]/results" def={[pg42, , fb0, , NotFound0]} context={context}>
                         <Route path="/teacher/[classroom]/results/translation" def={[, , fb0, , NotFound0]} context={context}/>
                     </Route>
-                    <Route path="/teacher/[classroom]/students" def={[pg44, , fb0, , NotFound0]} context={context}>
+                    <Route path="/teacher/[classroom]/student" def={[, , fb0, , NotFound0]} context={context}>
+                        <Route path="/teacher/[classroom]/student/[student]" def={[pg45, , fb0, , NotFound0]} context={context}>
+                            <Route path="/teacher/[classroom]/student/[student]/translation" def={[, , fb0, , NotFound0]} context={context}/>
+                        </Route>
+                    </Route>
+                    <Route path="/teacher/[classroom]/students" def={[pg47, , fb0, , NotFound0]} context={context}>
                         <Route path="/teacher/[classroom]/students/translation" def={[, , fb0, , NotFound0]} context={context}/>
                     </Route>
                     <Route path="/teacher/[classroom]/written" def={[, , fb0, , NotFound0]} context={context}>
-                        <Route path="/teacher/[classroom]/written/[written]" def={[pg47, , fb0, , NotFound0]} context={context}>
+                        <Route path="/teacher/[classroom]/written/[written]" def={[pg50, , fb0, , NotFound0]} context={context}>
                             <Route path="/teacher/[classroom]/written/[written]/translation" def={[, , fb0, , NotFound0]} context={context}/>
                             <Route path="/teacher/[classroom]/written/[written]/view" def={[, , fb0, , NotFound0]} context={context}>
-                                <Route path="/teacher/[classroom]/written/[written]/view/[upload]" def={[pg50, , fb0, , NotFound0]} context={context}>
+                                <Route path="/teacher/[classroom]/written/[written]/view/[upload]" def={[pg53, , fb0, , NotFound0]} context={context}>
                                     <Route path="/teacher/[classroom]/written/[written]/view/[upload]/translation" def={[, , fb0, , NotFound0]} context={context}/>
                                 </Route>
                             </Route>
                         </Route>
                     </Route>
                 </Route>
-                <Route path="/teacher/written" def={[pg52, , fb0, , NotFound0]} context={context}>
-                    <Route path="/teacher/written/[written]" def={[pg53, , fb0, , NotFound0]} context={context}/>
+                <Route path="/teacher/written" def={[pg55, , fb0, , NotFound0]} context={context}>
+                    <Route path="/teacher/written/[written]" def={[pg56, , fb0, , NotFound0]} context={context}/>
                 </Route>
             </Route>
         </Route>

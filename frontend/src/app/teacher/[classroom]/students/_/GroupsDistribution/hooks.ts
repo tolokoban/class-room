@@ -28,6 +28,7 @@ export function useGroupsDistribution(classroom: string) {
     groups,
     hasStudents: names.length > 0,
     distribute: () => setGroups(makeGroups(names, size)),
+    studentUrl: (name: string) => `#/teacher/${classroom}/student/${encodeURIComponent(name)}`,
   };
 }
 

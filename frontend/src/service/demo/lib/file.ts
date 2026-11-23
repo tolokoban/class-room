@@ -1,5 +1,5 @@
 import { DemoContext } from "../context";
-import { FilesRow } from "../db/tables";
+import { FilesRow, FileUploadRow } from "../db/tables";
 import { registerDemoUrl } from "../urls";
 import { sameText } from "./class";
 
@@ -13,6 +13,15 @@ import { sameText } from "./class";
  */
 export const NOTES_FILE_NAME = "notes.md";
 export const NOTES_MIME = "text/markdown";
+
+/** Maximum size (in bytes) of a file. */
+export const FILE_MAX_SIZE = 100 * 1024 * 1024;
+
+/** Maximum size (in bytes) of a decoded chunk. */
+export const FILE_MAX_CHUNK_SIZE = 1024 * 1024;
+
+/** Incomplete uploads are deleted after this number of seconds without any new chunk. */
+export const FILE_UPLOAD_TIMEOUT = 3600;
 
 /** Is this name reserved (case insensitive, like the database collation)? */
 export function isReservedFileName(name: string): boolean {
@@ -51,45 +60,6 @@ export function sanitizeFileName(value: unknown): string | false {
     return false;
   }
   return name;
-}
-
-export interface DataUrl {
-  mime: string;
-  content: Blob;
-}
-
-/**
- * Decode a data URL (`data:<mime>;base64,<content>`), as produced
- * by `FileReader.readAsDataURL()` in the browser.
- * @returns `false` if this is not a valid base64 data URL.
- */
-export function parseDataUrl(file: unknown): DataUrl | false {
-  if (typeof file !== "string") return false;
-
-  const matches = /^data:([^;,]*)((?:;[^;,]*)*),/.exec(file);
-  if (!matches) return false;
-
-  const params = matches[2]
-    .toLowerCase()
-    .split(";")
-    .map((param) => param.trim());
-  if (!params.includes("base64")) return false;
-
-  const base64 = file.slice(matches[0].length).replace(/\s+/g, "");
-  if (!/^[A-Za-z0-9+/]*={0,2}$/.test(base64)) return false;
-
-  let binary: string;
-  try {
-    binary = atob(base64);
-  } catch {
-    return false;
-  }
-  const bytes = Uint8Array.from(binary, (char) => char.charCodeAt(0));
-  let mime = matches[1].trim().toLowerCase();
-  if (!/^[a-z0-9!#$&^_.+-]+\/[a-z0-9!#$&^_.+-]+$/.test(mime)) {
-    mime = "application/octet-stream";
-  }
-  return { mime, content: new Blob([bytes], { type: mime }) };
 }
 
 export interface FileInfo extends FilesRow {
@@ -137,4 +107,28 @@ export function registerFileUrl(fileId: number, blob: Blob, mime: string) {
     getFileApiUrl(fileId),
     blob.type === mime ? blob : new Blob([blob], { type: mime }),
   );
+}
+
+/**
+ * @returns An upload in progress, if it belongs to a class room of the current user,
+ * or `false` otherwise.
+ */
+export async function findOwnedFileUpload(
+  ctx: DemoContext,
+  id: number,
+): Promise<FileUploadRow | false> {
+  const upload = await ctx.db.get("file_upload", id);
+  if (!upload) return false;
+
+  const classroom = await ctx.db.get("class", upload.classroom);
+  return classroom?.user === ctx.user.id ? upload : false;
+}
+
+/**
+ * Delete the uploads in progress that have not received any chunk
+ * for `FILE_UPLOAD_TIMEOUT` seconds (rows and content).
+ */
+export async function collectFileUploadGarbage(ctx: DemoContext): Promise<void> {
+  const limit = ctx.now() - FILE_UPLOAD_TIMEOUT;
+  await ctx.db.deleteWhere("file_upload", (row) => row.time < limit);
 }

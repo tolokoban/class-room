@@ -2,6 +2,7 @@ import { isString, isType } from "@tolokoban/type-guards";
 
 import { resolveApiUrl } from "@/service/demo/links";
 
+import { sendChunks } from "./chunks";
 import { api, ApiError, ApiErrorTypeAssertion, throwIfError } from "./service";
 
 /**
@@ -49,67 +50,87 @@ export async function fileList(input: FileListInput): Promise<FileItem[]> {
   return result;
 }
 
-export interface FileAddInput {
+/** Maximum size (in bytes) of a file (see `FILE_MAX_SIZE` in `backend/www/api/file.php`). */
+export const FILE_MAX_SIZE = 100 * 1024 * 1024;
+
+/** Add a new file in a class room. */
+export interface FileUploadNew {
   /** Field `code` of table `class`. */
   classroomCode: string;
-  /** Name of the file, with its extension. Must be unique in the class room. */
-  name: string;
-  /** Content of the file as a base64 data URL (see `readFileAsDataUrl()`). */
-  file: string;
 }
 
-/**
- * Upload a new file in a class room of the current teacher.
- * @returns The ID of the new file.
- */
-export async function fileAdd(input: FileAddInput): Promise<number> {
-  const result = await api("file/add", input);
-  throwIfError(result, {
-    [ApiError.FILE_ADD_INVALID_INPUT]: "Invalid input.",
-    [ApiError.FILE_ADD_CLASS_NOT_FOUND]: `Class room "${input.classroomCode}" does not exist.`,
-    [ApiError.FILE_ADD_FORBIDDEN]: `You are not the owner of class room "${input.classroomCode}".`,
-    [ApiError.FILE_ADD_NAME_USED]: `There is already a file called "${input.name}" in this class room.`,
-    [ApiError.FILE_ADD_DATABASE_ERROR]: "Database error while adding the file.",
-    [ApiError.FILE_ADD_STORAGE_ERROR]: "Unable to store the file on the server.",
-    [ApiError.FILE_ADD_RESERVED_NAME]: `The name "${input.name}" is reserved.`,
-  });
-  if (!isType(result, { fileId: "number" })) {
-    throw new ApiErrorTypeAssertion('Invalid response for "file/add"');
-  }
-  return result.fileId;
-}
-
-export interface FileReplaceInput {
+/** Replace the content and the name of a file. The new content must have the same mime type. */
+export interface FileUploadReplace {
   /** Field `id` of table `files`. */
   fileId: number;
-  /** New name of the file, with its extension. */
-  name: string;
-  /**
-   * Content of the file as a base64 data URL (see `readFileAsDataUrl()`).
-   * It must have the same mime type as the replaced file.
-   */
-  file: string;
 }
 
+export type FileUploadInput = (FileUploadNew | FileUploadReplace) & {
+  /** Its name must be unique in the class room. */
+  file: File;
+  /** Called after each chunk with a value between 0 and 1. */
+  onProgress?(progress: number): void;
+  /** Abort the upload. */
+  signal?: AbortSignal;
+};
+
 /**
- * Replace the content and the name of an existing file.
+ * Upload a file in a class room of the current teacher, by chunks: `file/upload-init`,
+ * `file/upload-chunk` (as many as needed) and `file/upload-complete`.
+ * With `fileId`, the file replaces an existing one (which keeps its ID).
  * @returns The ID of the file.
  */
-export async function fileReplace(input: FileReplaceInput): Promise<number> {
-  const result = await api("file/replace", input);
-  throwIfError(result, {
-    [ApiError.FILE_REPLACE_INVALID_INPUT]: "Invalid input.",
-    [ApiError.FILE_REPLACE_NOT_FOUND]: `There is no file with ID #${input.fileId}.`,
-    [ApiError.FILE_REPLACE_FORBIDDEN]: `You are not the owner of file #${input.fileId}.`,
-    [ApiError.FILE_REPLACE_NAME_USED]: `There is already another file called "${input.name}" in this class room.`,
-    [ApiError.FILE_REPLACE_MIME_MISMATCH]:
+export async function fileUpload({
+  file,
+  onProgress,
+  signal,
+  ...target
+}: FileUploadInput): Promise<number> {
+  const init = await api("file/upload-init", {
+    ...target,
+    name: file.name,
+    size: file.size,
+    mime: getFileMime(file),
+  });
+  throwIfError(init, {
+    [ApiError.FILE_UPLOAD_INIT_INVALID_INPUT]: "Invalid input.",
+    [ApiError.FILE_UPLOAD_INIT_CLASS_NOT_FOUND]: "This class room does not exist.",
+    [ApiError.FILE_UPLOAD_INIT_FILE_NOT_FOUND]: "This file does not exist.",
+    [ApiError.FILE_UPLOAD_INIT_FORBIDDEN]: "You are not the owner of this class room.",
+    [ApiError.FILE_UPLOAD_INIT_NAME_USED]: `There is already a file called "${file.name}" in this class room.`,
+    [ApiError.FILE_UPLOAD_INIT_RESERVED_NAME]: `The name "${file.name}" is reserved.`,
+    [ApiError.FILE_UPLOAD_INIT_MIME_MISMATCH]:
       "The new file must have the same type as the replaced one.",
-    [ApiError.FILE_REPLACE_DATABASE_ERROR]: "Database error while replacing the file.",
-    [ApiError.FILE_REPLACE_STORAGE_ERROR]: "Unable to store the file on the server.",
-    [ApiError.FILE_REPLACE_RESERVED_NAME]: `The name "${input.name}" is reserved.`,
+    [ApiError.FILE_UPLOAD_INIT_TOO_LARGE]: "The file is too large.",
+    [ApiError.FILE_UPLOAD_INIT_STORAGE_ERROR]: "Unable to store the file on the server.",
+    [ApiError.FILE_UPLOAD_INIT_DATABASE_ERROR]: "Database error while adding the file.",
+  });
+  if (!isType(init, { uploadId: "number", chunkSize: "number" })) {
+    throw new ApiErrorTypeAssertion('Invalid response for "file/upload-init"');
+  }
+
+  const { uploadId, chunkSize } = init;
+  await sendChunks({ file, chunkSize, onProgress, signal }, async (offset, data) => {
+    const result = await api("file/upload-chunk", { uploadId, offset, data });
+    throwIfError(result, {
+      [ApiError.FILE_UPLOAD_CHUNK_INVALID_INPUT]: "Invalid input.",
+      [ApiError.FILE_UPLOAD_CHUNK_NOT_FOUND]: "This upload does not exist.",
+      [ApiError.FILE_UPLOAD_CHUNK_BAD_CHUNK]: "Invalid chunk.",
+      [ApiError.FILE_UPLOAD_CHUNK_STORAGE_ERROR]: "Unable to store the file on the server.",
+    });
+  });
+
+  const result = await api("file/upload-complete", { uploadId });
+  throwIfError(result, {
+    [ApiError.FILE_UPLOAD_COMPLETE_INVALID_INPUT]: "Invalid input.",
+    [ApiError.FILE_UPLOAD_COMPLETE_NOT_FOUND]: "This upload does not exist.",
+    [ApiError.FILE_UPLOAD_COMPLETE_INCOMPLETE]: "Some parts of the file are missing.",
+    [ApiError.FILE_UPLOAD_COMPLETE_NAME_USED]: `There is already a file called "${file.name}" in this class room.`,
+    [ApiError.FILE_UPLOAD_COMPLETE_STORAGE_ERROR]: "Unable to store the file on the server.",
+    [ApiError.FILE_UPLOAD_COMPLETE_DATABASE_ERROR]: "Database error while adding the file.",
   });
   if (!isType(result, { fileId: "number" })) {
-    throw new ApiErrorTypeAssertion('Invalid response for "file/replace"');
+    throw new ApiErrorTypeAssertion('Invalid response for "file/upload-complete"');
   }
   return result.fileId;
 }
@@ -185,21 +206,6 @@ export async function fileNotesSet(input: FileNotesSetInput): Promise<void> {
  */
 export function getFileUrl(fileId: number): string {
   return resolveApiUrl(`api/file/get?fileId=${fileId}`);
-}
-
-/**
- * Read a file picked by the user as a base64 data URL:
- * `data:<mime>;base64,<content>`.
- */
-export function readFileAsDataUrl(file: File): Promise<string> {
-  return new Promise((resolve, reject) => {
-    const reader = new FileReader();
-    reader.addEventListener("load", () => resolve(String(reader.result)));
-    reader.addEventListener("error", () =>
-      reject(reader.error ?? new Error(`Unable to read "${file.name}"!`)),
-    );
-    reader.readAsDataURL(file);
-  });
 }
 
 /**

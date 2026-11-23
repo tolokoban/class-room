@@ -1,9 +1,9 @@
 import { IconArrowLeft, IconExport, ViewButton, ViewSpinner } from "@tolokoban/ui";
 
+import { MarkdownViewer } from "@/components/MarkdownViewer";
 import { TeacherOnly } from "@/components/TeacherOnly";
 import { isTeacher, State } from "@/state";
 
-import { MarkdownViewer } from "./_/MarkdownViewer";
 import { useUploadViewerPage } from "./hooks";
 import { useTranslation } from "./translation";
 

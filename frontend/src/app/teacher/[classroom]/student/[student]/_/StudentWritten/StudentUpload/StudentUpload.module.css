@@ -1,0 +1,52 @@
+.studentUpload {
+  padding: 0.5em;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5em;
+
+  &:not(:last-child) {
+    border-bottom: 1px solid var(--theme-color-primary-4);
+  }
+
+  > header {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 0 1em;
+
+    > a,
+    > a:visited {
+      color: var(--theme-color-secondary-5);
+      font-weight: bold;
+      overflow-wrap: anywhere;
+    }
+
+    > span {
+      font-size: 0.9em;
+      opacity: 0.8;
+    }
+
+    > .late {
+      opacity: 1;
+      padding: 0 0.5em;
+      border-radius: 0.25em;
+      background: var(--theme-color-error);
+      color: var(--theme-color-on-error);
+    }
+  }
+
+  > pre {
+    margin: 0;
+    padding: 0.5em 1em;
+    border-radius: 0.25em;
+    white-space: pre-wrap;
+    overflow-wrap: anywhere;
+    font-family: monospace;
+    background: var(--theme-color-neutral-9);
+    color: var(--theme-color-on-neutral-9);
+  }
+
+  > .error {
+    color: var(--theme-color-error);
+  }
+}
