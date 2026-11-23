@@ -4,6 +4,7 @@ import { useRouteParamAsString } from "@/app/routes";
 import { TeacherOnly } from "@/components/TeacherOnly";
 import { isTeacher, State } from "@/state";
 
+import { GroupsDistribution } from "./_/GroupsDistribution";
 import { MaxStudents } from "./_/MaxStudents";
 import { SeatsList } from "./_/SeatsList";
 import { useTranslation } from "./translation";
@@ -29,6 +30,7 @@ export default function Page() {
       </nav>
       <MaxStudents classroom={classroom} />
       <SeatsList classroom={classroom} />
+      <GroupsDistribution classroom={classroom} />
     </div>
   );
 }

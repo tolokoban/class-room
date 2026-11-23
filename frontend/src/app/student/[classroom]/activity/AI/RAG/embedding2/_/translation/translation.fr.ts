@@ -1,10 +1,6 @@
 const FR = {
   title: "Retrouve la fable",
-  intro: `La Fontaine, pour écrire ses fables, s'est inspiré des auteurs de l'Antiquité : le Grec Ésope et le Latin Phèdre.
-  
-Retrouvez une fable en la décrivant avec vos propres mots.
-
-La machine va extraire le sens de votre requête et le comparer aux 82 fables stockées dans sa base de données.`,
+  intro: `La machine va extraire le sens de votre requête et le comparer aux 82 fables stockées dans sa base de données.`,
   showList: "Afficher la liste des fables",
   question: "De quoi parle la fable que vous cherchez ?",
   placeholder: "Par exemple : un oiseau se fait voler son repas par un flatteur",

@@ -1,0 +1,52 @@
+.groupsDistribution {
+  border-radius: 0.25em;
+  overflow: hidden;
+
+  > header {
+    background: var(--theme-color-primary-5);
+    color: var(--theme-color-on-primary-5);
+    padding: 0.5em;
+    font-weight: bold;
+  }
+
+  > div {
+    background: var(--theme-color-primary-3);
+    color: var(--theme-color-on-primary-3);
+    padding: 0.5em;
+    display: flex;
+    flex-direction: column;
+    gap: 1em;
+
+    > .toolbar {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: flex-end;
+      justify-content: space-between;
+      gap: 1em;
+    }
+
+    > ol {
+      margin: 0;
+      padding-left: 2em;
+
+      &:empty {
+        display: none;
+      }
+
+      > li {
+        padding: 0.25em 0;
+
+        > span {
+          display: inline-block;
+          margin: 0.25em 0.5em 0.25em 0;
+          padding: 0.125em 0.5em;
+          border-radius: 1em;
+          background: var(--theme-color-secondary-5);
+          color: var(--theme-color-on-secondary-5);
+          font-weight: bold;
+          font-size: 150%;
+        }
+      }
+    }
+  }
+}

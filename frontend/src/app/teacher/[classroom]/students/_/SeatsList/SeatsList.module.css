@@ -2,16 +2,6 @@
   border-radius: 0.25em;
   overflow: hidden;
 
-  > header {
-    background: var(--theme-color-primary-5);
-    color: var(--theme-color-on-primary-5);
-    padding: 0.5em;
-    font-weight: bold;
-    display: flex;
-    justify-content: space-between;
-    gap: 1em;
-  }
-
   > div {
     background: var(--theme-color-primary-3);
     color: var(--theme-color-on-primary-3);

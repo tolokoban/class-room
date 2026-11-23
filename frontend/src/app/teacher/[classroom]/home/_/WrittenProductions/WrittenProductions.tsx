@@ -1,9 +1,9 @@
 import { IconDelete, IconEdit, Theme, ViewButton, ViewSpinner } from "@tolokoban/ui";
 
 import { useConfirm } from "@/components/Confirm";
+import { SectionHeader } from "@/components/SectionHeader";
 import { getWrittenActivityCode } from "@/service/calls/written";
 
-import { SectionHeader } from "../SectionHeader";
 import { AssignWritten } from "./AssignWritten";
 import { useWrittenProductions } from "./hooks";
 import { useTranslation } from "./translation";

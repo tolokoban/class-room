@@ -1,8 +1,9 @@
 import { IconAdd, Theme, ViewInputFile, ViewSpinner } from "@tolokoban/ui";
 
+import { SectionHeader } from "@/components/SectionHeader";
+
 import { FileRow } from "./FileRow";
 import { useClassroomFiles } from "./hooks";
-import { SectionHeader } from "../SectionHeader";
 import { useTranslation } from "./translation";
 
 import Styles from "./ClassroomFiles.module.css";

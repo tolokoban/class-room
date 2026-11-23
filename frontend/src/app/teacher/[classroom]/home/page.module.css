@@ -1,41 +1,24 @@
 .page {
     position: absolute;
     inset: 0;
-    padding: 2em;
+    padding: 1em;
     overflow: auto;
-    /* Two columns that wrap on narrow screens. */
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: center;
-    align-items: flex-start;
-    align-content: flex-start;
-    gap: 2em;
-
-    >* {
-        flex: 1 1 min(20em, 100%);
-        max-width: 40em;
-    }
 
     /* Right column */
     >div {
         display: flex;
         flex-direction: column;
-        gap: 2em;
+        gap: .5em;
 
         >section {
             border-radius: .25em;
             overflow: hidden;
-        }
-    }
 
-    >section {
-        border-radius: .25em;
-        overflow: hidden;
-
-        >nav {
-            background: var(--theme-color-primary-3);
-            color: var(--theme-color-on-primary-3);
-            padding: .5em;
+            >nav {
+                background: var(--theme-color-primary-3);
+                color: var(--theme-color-on-primary-3);
+                padding: .5em;
+            }
         }
     }
 }

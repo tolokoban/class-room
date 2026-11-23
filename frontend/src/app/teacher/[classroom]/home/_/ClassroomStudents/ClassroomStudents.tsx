@@ -1,8 +1,8 @@
 import { IconUser, Theme, ViewButton, ViewSpinner } from "@tolokoban/ui";
 
+import { SectionHeader } from "@/components/SectionHeader";
 import { useServiceRoomSeats } from "@/service/hooks/room";
 
-import { SectionHeader } from "../SectionHeader";
 import { useTranslation } from "./translation";
 
 import Styles from "./ClassroomStudents.module.css";

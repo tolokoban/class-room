@@ -1,8 +1,8 @@
 import { Theme, ViewButton, ViewSpinner, ViewTab, ViewTabs } from "@tolokoban/ui";
 
 import { Md } from "@/components/Md";
+import { SectionHeader } from "@/components/SectionHeader";
 
-import { SectionHeader } from "../SectionHeader";
 import { useClassroomNotes } from "./hooks";
 import { useTranslation } from "./translation";
 
